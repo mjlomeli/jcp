@@ -18,10 +18,7 @@ Released under [MIT](/LICENSE) by [@Mauricio](https://github.com/mjlomeli).
 
 [![safari - Unavailable](https://img.shields.io/badge/safari-Unavailable-critical?style=for-the-badge&logo=safari&logoColor=blue)](https://www.apple.com/safari/)
 
-
-
 <br>
-<img alt="Bitbucket open issues" src="https://img.shields.io/bitbucket/issues-raw/mjlomeli/jcp">
 
 # Welcome to JCP!
 
