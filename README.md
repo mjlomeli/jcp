@@ -21,7 +21,7 @@ Released under [MIT](/LICENSE) by [@Mauricio](https://github.com/mjlomeli).
 
 
 <br>
-
+![Bitbucket open issues](https://img.shields.io/bitbucket/issues-raw/mjlomeli/jcp)
 
 # Welcome to JCP!
 
