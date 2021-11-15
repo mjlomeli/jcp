@@ -4,7 +4,7 @@
 [![License](https://img.shields.io/badge/License-MIT-blue)](#license)
 [![issues - cards](https://img.shields.io/github/issues/mjlomeli/cards)](https://github.com/mjlomeli/cards/issues)
 
-Released under [MIT](/LICENSE) by [@Mauricio](https://github.com/mjlomeli).
+Released under [MIT](/LICENSE) by [@Mauricio](https://github.com/mjlomeli/jcp/blob/main/LICENSE).
 
 **Email** : [Mauricio](mailto:developer.mauricio.jr.lomeli@gmail.com)
 
