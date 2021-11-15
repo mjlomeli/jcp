@@ -2,7 +2,7 @@
 
 ## License
 [![License](https://img.shields.io/badge/License-MIT-blue)](#license)
-[![issues - cards](https://img.shields.io/github/issues/mjlomeli/cards)](https://github.com/mjlomeli/cards/issues)
+[![issues - cards](https://img.shields.io/github/issues/mjlomeli/jcp)](https://github.com/mjlomeli/jcp/issues)
 
 Released under [MIT](/LICENSE) by [@Mauricio](https://github.com/mjlomeli/jcp/blob/main/LICENSE).
 
