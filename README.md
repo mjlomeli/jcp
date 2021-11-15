@@ -1,7 +1,7 @@
 # JCP &nbsp; [![VIEW SITE - DOWN](https://img.shields.io/badge/VIEW_SITE-DOWN-critical?style=for-the-badge&logo=github)](#)
 
 ## License
-[![License](https://img.shields.io/badge/License-MIT-blue)](#license)
+[![License](https://img.shields.io/badge/License-MIT-blue)](https://github.com/mjlomeli/jcp/blob/main/LICENSE)
 [![issues - cards](https://img.shields.io/github/issues/mjlomeli/jcp)](https://github.com/mjlomeli/jcp/issues)
 
 Released under [MIT](/LICENSE) by [@Mauricio](https://github.com/mjlomeli/jcp/blob/main/LICENSE).
