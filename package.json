@@ -1,22 +1,41 @@
 {
-  "name": "jcp-postgres",
-  "private": true,
+  "name": "jcp",
+  "version": "1.0.0",
+  "description": "[![License](https://img.shields.io/badge/License-MIT-blue)](https://github.com/mjlomeli/jcp/blob/main/LICENSE)\r [![issues - cards](https://img.shields.io/github/issues/mjlomeli/jcp)](https://github.com/mjlomeli/jcp/issues)",
+  "main": "webpack.config.js",
+  "directories": {
+    "lib": "lib",
+    "test": "test"
+  },
+  "scripts": {
+    "webpack": "NODE_OPTIONS=--openssl-legacy-provider && webpack --watch --mode=development",
+    "webpack5": "export NODE_OPTIONS=--openssl-legacy-provider && webpack --watch --mode=development",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mjlomeli/jcp.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mjlomeli/jcp/issues"
+  },
+  "homepage": "https://github.com/mjlomeli/jcp#readme",
   "dependencies": {
     "@babel/core": "^7.16.0",
     "@babel/preset-env": "^7.16.4",
     "@babel/preset-react": "^7.16.0",
-    "@rails/actioncable": "^6.0.0",
-    "@rails/activestorage": "^6.0.0",
-    "@rails/ujs": "^6.0.0",
     "babel-loader": "^8.2.3",
+    "css-loader": "^6.5.1",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-redux": "^7.2.6",
     "redux": "^4.1.2",
     "redux-logger": "^3.0.6",
-    "turbolinks": "^5.2.0",
+    "style-loader": "^3.3.1",
     "webpack": "^5.64.2",
     "webpack-cli": "^4.9.1"
-  },
-  "version": "0.1.0"
+  }
 }
