@@ -4,7 +4,7 @@ Rails.application.routes.draw do
     # API routes
     namespace :api, defaults: { format: :json } do
       resource :session, only: [:create, :destroy]
-      resources :users, only: [:create, :show, :update]
+      resources :users, only: [:index, :create, :show, :update]
       resources :products, only: [:index, :create, :show, :update, :destroy]
 
       # TODO: these two routes need to be nested inside users routes or products
