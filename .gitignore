@@ -105,6 +105,14 @@ build-iPhoneSimulator/
 /_yardoc/
 /doc/
 /rdoc/
+.pnp.loader.mjs
+/.pnp.loader.mjs
+babel.config.js
+/babel.config.js
+postcss.config.js
+/postcss.config.js
+yarn.lock
+/yarn.lock
 
 ## Environment normalization:
 /.bundle/
