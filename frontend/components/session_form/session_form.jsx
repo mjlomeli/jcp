@@ -11,9 +11,7 @@ class SessionForm extends React.Component {
     }
 
     update(field) {
-        return e => this.setState({
-            [field]: e.currentTarget.value
-        });
+        return e => this.setState({[field]: e.currentTarget.value});
     }
 
     handleSubmit(e) {
@@ -23,27 +21,20 @@ class SessionForm extends React.Component {
     }
 
     renderErrors() {
-        return (
-            <ul>
-                {this.props.errors.map((error, i) => (
-                    <li key={`error-${i}`}>
-                        {error}
-                    </li>
-                ))}
-            </ul>
-        );
+        return <ul>{
+            this.props.errors.map(
+                (error, i) => <li key={`error-${i}`}> {error} </li>
+            )
+        }</ul>
     }
 
     render() {
-        return (
+        return <>
             <div className="login-form-container">
                 <form onSubmit={this.handleSubmit} className="login-form-box">
-                    Welcome to BenchBnB!
-                    <br/>
-                    Please {this.props.formType} or {this.props.navLink}
+                    Welcome to JCP!
                     {this.renderErrors()}
                     <div className="login-form">
-                        <br/>
                         <label>Username:
                             <input type="text" value={this.state.email} onChange={this.update('email')}
                                    className="login-input"/>
@@ -58,7 +49,7 @@ class SessionForm extends React.Component {
                     </div>
                 </form>
             </div>
-        );
+        </>
     }
 }
 
