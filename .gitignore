@@ -205,7 +205,3 @@ package-lock.json
 /.yarn
 .pnp.cjs
 /.pnp.cjs
-postcss.config.js
-/postcss.config.js
-yarn.lock
-/yarn.lock
