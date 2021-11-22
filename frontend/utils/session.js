@@ -1,3 +1,5 @@
+import {createReview, deleteReview, fetchProducts} from "./products";
+
 export const createUser = (user) => {
     return $.ajax({
         url: '/api/users',
@@ -21,3 +23,8 @@ export const deleteSession = () => {
         method: 'DELETE'
     });
 };
+
+
+window.createUser = createUser;
+window.createSession = createSession;
+window.deleteSession = deleteSession;
