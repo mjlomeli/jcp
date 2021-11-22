@@ -31,7 +31,7 @@ export const createUser = (user) => dispatch => (
 
 export const createSession = (user) => dispatch => (
     SessionAPIUtil.createSession(user).then(
-        user => dispatch(receiveSession(user)),
+        user => dispatch(receiveUser(user)),
         err => dispatch(receiveErrors(err.responseJSON))
     )
 )

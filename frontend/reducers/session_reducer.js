@@ -1,7 +1,6 @@
 import {
     RECEIVE_USER,
-    REMOVE_SESSION,
-    RECEIVE_SESSION_ERRORS
+    REMOVE_SESSION
 } from '../actions/session_actions';
 
 const _nullUser = Object.freeze({
