@@ -9,7 +9,7 @@ module.exports = {
     output: {
         // When using webpack where to output the bundle.js
         // this outputs to ./bundle.js in the root folder
-        path: path.resolve(__dirname, 'app', 'assets', 'scripts'),
+        path: path.resolve(__dirname, 'app', 'assets', 'javascripts'),
         filename: 'bundle.js'
     },
 
@@ -44,3 +44,4 @@ module.exports = {
         ]
     }
 };
+

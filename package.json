@@ -8,6 +8,7 @@
     "test": "test"
   },
   "scripts": {
+    "jcp": "webpack --watch --mode=development",
     "webpack": "NODE_OPTIONS=--openssl-legacy-provider && webpack --watch --mode=development",
     "webpack5": "export NODE_OPTIONS=--openssl-legacy-provider && webpack --watch --mode=development",
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -17,8 +18,8 @@
     "url": "git+https://github.com/mjlomeli/jcp.git"
   },
   "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "author": "Mauricio Lomeli",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/mjlomeli/jcp/issues"
   },
@@ -27,6 +28,7 @@
     "@babel/core": "^7.16.0",
     "@babel/preset-env": "^7.16.4",
     "@babel/preset-react": "^7.16.0",
+    "@rails/webpacker": "5.4.3",
     "babel-loader": "^8.2.3",
     "css-loader": "^6.5.1",
     "react": "^17.0.2",
@@ -34,8 +36,13 @@
     "react-redux": "^7.2.6",
     "redux": "^4.1.2",
     "redux-logger": "^3.0.6",
+    "redux-thunk": "^2.4.0",
     "style-loader": "^3.3.1",
-    "webpack": "^5.64.2",
-    "webpack-cli": "^4.9.1"
+    "webpack": "^4.46.0",
+    "webpack-cli": "^3.3.12",
+    "yarn": "^1.22.17"
+  },
+  "devDependencies": {
+    "webpack-dev-server": "^3"
   }
 }
