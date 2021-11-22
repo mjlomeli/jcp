@@ -1,20 +1,20 @@
 import {
     RECEIVE_USER,
-    RECEIVE_SESSION,
     REMOVE_SESSION,
+    RECEIVE_SESSION_ERRORS
 } from '../actions/session_actions';
 
+const _nullUser = Object.freeze({
+    id: null
+});
 
-export default function SessionReducer(prevState={}, action){
+export default function SessionReducer(prevState=_nullUser, action){
     Object.freeze(prevState);
-    let newState = Object.assign({}, prevState);
     switch(action.type){
         case RECEIVE_USER:
-            return newState;
-        case RECEIVE_SESSION:
-            return newState;
+            return { id: action.user.id };
         case REMOVE_SESSION:
-            return newState;
+            return _nullUser;
         default:
             return prevState;
     }
