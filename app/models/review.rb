@@ -16,5 +16,4 @@ class Review < ApplicationRecord
     # just an example of if statement validation
     self.rating.nil?
   end
-
 end
