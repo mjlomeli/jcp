@@ -9,8 +9,13 @@ class Store < ApplicationRecord
            foreign_key: :store_id,
            class_name: :Product
 
+  has_many :reviews,
+           through: :products,
+           source: :reviews
+
   def rating
     # avoid n+1 searches
+
     return 5
   end
 
