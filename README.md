@@ -1,4 +1,5 @@
-# JCP &nbsp; [![VIEW SITE - DOWN](https://img.shields.io/badge/VIEW_SITE-DOWN-critical?style=for-the-badge&logo=github)](https://jcp-crafter.herokuapp.com/)
+# JCP &nbsp; [![VIEW SITE - AVAILABLE](https://img.shields.io/badge/VIEW_SITE-AVAILABLE-2ea44f?style=for-the-badge&logo=heroku)](https://jcp-crafter.herokuapp.com/)
+
 
 ## License
 [![License](https://img.shields.io/badge/License-MIT-blue)](https://github.com/mjlomeli/jcp/blob/main/LICENSE)
