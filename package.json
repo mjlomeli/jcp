@@ -8,10 +8,15 @@
     "test": "test"
   },
   "scripts": {
+    "postinstall": "webpack",
     "jcp": "webpack --watch --mode=development",
     "webpack": "NODE_OPTIONS=--openssl-legacy-provider && webpack --watch --mode=development",
     "webpack5": "export NODE_OPTIONS=--openssl-legacy-provider && webpack --watch --mode=development",
     "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "engines":{
+    "node": "17.0.1",
+    "npm": "8.1.0"
   },
   "repository": {
     "type": "git",

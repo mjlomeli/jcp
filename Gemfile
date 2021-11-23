@@ -23,6 +23,7 @@ gem 'turbolinks', '~> 5'
 gem 'jbuilder'
 gem 'bcrypt'
 gem 'jquery-rails'
+gem 'uglifier'
 
 # Use Active Storage variant
 # gem 'image_processing', '~> 1.2'

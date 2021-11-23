@@ -84,6 +84,7 @@ GEM
     concurrent-ruby (1.1.9)
     crass (1.0.6)
     erubi (1.10.0)
+    execjs (2.8.1)
     faker (2.19.0)
       i18n (>= 1.6, < 2)
     ffi (1.15.4)
@@ -191,6 +192,8 @@ GEM
     turbolinks-source (5.2.0)
     tzinfo (2.0.4)
       concurrent-ruby (~> 1.0)
+    uglifier (4.2.0)
+      execjs (>= 0.3.0, < 3)
     web-console (4.2.0)
       actionview (>= 6.0.0)
       activemodel (>= 6.0.0)
@@ -235,6 +238,7 @@ DEPENDENCIES
   spring
   turbolinks (~> 5)
   tzinfo-data
+  uglifier
   web-console (>= 4.1.0)
   webdrivers
   webpacker
