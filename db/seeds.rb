@@ -12,7 +12,6 @@ Store.delete_all
 Review.delete_all
 CartItem.delete_all
 Order.delete_all
-Profile.delete_all
 
 
 mau = User.create(email: 'mau', username: 'maumau', password: "password", first_name: "mauricio", last_name: "lomeli")

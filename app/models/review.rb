@@ -10,7 +10,7 @@ class Review < ApplicationRecord
 
   belongs_to :user,
              foreign_key: :user_id,
-             class_name: :user
+             class_name: :User
 
   def not_rated?
     # just an example of if statement validation
