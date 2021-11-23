@@ -15,13 +15,9 @@ Order.delete_all
 Profile.delete_all
 
 
-mau = User.create(email: 'mau', password: "password")
-zed = User.create(email: 'zed', password: "password")
-ensu = User.create(email: 'ensu', password: "password")
-
-Profile.create(user_id: mau.id, username: 'maumau', first_name: "mauricio", last_name: "lomeli")
-Profile.create(user_id: zed.id, username: "Zed", first_name: "zed", last_name: "kiah")
-Profile.create(user_id: ensu.id, username: "Ensue", first_name: "ensue", last_name: "nsvent")
+mau = User.create(email: 'mau', username: 'maumau', password: "password", first_name: "mauricio", last_name: "lomeli")
+zed = User.create(email: 'zed', username: "Zed", password: "password", first_name: "zed", last_name: "kiah")
+ensu = User.create(email: 'ensu', username: "Ensue", password: "password",  first_name: "ensue", last_name: "nsvent")
 
 mau_store = Store.create(shop_name: 'MauStore', user_id: mau.id)
 zed_store = Store.create(shop_name: 'ZedStore', user_id: zed.id)

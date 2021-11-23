@@ -26,7 +26,25 @@ class User < ApplicationRecord
            foreign_key: :user_id,
            class_name: :Review
 
+  def cart_price
+    # reduced the (N+1) query
+    cart_items = self.cart_items.includes(:product)
+    total = 0
+    cart_items.each do |item|
+      total += item.item_price
+    end
+    total
+  end
 
+  def order_price
+    # reduced the (N+1) query
+    orders = self.orders.includes(:product)
+    total = 0
+    orders.each do |item|
+      total += item.item_price
+    end
+    total
+  end
 
   def self.find_by_credentials(email, password)
     user = User.find_by(email: email)
