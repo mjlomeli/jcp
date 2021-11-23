@@ -6,6 +6,15 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
+User.delete_all
+Product.delete_all
+Store.delete_all
+Review.delete_all
+CartItem.delete_all
+Order.delete_all
+Profile.delete_all
+
+
 mau = User.create(email: 'mau', password: "password")
 zed = User.create(email: 'zed', password: "password")
 ensu = User.create(email: 'ensu', password: "password")
