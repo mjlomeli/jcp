@@ -109,30 +109,34 @@ class CardListing extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            front: props.front,
-            frontFlip: "",
-            back: props.back,
-            backFlip: "flip",
-            cursor: ""
+            title: "Personalized Name Puzzle With Pegs, Personalized Name Puzzle With Pegs, New Baby Gift",
+            imageUrl: "https://i.etsystatic.com/17305851/c/1801/1432/177/346/il/4ad87f/3411776815/il_340x270.3411776815_s6oc.jpg"
         }
         this.onclick = props.onClick || this.onClick.bind(this);
+    }
+
+    resize(title){
+        if (title.length > 70) {
+            return `${title.slice(0, 65)}...`
+        }
+    }
+
+    componentDidMount() {
+        // TODO: make sure title is resized
     }
 
     onClick(e) {
         e.preventDefault();
         // TODO: send to product page
-        this.flip();
     }
 
     render() {
         return <>
             <div className="card-listing">
                 <div className="image">
-                    <img alt="img" aria-hidden="true" src="https://i.etsystatic.com/17305851/c/1801/1432/177/346/il/4ad87f/3411776815/il_340x270.3411776815_s6oc.jpg"/>
+                    <img alt="img" aria-hidden="true" src={this.state.imageUrl}/>
                 </div>
-                <label className="title">
-                    Personalized Name Puzzle With Pegs, New Baby Gift...
-                </label>
+                <label className="title">{this.resize(this.state.title)}</label>
                 <Rating />
                 <Price />
                 <Additional />
