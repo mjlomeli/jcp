@@ -69,10 +69,37 @@ class Price extends React.Component {
                     ${this.state.price}
                 </span>
                 {this.discounted()}
-                <div className="shipping-container">
-                    <span className="shipping">&nbsp;&nbsp;FREE shipping&nbsp;&nbsp;</span>
-                </div>
             </div>
+        </>
+    }
+}
+
+
+class Additional extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {}
+    }
+
+    shipping(){
+        return <>
+            <div className="shipping-container">
+                <span className="shipping">&nbsp;&nbsp;FREE shipping&nbsp;&nbsp;</span>
+            </div>
+        </>
+    }
+
+    recommendation(){
+        return <>
+            <div className="more-like-this">
+
+            </div>
+        </>
+    }
+
+    render() {
+        return <>
+            {this.shipping()}
         </>
     }
 }
@@ -100,20 +127,15 @@ class CardListing extends React.Component {
     render() {
         return <>
             <div className="card-listing">
-                {/* Image or Video */}
                 <div className="image">
                     <img alt="img" aria-hidden="true" src="https://i.etsystatic.com/17305851/c/1801/1432/177/346/il/4ad87f/3411776815/il_340x270.3411776815_s6oc.jpg"/>
                 </div>
-                {/* Title */}
                 <label className="title">
                     Personalized Name Puzzle With Pegs, New Baby Gift...
                 </label>
-                {/* Rating */}
-                <div>
-                    <Rating />
-                </div>
-                {/* Pricing */}
+                <Rating />
                 <Price />
+                <Additional />
             </div>
         </>
     }

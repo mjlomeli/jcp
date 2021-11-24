@@ -1,10 +1,10 @@
 .card-listing {
-    display: flex;
-    flex-direction: column;
     padding: 1vw 1vw 1vw 1vw;
 }
 
-.image, .rating, .price-container{
+.image{
+    display: flex;
+    justify-content: center;
 }
 
 .title {
@@ -61,15 +61,13 @@
     line-height: 1.4;
     word-wrap: break-word;
     -webkit-font-smoothing: antialiased;
-
 }
 
 .shipping-container {
     background-color: #D4E9D7;
     border-radius: 15px;
     overflow: hidden;
-    display: flex;
-    flex-direction: column;
+    display: inline-flex;
 }
 
 

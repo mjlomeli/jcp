@@ -44,7 +44,7 @@ const App = () => (
             {/*<ProtectedRoute exact path="/user/:id" component={ProfileContainer} />*/}
         </Switch>
         <br />
-        <GridLayout areas={layout2x4} components={comp2x4} gridClass="grid" itemClass="item"/>
+        <GridLayout areas={layout2x4} components={comp2x4} gridClass="grid-test" itemClass="item-test"/>
     </div>
 );
 
