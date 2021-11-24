@@ -72,8 +72,4 @@
     flex-direction: column;
 }
 
-img {
-    object-fit: contain;
-    border-radius: 3.5%;
-}
 
