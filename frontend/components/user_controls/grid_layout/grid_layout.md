@@ -44,6 +44,10 @@ import GridLayout from "../grid_layout/grid_layout";
 ## Finale
 
 ```javascript
+import GridLayout from "../grid_layout/grid_layout";
+
+... // inside a render function
+
 let gridTemplateAreas = [
     ['header header header header header header'],
     ['menu main main main right right'],
@@ -57,7 +61,6 @@ let components = {
     'footer': <div>Footer</div>
 }
 
-import GridLayout from "../grid_layout/grid_layout";
 <GridLayout gridTemplateAreas={gridTemplateAreas} components={components}/>
 ```
 
@@ -72,7 +75,7 @@ To add styles to the grid or the grid items, a class name to either can be passe
 down by defining the props ```gridContainerClass``` and ```gridItemClass```.
 
 ```javascript
-<GridLayout gridContainerClass="grid" gridItemClass="item" .../>
+<GridLayout containerClass="grid" itemClass="item" .../>
 ```
 
 Now in the css file, the container and the grid items can be accessed.
