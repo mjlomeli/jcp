@@ -93,3 +93,6 @@ Now in the css file, the container and the grid items can be accessed.
     font-size: 30px;
 }
 ```
+<br>
+
+![GridLayout](styled_example.png)
