@@ -83,6 +83,7 @@ class CardThumbnail extends React.Component {
         if (title.length > 70) {
             return `${title.slice(0, 65)}...`
         }
+        return title;
     }
 
     componentDidMount() {

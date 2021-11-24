@@ -15,10 +15,10 @@ import DemoLogInFormContainer from './session_form/demo_form_container';
 import { AuthRoute, ProtectedRoute } from '../utils/route_util';
 
 import GridLayout from "./user_controls/grid_layout/grid_layout";
-import CardThumbnail from "./user_controls/card_thumbnail/card_thumbnail";
+import CircularThumbnail from "./user_controls/circular_thumbnail/circular_thumbnail";
 
 
-let card = <CardThumbnail />
+let card = <CircularThumbnail />
 let layout4x1 = ['one two three four']
 let comp4x1 = {'one': card, 'two': card, 'three': card, 'four': card}
 let layout2x3 = ['one two three', 'four five six']
@@ -45,7 +45,7 @@ const App = () => (
             {/*<ProtectedRoute exact path="/user/:id" component={ProfileContainer} />*/}
         </Switch>
         <br />
-        <GridLayout areas={layout2x4} components={comp2x4} gridClass="grid-test" itemClass="item-test"/>
+        <GridLayout areas={layout4x1} components={comp4x1} gridClass="grid-test" itemClass="item-test"/>
     </div>
 );
 
