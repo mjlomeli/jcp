@@ -1,7 +1,7 @@
 import {
     RECEIVE_USER,
     REMOVE_SESSION
-} from '../actions/session_actions';
+} from '../../actions/session_actions';
 
 const _nullUser = Object.freeze({
     id: null
