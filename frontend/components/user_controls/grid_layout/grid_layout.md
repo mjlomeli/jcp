@@ -13,7 +13,7 @@ An example below illustrates the general formatting. For making a grid
 of various dimensions. A full horizontal category means that a
 component fills the entire top area.
 ```javascript
-let gridTemplateAreas = [
+let areas = [
     ['header header header header header header'],
     ['menu main main main right right'],
     ['menu footer footer footer footer footer']
@@ -37,7 +37,7 @@ To render the grid pass in the gridTemplateAreas and components to the props
 
 ```javascript
 import GridLayout from "../grid_layout/grid_layout";
-<GridLayout gridTemplateAreas={gridTemplateAreas} components={components}/>
+<GridLayout areas={areas} components={components}/>
 ```
 
 
@@ -48,7 +48,7 @@ import GridLayout from "../grid_layout/grid_layout";
 
 ... // inside a render function
 
-let gridTemplateAreas = [
+let areas = [
     ['header header header header header header'],
     ['menu main main main right right'],
     ['menu footer footer footer footer footer']
@@ -61,7 +61,7 @@ let components = {
     'footer': <div>Footer</div>
 }
 
-<GridLayout gridTemplateAreas={gridTemplateAreas} components={components}/>
+<GridLayout gridTemplateAreas={areas} components={components}/>
 ```
 
 <br>
@@ -72,7 +72,7 @@ let components = {
 
 ## Customizing
 To add styles to the grid or the grid items, a class name to either can be passed
-down by defining the props ```gridContainerClass``` and ```gridItemClass```.
+down by defining the props ```grid``` and ```item```.
 
 ```javascript
 <GridLayout containerClass="grid" itemClass="item" .../>
