@@ -13,11 +13,12 @@ import SignUpFormContainer from './session_form/signup_form_container';
 import LogInFormContainer from './session_form/login_form_container';
 import DemoLogInFormContainer from './session_form/demo_form_container';
 import { AuthRoute, ProtectedRoute } from '../utils/route_util';
-import CardListing from "./user_controls/card_listing/card_listing";
+
 import GridLayout from "./user_controls/grid_layout/grid_layout";
+import CardThumbnail from "./user_controls/card_thumbnail/card_thumbnail";
 
 
-let card = <CardListing />
+let card = <CardThumbnail />
 let layout4x1 = ['one two three four']
 let comp4x1 = {'one': card, 'two': card, 'three': card, 'four': card}
 let layout2x3 = ['one two three', 'four five six']

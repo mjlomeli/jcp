@@ -1,7 +1,6 @@
 import {connect} from 'react-redux';
 import React from 'react';
 import './card_thumbnail.css'
-import './rating.css'
 
 const mapStateToProps = ({errors}) => ({
     //errors: errors.session, // need to add a ui or user_control errors
@@ -19,14 +18,44 @@ class Price extends React.Component {
         this.state = {price: 7.47, discount: 0.6}
     }
 
-    calculatedPrice(){
-        if (this.state.discount){
-            let price = this.state.price - (this.state.price * this.state.discount);
-            return <><span className="calculated-price">${price.toFixed(2)}</span>&nbsp;</>;
-        }
+    shipping() {
+        return <div className="shipping-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                <path
+                    d="M21.868 11.5l-4-7A1 1 0 0017 4H5a1 1 0 00-1 1v1H2a1 1 0 000 2h4a1 1 0 010 2H3a1 1 0 000 2h2a1 1 0 010 2H4v3a1 1 0 001 1h1.05a2.5 2.5 0 004.9 0h4.1a2.5 2.5 0 004.9 0H21a1 1 0 001-1v-5a1 1 0 00-.132-.5zM8.5 19a1.5 1.5 0 110-3 1.5 1.5 0 010 3zm5.488-8V6h1.725l2.845 5h-4.57zm3.512 8a1.5 1.5 0 110-3 1.5 1.5 0 010 3z"></path>
+            </svg>
+        </div>
     }
 
-    discounted(){
+    fastDeliveryPrice() {
+        if (this.state.discount) {
+            let price = this.state.price - (this.state.price * this.state.discount);
+            return <>
+                <div className="fast-price-container">
+                    {this.shipping()}
+                    <label className="calculated-price"><span>${price.toFixed(2)}</span></label></div>
+            </>;
+        }
+        return <>
+            <div className="fast-price-container">
+                {this.shipping()}
+                <label className="calculated-price"><span>${this.state.price}</span></label></div>
+        </>;
+    }
+
+    calculatedPrice() {
+        if (this.state.discount) {
+            let price = this.state.price - (this.state.price * this.state.discount);
+            return <>
+                <div className="price-container"><label className="calculated-price"><span>${price.toFixed(2)}</span></label></div>
+            </>;
+        }
+        return <>
+            <div className="price-container"><label className="calculated-price"><span>${this.state.price}</span></label></div>
+        </>;
+    }
+
+    discounted() {
         let percentage = (this.state.discount) ? this.state.discount * 100 >> 0 : 0
         if (percentage)
             return <>&nbsp;<span className="discount">({percentage}% off)</span></>
@@ -35,47 +64,10 @@ class Price extends React.Component {
 
     render() {
         return <>
-            <div className="price-container">
-                {this.calculatedPrice()}
-                <span className="price">
-                    ${this.state.price}
-                </span>
-                {this.discounted()}
-            </div>
+            {this.fastDeliveryPrice()}
         </>
     }
 }
-
-
-class Additional extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {}
-    }
-
-    shipping(){
-        return <>
-            <div className="shipping-container">
-                <span className="shipping">&nbsp;&nbsp;FREE shipping&nbsp;&nbsp;</span>
-            </div>
-        </>
-    }
-
-    recommendation(){
-        return <>
-            <div className="more-like-this">
-
-            </div>
-        </>
-    }
-
-    render() {
-        return <>
-            {this.shipping()}
-        </>
-    }
-}
-
 
 class CardThumbnail extends React.Component {
     constructor(props) {
@@ -87,7 +79,7 @@ class CardThumbnail extends React.Component {
         this.onclick = props.onClick || this.onClick.bind(this);
     }
 
-    resize(title){
+    resize(title) {
         if (title.length > 70) {
             return `${title.slice(0, 65)}...`
         }
@@ -104,12 +96,11 @@ class CardThumbnail extends React.Component {
 
     render() {
         return <>
-            <div className="card-listing">
+            <div className="card-thumbnail">
                 <div className="image">
-                    <img alt="img" aria-hidden="true" src={this.state.imageUrl}/>
+                    <img className="image-thumbnail" alt="img" aria-hidden="true" src={this.state.imageUrl}/>
                 </div>
-                <Price />
-                <Additional />
+                <Price/>
             </div>
         </>
     }
