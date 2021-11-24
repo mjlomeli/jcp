@@ -1,8 +1,7 @@
 import React from 'react';
 import './grid_layout.css'
-// <div className="grid-container" style={{gridTemplateAreas: "'header header header header header header' 'menu main main main right right' 'menu footer footer footer footer footer'"}}>
-//                                       {"gridTemplateAreas":"'header header header header header header' 'menu main main main right right' 'menu footer footer footer footer footer'"}
-// style={`grid-area: ${key}`}
+
+
 class GridLayout extends React.Component {
     constructor(props) {
         super(props);

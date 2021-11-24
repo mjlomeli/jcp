@@ -1,0 +1,28 @@
+
+
+.card-side {
+    transition: all 0.4s ease;
+    backface-visibility: hidden;
+    position: absolute;
+    object-fit: cover;
+}
+
+.flip {
+    transform: rotateY(180deg);
+}
+
+.cursor-grab {
+    cursor: grab;
+}
+
+.cursor-default {
+    cursor: default;
+}
+
+.cursor-pointing-loading {
+    cursor: progress;
+}
+
+.cursor-loading {
+    cursor: wait;
+}
