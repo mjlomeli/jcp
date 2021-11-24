@@ -52,7 +52,7 @@ class CircularThumbnail extends React.Component {
 
     render() {
         return <>
-            <div className="card-listing" onMouseEnter={this.onMouseEnter} onMouseLeave={this.onMouseLeave}>
+            <div className="thumbnail-listing" onMouseEnter={this.onMouseEnter} onMouseLeave={this.onMouseLeave}>
                 <div className="image">
                     <img className="circular-image" alt="img" aria-hidden="true" src={this.state.imageUrl}/>
                 </div>
