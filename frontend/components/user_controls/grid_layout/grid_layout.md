@@ -36,6 +36,28 @@ let components = {
 To render the grid pass in the gridTemplateAreas and components to the props
 
 ```javascript
+import GridLayout from "../grid_layout/grid_layout";
+<GridLayout gridTemplateAreas={gridTemplateAreas} components={components}/>
+```
+
+
+## Finale
+
+```javascript
+let gridTemplateAreas = [
+    ['header header header header header header'],
+    ['menu main main main right right'],
+    ['menu footer footer footer footer footer']
+]
+let components = {
+    'header': <div>Header</div>,
+    'menu': <div>Menu</div>,
+    'main': <div>Main</div>,
+    'right': <div>Right</div>,
+    'footer': <div>Footer</div>
+}
+
+import GridLayout from "../grid_layout/grid_layout";
 <GridLayout gridTemplateAreas={gridTemplateAreas} components={components}/>
 ```
 
