@@ -5,7 +5,7 @@ import {createUser} from '../../actions/session_actions';
 import SessionForm from './session_form';
 
 const mapStateToProps = ({errors}) => ({
-    errors: errors.sessionErrors, // sessionErrors is an array
+    errors: errors.session, // sessionErrors is an array
     formType: 'signup',
     navLink: <Link to="/login">log in instead</Link>,
 });

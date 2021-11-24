@@ -5,7 +5,8 @@ class SessionForm extends React.Component {
         super(props);
         this.state = {
             email: '',
-            password: ''
+            password: '',
+            firstName: ''
         };
         this.handleSubmit = this.handleSubmit.bind(this);
     }
@@ -21,6 +22,7 @@ class SessionForm extends React.Component {
     }
 
     renderErrors() {
+        console.log(this.props.errors);
         return <ul>{
             this.props.errors.map(
                 (error, i) => <li key={`error-${i}`}> {error} </li>
