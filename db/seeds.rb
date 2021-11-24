@@ -17,6 +17,7 @@ Order.delete_all
 mau = User.create(email: 'mau', username: 'maumau', password: "password", first_name: "mauricio", last_name: "lomeli")
 zed = User.create(email: 'zed', username: "Zed", password: "password", first_name: "zed", last_name: "kiah")
 ensu = User.create(email: 'ensu', username: "Ensue", password: "password",  first_name: "ensue", last_name: "nsvent")
+demo = User.create(email: 'demo@email.com', username: "DemoUser", password: "password",  first_name: "Demo", last_name: "User")
 
 mau_store = Store.create(shop_name: 'MauStore', user_id: mau.id)
 zed_store = Store.create(shop_name: 'ZedStore', user_id: zed.id)

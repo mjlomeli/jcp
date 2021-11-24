@@ -1,0 +1,1 @@
+git push heroku main && heroku pg:reset --confirm jcp-crafter && heroku run rails db:migrate db:seed
