@@ -63,7 +63,7 @@ class Price extends React.Component {
 
     render() {
         return <>
-            <div>
+            <div className="price-container">
                 {this.calculatedPrice()}
                 <span className="price">
                     ${this.state.price}
@@ -101,7 +101,7 @@ class CardListing extends React.Component {
         return <>
             <div className="card-listing">
                 {/* Image or Video */}
-                <div>
+                <div className="image">
                     <img alt="img" aria-hidden="true" src="https://i.etsystatic.com/17305851/c/1801/1432/177/346/il/4ad87f/3411776815/il_340x270.3411776815_s6oc.jpg"/>
                 </div>
                 {/* Title */}

@@ -1,6 +1,10 @@
 .card-listing {
-    width: 250px;
-    height: 250px;
+    display: flex;
+    flex-direction: column;
+    padding: 1vw 1vw 1vw 1vw;
+}
+
+.image, .rating, .price-container{
 }
 
 .title {
@@ -64,12 +68,11 @@
     background-color: #D4E9D7;
     border-radius: 15px;
     overflow: hidden;
-    display: inline-block;
+    display: flex;
+    flex-direction: column;
 }
 
 img {
-    max-width: 100%;
-    max-height: 100%;
     object-fit: contain;
     border-radius: 3.5%;
 }

@@ -11,21 +11,14 @@
     Nothing here unless something new comes up.
     This will override every existing gridlayout items.
     */
+
+
 }
 
 .grid {
-    /*
-    grid-gap: 10px;
-    background-color: #2196F3;
-    */
-    padding: 20px 20px 20px 20px;
+    background-color: #186e00;
 }
 
 .item {
-    /*
-    background-color: rgba(255, 255, 255, 0.8);
-    text-align: center;
-    font-size: 30px;
-    */
-    padding: 50px;
+    background-color: rgba(255, 0, 0, 0.8);
 }
