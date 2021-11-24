@@ -14,10 +14,10 @@ Decide on your parts. Two sections must be filled out.
 An example below illustrates the general component to be the front and back.
 
 ```javascript
-// front of card
+// front of card_layout
 let ace_hearts = <img src="https://upload.wikimedia.org/wikipedia/commons/5/57/Playing_card_heart_A.svg" alt="ace_hearts"/>
 
-// back of card
+// back of card_layout
 let ace_spades = <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/ab/01_of_spades_A.svg/703px-01_of_spades_A.svg.png" alt="ace_spades"/>
 ```
 
@@ -32,14 +32,17 @@ each respectively.
 Lets put it all together.
 
 ```javascript
-import CardLayout from "../card/card_layout";
+import CardLayout from "../card_layout/card_layout";
 
 ... // inside a render function
 
-let ace_hearts = <img src="https://upload.wikimedia.org/wikipedia/commons/5/57/Playing_card_heart_A.svg" alt="ace_hearts"/>
-let ace_spades = <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/ab/01_of_spades_A.svg/703px-01_of_spades_A.svg.png" alt="ace_spades"/>
+let ace_hearts = <img src="https://upload.wikimedia.org/wikipedia/commons/5/57/Playing_card_heart_A.svg"
+                      alt="ace_hearts"/>
+let ace_spades = <img
+    src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/ab/01_of_spades_A.svg/703px-01_of_spades_A.svg.png"
+    alt="ace_spades"/>
 
-<CardLayout front={ace_hearts} back={ace_spades} />
+<CardLayout front={ace_hearts} back={ace_spades}/>
 ```
 
 <br>

@@ -4,7 +4,7 @@ import './card_layout.css'
 
 const mapStateToProps = ({errors}) => ({
     //errors: errors.session, // need to add a ui or user_control errors
-    nameId: "listing_card"
+    nameId: "card_listing"
 });
 
 const mapDispatchToProps = dispatch => ({

@@ -13,7 +13,7 @@ import SignUpFormContainer from './session_form/signup_form_container';
 import LogInFormContainer from './session_form/login_form_container';
 import DemoLogInFormContainer from './session_form/demo_form_container';
 import { AuthRoute, ProtectedRoute } from '../utils/route_util';
-import CardLayout from "./user_controls/card/card_layout";
+import CardListing from "./user_controls/card_listing/card_listing";
 
 
 
@@ -32,6 +32,7 @@ const App = () => (
             {/*<ProtectedRoute exact path="/user/:id" component={ProfileContainer} />*/}
         </Switch>
         <br />
+        <CardListing />
     </div>
 );
 
