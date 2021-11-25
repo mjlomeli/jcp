@@ -30,7 +30,7 @@ let comp1x2 = {'one': card, 'two': card}
 let layout2x4 = ['one two three four', 'five six seven eight']
 let comp2x4 = {'one': card, 'two': card, 'three': card, 'four': card, 'five': card, 'six': card, 'seven': card, 'eight': card}
 
-let layout = <GridLayout areas={layout4x1} components={comp4x1} gridClass="grid-test" itemClass="item-test"/>
+let layout = <GridLayout areas={layout4x1} components={comp4x1} />
 let home = <HomeModule seasonal={layout}/>
 
 const App = () => (
@@ -48,7 +48,7 @@ const App = () => (
             {/*<ProtectedRoute exact path="/user/:id" component={ProfileContainer} />*/}
         </Switch>
         <br />
-        {layout}
+        {home}
     </div>
 );
 
