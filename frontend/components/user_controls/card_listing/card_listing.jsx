@@ -74,7 +74,6 @@ class Price extends React.Component {
     }
 }
 
-
 class Additional extends React.Component {
     constructor(props) {
         super(props);
@@ -103,7 +102,6 @@ class Additional extends React.Component {
         </>
     }
 }
-
 
 class CardListing extends React.Component {
     constructor(props) {
