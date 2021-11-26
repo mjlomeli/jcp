@@ -24,14 +24,15 @@ let card = <CardListing />
 
 let layout4x1 = ['one two three four']
 let comp4x1 = {'one': card, 'two': card, 'three': card, 'four': card}
-// let layout2x3 = ['one two three', 'four five six']
-// let comp2x3 = {'one': thumb, 'two': thumb, 'three': thumb, 'four': thumb, 'five': thumb, 'six': thumb}
+let layout2x3 = ['one two three', 'four five six']
+let comp2x3 = {'one': card, 'two': card, 'three': card, 'four': card, 'five': card, 'six': card}
 // let layout1x2 = ['one two two']
 //let comp1x2 = {'one': card, 'two': card}
 //let layout2x4 = ['one two three four', 'five six seven eight']
 //let comp2x4 = {'one': listing, 'two': listing, 'three': listing, 'four': listing, 'five': listing, 'six': listing, 'seven': listing, 'eight': listing}
 
-let layout = <GridLayout areas={layout4x1} components={comp4x1} />
+let gridlayout4x1 = <GridLayout areas={layout4x1} components={comp4x1} />
+let gridlayout2x3 = <GridLayout areas={layout2x3} components={comp2x3} />
 //let home = <HomeModule seasonal={layout}/>
 //let featured = <GridLayout areas={layout2x4} components={comp2x4} />
 //let viewed = <GridLayout areas={layout2x3} components={comp2x3} />
@@ -52,7 +53,10 @@ const App = () => (
         </Switch>
         <br />
         <div>
-            {layout}
+            {gridlayout4x1}
+        </div>
+        <div>
+            {gridlayout2x3}
         </div>
     </div>
 );

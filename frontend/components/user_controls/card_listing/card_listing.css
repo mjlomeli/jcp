@@ -2,7 +2,6 @@
     grid-template-columns: repeat(auto-fit, 20em);
     margin: 0;
     box-sizing: inherit;
-
     border: 1em solid transparent;
 }
 
