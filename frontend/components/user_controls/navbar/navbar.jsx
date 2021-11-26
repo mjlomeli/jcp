@@ -1,7 +1,8 @@
 import {connect} from 'react-redux';
 import React from 'react';
 import './navbar.css'
-import GridLayout from "../grid_layout/grid_layout";
+import {isHTML} from '../../../utils/component_utils'
+import {NavbarEntriesError, NavbarEntriesTitleErrors} from "./navbar_error";
 
 const mapStateToProps = ({errors}) => ({
     //errors: errors.session, // need to add a ui or user_control errors
@@ -13,38 +14,30 @@ const mapDispatchToProps = dispatch => ({
     }
 });
 
-class Price extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {price: 7.47, discount: 0.6}
-    }
-
-    render() {
-        return <>
-        </>
-    }
-}
-
 class NavbarLayout extends React.Component {
     constructor(props) {
         super(props);
+        this.state = {}
         this.navEntries = props.navEntries;
-        console.log(JSON.stringify(this.navEntries));
+        if (isHTML(this.navEntries))
+            throw new NavbarEntriesError();
     }
 
     navDropDown(navTitle, navElement){
         let dropdowns = Object.entries(navElement).map(
             (pair, idx) => {
-                let [title, link] = pair;
+                let [title, element] = pair;
+                if (isHTML(element))
+                    return <React.Fragment key={idx}>{element}</React.Fragment>;
                 return <a key={idx} className={`navbar-dropdown-link navbar-dropdown-link-${title}`}
-                          href={`${link}`}>
+                          href={`${element}`}>
                     {`${title}`}
                 </a>
             })
 
         return <div className={`navbar-dropdown navbar-dropdown-${navTitle.toLowerCase()}`}>
                 <button className="dropbtn">Dropdown
-                    <i className="fa fa-caret-down"></i>
+                    <i className="fa fa-caret-down" />
                 </button>
                 <div className={`dropdown-content dropdown-content-${navTitle.toLowerCase()}`}>
                     {dropdowns}
@@ -54,6 +47,8 @@ class NavbarLayout extends React.Component {
     }
 
     navLink(navTitle, navElement){
+        if (isHTML(navElement))
+            return navElement;
         return <a className={`navbar-link navbar-link-${navTitle.toLowerCase()}`} href={`${navElement}`}>
             {`${navTitle}`}
         </a>
@@ -61,7 +56,9 @@ class NavbarLayout extends React.Component {
 
     generateNavElement(navObject){
         let [navTitle, navElement] = navObject;
-        if (typeof navElement === 'string' || navElement instanceof String)
+        if (isHTML(navTitle))
+            throw new NavbarEntriesTitleErrors()
+        else if (typeof navElement === 'string' || navElement instanceof String || isHTML(navElement))
             return this.navLink(navTitle, navElement);
         else
             return this.navDropDown(navTitle, navElement);
@@ -70,9 +67,9 @@ class NavbarLayout extends React.Component {
     render() {
         return <div className="navbar">{
             Object.entries(this.navEntries).map(
-                navObject => {
-                    return this.generateNavElement(navObject)
-                }
+                (navObject, idx) => <React.Fragment key={idx}>
+                    { this.generateNavElement(navObject) }
+                </React.Fragment>
             )
         }</div>
     }

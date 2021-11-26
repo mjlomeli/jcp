@@ -19,17 +19,19 @@ import CardThumbnail from "./user_controls/card_thumbnail/card_thumbnail";
 
 import Navbar from "./user_controls/navbar/navbar";
 
+let card = <CardThumbnail />
+let atag = <a>hello</a>
 let nav = {
     "Home": "#",
     "News": "#",
+    "Component": atag,
     "Dropdown": {
-        "Link 1": "#",
-        "Link 2": "#",
+        "Link 1": card,
+        "Link 2": card,
         "Link 3": "#"
     }
 }
 
-let card = <CardThumbnail />
 //let card = <CardListing />
 //let thumb = <CardThumbnail />
 
