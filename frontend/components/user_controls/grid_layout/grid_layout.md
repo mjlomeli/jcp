@@ -14,7 +14,7 @@ of various dimensions. A full horizontal category means that a
 component fills the entire top area.
 ```javascript
 let areas = [
-    ['header header header header header header'],
+    ['header_template header_template header_template header_template header_template header_template'],
     ['menu main main main right right'],
     ['menu footer footer footer footer footer']
 ]
@@ -49,7 +49,7 @@ import GridLayout from "../grid_layout/grid_layout";
 ... // inside a render function
 
 let areas = [
-    ['header header header header header header'],
+    ['header_template header_template header_template header_template header_template header_template'],
     ['menu main main main right right'],
     ['menu footer footer footer footer footer']
 ]

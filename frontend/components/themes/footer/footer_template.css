@@ -1,0 +1,71 @@
+.footer {
+    display: block;
+    margin: 0;
+    box-sizing: inherit;
+    font-family: "Graphik Webfont", -apple-system, "Helvetica Neue", "Droid Sans", Arial, sans-serif;
+}
+
+.mountain-background {
+    padding: 0;
+    margin-bottom: -5px;
+    fill: #4D6BC6;
+    display: inline-flex;
+    height: 48px;
+    width: 100%;
+    overflow: hidden;
+    transform: rotate(180deg);
+    vertical-align: middle;
+}
+
+.educated-by {
+    margin: 0;
+    box-sizing: inherit;
+    font-size: 16px;
+    color: white;
+    background-color: #4D6BC6;
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    text-decoration: none;
+}
+
+.educated-by-icon {
+    margin: 0;
+    box-sizing: inherit;
+    display: inline-block;
+    fill: white;
+    height: 24px;
+    width: 24px;
+    vertical-align: middle;
+    overflow: hidden;
+}
+
+.footer-links {
+    display: flex;
+    margin: 0;
+    box-sizing: inherit;
+    color: #FFFFFF;
+    background-color: #2F466C;
+    padding-right: 24px;
+    padding-left: 24px;
+    padding-bottom: 24px;
+}
+
+.list-container {
+    list-style: none;
+}
+
+.list-link > a {
+    color: white;
+    fill: white;
+    text-decoration: none;
+    background-color: transparent;
+}
+
+
+.follow-me {
+    width: 24px;
+    fill: white;
+}

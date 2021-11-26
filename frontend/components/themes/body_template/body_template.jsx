@@ -1,6 +1,6 @@
 import {connect} from 'react-redux';
 import React from 'react';
-import './home_module.css'
+import './body_template.css'
 
 const mapStateToProps = ({errors}) => ({
     //errors: errors.session, // need to add a ui or user_control errors
@@ -12,7 +12,7 @@ const mapDispatchToProps = dispatch => ({
     }
 });
 
-class HomeModule extends React.Component {
+class BodyTemplate extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -33,4 +33,4 @@ class HomeModule extends React.Component {
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(HomeModule);
+export default connect(mapStateToProps, mapDispatchToProps)(BodyTemplate);
