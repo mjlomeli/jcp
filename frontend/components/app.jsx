@@ -17,6 +17,17 @@ import { AuthRoute, ProtectedRoute } from '../utils/route_util';
 import GridLayout from "./user_controls/grid_layout/grid_layout";
 import CardThumbnail from "./user_controls/card_thumbnail/card_thumbnail";
 
+import Navbar from "./user_controls/navbar/navbar";
+
+let nav = {
+    "Home": "#",
+    "News": "#",
+    "Dropdown": {
+        "Link 1": "#",
+        "Link 2": "#",
+        "Link 3": "#"
+    }
+}
 
 let card = <CardThumbnail />
 //let card = <CardListing />
@@ -53,7 +64,7 @@ const App = () => (
         </Switch>
         <br />
         <div>
-            {card}
+            {<Navbar navEntries={nav}/>}
             {/*{gridlayout4x1}*/}
         </div>
         <div>
