@@ -1,0 +1,33 @@
+.card-listing-rating {
+    display: flex;
+    align-items: center;
+}
+
+.card-listing-rating-count {
+
+}
+
+.card-listing-star-rating {
+    font-size:1.5em;
+    height:1.5em;
+    text-align:center;
+}
+
+.card-listing-star-rating input {
+    display:none;
+}
+
+.card-listing-star-rating label {
+    color:#ccc;
+    cursor:pointer;
+    float:right;
+}
+
+.card-listing-star-rating :checked ~ label {
+    color:#222;
+}
+
+.card-listing-star-rating label:hover,
+.card-listing-star-rating label:hover ~ label {
+    color:#fc0;
+}

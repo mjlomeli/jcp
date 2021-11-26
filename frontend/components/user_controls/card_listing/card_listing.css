@@ -1,23 +1,35 @@
-.card-listing {
-    padding: 1vw 1vw 1vw 1vw;
+.card-listing-grid {
+    grid-template-columns: repeat(auto-fit, 20em);
+    margin: 0;
+    box-sizing: inherit;
 }
 
-.image{
-    display: flex;
-    justify-content: center;
+.card-listing-items {
 }
 
-.title {
+.card-list-image-div {
+    object-fit: none;
+    object-position: center;
+    width: 20em;
+}
+
+.card-listing-image{
+    box-sizing: inherit;
+    border-radius: 1em;
+}
+
+.card-listing-title {
     color: #222;
     font-weight: 640;
     font-size: 18px;
+    position: relative;
     font-family: -apple-system, BlinkMacSystemFont, "Roboto", "Droid Sans", "Segoe UI", "Helvetica", Arial, sans-serif;
     line-height: 1.4;
     word-wrap: break-word;
     -webkit-font-smoothing: antialiased;
 }
 
-.rating-count {
+.card-listing-rating-count {
     color: #919191;
     font-weight: 550;
     font-family: -apple-system, BlinkMacSystemFont, "Roboto", "Droid Sans", "Segoe UI", "Helvetica", Arial, sans-serif;
@@ -26,7 +38,7 @@
     -webkit-font-smoothing: antialiased;
 }
 
-.calculated-price {
+.card-listing-calculated-price {
     color: #222;
     font-size: 22px;
     font-weight: 575;
@@ -36,7 +48,7 @@
     -webkit-font-smoothing: antialiased;
 }
 
-.price {
+.card-listing-price {
     color: #258635;
     text-decoration: line-through;
     font-family: -apple-system, BlinkMacSystemFont, "Roboto", "Droid Sans", "Segoe UI", "Helvetica", Arial, sans-serif;
@@ -45,7 +57,7 @@
     -webkit-font-smoothing: antialiased;
 }
 
-.discount {
+.card-listing-discount {
     color: #258635;
     font-family: -apple-system, BlinkMacSystemFont, "Roboto", "Droid Sans", "Segoe UI", "Helvetica", Arial, sans-serif;
     line-height: 1.4;
@@ -53,7 +65,7 @@
     -webkit-font-smoothing: antialiased;
 }
 
-.shipping {
+.card-listing-shipping {
     color: #222;
     font-size: 14px;
     font-weight: 600;
@@ -63,9 +75,9 @@
     -webkit-font-smoothing: antialiased;
 }
 
-.shipping-container {
+.card-listing-shipping-container {
     background-color: #D4E9D7;
-    border-radius: 15px;
+    border-radius: 2em;
     overflow: hidden;
     display: inline-flex;
 }

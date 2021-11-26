@@ -1,7 +1,8 @@
 import {connect} from 'react-redux';
 import React from 'react';
 import './card_listing.css'
-import './rating.css'
+import './card_listing_rating.css'
+import GridLayout from "../grid_layout/grid_layout";
 
 const mapStateToProps = ({errors}) => ({
     //errors: errors.session, // need to add a ui or user_control errors
@@ -21,8 +22,8 @@ class Rating extends React.Component {
 
     render() {
         return <>
-            <div className="rating">
-                <div className="star-rating">
+            <div className="card-listing-rating">
+                <div className="card-listing-star-rating">
                     <input type="radio" id="5-stars" name="rating" value="5"/>
                     <label htmlFor="5-stars" className="star">&#9733;</label>
                     <input type="radio" id="4-stars" name="rating" value="4"/>
@@ -35,7 +36,7 @@ class Rating extends React.Component {
                     <label htmlFor="1-star" className="star">&#9733;</label>
                 </div>
                 &nbsp;
-                <label className="rating-count">({this.state.count.toLocaleString()})</label>
+                <label className="card-listing-rating-count">({this.state.count.toLocaleString()})</label>
             </div>
         </>
     }
@@ -50,7 +51,7 @@ class Price extends React.Component {
     calculatedPrice(){
         if (this.state.discount){
             let price = this.state.price - (this.state.price * this.state.discount);
-            return <><span className="calculated-price">${price.toFixed(2)}</span>&nbsp;</>;
+            return <><span className="card-listing-calculated-price">${price.toFixed(2)}</span>&nbsp;</>;
         }
     }
 
@@ -63,7 +64,7 @@ class Price extends React.Component {
 
     render() {
         return <>
-            <div className="price-container">
+            <div className="card-listing-price-container">
                 {this.calculatedPrice()}
                 <span className="price">
                     ${this.state.price}
@@ -82,7 +83,7 @@ class Additional extends React.Component {
 
     shipping(){
         return <>
-            <div className="shipping-container">
+            <div className="card-listing-shipping-container">
                 <span className="shipping">&nbsp;&nbsp;FREE shipping&nbsp;&nbsp;</span>
             </div>
         </>
@@ -90,7 +91,7 @@ class Additional extends React.Component {
 
     recommendation(){
         return <>
-            <div className="more-like-this">
+            <div className="card-listing-more-like-this">
 
             </div>
         </>
@@ -112,7 +113,6 @@ class CardListing extends React.Component {
         }
         this.onclick = props.onClick || this.onClick.bind(this);
     }
-
     resize(title){
         if (title.length > 70) {
             return `${title.slice(0, 65)}...`
@@ -130,17 +130,20 @@ class CardListing extends React.Component {
     }
 
     render() {
-        return <>
-            <div className="card-listing">
-                <div className="image">
-                    <img alt="img" aria-hidden="true" src={this.state.imageUrl}/>
-                </div>
-                <label className="title">{this.resize(this.state.title)}</label>
-                <Rating />
-                <Price />
-                <Additional />
-            </div>
-        </>
+        let areas = ['image', 'title', 'rating', 'price', 'additional']
+        let components = {
+            'image': <div className="card-list-image-div">
+                <img className="card-listing-image" alt="img" aria-hidden="true" src={this.state.imageUrl}/>
+            </div>,
+            'title': <label className="card-listing-title">{this.resize(this.state.title)}</label>,
+            'rating': <Rating />,
+            'price': <Price />,
+            'additional': <Additional />
+        }
+        return <GridLayout areas={areas}
+                           components={components}
+                           gridClass="card-listing-grid"
+                           itemClass="card-listing-items"/>
     }
 }
 
