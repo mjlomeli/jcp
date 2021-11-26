@@ -14,12 +14,12 @@ import LogInFormContainer from './session_form/login_form_container';
 import DemoLogInFormContainer from './session_form/demo_form_container';
 import { AuthRoute, ProtectedRoute } from '../utils/route_util';
 
-import CardListing from "./user_controls/card_listing/card_listing";
 import GridLayout from "./user_controls/grid_layout/grid_layout";
+import CardThumbnail from "./user_controls/card_thumbnail/card_thumbnail";
 
 
-//let circle = <CircularThumbnail />
-let card = <CardListing />
+let card = <CardThumbnail />
+//let card = <CardListing />
 //let thumb = <CardThumbnail />
 
 let layout4x1 = ['one two three four']
@@ -53,10 +53,11 @@ const App = () => (
         </Switch>
         <br />
         <div>
-            {gridlayout4x1}
+            {card}
+            {/*{gridlayout4x1}*/}
         </div>
         <div>
-            {gridlayout2x3}
+            {/*{gridlayout2x3}*/}
         </div>
     </div>
 );

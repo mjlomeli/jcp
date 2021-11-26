@@ -1,6 +1,7 @@
 import {connect} from 'react-redux';
 import React from 'react';
 import './circular_thumbnail.css'
+import GridLayout from "../grid_layout/grid_layout";
 
 const mapStateToProps = ({errors}) => ({
     //errors: errors.session, // need to add a ui or user_control errors
@@ -40,24 +41,34 @@ class CircularThumbnail extends React.Component {
 
     onMouseEnter(e) {
         let element = e.currentTarget
-        if (!element.classList.contains("card-highlight"))
-            e.currentTarget.classList.toggle('card-highlight')
+        if (element.classList.contains("circular-thumbnail-mouse-leave")) {
+            e.currentTarget.classList.replace('circular-thumbnail-mouse-leave','circular-thumbnail-mouse-enter')
+        }
     }
 
     onMouseLeave(e){
         let element = e.currentTarget
-        if (element.classList.contains("card-highlight"))
-            e.currentTarget.classList.toggle('card-highlight')
+        if (element.classList.contains("circular-thumbnail-mouse-enter")) {
+            e.currentTarget.classList.replace('circular-thumbnail-mouse-enter','circular-thumbnail-mouse-leave')
+        }
     }
 
     render() {
+        let areas = ['image', 'title']
+        let components = {
+            'image': <div className="circular-thumbnail-image-div">
+                <img className="circular-thumbnail-image" alt="img" aria-hidden="true" src={this.state.imageUrl}/>
+            </div>,
+            'title': <label className="circular-thumbnail-category">{this.resize(this.state.category)}</label>
+        }
         return <>
-            <div className="thumbnail-listing" onMouseEnter={this.onMouseEnter} onMouseLeave={this.onMouseLeave}>
-                <div className="image">
-                    <img className="circular-image" alt="img" aria-hidden="true" src={this.state.imageUrl}/>
-                </div>
-                <label className="category">{this.resize(this.state.category)}</label>
-            </div>
+            <GridLayout
+                gridClass="circular-thumbnail-listing circular-thumbnail-mouse-leave"
+                itemClass="circular-thumbnail-items"
+                areas={areas}
+                components={components}
+                onMouseEnter={this.onMouseEnter}
+                onMouseLeave={this.onMouseLeave}/>
         </>
     }
 }

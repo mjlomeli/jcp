@@ -13,11 +13,16 @@ class GridLayout extends React.Component {
 
         this.gridClass = `global-gridlayout-container ${props.gridClass || ""}`
         this.itemClass = `global-gridlayout-item ${props.itemClass || ""}`
+
+        this.onmouseenter = props.onMouseEnter;
+        this.onmouseleave = props.onMouseLeave;
+        this.onclick = props.onClick;
     }
 
     render() {
         return <>
-            <div className={this.gridClass} style={this.style}>{
+            <div onMouseEnter={this.onmouseenter} onMouseLeave={this.onmouseleave} onClick={this.onclick}
+                 className={this.gridClass} style={this.style}>{
                 Object.entries(this.components).map(
                     (obj, i) => {
                         let [key, value] = obj;

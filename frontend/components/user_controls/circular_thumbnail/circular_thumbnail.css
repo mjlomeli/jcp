@@ -1,28 +1,47 @@
-.thumbnail-listing {
-    position: relative;
-    left: 50%;
-    right: 50%;
+.circular-thumbnail-listing {
+    margin: 0;
+    box-sizing: inherit;
+    grid-gap: 10px;
+    width: 20em;
 }
 
-.card-highlight {
-    border-bottom: 5px solid black;
+.circular-thumbnail-items {
+    display: flex;
+    justify-content: center;
+    border-bottom: 0.5em solid transparent;
+}
+
+.circular-thumbnail-mouse-leave {
+    border-bottom: 0.5em solid white;
+    -webkit-font-smoothing: antialiased;
+}
+
+.circular-thumbnail-mouse-enter {
+    border-bottom: 0.5em solid black;
+    -webkit-font-smoothing: antialiased;
 }
 
 
-.category {
+.circular-thumbnail-category {
     color: #222;
-    font-size: 20px;
-    font-weight: bold;
+    font-weight: 640;
+    font-size: 1.5em;
+    position: relative;
     font-family: -apple-system, BlinkMacSystemFont, "Roboto", "Droid Sans", "Segoe UI", "Helvetica", Arial, sans-serif;
     line-height: 4;
     word-wrap: break-word;
     -webkit-font-smoothing: antialiased;
-    display: flex;
-    justify-content: center;
-    text-align: center;
 }
 
-.circular-image {
+.circular-thumbnail-image-div {
+    object-fit: none;
+    object-position: center;
+}
+
+.circular-thumbnail-image {
+    display: flex;
+    box-sizing: inherit;
     border-radius: 50%;
+    width: 20em;
 }
 

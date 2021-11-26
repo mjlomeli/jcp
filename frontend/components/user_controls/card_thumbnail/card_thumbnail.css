@@ -1,51 +1,36 @@
 .card-thumbnail {
-    padding: 1vw 1vw 1vw 1vw;
+    position: relative;
+    box-sizing: inherit;
+    display: inline-flex;
+    flex-direction: column;
+    justify-items: center;
 }
 
-.image {
-    display: flex;
-    justify-content: center;
-    align-items: stretch;
+.card-thumbnail-image {
+    border-radius: 2em;
 }
 
-.image-thumbnail {
-    border-radius: 15px;
+.card-thumbnail-grid {
+    grid-gap: 0.5em;
+    padding: 0.5em 0.5em 0.5em 0.5em;
 }
 
-.fast-price-container {
+.card-thumbnail-item {
+}
+
+.card-thumbnail-price {
+    position: absolute;
+    width: 5em;
+    color: #222222;
     background-color: #D4E9D7;
-    border-radius: 15px;
-    position: relative;
-    right: -2em;
-    bottom: 3em;
-    display: inline-flex;
-    align-items: center;
-    padding: 0.5em 0.5em 0.5em 0.5em;
+    border-radius: 96px;
+    bottom: 5%;
+    left: 5%;
 }
 
-.price-container {
-    background-color: #ffffff;
-    border-radius: 15px;
-    position: relative;
-    right: -2em;
-    bottom: 3em;
-    display: inline-flex;
-    align-items: center;
-    padding: 0.5em 0.5em 0.5em 0.5em;
-}
-
-.shipping-icon {
-    width: 20px;
-    height: 20px;
-    padding-right: 5px;
-    display: inline-flex;
-}
-
-.calculated-price {
-    color: #000222;
-    font-family: -apple-system, BlinkMacSystemFont, "Roboto", "Droid Sans", "Segoe UI", "Helvetica", Arial, sans-serif;
-    line-height: 1.4;
-    word-wrap: break-word;
-    -webkit-font-smoothing: antialiased;
-    display: inline-flex;
+.card-thumbnail-shipping-svg {
+    fill: #222222;
+    object-fit: fill;
+    width: 1em;
+    height: 1em;
 }
