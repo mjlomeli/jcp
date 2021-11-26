@@ -1,5 +1,7 @@
 .thumbnail-listing {
-
+    position: relative;
+    left: 50%;
+    right: 50%;
 }
 
 .card-highlight {

@@ -21,8 +21,8 @@ import CardListing from "./user_controls/card_listing/card_listing";
 import CardThumbnail from "./user_controls/card_thumbnail/card_thumbnail";
 
 
-let card = <CircularThumbnail />
-let listing = <CardListing />
+let circle = <CircularThumbnail />
+let card = <CardListing />
 let thumb = <CardThumbnail />
 
 let layout4x1 = ['one two three four']
@@ -32,12 +32,12 @@ let comp2x3 = {'one': thumb, 'two': thumb, 'three': thumb, 'four': thumb, 'five'
 let layout1x2 = ['one two two']
 let comp1x2 = {'one': card, 'two': card}
 let layout2x4 = ['one two three four', 'five six seven eight']
-let comp2x4 = {'one': listing, 'two': listing, 'three': listing, 'four': listing, 'five': listing, 'six': listing, 'seven': listing, 'eight': listing}
+//let comp2x4 = {'one': listing, 'two': listing, 'three': listing, 'four': listing, 'five': listing, 'six': listing, 'seven': listing, 'eight': listing}
 
 let layout = <GridLayout areas={layout4x1} components={comp4x1} />
 let home = <HomeModule seasonal={layout}/>
-let featured = <GridLayout areas={layout2x4} components={comp2x4} />
-let viewed = <GridLayout areas={layout2x3} components={comp2x3} />
+//let featured = <GridLayout areas={layout2x4} components={comp2x4} />
+//let viewed = <GridLayout areas={layout2x3} components={comp2x3} />
 
 const App = () => (
     <div>
