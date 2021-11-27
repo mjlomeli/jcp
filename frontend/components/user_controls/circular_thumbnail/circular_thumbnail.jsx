@@ -39,20 +39,6 @@ class CircularThumbnail extends React.Component {
         // TODO: send to product page
     }
 
-    onMouseEnter(e) {
-        let element = e.currentTarget
-        if (element.classList.contains("circular-thumbnail-mouse-leave")) {
-            e.currentTarget.classList.replace('circular-thumbnail-mouse-leave','circular-thumbnail-mouse-enter')
-        }
-    }
-
-    onMouseLeave(e){
-        let element = e.currentTarget
-        if (element.classList.contains("circular-thumbnail-mouse-enter")) {
-            element.classList.replace('circular-thumbnail-mouse-enter','circular-thumbnail-mouse-leave')
-        }
-    }
-
     render() {
         let areas = ['image', 'title']
         let components = {
@@ -66,9 +52,7 @@ class CircularThumbnail extends React.Component {
                 gridClass="circular-thumbnail-listing"
                 itemClass="circular-thumbnail-items"
                 areas={areas}
-                components={components}
-                onMouseEnter={this.onMouseEnter}
-                onMouseLeave={this.onMouseLeave}/>
+                components={components} />
         </>
     }
 }

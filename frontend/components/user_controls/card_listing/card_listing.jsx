@@ -129,28 +129,12 @@ class CardListing extends React.Component {
         // TODO: send to product page
     }
 
-    onMouseEnter(e) {
-        let element = e.currentTarget
-        if (element.classList.contains("card-listing-mouse-leave")) {
-            e.currentTarget.classList.replace('card-listing-mouse-leave','card-listing-mouse-enter')
-        }
-    }
-
-    onMouseLeave(e){
-        let element = e.currentTarget
-        if (element.classList.contains("card-listing-mouse-enter")) {
-            e.currentTarget.classList.replace('card-listing-mouse-enter','card-listing-mouse-leave')
-        }
-    }
-
     render() {
         let areas = ['image', 'title', 'rating', 'price', 'additional']
         let components = {
             'image': <div className="card-list-image-div">
-                <img className="card-listing-image card-listing-mouse-leave" alt="img"
-                     aria-hidden="true" src={this.state.imageUrl}
-                     onMouseEnter={this.onMouseEnter}
-                     onMouseLeave={this.onMouseLeave}/>
+                <img className="card-listing-image" alt="img"
+                     aria-hidden="true" src={this.state.imageUrl} />
             </div>,
             'title': <label className="card-listing-title">{this.resize(this.state.title)}</label>,
             'rating': <Rating />,
