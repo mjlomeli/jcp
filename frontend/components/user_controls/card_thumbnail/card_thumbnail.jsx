@@ -72,10 +72,27 @@ class CardThumbnail extends React.Component {
         // TODO: send to product page
     }
 
+    onMouseEnter(e) {
+        let element = e.currentTarget
+        if (element.classList.contains("card-thumbnail-mouse-leave")) {
+            e.currentTarget.classList.replace('card-thumbnail-mouse-leave','card-thumbnail-mouse-enter')
+        }
+    }
+
+    onMouseLeave(e){
+        let element = e.currentTarget
+        if (element.classList.contains("card-thumbnail-mouse-enter")) {
+            e.currentTarget.classList.replace('card-thumbnail-mouse-enter','card-thumbnail-mouse-leave')
+        }
+    }
+
     render() {
         return <>
             <div className="card-thumbnail">
-                <img className="card-thumbnail-image" alt="img" aria-hidden="true" src={this.state.imageUrl}/>
+                <img className="card-thumbnail-image card-thumbnail-mouse-leave"
+                     alt="img" aria-hidden="true" src={this.state.imageUrl}
+                     onMouseEnter={this.onMouseEnter}
+                     onMouseLeave={this.onMouseLeave}/>
                 <Price/>
             </div>
         </>

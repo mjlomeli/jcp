@@ -40,3 +40,10 @@
 
 
 
+.recently-viewed-grid {
+    grid-gap: 2em;
+}
+
+.recently-viewed-items {
+    grid-gap: 1em;
+}

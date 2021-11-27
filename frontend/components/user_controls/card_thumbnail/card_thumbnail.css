@@ -7,12 +7,14 @@
 }
 
 .card-thumbnail-image {
-    border-radius: 2em;
+    border-radius: 0.5em;
 }
 
 .card-thumbnail-grid {
     grid-gap: 0.5em;
-    padding: 0.5em 0.5em 0.5em 0.5em;
+    padding: 0em 0em 0em 0.5em;
+    border-radius: 96px;
+    border: 1px solid #bdccbe;
 }
 
 .card-thumbnail-item {
@@ -22,6 +24,7 @@
     position: absolute;
     width: 5em;
     color: #222222;
+    font-weight: bold;
     background-color: #D4E9D7;
     border-radius: 96px;
     bottom: 5%;
@@ -33,4 +36,16 @@
     object-fit: fill;
     width: 1em;
     height: 1em;
+}
+
+
+.card-thumbnail-mouse-leave {
+    box-shadow: 0em 0em 1em 0 transparent;
+    cursor: default;
+}
+
+.card-thumbnail-mouse-enter {
+    box-shadow: 0em 0em 1em 0 rgba(26, 26, 26, 0.44);
+    transition: box-shadow 0.2s ease;
+    cursor: pointer;
 }

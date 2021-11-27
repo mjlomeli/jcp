@@ -11,25 +11,30 @@
     border-bottom: 0.5em solid transparent;
 }
 
-.circular-thumbnail-mouse-leave {
-    border-bottom: 0.5em solid white;
-    -webkit-font-smoothing: antialiased;
+.circular-thumbnail-listing:hover > .circular-thumbnail-items > .circular-thumbnail-image-div > .circular-thumbnail-image {
+    transform: scale(1.1);
+    box-shadow: 0em 0em 2em 0 rgba(26, 26, 26, 0.29);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer;
 }
 
-.circular-thumbnail-mouse-enter {
-    border-bottom: 0.5em solid black;
+
+.circular-thumbnail-listing:hover > .circular-thumbnail-items > .circular-thumbnail-category {
+    color: #595959;
+    border-bottom: 0.2em solid #595959;
     -webkit-font-smoothing: antialiased;
 }
 
 
 .circular-thumbnail-category {
-    color: #222;
+    color: #222222;
     font-weight: 640;
     font-size: 1.5em;
     position: relative;
     font-family: -apple-system, BlinkMacSystemFont, "Roboto", "Droid Sans", "Segoe UI", "Helvetica", Arial, sans-serif;
-    line-height: 4;
+    line-height: 2;
     word-wrap: break-word;
+    border-bottom: 0.2em solid transparent;
     -webkit-font-smoothing: antialiased;
 }
 
@@ -43,5 +48,7 @@
     box-sizing: inherit;
     border-radius: 50%;
     width: 20em;
+    overflow: hidden;
 }
+
 

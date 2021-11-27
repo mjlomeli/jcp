@@ -16,7 +16,7 @@
 
 .card-listing-image{
     box-sizing: inherit;
-    border-radius: 1em;
+    border-radius: 0.25em;
 }
 
 .card-listing-title {
@@ -84,3 +84,13 @@
 }
 
 
+.card-listing-mouse-leave {
+    box-shadow: 0em 0em 1em 0 transparent;
+    cursor: default;
+}
+
+.card-listing-mouse-enter {
+    box-shadow: 0em 0em 1em 0 rgba(26, 26, 26, 0.3);
+    transition: box-shadow 0.2s ease;
+    cursor: pointer;
+}

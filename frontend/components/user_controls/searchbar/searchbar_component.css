@@ -1,0 +1,71 @@
+form {
+    display: flex;
+    box-sizing: inherit;
+    min-width: 100%;
+    justify-content: center;
+}
+.search-bar {
+    margin: 0;
+    box-sizing: inherit;
+    border-radius: 96px;
+    box-shadow: 1px 2px 4px 0 rgba(34, 34, 34, 0.1) inset;
+    background: #FFFFFF;
+    border-color: #222222;
+    border-style: solid;
+    border-width: 2px;
+    font-family: "Graphik Webfont", -apple-system, "Helvetica Neue", "Droid Sans", Arial, sans-serif;
+    transform: scale(1) perspective(1px);
+}
+
+.search-input {
+    background: transparent;
+    transition: inherit;
+    border: none;
+    -webkit-appearance: none;
+    appearance: none;
+    box-shadow: none;
+    outline: none;
+    font-family: inherit;
+    font-size: inherit;
+    line-height: 28px;
+    padding-left: 1em;
+    cursor: text;
+
+}
+
+.search-button {
+    margin: 0;
+    box-sizing: inherit;
+    background: transparent;
+    border-color: #222222;
+    color: #222222;
+    border: none;
+    font: inherit;
+    font-size: 16px;
+    cursor: pointer;
+    text-align: left;
+    -webkit-appearance: none;
+    position: relative;
+    padding-top: 0.5em;
+    padding-bottom: 0.5em;
+    white-space: nowrap;
+    z-index: 10;
+    border-top-left-radius: 0;
+    border-top-right-radius: 96px;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 96px;
+    border-width: 2px;
+    transform: inherit;
+}
+
+.search-icon {
+    margin: 0;
+    box-sizing: inherit;
+    display: inline-block;
+    height: 1.2em;
+    width: 1.2em;
+    padding-right: 0.5em;
+    vertical-align: middle;
+    position: relative;
+    bottom: 1px;
+}

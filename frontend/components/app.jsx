@@ -14,44 +14,16 @@ import LogInFormContainer from './session_form/login_form_container';
 import DemoLogInFormContainer from './session_form/demo_form_container';
 import { AuthRoute, ProtectedRoute } from '../utils/route_util';
 
-import GridLayout from "./user_controls/grid_layout/grid_layout";
-import CardThumbnail from "./user_controls/card_thumbnail/card_thumbnail";
 
-import Navbar from "./user_controls/navbar/navbar";
+import HeaderTemplate from "./themes/header_template/header_template";
+import FooterTemplate from "./themes/footer/footer_template";
+import BodyTemplate from "./themes/body_template/body_template";
 
-let card = <CardThumbnail />
-let atag = <a>hello</a>
-let nav = {
-    "Home": "#",
-    "News": "#",
-    "Component": atag,
-    "Dropdown": {
-        "Link 1": card,
-        "Link 2": card,
-        "Link 3": "#"
-    }
-}
 
-//let card = <CardListing />
-//let thumb = <CardThumbnail />
-
-let layout4x1 = ['one two three four']
-let comp4x1 = {'one': card, 'two': card, 'three': card, 'four': card}
-let layout2x3 = ['one two three', 'four five six']
-let comp2x3 = {'one': card, 'two': card, 'three': card, 'four': card, 'five': card, 'six': card}
-// let layout1x2 = ['one two two']
-//let comp1x2 = {'one': card, 'two': card}
-//let layout2x4 = ['one two three four', 'five six seven eight']
-//let comp2x4 = {'one': listing, 'two': listing, 'three': listing, 'four': listing, 'five': listing, 'six': listing, 'seven': listing, 'eight': listing}
-
-let gridlayout4x1 = <GridLayout areas={layout4x1} components={comp4x1} />
-let gridlayout2x3 = <GridLayout areas={layout2x3} components={comp2x3} />
-//let home = <HomeModule seasonal={layout}/>
-//let featured = <GridLayout areas={layout2x4} components={comp2x4} />
-//let viewed = <GridLayout areas={layout2x3} components={comp2x3} />
 
 const App = () => (
     <div>
+        {/*DON'T REMOVE*/}
         <header>
             <Link to="/" className="header-link">
                 <h1>JCP</h1>
@@ -65,13 +37,12 @@ const App = () => (
             {/*<ProtectedRoute exact path="/user/:id" component={ProfileContainer} />*/}
         </Switch>
         <br />
-        <div>
-            {<Navbar navEntries={nav}/>}
-            {/*{gridlayout4x1}*/}
-        </div>
-        <div>
-            {/*{gridlayout2x3}*/}
-        </div>
+        {/*END OF DON'T REMOVE*/}
+
+        <HeaderTemplate />
+        <BodyTemplate />
+        <FooterTemplate />
+
     </div>
 );
 
