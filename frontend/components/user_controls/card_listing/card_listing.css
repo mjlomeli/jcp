@@ -10,7 +10,7 @@
     cursor: inherit;
 }
 
-.card-listing-items:hover > div > img {
+.card-listing-grid:hover img {
     box-shadow: 0em 0em 1em 0 rgba(26, 26, 26, 0.3);
     transition: box-shadow 0.2s ease;
 }
