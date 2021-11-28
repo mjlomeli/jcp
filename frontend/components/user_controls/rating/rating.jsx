@@ -164,11 +164,9 @@ class IconsRating extends React.Component {
         for (let i = 0; i < this.state.numOfIcons; i++)
             if (i <= index) {
                 stars[`star${i}`].fill();
-                console.log("highlight", i);
             }
             else {
                 stars[`star${i}`].remove();
-                console.log("remove", i);
             }
         this.setState({...stars})
     }
@@ -179,13 +177,11 @@ class IconsRating extends React.Component {
             stars[`star${i}`] = this.state[`star${i}`];
         }
         for (let i = 0; i < this.state.numOfIcons; i++) {
-            if (i <= this.state.rating) {
-                stars[`star${i}`].fillPercent = this.getFillPercent(i);
-                stars[`star${i}`].highlight();
-                console.log("highlight", i);
+            if (i <= this.state.rating + 1) {
+                stars[`star${i}`].highlight(this.getFillPercent(i));
+                console.log("highlight", i, "rating: ", this.state.rating, "percent: ", this.getFillPercent(i));
             } else {
                 stars[`star${i}`].remove();
-                console.log("remove", i);
             }
         }
         this.setState({...stars})
@@ -199,10 +195,8 @@ class IconsRating extends React.Component {
         for (let i = 0; i < this.state.numOfIcons; i++) {
             if (i <= index) {
                 stars[`star${i}`].highlight();
-                console.log("highlight", i);
             } else {
                 stars[`star${i}`].remove();
-                console.log("remove", i);
             }
         }
         this.setState({...stars})
@@ -229,7 +223,7 @@ class IconsRating extends React.Component {
                                               star={this.state[`star${key}`]}
                                   onClick={() => this.fillEvent(key)}
                                   onMouseEnter={() => this.highlightEvent(key)}
-                                  onMouseLeave={() => this.resetEvent(key)}
+                                  onMouseLeave={() => {}}
                     />
                     console.log(`star${key}: ${JSON.stringify(this.state[`star${key}`])}`)
 
