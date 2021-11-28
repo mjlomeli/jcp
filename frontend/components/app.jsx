@@ -35,7 +35,7 @@ const App = () => (
             {/*<ProtectedRoute exact path="/user/:id" component={ProfileContainer} />*/}
         </Switch>
         {/*END OF DON'T REMOVE*/}
-        <Rating rating={2.5} disabled={false}/>
+        <Rating rating={2.5} disabled={true}/>
         <CardListing />
     </div>
 );
