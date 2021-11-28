@@ -56,15 +56,15 @@ class Additional extends React.Component {
 
     shipping(){
         return <>
-            <div className="card-listing-shipping-container">
-                <span className="shipping">&nbsp;&nbsp;FREE shipping&nbsp;&nbsp;</span>
+            <div className="card-listing-additional">
+                <label className="card-listing-additional-label">&nbsp;&nbsp;FREE shipping&nbsp;&nbsp;</label>
             </div>
         </>
     }
 
     recommendation(){
         return <>
-            <div className="card-listing-more-like-this">
+            <div className="card-listing-additional">
 
             </div>
         </>
