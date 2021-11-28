@@ -58,7 +58,7 @@ class Price extends React.Component {
     discounted(){
         let percentage = (this.state.discount) ? this.state.discount * 100 >> 0 : 0
         if (percentage)
-            return <>&nbsp;<span className="discount">({percentage}% off)</span></>
+            return <>&nbsp;<span className="card-listing-discount">({percentage}% off)</span></>
         return <></>
     }
 
@@ -66,7 +66,7 @@ class Price extends React.Component {
         return <>
             <div className="card-listing-price-container">
                 {this.calculatedPrice()}
-                <span className="price">
+                <span className="card-listing-original-price">
                     ${this.state.price}
                 </span>
                 {this.discounted()}

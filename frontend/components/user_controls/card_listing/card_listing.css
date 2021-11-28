@@ -60,7 +60,7 @@
     cursor: inherit;
 }
 
-.card-listing-price {
+.card-listing-original-price {
     color: #258635;
     text-decoration: line-through;
     font-family: -apple-system, BlinkMacSystemFont, "Roboto", "Droid Sans", "Segoe UI", "Helvetica", Arial, sans-serif;
