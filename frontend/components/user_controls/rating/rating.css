@@ -1,0 +1,47 @@
+.global-star-rating {
+    display: flex;
+    align-items: center;
+}
+
+.star-rating-read-only {
+    display: flex;
+    line-height: 1.5em;
+}
+
+.star-rating-count-read-only {
+    padding: 0em 1em 0em;
+    color: #919191;
+    align-self: baseline;
+}
+
+.global-star-rating-count {
+    color: #919191;
+    font-weight: 550;
+    font-family: -apple-system, BlinkMacSystemFont, "Roboto", "Droid Sans", "Segoe UI", "Helvetica", Arial, sans-serif;
+    line-height: 1.4;
+    word-wrap: break-word;
+    -webkit-font-smoothing: antialiased;
+    cursor: inherit;
+}
+
+.global-star-rating-stars {
+    font-size:1.5em;
+    height:1.5em;
+    text-align:center;
+}
+
+.global-star-rating-stars input {
+    display:none;
+}
+
+.global-star-rating-stars label {
+    color:#ccc;
+    cursor:pointer;
+    float:right;
+}
+
+
+.global-star-rating-stars[data-hover-enabled="true"] label:hover,
+.global-star-rating-stars[data-hover-enabled="true"] label:hover ~ label {
+    color:#fc0;
+}

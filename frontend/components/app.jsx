@@ -15,7 +15,8 @@ import DemoLogInFormContainer from './session_form/demo_form_container';
 import { AuthRoute, ProtectedRoute } from '../utils/route_util';
 
 
-import Home from "./pages/home";
+import Rating from "./user_controls/rating/rating";
+import CardListing from "./user_controls/card_listing/card_listing";
 
 
 const App = () => (
@@ -34,9 +35,8 @@ const App = () => (
             {/*<ProtectedRoute exact path="/user/:id" component={ProfileContainer} />*/}
         </Switch>
         {/*END OF DON'T REMOVE*/}
-
-        <Home />
-
+        <Rating rating={2.5} disabled={false}/>
+        <CardListing />
     </div>
 );
 

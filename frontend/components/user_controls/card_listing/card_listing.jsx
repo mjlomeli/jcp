@@ -1,8 +1,9 @@
 import {connect} from 'react-redux';
 import React from 'react';
 import './card_listing.css'
-import './card_listing_rating.css'
 import GridLayout from "../grid_layout/grid_layout";
+import Rating from "../rating/rating";
+import {v4 as uuidv4} from "uuid";
 
 const mapStateToProps = ({errors}) => ({
     //errors: errors.session, // need to add a ui or user_control errors
@@ -14,33 +15,6 @@ const mapDispatchToProps = dispatch => ({
     }
 });
 
-class Rating extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {rating: 5, count: 31909}
-    }
-
-    render() {
-        return <>
-            <div className="card-listing-rating">
-                <div className="card-listing-star-rating">
-                    <input type="radio" id="5-stars" name="rating" value="5"/>
-                    <label htmlFor="5-stars" className="star">&#9733;</label>
-                    <input type="radio" id="4-stars" name="rating" value="4"/>
-                    <label htmlFor="4-stars" className="star">&#9733;</label>
-                    <input type="radio" id="3-stars" name="rating" value="3"/>
-                    <label htmlFor="3-stars" className="star">&#9733;</label>
-                    <input type="radio" id="2-stars" name="rating" value="2"/>
-                    <label htmlFor="2-stars" className="star">&#9733;</label>
-                    <input type="radio" id="1-star" name="rating" value="1"/>
-                    <label htmlFor="1-star" className="star">&#9733;</label>
-                </div>
-                &nbsp;
-                <label className="card-listing-rating-count">({this.state.count.toLocaleString()})</label>
-            </div>
-        </>
-    }
-}
 
 class Price extends React.Component {
     constructor(props) {
@@ -137,7 +111,7 @@ class CardListing extends React.Component {
                      aria-hidden="true" src={this.state.imageUrl} />
             </div>,
             'title': <label className="card-listing-title">{this.resize(this.state.title)}</label>,
-            'rating': <Rating />,
+            'rating': <Rating rating={2.5} readonly={true}/>,
             'price': <Price />,
             'additional': <Additional />
         }

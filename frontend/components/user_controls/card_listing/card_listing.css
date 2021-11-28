@@ -39,16 +39,6 @@
     cursor: inherit;
 }
 
-.card-listing-rating-count {
-    color: #919191;
-    font-weight: 550;
-    font-family: -apple-system, BlinkMacSystemFont, "Roboto", "Droid Sans", "Segoe UI", "Helvetica", Arial, sans-serif;
-    line-height: 1.4;
-    word-wrap: break-word;
-    -webkit-font-smoothing: antialiased;
-    cursor: inherit;
-}
-
 .card-listing-calculated-price {
     color: #222;
     font-size: 22px;

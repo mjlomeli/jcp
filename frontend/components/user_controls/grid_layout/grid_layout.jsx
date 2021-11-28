@@ -1,6 +1,6 @@
 import React from 'react';
 import './grid_layout.css'
-
+import {v4 as uuidv4} from "uuid";
 
 class GridLayout extends React.Component {
     constructor(props) {
@@ -25,7 +25,7 @@ class GridLayout extends React.Component {
                 Object.entries(this.components).map(
                     (obj, i) => {
                         let [key, value] = obj;
-                        return <div className={this.itemClass} style={{gridArea: `${key}`}} key={i}>{value}</div>
+                        return <div key={uuidv4()} className={this.itemClass} style={{gridArea: `${key}`}}>{value}</div>
                     })
             }</div>
         </>
