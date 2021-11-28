@@ -20,7 +20,6 @@ import FooterTemplate from "./themes/footer/footer_template";
 import BodyTemplate from "./themes/body_template/body_template";
 
 
-
 const App = () => (
     <div>
         {/*DON'T REMOVE*/}
@@ -42,7 +41,6 @@ const App = () => (
         <HeaderTemplate />
         <BodyTemplate />
         <FooterTemplate />
-
     </div>
 );
 

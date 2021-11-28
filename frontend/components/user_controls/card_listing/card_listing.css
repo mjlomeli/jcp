@@ -16,9 +16,8 @@
 }
 
 .card-list-image-div {
-    object-fit: none;
     object-position: center;
-    width: 20em;
+    width: inherit;
     cursor: inherit;
 }
 
