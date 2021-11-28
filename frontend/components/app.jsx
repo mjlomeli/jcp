@@ -15,10 +15,7 @@ import DemoLogInFormContainer from './session_form/demo_form_container';
 import { AuthRoute, ProtectedRoute } from '../utils/route_util';
 
 
-import HeaderTemplate from "./themes/header_template/header_template";
-import FooterTemplate from "./themes/footer/footer_template";
-import BodyTemplate from "./themes/body_template/body_template";
-import StarRating from "./user_controls/star_rating/star_rating";
+import Home from "./pages/home";
 
 
 const App = () => (
@@ -36,17 +33,10 @@ const App = () => (
             <AuthRoute exact path="/demo" component={DemoLogInFormContainer} />
             {/*<ProtectedRoute exact path="/user/:id" component={ProfileContainer} />*/}
         </Switch>
-        <br />
-        <br />
-        <StarRating />
-        <br />
-        <br />
-        <br />
         {/*END OF DON'T REMOVE*/}
 
-        <HeaderTemplate />
-        <BodyTemplate />
-        <FooterTemplate />
+        <Home />
+
     </div>
 );
 
