@@ -3,6 +3,7 @@
     box-sizing: inherit;
     grid-gap: 10px;
     width: 20em;
+    border: 1em solid transparent;
 }
 
 .circular-thumbnail-items {
@@ -47,7 +48,7 @@
     display: flex;
     box-sizing: inherit;
     border-radius: 50%;
-    width: 20em;
+    width: 10em;
     overflow: hidden;
 }
 
