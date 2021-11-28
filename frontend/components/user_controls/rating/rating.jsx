@@ -1,3 +1,12 @@
+/*
+    Special thanks goes to Daryl Lau and Chuck Cruz who's code I borrowed
+    to fill svg icons by percentage fill. I modified about half the code
+    to allow listeners, class name customization, and capable of being redux safe.
+
+    Chuck Cruz: https://github.com/imchuck
+    Daryl Lau: https://github.com/dlau
+ */
+
 import React from "react";
 import {connect} from 'react-redux';
 import './rating.css'
