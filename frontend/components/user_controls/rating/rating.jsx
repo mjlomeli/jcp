@@ -18,29 +18,6 @@ const defaultIcon = {
         viewBox: "0 0 50 48"
 }
 
-
-class Event {
-    constructor() {
-        this.eventhandlers = [];
-    }
-
-    add(handler){
-        this.eventhandlers.push(handler);
-    }
-
-    sub(handler){
-        let index = this.eventhandlers.indexOf(handler);
-        if (index >= 0)
-            this.eventhandlers.splice(index, 1);
-    }
-
-    call(){
-        this.eventhandlers.forEach(handler => {
-            handler.call(handler, ...arguments);
-        })
-    }
-}
-
 class Star {
     static fillColor = "#222";
     static highlightColor = "#fc0"
@@ -120,7 +97,7 @@ class SingleIcon extends React.Component{
 
 
     render() {
-        return <svg onMouseEnter={this.props.onMouseEnter} onMouseLeave={this.props.onMouseLeave} width={this.size} height={this.size} viewBox={this.viewBox} xmlns={"http://www.w3.org/2000/svg"}>
+        return <svg onMouseEnter={this.props.onMouseEnter} onMouseLeave={this.props.onMouseLeave} onClick={this.props.onClick} width={this.size} height={this.size} viewBox={this.viewBox} xmlns={"http://www.w3.org/2000/svg"}>
             <defs>
                 <linearGradient id={this.iconId} x1={"0%"} y1={"0%"} x2={this.direction === 'row' ? '100%' : '0%'}
                                 y2={this.direction === 'row' ? '0%' : '100%'}>
@@ -156,30 +133,14 @@ class IconsRating extends React.Component {
         }
     }
 
-    fillEvent(index){
-        let stars = {};
-        for (let i = 0; i < this.state.numOfIcons; i++) {
-            stars[`star${i}`] = this.state[`star${index}`];
-        }
-        for (let i = 0; i < this.state.numOfIcons; i++)
-            if (i <= index) {
-                stars[`star${i}`].fill();
-            }
-            else {
-                stars[`star${i}`].remove();
-            }
-        this.setState({...stars})
-    }
-
-    highlightEvent(index){
+    fillEvent(){
         let stars = {};
         for (let i = 0; i < this.state.numOfIcons; i++) {
             stars[`star${i}`] = this.state[`star${i}`];
         }
         for (let i = 0; i < this.state.numOfIcons; i++) {
             if (i <= this.state.rating + 1) {
-                stars[`star${i}`].highlight(this.getFillPercent(i));
-                console.log("highlight", i, "rating: ", this.state.rating, "percent: ", this.getFillPercent(i));
+                stars[`star${i}`].fill(this.getFillPercent(i));
             } else {
                 stars[`star${i}`].remove();
             }
@@ -187,7 +148,7 @@ class IconsRating extends React.Component {
         this.setState({...stars})
     }
 
-    resetEvent(index){
+    highlightEvent(index){
         let stars = {};
         for (let i = 0; i < this.state.numOfIcons; i++) {
             stars[`star${i}`] = this.state[`star${i}`];
@@ -200,6 +161,12 @@ class IconsRating extends React.Component {
             }
         }
         this.setState({...stars})
+    }
+
+    onClick(index){
+        this.setState({rating: index});
+        this.fillEvent();
+        console.log(this.state.rating);
     }
 
     render() {
@@ -221,11 +188,10 @@ class IconsRating extends React.Component {
                                    backgroundColor={this.state.backgroundColor}
                                    prevFillColors={this.state.prevFillColors}
                                               star={this.state[`star${key}`]}
-                                  onClick={() => this.fillEvent(key)}
+                                  onClick={() => this.onClick(key)}
                                   onMouseEnter={() => this.highlightEvent(key)}
-                                  onMouseLeave={() => {}}
+                                  onMouseLeave={() => this.fillEvent()}
                     />
-                    console.log(`star${key}: ${JSON.stringify(this.state[`star${key}`])}`)
 
                     return element;
             })}
