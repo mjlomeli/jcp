@@ -3,7 +3,6 @@ import React from 'react';
 import './card_listing.css'
 import GridLayout from "../grid_layout/grid_layout";
 import Rating from "../rating/rating";
-import {v4 as uuidv4} from "uuid";
 
 const mapStateToProps = ({errors}) => ({
     //errors: errors.session, // need to add a ui or user_control errors
@@ -111,7 +110,7 @@ class CardListing extends React.Component {
                      aria-hidden="true" src={this.state.imageUrl} />
             </div>,
             'title': <label className="card-listing-title">{this.resize(this.state.title)}</label>,
-            'rating': <Rating rating={2.5} readonly={true}/>,
+            'rating': <Rating rating={4.6} disabled={true}/>,
             'price': <Price />,
             'additional': <Additional />
         }

@@ -126,8 +126,8 @@ class IconsRating extends React.Component {
             icons[`iconData${i}`] = this.state[`iconData${i}`];
         }
         for (let i = 0; i < this.state.numOfIcons; i++) {
-            if (i <= this.state.rating + 1) {
-                icons[`iconData${i}`].fill(this.getFillPercent(i));
+            if (i <= this.state.rating) {
+                icons[`iconData${i}`].fill(this.getFillPercent(i + 1));
             } else {
                 icons[`iconData${i}`].remove();
             }

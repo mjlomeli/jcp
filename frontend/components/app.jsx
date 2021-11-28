@@ -13,10 +13,7 @@ import SignUpFormContainer from './session_form/signup_form_container';
 import LogInFormContainer from './session_form/login_form_container';
 import DemoLogInFormContainer from './session_form/demo_form_container';
 import { AuthRoute, ProtectedRoute } from '../utils/route_util';
-
-
-import Rating from "./user_controls/rating/rating";
-import CardListing from "./user_controls/card_listing/card_listing";
+import Home from "./pages/home";
 
 
 const App = () => (
@@ -35,8 +32,7 @@ const App = () => (
             {/*<ProtectedRoute exact path="/user/:id" component={ProfileContainer} />*/}
         </Switch>
         {/*END OF DON'T REMOVE*/}
-        <Rating rating={2.5} disabled={true}/>
-        <CardListing />
+        <Home />
     </div>
 );
 
