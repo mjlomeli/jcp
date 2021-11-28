@@ -8,7 +8,6 @@ class GridLayout extends React.Component {
 
         let areas = this.props.areas.map(r => `'${r}'`)
         this.style = {gridTemplateAreas: areas.join(' ')}
-        console.log(this.style)
         this.components = props.components;
 
         this.gridClass = `global-gridlayout-container ${props.gridClass || ""}`

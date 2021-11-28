@@ -1,0 +1,100 @@
+.card-listing-grid {
+    grid-template-columns: repeat(auto-fit, 20em);
+    margin: 0;
+    box-sizing: inherit;
+    border: 1em solid transparent;
+    cursor: pointer;
+}
+
+.card-listing-items {
+    cursor: inherit;
+}
+
+.card-listing-grid:hover img {
+    box-shadow: 0em 0em 1em 0 rgba(26, 26, 26, 0.3);
+    transition: box-shadow 0.2s ease;
+}
+
+.card-list-image-div {
+    object-position: center;
+    width: inherit;
+    cursor: inherit;
+}
+
+.card-listing-image{
+    box-sizing: inherit;
+    border-radius: 0.25em;
+    cursor: inherit;
+}
+
+.card-listing-title {
+    color: #222;
+    font-weight: 640;
+    font-size: 18px;
+    position: relative;
+    font-family: -apple-system, BlinkMacSystemFont, "Roboto", "Droid Sans", "Segoe UI", "Helvetica", Arial, sans-serif;
+    line-height: 1.4;
+    word-wrap: break-word;
+    -webkit-font-smoothing: antialiased;
+    cursor: inherit;
+}
+
+.card-listing-rating-count {
+    color: #919191;
+    font-weight: 550;
+    font-family: -apple-system, BlinkMacSystemFont, "Roboto", "Droid Sans", "Segoe UI", "Helvetica", Arial, sans-serif;
+    line-height: 1.4;
+    word-wrap: break-word;
+    -webkit-font-smoothing: antialiased;
+    cursor: inherit;
+}
+
+.card-listing-calculated-price {
+    color: #222;
+    font-size: 22px;
+    font-weight: 575;
+    font-family: -apple-system, BlinkMacSystemFont, "Roboto", "Droid Sans", "Segoe UI", "Helvetica", Arial, sans-serif;
+    line-height: 1.4;
+    word-wrap: break-word;
+    -webkit-font-smoothing: antialiased;
+    cursor: inherit;
+}
+
+.card-listing-original-price {
+    color: #258635;
+    text-decoration: line-through;
+    font-family: -apple-system, BlinkMacSystemFont, "Roboto", "Droid Sans", "Segoe UI", "Helvetica", Arial, sans-serif;
+    line-height: 1.4;
+    word-wrap: break-word;
+    -webkit-font-smoothing: antialiased;
+    cursor: inherit;
+}
+
+.card-listing-discount {
+    color: #258635;
+    font-family: -apple-system, BlinkMacSystemFont, "Roboto", "Droid Sans", "Segoe UI", "Helvetica", Arial, sans-serif;
+    line-height: 1.4;
+    word-wrap: break-word;
+    -webkit-font-smoothing: antialiased;
+    cursor: inherit;
+}
+
+.card-listing-shipping {
+    color: #222;
+    font-size: 14px;
+    font-weight: 600;
+    font-family: -apple-system, BlinkMacSystemFont, "Roboto", "Droid Sans", "Segoe UI", "Helvetica", Arial, sans-serif;
+    line-height: 1.4;
+    word-wrap: break-word;
+    -webkit-font-smoothing: antialiased;
+    cursor: inherit;
+}
+
+.card-listing-shipping-container {
+    background-color: #D4E9D7;
+    border-radius: 2em;
+    overflow: hidden;
+    display: inline-flex;
+    cursor: inherit;
+}
+
