@@ -4,7 +4,7 @@ import HeaderTemplate from "./../themes/header_template/header_template";
 import FooterTemplate from "./../themes/footer/footer_template";
 import ProductsTemplate from "../themes/products_list/products_list";
 
-const Home = () => (
+const ProductList = () => (
     <div>
         <HeaderTemplate />
         <ProductsTemplate />
@@ -12,4 +12,4 @@ const Home = () => (
     </div>
 );
 
-export default Home;
+export default ProductList;
