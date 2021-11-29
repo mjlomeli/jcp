@@ -185,11 +185,29 @@ class IconsRating extends React.Component {
         this.setState({...icons})
     }
 
+    highlightFill(value) {
+        if (this.props.disabled)
+            return;
+        let icons = {};
+        for (let i = 1; i < this.state.numOfIcons + 1; i++) {
+            icons[`iconData${i}`] = this.state[`iconData${i}`];
+        }
+        for (let i = 1; i < this.state.numOfIcons + 1; i++) {
+            if (i <= value) {
+                icons[`iconData${i}`].fill();
+            } else {
+                icons[`iconData${i}`].remove();
+            }
+        }
+        this.setState({...icons})
+    }
+
     onClick(value) {
         if (this.props.disabled)
             return;
         this.setState({rating: value});
         this.fillEvent(value);
+        this.highlightFill(value);
     }
 
     render() {
