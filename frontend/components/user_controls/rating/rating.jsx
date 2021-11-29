@@ -154,7 +154,6 @@ class IconsRating extends React.Component {
 
     fillEvent(value) {
         let rating = value || this.state.rating;
-        console.debug(`Filling for rating = ${rating}`);
         let icons = {};
         for (let i = 1; i < this.state.numOfIcons + 1; i++) {
             icons[`iconData${i}`] = this.state[`iconData${i}`];
@@ -187,7 +186,6 @@ class IconsRating extends React.Component {
     }
 
     onClick(value) {
-        console.debug(`Clicked on: ${value}`);
         if (this.props.disabled)
             return;
         this.setState({rating: value});
