@@ -1,8 +1,6 @@
 .global-gridlayout-grid {
     display: inline-grid; /* DO NOT REMOVE */
 
-    grid-template-columns: auto auto auto;
-    grid-template-rows: auto auto auto;
     /* the original gridlayout-container
     Nothing here unless something new comes up.
     This will override every existing gridlayout container.
