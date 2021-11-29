@@ -25,6 +25,7 @@ import CircularThumbnail from "./user_controls/circular_thumbnail/circular_thumb
 import NavbarLayout from "./user_controls/navbar/navbar";
 import Rating from "./user_controls/rating/rating";
 import SearchBar from "./user_controls/searchbar/searchbar";
+import ViewLayout from "./user_controls/view_layout/viewlayout";
 
 /* learn more about grid-auto-flow */
 
@@ -55,6 +56,7 @@ const App = () => (
             <Route exact path="/rating" component={Rating} />
             <Route exact path="/searchbar" component={SearchBar} />
             <Route exact path="/nav_bar" component={NavbarLayout} />
+            <Route exact path="/view_layout" component={ViewLayout} />
 
         </Switch>
         {/*END OF DON'T REMOVE*/}

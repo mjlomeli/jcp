@@ -1,5 +1,8 @@
-.global-gridlayout-container {
+.global-gridlayout-grid {
     display: inline-grid; /* DO NOT REMOVE */
+
+    grid-template-columns: auto auto auto;
+    grid-template-rows: auto auto auto;
     /* the original gridlayout-container
     Nothing here unless something new comes up.
     This will override every existing gridlayout container.
@@ -11,7 +14,7 @@
     /* padding: 10px; */
 }
 
-.global-gridlayout-item {
+.global-gridlayout-items {
     /* the original gridlayout-item
     Nothing here unless something new comes up.
     This will override every existing gridlayout items.
@@ -22,13 +25,16 @@
     /* padding: 20px 0; */
 }
 
-.grid-test {
-    grid-gap: 10px;
+.global-default-gridlayout-grid {
+    display: grid;
     background-color: #2196F3;
     padding: 10px;
 }
 
-.item-test {
+.global-default-gridlayout-items {
     background-color: rgba(255, 255, 255, 0.8);
-    padding: 20px 0;
+    border: 1px solid rgba(0, 0, 0, 0.8);
+    padding: 20px;
+    font-size: 30px;
+    text-align: center;
 }
