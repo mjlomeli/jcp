@@ -17,6 +17,7 @@ import Gallery from "./user_controls/gallery/gallery";
 import CartItem from "./user_controls/cart_item/cart_item";
 import ProductList from "./pages/product_list";
 import Home from "./pages/home";
+import FooterTemplate from "./themes/footer/footer_template";
 
 
 
@@ -40,6 +41,7 @@ const App = () => (
             <Route exact path="/home" component={Home} />
         </Switch>
         {/*END OF DON'T REMOVE*/}
+
     </div>
 );
 

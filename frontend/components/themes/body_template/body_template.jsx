@@ -25,11 +25,27 @@ class BodyTemplate extends React.Component {
         }
     }
 
-    recentlyViewed(){
+    squaredLayout1x4(){
+        let layout = ['one two three four'];
+        let thumbnail = <CardThumbnail />
+        let components = {'one': thumbnail, 'two': thumbnail, 'three': thumbnail, 'four': thumbnail
+        }
+        return <GridLayout areas={layout} components={components} gridClass="recently-viewed-grid" itemClass="recently-viewed-items"/>
+    }
+
+    squaredLayout2x5(){
         let layout2x5 = ['one two three four five', 'six seven eight nine ten'];
         let thumbnail = <CardThumbnail />
         let components = {'one': thumbnail, 'two': thumbnail, 'three': thumbnail, 'four': thumbnail,
             'five': thumbnail, 'six': thumbnail, 'seven': thumbnail, 'eight': thumbnail, 'nine': thumbnail, 'ten': thumbnail
+        }
+        return <GridLayout areas={layout2x5} components={components} gridClass="recently-viewed-grid" itemClass="recently-viewed-items"/>
+    }
+
+    squaredLayout2x3(){
+        let layout2x5 = ['one two three', 'six seven eight'];
+        let thumbnail = <CardThumbnail />
+        let components = {'one': thumbnail, 'two': thumbnail, 'three': thumbnail, 'six': thumbnail, 'seven': thumbnail, 'eight': thumbnail
         }
         return <GridLayout areas={layout2x5} components={components} gridClass="recently-viewed-grid" itemClass="recently-viewed-items"/>
     }
@@ -69,11 +85,14 @@ class BodyTemplate extends React.Component {
             <div className="background">
                 <div className="message"><h1 className="message-text">{this.state.message}</h1></div>
                 <div className="home-module">
-                    {this.recentlyViewed()}
-                    <br /><br /><br /><br /><br /><br /><br /><br />
                     {this.picksForYou()}
                     <br /><br /><br /><br /><br /><br /><br /><br />
-                    {this.productList()}
+                    {this.squaredLayout1x4()}
+                    <br /><br /><br /><br /><br /><br /><br /><br />
+                    <div><h1 className="message-text">Our Picks For You</h1></div>
+                    {this.picksForYou()}
+                    <br /><br /><br /><br /><br /><br /><br /><br />
+                    {this.squaredLayout2x3()}
                 </div>
             </div>
         </>
