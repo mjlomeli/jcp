@@ -5,7 +5,7 @@
 
 
 .global-rating-count {
-    color: #696969;
+    color: #adadad;
     font-weight: 550;
     font-family: -apple-system, BlinkMacSystemFont, "Roboto", "Droid Sans", "Segoe UI", "Helvetica", Arial, sans-serif;
     margin-left: 0.5em;
@@ -17,8 +17,4 @@
 .global-rating-icon {
 }
 
-.global-rating label {
-    color: #888888;
-    cursor:pointer;
-    float:right;
-}
+

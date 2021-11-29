@@ -42,15 +42,15 @@ class CircularThumbnail extends React.Component {
     render() {
         let areas = ['image', 'title']
         let components = {
-            'image': <div className="circular-thumbnail-image-div">
-                <img className="circular-thumbnail-image" alt="img" aria-hidden="true" src={this.state.imageUrl}/>
+            'image': <div className="global-circular-thumbnail-image-div">
+                <img className="global-circular-thumbnail-image" alt="img" aria-hidden="true" src={this.state.imageUrl}/>
             </div>,
-            'title': <label id="circular-title" className="circular-thumbnail-category">{this.resize(this.state.category)}</label>
+            'title': <label id="circular-title" className="global-circular-thumbnail-category">{this.resize(this.state.category)}</label>
         }
         return <>
             <GridLayout
-                gridClass="circular-thumbnail-listing"
-                itemClass="circular-thumbnail-items"
+                gridClass="global-circular-thumbnail-grid"
+                itemClass="global-circular-thumbnail-items"
                 areas={areas}
                 components={components} />
         </>

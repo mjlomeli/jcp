@@ -1,18 +1,18 @@
-.circular-thumbnail-listing {
+.global-circular-thumbnail-grid {
+    grid-template-columns: fit-content(1px);
     margin: 0;
-    box-sizing: inherit;
-    grid-gap: 10px;
-    width: 20em;
+    grid-gap: 1em;
     border: 1em solid transparent;
+    object-fit: scale-down;
 }
 
-.circular-thumbnail-items {
+.global-circular-thumbnail-items {
     display: flex;
     justify-content: center;
     border-bottom: 0.5em solid transparent;
 }
 
-.circular-thumbnail-listing:hover > .circular-thumbnail-items > .circular-thumbnail-image-div > .circular-thumbnail-image {
+.global-circular-thumbnail-listing:hover > .global-circular-thumbnail-items > .global-circular-thumbnail-image-div > .global-circular-thumbnail-image {
     transform: scale(1.1);
     box-shadow: 0em 0em 2em 0 rgba(26, 26, 26, 0.29);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
@@ -20,14 +20,14 @@
 }
 
 
-.circular-thumbnail-listing:hover > .circular-thumbnail-items > .circular-thumbnail-category {
+.global-circular-thumbnail-listing:hover > .global-circular-thumbnail-items > .global-circular-thumbnail-category {
     color: #595959;
     border-bottom: 0.2em solid #595959;
     -webkit-font-smoothing: antialiased;
 }
 
 
-.circular-thumbnail-category {
+.global-circular-thumbnail-category {
     color: #222222;
     font-weight: 640;
     font-size: 1.5em;
@@ -39,12 +39,12 @@
     -webkit-font-smoothing: antialiased;
 }
 
-.circular-thumbnail-image-div {
+.global-circular-thumbnail-image-div {
     object-fit: none;
     object-position: center;
 }
 
-.circular-thumbnail-image {
+.global-circular-thumbnail-image {
     display: flex;
     box-sizing: inherit;
     border-radius: 50%;
