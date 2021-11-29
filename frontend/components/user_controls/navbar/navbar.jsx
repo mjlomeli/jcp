@@ -15,12 +15,22 @@ const mapDispatchToProps = dispatch => ({
 });
 
 class NavbarLayout extends React.Component {
+    static defaultNavEntries = {
+        "home": "#",    // no dropdown
+        "news": "#",    // no dropdown
+        "dropdown": {   // has 3 drop downs
+            "link 1": "#",
+            "link 2": "#",
+            "link 3": "#"
+        }
+    }
+
     constructor(props) {
         super(props);
-        this.state = {}
-        this.navEntries = props.navEntries;
-        if (isHTML(this.navEntries))
+        let navEntries = props.navEntries || NavbarLayout.defaultNavEntries;
+        if (isHTML(navEntries))
             throw new NavbarEntriesError();
+        this.state = {...navEntries}
     }
 
     navDropDown(navTitle, navElement){
@@ -66,10 +76,10 @@ class NavbarLayout extends React.Component {
 
     render() {
         return <div className="navbar">{
-            Object.entries(this.navEntries).map(
-                (navObject, idx) => <React.Fragment key={idx}>
+            Object.entries(this.state).map(
+                (navObject, idx) => <div key={idx}>
                     { this.generateNavElement(navObject) }
-                </React.Fragment>
+                </div>
             )
         }</div>
     }

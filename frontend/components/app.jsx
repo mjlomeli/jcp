@@ -18,6 +18,13 @@ import CartItem from "./user_controls/cart_item/cart_item";
 import ProductList from "./pages/product_list";
 import Home from "./pages/home";
 import FooterTemplate from "./themes/footer/footer_template";
+import CardFeatured from "./user_controls/card_featured/card_featured";
+import CardListing from "./user_controls/card_listing/card_listing";
+import CardThumbnail from "./user_controls/card_thumbnail/card_thumbnail";
+import CircularThumbnail from "./user_controls/circular_thumbnail/circular_thumbnail";
+import NavbarLayout from "./user_controls/navbar/navbar";
+import Rating from "./user_controls/rating/rating";
+import SearchBar from "./user_controls/searchbar/searchbar";
 
 /* learn more about grid-auto-flow */
 
@@ -39,6 +46,16 @@ const App = () => (
             <ProtectedRoute exact path="/cart" component={CartItem} />
             <Route exact path="/product_list" component={ProductList} />
             <Route exact path="/home" component={Home} />
+            <Route exact path="/card_featured" component={CardFeatured} />
+            <Route exact path="/card_listing" component={CardListing} />
+            <Route exact path="/card_thumbnail" component={CardThumbnail} />
+            <Route exact path="/cart_item" component={CartItem} />
+            <Route exact path="/circular_thumbnail" component={CircularThumbnail} />
+            <Route exact path="/gallery" component={Gallery} />
+            <Route exact path="/rating" component={Rating} />
+            <Route exact path="/searchbar" component={SearchBar} />
+            <Route exact path="/nav_bar" component={NavbarLayout} />
+
         </Switch>
         {/*END OF DON'T REMOVE*/}
 

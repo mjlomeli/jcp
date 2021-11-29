@@ -1,6 +1,6 @@
 import {connect} from 'react-redux';
 import React from 'react';
-import './searchbar_component.css'
+import './searchbar.css'
 
 const mapStateToProps = ({errors}) => ({
     //errors: errors.session, // need to add a ui or user_control errors
@@ -12,7 +12,7 @@ const mapDispatchToProps = dispatch => ({
     }
 });
 
-class SearchBarComponent extends React.Component {
+class SearchBar extends React.Component {
     constructor(props) {
         super(props);
     }
@@ -42,4 +42,4 @@ class SearchBarComponent extends React.Component {
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(SearchBarComponent);
+export default connect(mapStateToProps, mapDispatchToProps)(SearchBar);

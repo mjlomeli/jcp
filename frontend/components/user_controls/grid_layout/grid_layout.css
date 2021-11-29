@@ -1,9 +1,14 @@
 .global-gridlayout-container {
-    display: grid; /* DO NOT REMOVE */
+    display: inline-grid; /* DO NOT REMOVE */
     /* the original gridlayout-container
     Nothing here unless something new comes up.
     This will override every existing gridlayout container.
     */
+
+    /* remove comment for testing purposes */
+    /* grid-gap: 10px; */
+    background-color: #2196F3;
+    /* padding: 10px; */
 }
 
 .global-gridlayout-item {
@@ -12,7 +17,9 @@
     This will override every existing gridlayout items.
     */
 
-
+    /* remove comment for testing purposes */
+    background-color: rgba(255, 255, 255, 0.8);
+    /* padding: 20px 0; */
 }
 
 .grid-test {

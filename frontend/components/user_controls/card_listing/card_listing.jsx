@@ -24,22 +24,22 @@ class Price extends React.Component {
     calculatedPrice(){
         if (this.state.discount){
             let price = this.state.price - (this.state.price * this.state.discount);
-            return <><span className="card-listing-calculated-price">${price.toFixed(2)}</span>&nbsp;</>;
+            return <><span className="global-card-listing-calculated-price">${price.toFixed(2)}</span>&nbsp;</>;
         }
     }
 
     discounted(){
         let percentage = (this.state.discount) ? this.state.discount * 100 >> 0 : 0
         if (percentage)
-            return <>&nbsp;<span className="card-listing-discount">({percentage}% off)</span></>
+            return <>&nbsp;<span className="global-card-listing-discount">({percentage}% off)</span></>
         return <></>
     }
 
     render() {
         return <>
-            <div className="card-listing-price-container">
+            <div className="global-card-listing-price-container">
                 {this.calculatedPrice()}
-                <span className="card-listing-original-price">
+                <span className="global-card-listing-original-price">
                     ${this.state.price}
                 </span>
                 {this.discounted()}
@@ -56,15 +56,15 @@ class Additional extends React.Component {
 
     shipping(){
         return <>
-            <div className="card-listing-additional">
-                <label className="card-listing-additional-label">&nbsp;&nbsp;FREE shipping&nbsp;&nbsp;</label>
+            <div className="global-card-listing-additional">
+                <label className="global-card-listing-additional-label">&nbsp;&nbsp;FREE shipping&nbsp;&nbsp;</label>
             </div>
         </>
     }
 
     recommendation(){
         return <>
-            <div className="card-listing-additional">
+            <div className="global-card-listing-additional">
 
             </div>
         </>
@@ -105,19 +105,19 @@ class CardListing extends React.Component {
     render() {
         let areas = ['image', 'title', 'rating', 'price', 'additional']
         let components = {
-            'image': <div className="card-list-image-div">
-                <img className="card-listing-image" alt="img"
+            'image': <div className="global-card-listing-image-div">
+                <img className="global-card-listing-image" alt="img"
                      aria-hidden="true" src={this.state.imageUrl} />
             </div>,
-            'title': <label className="card-listing-title">{this.resize(this.state.title)}</label>,
+            'title': <label className="global-card-listing-title">{this.resize(this.state.title)}</label>,
             'rating': <Rating rating={4.6} disabled={true}/>,
             'price': <Price />,
             'additional': <Additional />
         }
         return <GridLayout areas={areas}
                            components={components}
-                           gridClass="card-listing-grid"
-                           itemClass="card-listing-items"/>
+                           gridClass="global-card-listing-grid"
+                           itemClass="global-card-listing-items"/>
     }
 }
 

@@ -3,7 +3,7 @@ import React from 'react';
 import './header_template.css'
 import './navlinks_template.css'
 import './navbar_template.css'
-import SearchBarComponent from "../../user_controls/searchbar/searchbar_component";
+import SearchBarComponent from "../../user_controls/searchbar/searchbar";
 import GridLayout from "../../user_controls/grid_layout/grid_layout";
 
 const mapStateToProps = ({errors}) => ({
