@@ -39,7 +39,7 @@ ActiveRecord::Schema.define(version: 2021_11_22_040502) do
     t.index ["user_id"], name: "index_orders_on_user_id"
   end
 
-  create_table "products", force: :cascade do |t|
+  create_table "products_list", force: :cascade do |t|
     t.string "title", null: false
     t.float "price", null: false
     t.integer "quantity", default: 1

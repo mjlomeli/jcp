@@ -13,7 +13,8 @@ import SignUpFormContainer from './session_form/signup_form_container';
 import LogInFormContainer from './session_form/login_form_container';
 import DemoLogInFormContainer from './session_form/demo_form_container';
 import { AuthRoute, ProtectedRoute } from '../utils/route_util';
-import CartItem from "./user_controls/cart_item/cart_item";
+import Gallery from "./user_controls/gallery/gallery";
+
 
 
 const App = () => (
@@ -32,7 +33,7 @@ const App = () => (
             {/*<ProtectedRoute exact path="/user/:id" component={ProfileContainer} />*/}
         </Switch>
         {/*END OF DON'T REMOVE*/}
-        <CartItem />
+        <Gallery />
     </div>
 );
 
