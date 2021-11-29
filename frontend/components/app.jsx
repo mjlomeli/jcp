@@ -19,7 +19,7 @@ import ProductList from "./pages/product_list";
 import Home from "./pages/home";
 import FooterTemplate from "./themes/footer/footer_template";
 
-
+/* learn more about grid-auto-flow */
 
 const App = () => (
     <div>
