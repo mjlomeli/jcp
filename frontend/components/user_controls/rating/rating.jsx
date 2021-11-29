@@ -101,7 +101,8 @@ class Icon extends React.Component{
 class IconsRating extends React.Component {
     constructor(props){
         super(props);
-        this.state = { numOfIcons: props.numOfIcons, rating: props.rating || 0, ...this.setIcons()};
+        this.state = { numOfIcons: props.numOfIcons, rating: props.rating || 0, padding: props.padding || 0,
+            ...this.setIcons()};
     }
 
     componentDidMount() {
@@ -169,7 +170,7 @@ class IconsRating extends React.Component {
     }
 
     render() {
-        let style = { display: 'flex', columnGap: `${this.state.iconPadding}em`, flexDirection: this.state.direction }
+        let style = { display: 'flex', columnGap: `${this.state.padding}em`, flexDirection: this.state.direction }
         return <div style={style} title={`${this.state.rating} / ${this.state.numOfIcons}`}>
             {
                 new Array(this.state.numOfIcons).fill(null).map((val, key) => {
@@ -189,15 +190,17 @@ class IconsRating extends React.Component {
 class Rating extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {numOfIcons: 5, rating: this.props.rating || 0, count: 31909, disabled: this.props.disabled || false}
+        this.state = {numOfIcons: 5, rating: this.props.rating || 0, padding: this.props.padding || 0,
+            count: 31909, disabled: this.props.disabled || false}
     }
 
     render() {
         let className = `global-rating ${this.props.className || ""}`;
-        let iconClass = `global-rating-icon ${this.props.iconClass || ""}`;
-        let countClass = `global-rating-count ${this.props.countClass || ""}`
+        let iconClass = `global-rating-icon ${this.props.classIcon || ""}`;
+        let countClass = `global-rating-count ${this.props.classCount || ""}`
         return <div className={className}>
-            <IconsRating className={iconClass} numOfIcons={this.state.numOfIcons} rating={this.state.rating} disabled={this.state.disabled} />
+            <IconsRating className={iconClass} numOfIcons={this.state.numOfIcons} padding={this.state.padding}
+                         rating={this.state.rating} disabled={this.state.disabled} />
             <label className={countClass}>({this.state.count.toLocaleString()})</label>
         </div>
     }

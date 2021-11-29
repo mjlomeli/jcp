@@ -1,0 +1,14 @@
+.product-template-grid {
+    grid-row-gap: 3em;
+}
+
+.product-feature-list-grid {
+    grid-row-gap: 1em;
+    grid-column-gap: 1em;
+}
+
+.product-feature-rec-grid {
+    margin-left: 10em;
+    margin-right: 10em;
+}
+

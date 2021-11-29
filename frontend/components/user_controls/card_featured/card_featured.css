@@ -1,100 +1,114 @@
-.card-listing-grid {
-    grid-template-columns: repeat(auto-fit, 20em);
+.card-featured-grid {
     margin: 0;
     box-sizing: inherit;
-    border: 1em solid transparent;
     cursor: pointer;
+    grid-row-end: 2;
+    grid-row-gap: 0.2em;
+    grid-column-gap: 1em;
 }
 
-.card-listing-items {
+.card-featured-items {
     cursor: inherit;
 }
 
-.card-listing-grid:hover img {
-    box-shadow: 0em 0em 1em 0 rgba(26, 26, 26, 0.3);
-    transition: box-shadow 0.2s ease;
-}
 
 .card-list-image-div {
-    object-position: center;
+    object-position: left;
     width: inherit;
     cursor: inherit;
 }
 
-.card-listing-image{
+.card-featured-image{
     box-sizing: inherit;
     border-radius: 0.25em;
     cursor: inherit;
 }
 
-.card-listing-title {
+.card-featured-store {
+    text-decoration: underline;
+}
+
+.card-featured-title {
     color: #222;
     font-weight: 640;
-    font-size: 18px;
+    font-size: 1.5em;
     position: relative;
     font-family: -apple-system, BlinkMacSystemFont, "Roboto", "Droid Sans", "Segoe UI", "Helvetica", Arial, sans-serif;
-    line-height: 1.4;
     word-wrap: break-word;
     -webkit-font-smoothing: antialiased;
     cursor: inherit;
 }
 
-.card-listing-rating-count {
-    color: #919191;
-    font-weight: 550;
+.card-featured-price-container {
     font-family: -apple-system, BlinkMacSystemFont, "Roboto", "Droid Sans", "Segoe UI", "Helvetica", Arial, sans-serif;
-    line-height: 1.4;
-    word-wrap: break-word;
-    -webkit-font-smoothing: antialiased;
     cursor: inherit;
 }
 
-.card-listing-calculated-price {
+.card-featured-calculated-price {
     color: #222;
-    font-size: 22px;
+    font-size: 1.5em;
     font-weight: 575;
     font-family: -apple-system, BlinkMacSystemFont, "Roboto", "Droid Sans", "Segoe UI", "Helvetica", Arial, sans-serif;
-    line-height: 1.4;
     word-wrap: break-word;
-    -webkit-font-smoothing: antialiased;
     cursor: inherit;
 }
 
-.card-listing-original-price {
+.card-featured-price-mod {
     color: #258635;
+    word-wrap: break-word;
+    cursor: inherit;
+}
+
+.card-featured-original-price {
     text-decoration: line-through;
     font-family: -apple-system, BlinkMacSystemFont, "Roboto", "Droid Sans", "Segoe UI", "Helvetica", Arial, sans-serif;
-    line-height: 1.4;
     word-wrap: break-word;
-    -webkit-font-smoothing: antialiased;
     cursor: inherit;
 }
 
-.card-listing-discount {
-    color: #258635;
-    font-family: -apple-system, BlinkMacSystemFont, "Roboto", "Droid Sans", "Segoe UI", "Helvetica", Arial, sans-serif;
-    line-height: 1.4;
-    word-wrap: break-word;
-    -webkit-font-smoothing: antialiased;
-    cursor: inherit;
-}
 
-.card-listing-shipping {
+.card-featured-additional-label {
     color: #222;
-    font-size: 14px;
+    font-size: 1em;
     font-weight: 600;
     font-family: -apple-system, BlinkMacSystemFont, "Roboto", "Droid Sans", "Segoe UI", "Helvetica", Arial, sans-serif;
-    line-height: 1.4;
     word-wrap: break-word;
-    -webkit-font-smoothing: antialiased;
     cursor: inherit;
 }
 
-.card-listing-shipping-container {
+.card-featured-group-price {
+}
+
+.card-featured-additional {
     background-color: #D4E9D7;
-    border-radius: 2em;
-    overflow: hidden;
-    display: inline-flex;
+    border-radius: 96px;
     cursor: inherit;
+    display: inline-flex;
 }
 
+.card-featured-additional-label {
+    margin-left: 0.5em;
+    margin-right: 0.5em;
+}
+
+.card-featured-rating-count {
+    color: #222222;
+}
+
+.card-featured-submit {
+    font-family: -apple-system, BlinkMacSystemFont, "Roboto", "Droid Sans", "Segoe UI", "Helvetica", Arial, sans-serif;
+    background: transparent;
+    font-size: 1em;
+    font-weight: 500;
+    border-radius: 96px;
+    border: 0.15em solid black;
+    padding: 1em 3.5em 1em 3.5em;
+    cursor: pointer;
+}
+
+
+.card-featured-submit:hover {
+    transform: scale(1.01);
+    box-shadow: 0em 0em 1.5em 0 rgba(26, 26, 26, 0.12);
+    transition: transform 0.07s ease, box-shadow 0.3s ease;
+}

@@ -1,8 +1,8 @@
 import {connect} from 'react-redux';
 import React from 'react';
 import './card_featured.css'
-import './card_listing_rating.css'
 import GridLayout from "../grid_layout/grid_layout";
+import Rating from "../rating/rating";
 
 const mapStateToProps = ({errors}) => ({
     //errors: errors.session, // need to add a ui or user_control errors
@@ -14,33 +14,6 @@ const mapDispatchToProps = dispatch => ({
     }
 });
 
-class Rating extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {rating: 5, count: 31909}
-    }
-
-    render() {
-        return <>
-            <div className="card-listing-rating">
-                <div className="card-listing-star-rating">
-                    <input type="radio" id="5-stars" name="rating" value="5"/>
-                    <label htmlFor="5-stars" className="star">&#9733;</label>
-                    <input type="radio" id="4-stars" name="rating" value="4"/>
-                    <label htmlFor="4-stars" className="star">&#9733;</label>
-                    <input type="radio" id="3-stars" name="rating" value="3"/>
-                    <label htmlFor="3-stars" className="star">&#9733;</label>
-                    <input type="radio" id="2-stars" name="rating" value="2"/>
-                    <label htmlFor="2-stars" className="star">&#9733;</label>
-                    <input type="radio" id="1-star" name="rating" value="1"/>
-                    <label htmlFor="1-star" className="star">&#9733;</label>
-                </div>
-                &nbsp;
-                <label className="card-listing-rating-count">({this.state.count.toLocaleString()})</label>
-            </div>
-        </>
-    }
-}
 
 class Price extends React.Component {
     constructor(props) {
@@ -51,25 +24,28 @@ class Price extends React.Component {
     calculatedPrice(){
         if (this.state.discount){
             let price = this.state.price - (this.state.price * this.state.discount);
-            return <><span className="card-listing-calculated-price">${price.toFixed(2)}</span>&nbsp;</>;
+            return <><label className="card-featured-calculated-price">${price.toFixed(2)}</label></>;
         }
     }
 
     discounted(){
         let percentage = (this.state.discount) ? this.state.discount * 100 >> 0 : 0
         if (percentage)
-            return <>&nbsp;<span className="card-listing-discount">({percentage}% off)</span></>
+            return <><label className="card-featured-discount-price">({percentage}% off)</label></>
         return <></>
+    }
+
+    originalPrice(){
+        return <label className="card-featured-original-price">${this.state.price}</label>
     }
 
     render() {
         return <>
-            <div className="card-listing-price-container">
+            <div className="card-featured-price-container">
                 {this.calculatedPrice()}
-                <span className="card-listing-original-price">
-                    ${this.state.price}
-                </span>
-                {this.discounted()}
+                <label className="card-featured-price-mod">
+                    {this.originalPrice()} {this.discounted()}
+                </label>
             </div>
         </>
     }
@@ -83,15 +59,15 @@ class Additional extends React.Component {
 
     shipping(){
         return <>
-            <div className="card-listing-shipping-container">
-                <span className="shipping">&nbsp;&nbsp;FREE shipping&nbsp;&nbsp;</span>
+            <div className="card-featured-additional">
+                <label className="card-featured-additional-label">FREE shipping</label>
             </div>
         </>
     }
 
     recommendation(){
         return <>
-            <div className="card-listing-more-like-this">
+            <div className="card-featured-additional">
 
             </div>
         </>
@@ -104,18 +80,20 @@ class Additional extends React.Component {
     }
 }
 
-class CardListing extends React.Component {
+class CardFeatured extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            storeName: "ClarkandTaft",
+            rating: 4.6,
             title: "Personalized Name Puzzle With Pegs, Personalized Name Puzzle With Pegs, New Baby Gift",
             imageUrl: "https://i.etsystatic.com/17305851/c/1801/1432/177/346/il/4ad87f/3411776815/il_340x270.3411776815_s6oc.jpg"
         }
         this.onclick = props.onClick || this.onClick.bind(this);
     }
     resize(title){
-        if (title.length > 70) {
-            return `${title.slice(0, 65)}...`
+        if (title.length > 75) {
+            return `${title.slice(0, 72)}...`
         }
         return title;
     }
@@ -130,22 +108,29 @@ class CardListing extends React.Component {
     }
 
     render() {
-        let areas = ['image', 'title', 'rating', 'price', 'additional']
+        let areas = ['image rating', 'image title', 'image price', 'image button']
         let components = {
+            'rating': <>
+                <label className="card-featured-store">{this.state.storeName}</label>
+                <Rating rating={4.6} disabled={true} classCount="card-featured-rating-count"/>
+                </>,
             'image': <div className="card-list-image-div">
-                <img className="card-listing-image" alt="img"
+                <img className="card-featured-image" alt="img"
                      aria-hidden="true" src={this.state.imageUrl} />
             </div>,
-            'title': <label className="card-listing-title">{this.resize(this.state.title)}</label>,
-            'rating': <Rating />,
-            'price': <Price />,
-            'additional': <Additional />
+            'title': <label className="card-featured-title">{this.resize(this.state.title)}</label>,
+            'price': <div className="card-featured-grouped-price"><Price />
+                <Additional /></div>,
+            'button': <button className="card-featured-submit">
+                <label className="card-featured-submit-label">Shop this item</label>
+                </button>
         }
         return <GridLayout areas={areas}
                            components={components}
-                           gridClass="card-listing-grid"
-                           itemClass="card-listing-items"/>
+                           gridClass="card-featured-grid grid-test-featured"
+                           itemClass="card-featured-items item-test-featured"
+        />
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(CardListing);
+export default connect(mapStateToProps, mapDispatchToProps)(CardFeatured);
