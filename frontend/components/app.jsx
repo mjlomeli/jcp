@@ -14,22 +14,22 @@ import LogInFormContainer from './session_form/login_form_container';
 import DemoLogInFormContainer from './session_form/demo_form_container';
 import { AuthRoute, ProtectedRoute } from '../utils/route_util';
 import Gallery from "./user_controls/gallery/gallery";
-import CartItem from "./user_controls/cart_item/cart_item";
+import NavbarLayout from "./user_controls/navbar/navbar";
 import Home from "./pages/home";
+import Products from "./pages/products";
+import Cart from "./pages/cart";
+import CartItem from "./user_controls/cart_item/cart_item";
 import FooterTemplate from "./themes/footer/footer_template";
 import CardFeatured from "./user_controls/card_featured/card_featured";
 import CardListing from "./user_controls/card_listing/card_listing";
 import CardThumbnail from "./user_controls/card_thumbnail/card_thumbnail";
 import CircularThumbnail from "./user_controls/circular_thumbnail/circular_thumbnail";
-import NavbarLayout from "./user_controls/navbar/navbar";
 import Rating from "./user_controls/rating/rating";
 import SearchBar from "./user_controls/searchbar/searchbar";
 import ViewLayout from "./user_controls/view_layout/viewlayout";
-import Products from "./pages/products";
 import ProductsTemplate from "./themes/products_template/products_template";
 import ProductsList from "./user_controls/product_list/products_list";
 import FlowLayout from "./user_controls/flow_layout/flow_layout";
-import Cart from "./pages/cart";
 import CartTemplate from "./themes/cart_template/cart_template";
 
 /* learn more about grid-auto-flow */
@@ -48,11 +48,12 @@ const App = () => (
             <AuthRoute exact path="/signup" component={SignUpFormContainer} />
             <AuthRoute exact path="/demo" component={DemoLogInFormContainer} />
             {/*<ProtectedRoute exact path="/user/:id" component={ProfileContainer} />*/}
-            <Route exact path="/gallery" component={Gallery} />
-            <ProtectedRoute exact path="/cart" component={Cart} />
-            <ProtectedRoute exact path="/cart_template" component={CartTemplate} />
-            <Route exact path="/products" component={Products} />
+            <Route exact path="/nav_bar" component={NavbarLayout} />
             <Route exact path="/home" component={Home} />
+            <Route exact path="/products" component={Products} />
+            <ProtectedRoute exact path="/cart" component={Cart} />
+            <Route exact path="/gallery" component={Gallery} />
+            <ProtectedRoute exact path="/cart_template" component={CartTemplate} />
             <Route exact path="/card_featured" component={CardFeatured} />
             <Route exact path="/card_listing" component={CardListing} />
             <Route exact path="/card_thumbnail" component={CardThumbnail} />
@@ -61,7 +62,6 @@ const App = () => (
             <Route exact path="/gallery" component={Gallery} />
             <Route exact path="/rating" component={Rating} />
             <Route exact path="/searchbar" component={SearchBar} />
-            <Route exact path="/nav_bar" component={NavbarLayout} />
             <Route exact path="/view_layout" component={ViewLayout} />
             <Route exact path="/footer" component={FooterTemplate} />
             <Route exact path="/products_list" component={ProductsList} />

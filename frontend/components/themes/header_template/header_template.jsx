@@ -151,46 +151,46 @@ class NavBarComponent extends React.Component {
 
     onMouseEnter(e) {
         let element = e.currentTarget
-        if (element.classList.contains("navbar-component-mouse-leave")) {
-            e.currentTarget.classList.replace('navbar-component-mouse-leave','navbar-component-mouse-enter')
+        if (element.classList.contains("navbar-template-component-mouse-leave")) {
+            e.currentTarget.classList.replace('navbar-template-component-mouse-leave','navbar-template-component-mouse-enter')
         }
 
     }
 
     onMouseLeave(e){
         let element = e.currentTarget
-        if (element.classList.contains("navbar-component-mouse-enter")) {
-            e.currentTarget.classList.replace('navbar-component-mouse-enter','navbar-component-mouse-leave')
+        if (element.classList.contains("navbar-template-component-mouse-enter")) {
+            e.currentTarget.classList.replace('navbar-template-component-mouse-enter','navbar-template-component-mouse-leave')
         }
     }
 
     render(){
-        return <div className="navbar">
-            <ul className="navbar-list" role="menubar">
-                <li className="navbar-component-mouse-leave" onMouseEnter={this.onMouseEnter} onMouseLeave={this.onMouseLeave}>
+        return <div className="navbar-template">
+            <ul className="navbar-template-list" role="menubar">
+                <li className="navbar-template-component-mouse-leave" onMouseEnter={this.onMouseEnter} onMouseLeave={this.onMouseLeave}>
                     <Link to="/products">Cyber Sales Event</Link></li>
-                <li className="navbar-component-mouse-leave" onMouseEnter={this.onMouseEnter} onMouseLeave={this.onMouseLeave}>
+                <li className="navbar-template-component-mouse-leave" onMouseEnter={this.onMouseEnter} onMouseLeave={this.onMouseLeave}>
                     <Link to="/products">Jewelry &amp; Accessories</Link>
                 </li>
-                <li className="navbar-component-mouse-leave" onMouseEnter={this.onMouseEnter} onMouseLeave={this.onMouseLeave}>
+                <li className="navbar-template-component-mouse-leave" onMouseEnter={this.onMouseEnter} onMouseLeave={this.onMouseLeave}>
                     <Link to="/products">Clothing &amp; Shoes</Link>
                 </li>
-                <li className="navbar-component-mouse-leave" onMouseEnter={this.onMouseEnter} onMouseLeave={this.onMouseLeave}>
+                <li className="navbar-template-component-mouse-leave" onMouseEnter={this.onMouseEnter} onMouseLeave={this.onMouseLeave}>
                     <Link to="/products">Home &amp; Living</Link>
                 </li>
-                <li className="navbar-component-mouse-leave" onMouseEnter={this.onMouseEnter} onMouseLeave={this.onMouseLeave}>
+                <li className="navbar-template-component-mouse-leave" onMouseEnter={this.onMouseEnter} onMouseLeave={this.onMouseLeave}>
                     <Link to="/products">Wedding &amp; Party</Link>
                 </li>
-                <li className="navbar-component-mouse-leave" onMouseEnter={this.onMouseEnter} onMouseLeave={this.onMouseLeave}>
+                <li className="navbar-template-component-mouse-leave" onMouseEnter={this.onMouseEnter} onMouseLeave={this.onMouseLeave}>
                     <Link to="/products">Toys &amp; Entertainment</Link>
                 </li>
-                <li className="navbar-component-mouse-leave" onMouseEnter={this.onMouseEnter} onMouseLeave={this.onMouseLeave}>
+                <li className="navbar-template-component-mouse-leave" onMouseEnter={this.onMouseEnter} onMouseLeave={this.onMouseLeave}>
                     <Link to="/products">Art &amp; Collectibles</Link>
                 </li>
-                <li className="navbar-component-mouse-leave" onMouseEnter={this.onMouseEnter} onMouseLeave={this.onMouseLeave}>
+                <li className="navbar-template-component-mouse-leave" onMouseEnter={this.onMouseEnter} onMouseLeave={this.onMouseLeave}>
                     <Link to="/products">Craft Supplies</Link>
                 </li>
-                <li className="navbar-component-mouse-leave" onMouseEnter={this.onMouseEnter} onMouseLeave={this.onMouseLeave}>
+                <li className="navbar-template-component-mouse-leave" onMouseEnter={this.onMouseEnter} onMouseLeave={this.onMouseLeave}>
                     <Link to="/products">Gifts &amp; Gift Cards</Link>
                 </li>
             </ul>

@@ -24,11 +24,11 @@ const mapDispatchToProps = dispatch => ({
 class NavbarLayout extends React.Component {
     static defaultNavEntries = {
         "Home": "/home",    // no dropdown
-        "Products": "/Products",    // no dropdown
-        "dropdown": {   // has 3 drop downs
-            "link 1": "/",
-            "link 2": "/",
-            "link 3": "/"
+        "Products": "/products",    // no dropdown
+        "Dropdown": {   // has 3 drop downs
+            "link 1": "/nav_bar",
+            "link 2": "/nav_bar",
+            "link 3": "/nav_bar"
         }
     }
 
@@ -53,11 +53,9 @@ class NavbarLayout extends React.Component {
             })
 
         return <div className={`navbar-dropdown navbar-dropdown-${navTitle.toLowerCase()}`}>
-                <button className="dropbtn">Dropdown
-                    <i className="fa fa-caret-down" />
-                </button>
-                <div className={`dropdown-content dropdown-content-${navTitle.toLowerCase()}`}>
-                    {dropdowns}
+                <Link to="/nav_bar" className="dropbtn">{navTitle} <i className="fa fa-caret-down" />
+                </Link>
+                <div className={`dropdown-content dropdown-content-${navTitle.toLowerCase()}`}> {dropdowns}
                 </div>
             </div>
 
@@ -84,9 +82,9 @@ class NavbarLayout extends React.Component {
     render() {
         return <div className="navbar">{
             Object.entries(this.state).map(
-                (navObject, idx) => <div key={idx}>
+                (navObject, idx) => <React.Fragment key={idx}>
                     { this.generateNavElement(navObject) }
-                </div>
+                </React.Fragment>
             )
         }</div>
     }

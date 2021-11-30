@@ -37,8 +37,6 @@ class GridLayout extends React.Component {
             this.classItems = `global-gridlayout-items global-default-gridlayout-items`;
         }
 
-        console.log(`classGrid: ${this.classGrid}`);
-        console.log(`classItems: ${this.classItems}`);
         this.onmouseenter = props.onMouseEnter;
         this.onmouseleave = props.onMouseLeave;
         this.onclick = props.onClick;
