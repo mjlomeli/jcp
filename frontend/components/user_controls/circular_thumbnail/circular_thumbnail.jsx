@@ -49,8 +49,8 @@ class CircularThumbnail extends React.Component {
         }
         return <>
             <GridLayout
-                gridClass="global-circular-thumbnail-grid"
-                itemClass="global-circular-thumbnail-items"
+                classGrid="global-circular-thumbnail-grid"
+                classItems="global-circular-thumbnail-items"
                 areas={areas}
                 components={components} />
         </>

@@ -1,31 +1,27 @@
-.global-gridlayout-grid {
-    display: inline-grid; /* DO NOT REMOVE */
+.global-flowlayout-grid {
+    display: flex;
+    flex-flow: row wrap;
     /* the original gridlayout-container
     Nothing here unless something new comes up.
     This will override every existing gridlayout container.
     */
-
-    /* remove comment for testing purposes */
-    background-color: rgba(33, 150, 243, 0.39);
 }
 
-.global-gridlayout-items {
+.global-flowlayout-items {
     /* the original gridlayout-item
     Nothing here unless something new comes up.
     This will override every existing gridlayout items.
     */
+     /*flex-grow: 0; !* 0 tight fit, 1 for even even out the distribution to all children *!*/
 
-    /* remove comment for testing purposes */
-    background-color: rgba(255, 255, 255, 0.34);
 }
 
-.global-default-gridlayout-grid {
-    display: grid;
+.global-default-flowlayout-grid {
     background-color: #2196F3;
     padding: 10px;
 }
 
-.global-default-gridlayout-items {
+.global-default-flowlayout-items {
     background-color: rgba(255, 255, 255, 0.8);
     border: 1px solid rgba(0, 0, 0, 0.8);
     padding: 20px;

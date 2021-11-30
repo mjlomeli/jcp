@@ -242,12 +242,12 @@ class Rating extends React.Component {
 
     render() {
         let className = `global-rating ${this.props.className || ""}`;
-        let iconClass = `global-rating-icon ${this.props.classIcon || ""}`;
-        let countClass = `global-rating-count ${this.props.classCount || ""}`
+        let classIcon = `global-rating-icon ${this.props.classIcon || ""}`;
+        let classCount = `global-rating-count ${this.props.classCount || ""}`
         return <div className={className}>
-            <IconsRating className={iconClass} numOfIcons={this.state.numOfIcons} padding={this.state.padding}
+            <IconsRating className={classIcon} numOfIcons={this.state.numOfIcons} padding={this.state.padding}
                          rating={this.state.rating} disabled={this.state.disabled}/>
-            <label className={countClass}>({this.state.count.toLocaleString()})</label>
+            <label className={classCount}>({this.state.count.toLocaleString()})</label>
         </div>
     }
 }

@@ -7,7 +7,7 @@ Rails.application.routes.draw do
       resources :users, only: [:index, :create, :show, :update]
       resources :products, only: [:index, :create, :show, :update, :destroy]
 
-      # TODO: these two routes need to be nested inside users routes or products_list
+      # TODO: these two routes need to be nested inside users routes or products_template
       resources :reviews, only: [:index, :create, :show, :update, :destroy]
       resources :cart_items, only: [:create, :show, :update]
     end

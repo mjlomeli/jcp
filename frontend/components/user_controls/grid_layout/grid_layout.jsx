@@ -30,10 +30,10 @@ class GridLayout extends React.Component {
             components: props.components || defaultComponents
         }
         if (props.areas && props.components) {
-            this.classGrid = `global-gridlayout-grid ${props.gridClass || ""}`;
-            this.classItems = `global-gridlayout-items ${props.itemClass || ""}`;
+            this.classGrid = `global-gridlayout-grid ${props.classGrid || ""}`;
+            this.classItems = `global-gridlayout-items ${props.classItem || ""}`;
         } else {
-            this.classGrid = `global-gridlayout-container global-default-gridlayout-grid`;
+            this.classGrid = `global-gridlayout-grid global-default-gridlayout-grid`;
             this.classItems = `global-gridlayout-items global-default-gridlayout-items`;
         }
 
@@ -44,7 +44,6 @@ class GridLayout extends React.Component {
 
     render() {
         let areas = this.state.areas.map(r => `'${r}'`)
-        console.log(areas)
         let style = {gridTemplateAreas: areas.join(' ')}
         return <>
             <div onMouseEnter={this.onmouseenter} onMouseLeave={this.onmouseleave} onClick={this.onclick}

@@ -82,8 +82,8 @@ class Gallery extends React.Component {
         }
         return <GridLayout areas={areas}
                            components={components}
-                           gridClass="gallery-grid"
-                           itemClass="gallery-items"/>
+                           classGrid="gallery-grid"
+                           classItems="gallery-items"/>
     }
 }
 

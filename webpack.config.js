@@ -3,14 +3,16 @@ const path = require('path');
 
 module.exports = {
     // this is the path to the start of the program (e.g. main.js, or main.jsx)
-    entry: './frontend/index.jsx',
+    entry: {
+        bundle: './frontend/index.jsx' // name is 'bundle'
+    },
 
 
     output: {
         // When using webpack where to output the bundle.js
         // this outputs to ./bundle.js in the root folder
         path: path.resolve(__dirname, 'app', 'assets', 'javascripts'),
-        filename: 'bundle.js'
+        filename: '[name].js' // uses the hash name ie 'bundle' to save as bundle.js in the path.
     },
 
     // A source map makes it possible for you to see the line numbers of

@@ -15,7 +15,6 @@ import DemoLogInFormContainer from './session_form/demo_form_container';
 import { AuthRoute, ProtectedRoute } from '../utils/route_util';
 import Gallery from "./user_controls/gallery/gallery";
 import CartItem from "./user_controls/cart_item/cart_item";
-import ProductList from "./pages/product_list";
 import Home from "./pages/home";
 import FooterTemplate from "./themes/footer/footer_template";
 import CardFeatured from "./user_controls/card_featured/card_featured";
@@ -26,6 +25,10 @@ import NavbarLayout from "./user_controls/navbar/navbar";
 import Rating from "./user_controls/rating/rating";
 import SearchBar from "./user_controls/searchbar/searchbar";
 import ViewLayout from "./user_controls/view_layout/viewlayout";
+import Products from "./pages/products";
+import ProductsTemplate from "./themes/products_template/products_template";
+import ProductsList from "./user_controls/product_list/products_list";
+import FlowLayout from "./user_controls/flow_layout/flow_layout";
 
 /* learn more about grid-auto-flow */
 
@@ -45,7 +48,7 @@ const App = () => (
             {/*<ProtectedRoute exact path="/user/:id" component={ProfileContainer} />*/}
             <Route exact path="/gallery" component={Gallery} />
             <ProtectedRoute exact path="/cart" component={CartItem} />
-            <Route exact path="/product_list" component={ProductList} />
+            <Route exact path="/products" component={Products} />
             <Route exact path="/home" component={Home} />
             <Route exact path="/card_featured" component={CardFeatured} />
             <Route exact path="/card_listing" component={CardListing} />
@@ -57,7 +60,10 @@ const App = () => (
             <Route exact path="/searchbar" component={SearchBar} />
             <Route exact path="/nav_bar" component={NavbarLayout} />
             <Route exact path="/view_layout" component={ViewLayout} />
-
+            <Route exact path="/footer" component={FooterTemplate} />
+            <Route exact path="/products_list" component={ProductsList} />
+            <Route exact path="/products_template" component={ProductsTemplate} />
+            <Route exact path="/flow_layout" component={FlowLayout} />
         </Switch>
         {/*END OF DON'T REMOVE*/}
 

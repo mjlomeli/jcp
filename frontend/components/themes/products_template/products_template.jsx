@@ -1,6 +1,6 @@
 import {connect} from 'react-redux';
 import React from 'react';
-import './products_list.css'
+import './products_template.css'
 import CardListing from "../../user_controls/card_listing/card_listing";
 import CardFeatured from "../../user_controls/card_featured/card_featured";
 import GridLayout from "../../user_controls/grid_layout/grid_layout";

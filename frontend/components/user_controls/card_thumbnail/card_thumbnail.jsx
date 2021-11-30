@@ -20,28 +20,23 @@ class Price extends React.Component {
     }
 
     shipping() {
-        let image = <svg className="card-thumbnail-shipping-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 20" aria-hidden="true" focusable="false"><path d="M21.868 11.5l-4-7A1 1 0 0017 4H5a1 1 0 00-1 1v1H2a1 1 0 000 2h4a1 1 0 010 2H3a1 1 0 000 2h2a1 1 0 010 2H4v3a1 1 0 001 1h1.05a2.5 2.5 0 004.9 0h4.1a2.5 2.5 0 004.9 0H21a1 1 0 001-1v-5a1 1 0 00-.132-.5zM8.5 19a1.5 1.5 0 110-3 1.5 1.5 0 010 3zm5.488-8V6h1.725l2.845 5h-4.57zm3.512 8a1.5 1.5 0 110-3 1.5 1.5 0 010 3z"/></svg>
-        return (this.state.shipping) ? <></> : image
+        let image = <svg version="1.1" viewBox="0 0 21 16.002" id="svg4" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+            <path d="m 20.868,7.5000019 -4,-6.99999995 A 1,1 0 0 0 16,1.9472977e-6 H 4 A 1,1 0 0 0 3,1.0000019 v 1 H 1 a 1,1 0 0 0 0,2 h 4 a 1,1 0 0 1 0,2 H 2 a 1,1 0 0 0 0,2 H 4 A 1,1 0 0 1 4,10.000002 H 3 v 3 a 1,1 0 0 0 1,1 h 1.05 a 2.5,2.5 0 0 0 4.9,0 h 4.1 a 2.5,2.5 0 0 0 4.9,0 H 20 a 1,1 0 0 0 1,-1 V 8.0000019 a 1,1 0 0 0 -0.132,-0.5 z M 7.5,15.000002 a 1.5,1.5 0 1 1 0,-3 1.5,1.5 0 0 1 0,3 z m 5.488,-8.0000001 v -5 h 1.725 l 2.845,5 z M 16.5,15.000002 a 1.5,1.5 0 1 1 0,-3 1.5,1.5 0 0 1 0,3 z"/>
+        </svg>
+        return (this.state.shipping) ? <></> : <div className="global-card-thumbnail-shipping-div">{image}</div>
     }
 
     price() {
         let price = this.state.price - (this.state.price * this.state.discount);
         return <>
-            <label className="card-thumbnail-price-label">${price.toFixed(2)}</label>
+            <label className="global-card-thumbnail-price-label">${price.toFixed(2)}</label>
         </>
     }
 
     render() {
-        let areas = ['shipping price']
-        let components = {
-            'shipping': this.shipping(),
-            'price': this.price()
-        }
-        return <div className="card-thumbnail-price">
-            <GridLayout areas={areas} components={components}
-                        gridClass="card-thumbnail-grid"
-                        itemClass="card-thumbnail-item"
-            />
+        return <div className="global-card-thumbnail-price">
+            {this.shipping()}
+            {this.price()}
         </div>
     }
 }
@@ -74,8 +69,8 @@ class CardThumbnail extends React.Component {
 
     render() {
         return <>
-            <div className="card-thumbnail">
-                <img className="card-thumbnail-image"
+            <div className="global-card-thumbnail">
+                <img className="global-card-thumbnail-image"
                      alt="img" aria-hidden="true" src={this.state.imageUrl} />
                 <Price/>
             </div>
