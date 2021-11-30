@@ -1,20 +1,23 @@
 .global-rating {
     display: flex;
     align-items: center;
+    font-family: -apple-system, BlinkMacSystemFont, "Roboto", "Droid Sans", "Segoe UI", "Helvetica", Arial, sans-serif;
 }
 
 
 .global-rating-count {
     color: #adadad;
-    font-weight: 550;
-    font-family: -apple-system, BlinkMacSystemFont, "Roboto", "Droid Sans", "Segoe UI", "Helvetica", Arial, sans-serif;
-    margin-left: 0.5em;
+    font-weight: 500;
+    font-size: 3vw;
+    margin-left: 1vw;
     word-wrap: break-word;
     -webkit-font-smoothing: antialiased;
     cursor: inherit;
 }
 
 .global-rating-icon {
+    width: 4vw;
+    height: 3vh;
 }
 
 

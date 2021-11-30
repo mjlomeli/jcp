@@ -28,7 +28,7 @@ class IconData {
     static defaultStrokeColor = "rgba(0,0,0,0)";
     static defaultBackgroundColor = "#ccc";
     static defaultPadding = 0.2;
-    static defaultSize = 20;
+    static defaultSize = "100%";
     static defaultPath = "m25,1 6,17h18l-14,11 5,17-15-10-15,10 5-17-14-11h18z";
     static defaultViewBox = "0 0 50 48";
     static defaultStrokeWidth = 2;
@@ -36,22 +36,8 @@ class IconData {
     static defaultFillPercent = 100;
 
 
-    constructor({
-                    size,
-                    direction,
-                    fillPercent,
-                    strokeWidth,
-                    color,
-                    fillColor,
-                    highlightColor,
-                    strokeColor,
-                    backgroundColor,
-                    customIcon,
-                    padding,
-                    iconId,
-                    path,
-                    viewBox
-                }) {
+    constructor({size, direction, fillPercent, strokeWidth, color, fillColor, highlightColor,
+                    strokeColor, backgroundColor, customIcon, padding, iconId, path, viewBox}) {
         this.color = color || IconData.defaultBackgroundColor;
         this.iconId = iconId || uuidv4();
         this.fillPercent = fillPercent || IconData.defaultFillPercent;

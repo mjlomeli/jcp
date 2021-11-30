@@ -17,16 +17,20 @@ let defaultComponents = () => {
 class FlowLayout extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {
-            components: props.components || defaultComponents(),
-            maxColumns: props.maxColumns || 0
-        }
         if (props.components) {
             this.classGrid = `global-flowlayout-grid ${props.classGrid || ""}`;
             this.classItems = `global-flowlayout-items ${props.classItem || ""}`;
+            this.state = {
+                components: props.components || defaultComponents(),
+                maxColumns: props.maxColumns || 0
+            }
         } else {
             this.classGrid = `global-flowlayout-grid global-default-flowlayout-grid`;
             this.classItems = `global-flowlayout-items global-default-flowlayout-items`;
+            this.state = {
+                components: defaultComponents(),
+                maxColumns: 4
+            }
         }
 
         this.onmouseenter = props.onMouseEnter;

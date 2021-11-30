@@ -31,12 +31,14 @@ class GridLayout extends React.Component {
         }
         if (props.areas && props.components) {
             this.classGrid = `global-gridlayout-grid ${props.classGrid || ""}`;
-            this.classItems = `global-gridlayout-items ${props.classItem || ""}`;
+            this.classItems = `global-gridlayout-items ${props.classItems || ""}`;
         } else {
             this.classGrid = `global-gridlayout-grid global-default-gridlayout-grid`;
             this.classItems = `global-gridlayout-items global-default-gridlayout-items`;
         }
 
+        console.log(`classGrid: ${this.classGrid}`);
+        console.log(`classItems: ${this.classItems}`);
         this.onmouseenter = props.onMouseEnter;
         this.onmouseleave = props.onMouseLeave;
         this.onclick = props.onClick;

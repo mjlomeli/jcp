@@ -3,9 +3,6 @@
     box-sizing: inherit;
     cursor: pointer;
     font-family: -apple-system, BlinkMacSystemFont, "Roboto", "Droid Sans", "Segoe UI", "Helvetica", Arial, sans-serif;
-
-    /* Variables */
-    --shipping-text-size: 1.5em;
 }
 
 .global-card-thumbnail:hover > img {
@@ -17,40 +14,43 @@
     width: 100%;
     height: 100%;
     object-fit: fill;
-    border-radius: 1em;
-    box-shadow: 0em 0em 1em 0 transparent;
+    border-radius: 1.5vw;
+    box-shadow: 0em 0em 1vm 0 transparent;
 }
 
 .global-card-thumbnail-price{
     position: absolute;
     display: flex;
+    width: 8vw;
+    height: 2vw;
     justify-content: space-evenly;
-    width: 30%;
-    height: 10%;
-    border-radius: 96px;
+    align-items: center;
+    border-radius: 1vw;
     background-color: #D4E9D7;
-    border: 1px solid #bdccbe;
+    border: 0.5vm solid #bdccbe;
     color: #222222;
-    bottom: 10%;
-    left: 10%;
+    bottom: 2vw;
+    left: 2vw;
 }
 
 
 .global-card-thumbnail-price-label {
-    font-size: 5vw;
+    font-size: 1vw;
     cursor: inherit;
     font-weight: 600;
     font-family: inherit;
 }
 
 .global-card-thumbnail-shipping-div {
-    width: 20%;
+    width: 1.5vw;
     object-fit: contain;
+    object-position: center;
 }
 
 .global-card-thumbnail-shipping-svg {
     object-fit: fill;
-    width: 100%;
-    height: 100%;
+    width: 1vw;
+    height: 1vw;
     fill: #222222;
+    vertical-align: bottom;
 }

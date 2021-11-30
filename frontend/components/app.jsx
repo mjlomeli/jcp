@@ -64,6 +64,7 @@ const App = () => (
             <Route exact path="/products_list" component={ProductsList} />
             <Route exact path="/products_template" component={ProductsTemplate} />
             <Route exact path="/flow_layout" component={FlowLayout} />
+            <Route exact path="/rating" component={Rating} />
         </Switch>
         {/*END OF DON'T REMOVE*/}
 

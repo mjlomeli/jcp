@@ -1,28 +1,27 @@
 .global-circular-thumbnail-grid {
-    grid-template-columns: fit-content(1px);
-    margin: 0;
-    grid-gap: 1em;
-    border: 1em solid transparent;
+    grid-template-columns: fit-content(1vw);
+    grid-gap: 1vw;
+    border: 1vw solid transparent;
     object-fit: scale-down;
 }
 
 .global-circular-thumbnail-items {
     display: flex;
     justify-content: center;
-    border-bottom: 0.5em solid transparent;
+    border-bottom: 0.5vw solid transparent;
 }
 
-.global-circular-thumbnail-listing:hover > .global-circular-thumbnail-items > .global-circular-thumbnail-image-div > .global-circular-thumbnail-image {
+.global-circular-thumbnail-grid:hover > .global-circular-thumbnail-items > .global-circular-thumbnail-image-div > .global-circular-thumbnail-image {
     transform: scale(1.1);
-    box-shadow: 0em 0em 2em 0 rgba(26, 26, 26, 0.29);
+    box-shadow: 0em 0em 2vw 0 rgba(26, 26, 26, 0.29);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     cursor: pointer;
 }
 
 
-.global-circular-thumbnail-listing:hover > .global-circular-thumbnail-items > .global-circular-thumbnail-category {
+.global-circular-thumbnail:hover > .global-circular-thumbnail-items > .global-circular-thumbnail-category {
     color: #595959;
-    border-bottom: 0.2em solid #595959;
+    border-bottom: 0.5vw solid #595959;
     -webkit-font-smoothing: antialiased;
 }
 
@@ -30,25 +29,26 @@
 .global-circular-thumbnail-category {
     color: #222222;
     font-weight: 640;
-    font-size: 1.5em;
+    font-size: 1.5vw;
     position: relative;
     font-family: -apple-system, BlinkMacSystemFont, "Roboto", "Droid Sans", "Segoe UI", "Helvetica", Arial, sans-serif;
     line-height: 2;
     word-wrap: break-word;
-    border-bottom: 0.2em solid transparent;
+    border-bottom: 0.5vw solid transparent;
     -webkit-font-smoothing: antialiased;
 }
 
 .global-circular-thumbnail-image-div {
-    object-fit: none;
+    object-fit: scale-down;
     object-position: center;
 }
 
 .global-circular-thumbnail-image {
     display: flex;
-    box-sizing: inherit;
     border-radius: 50%;
-    width: 10em;
+    width: 100%;
+    height: 100%;
+    object-fit: fill;
     overflow: hidden;
 }
 
