@@ -3,7 +3,8 @@
     /* grid-template-columns: repeat(auto-fit, minmax(20em, 50em)); */
     /* grid-template-columns: repeat(auto-fit, fit-content(200px)); */
 
-    /* The minimal allowable size is 10em vs maximum size is infinite */
+    /*  The minimal allowable size is 10em vs maximum size is infinite
+        Remove to allow more tightly stretching. */
     grid-template-columns: repeat(auto-fit, minmax(10em, 100%));
     border: 1vw solid transparent;
     cursor: pointer;
