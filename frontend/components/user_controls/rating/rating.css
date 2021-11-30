@@ -8,7 +8,7 @@
 .global-rating-count {
     color: #adadad;
     font-weight: 500;
-    font-size: 3vw;
+    font-size: 1vw;
     margin-left: 1vw;
     word-wrap: break-word;
     -webkit-font-smoothing: antialiased;
@@ -16,8 +16,7 @@
 }
 
 .global-rating-icon {
-    width: 4vw;
-    height: 3vh;
+    width: 1.5vw;
 }
 
 

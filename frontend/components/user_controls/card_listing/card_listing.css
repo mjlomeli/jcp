@@ -11,6 +11,7 @@
 
 .global-card-listing-items {
     cursor: inherit;
+
 }
 
 .global-card-listing-grid:hover img {
@@ -40,7 +41,8 @@
 .global-card-listing-title {
     color: #222;
     font-weight: 600;
-    font-size: 5vw;
+    font-size: 1.5vw;
+
     position: relative;
     font-family: -apple-system, BlinkMacSystemFont, "Roboto", "Droid Sans", "Segoe UI", "Helvetica", Arial, sans-serif;
     line-height: 1.4;
@@ -51,7 +53,7 @@
 
 .global-card-listing-calculated-price {
     color: #222;
-    font-size: 5vw;
+    font-size: 1.5vw;
     font-weight: 600;
     font-family: -apple-system, BlinkMacSystemFont, "Roboto", "Droid Sans", "Segoe UI", "Helvetica", Arial, sans-serif;
     line-height: 1.4;
@@ -65,7 +67,7 @@
     text-decoration: line-through;
     font-family: -apple-system, BlinkMacSystemFont, "Roboto", "Droid Sans", "Segoe UI", "Helvetica", Arial, sans-serif;
     line-height: 1.4;
-    font-size: 3vw;
+    font-size: 1vw;
     word-wrap: break-word;
     -webkit-font-smoothing: antialiased;
     cursor: inherit;
@@ -73,6 +75,7 @@
 
 .global-card-listing-discount {
     color: #258635;
+    font-size: 1vw;
     font-family: -apple-system, BlinkMacSystemFont, "Roboto", "Droid Sans", "Segoe UI", "Helvetica", Arial, sans-serif;
     word-wrap: break-word;
     -webkit-font-smoothing: antialiased;
@@ -81,7 +84,7 @@
 
 .global-card-listing-additional-label {
     color: #222;
-    font-size: 3vw;
+    font-size: 1vw;
     font-weight: 600;
     font-family: -apple-system, BlinkMacSystemFont, "Roboto", "Droid Sans", "Segoe UI", "Helvetica", Arial, sans-serif;
     line-height: 1.4;

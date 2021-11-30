@@ -29,7 +29,7 @@ class FlowLayout extends React.Component {
             this.classItems = `global-flowlayout-items global-default-flowlayout-items`;
             this.state = {
                 components: defaultComponents(),
-                maxColumns: 4
+                maxColumns: 1
             }
         }
 
