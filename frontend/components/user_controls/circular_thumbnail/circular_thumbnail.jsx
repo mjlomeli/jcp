@@ -1,3 +1,10 @@
+import {
+    Route,
+    Redirect,
+    Switch,
+    Link,
+    HashRouter
+} from 'react-router-dom';
 import {connect} from 'react-redux';
 import React from 'react';
 import './circular_thumbnail.css'
@@ -13,13 +20,23 @@ const mapDispatchToProps = dispatch => ({
     }
 });
 
+let defaultThumbnail = {
+    title: "Baby Puzzles",
+    imageUrl: "https://i.etsystatic.com/17305851/c/1801/1432/177/346/il/4ad87f/3411776815/il_340x270.3411776815_s6oc.jpg",
+    link: "/products"
+}
+
 class CircularThumbnail extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            category: "Baby Puzzles",
-            imageUrl: "https://i.etsystatic.com/17305851/c/1801/1432/177/346/il/4ad87f/3411776815/il_340x270.3411776815_s6oc.jpg"
+            title: props.title,
+            imageUrl: props.imageUrl,
+            link: props.link
         }
+
+        if (typeof this.state.title === "undefined")
+            this.state = {...defaultThumbnail};
 
         this.classGrid = `global-circular-thumbnail-grid`;
         this.classItems = `global-circular-thumbnail-items`;
@@ -27,11 +44,11 @@ class CircularThumbnail extends React.Component {
         this.onclick = props.onClick || this.onClick.bind(this);
     }
 
-    resize(category){
-        if (category.length > 17) {
-            return `${category.slice(0, 17)}...`
+    resize(title){
+        if (title.length > 17) {
+            return `${title.slice(0, 17)}...`
         }
-        return category;
+        return title;
     }
 
     componentDidMount() {
@@ -49,15 +66,15 @@ class CircularThumbnail extends React.Component {
             'image': <div className="global-circular-thumbnail-image-div">
                 <img className="global-circular-thumbnail-image" alt="img" aria-hidden="true" src={this.state.imageUrl}/>
             </div>,
-            'title': <label id="circular-title" className="global-circular-thumbnail-category">{this.resize(this.state.category)}</label>
+            'title': <label id="circular-title" className="global-circular-thumbnail-category">{this.resize(this.state.title)}</label>
         }
-        return <>
+        return <Link to={this.state.link}>
             <GridLayout
                 classGrid={this.classGrid}
                 classItems={this.classItems}
                 areas={areas}
                 components={components} />
-        </>
+        </Link>
     }
 }
 

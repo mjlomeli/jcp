@@ -221,15 +221,16 @@ class Rating extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            numOfIcons: 5, rating: this.props.rating || 0, padding: this.props.padding || 0,
-            count: 31909, disabled: this.props.disabled || false
+            numOfIcons: props.numOfIcons || 5, rating: props.rating || 0, padding: props.padding || 0,
+            count: props.count || 0, disabled: props.disabled || false, classIcon: props.classIcon,
+            classCount: props.classCount, customIcon: props.customIcon
         }
     }
 
     render() {
-        let className = `global-rating ${this.props.className || ""}`;
-        let classIcon = `global-rating-icon ${this.props.classIcon || ""}`;
-        let classCount = `global-rating-count ${this.props.classCount || ""}`
+        let className = `global-rating ${this.state.className || ""}`;
+        let classIcon = `global-rating-icon ${this.state.classIcon || ""}`;
+        let classCount = `global-rating-count ${this.state.classCount || ""}`
         return <div className={className}>
             <IconsRating className={classIcon} numOfIcons={this.state.numOfIcons} padding={this.state.padding}
                          rating={this.state.rating} disabled={this.state.disabled}/>

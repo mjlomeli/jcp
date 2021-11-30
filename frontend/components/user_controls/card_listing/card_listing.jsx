@@ -1,3 +1,10 @@
+import {
+    Route,
+    Redirect,
+    Switch,
+    Link,
+    HashRouter
+} from 'react-router-dom';
 import {connect} from 'react-redux';
 import React from 'react';
 import './card_listing.css'
@@ -18,7 +25,7 @@ const mapDispatchToProps = dispatch => ({
 class Price extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {price: 7.47, discount: 0.6}
+        this.state = {price: props.price || 0, discount: props.discount || 0}
     }
 
     calculatedPrice(){
@@ -77,16 +84,40 @@ class Additional extends React.Component {
     }
 }
 
+let defaultListing = {
+    title: "Personalized Name Puzzle With Pegs, Personalized Name Puzzle With Pegs, New Baby Gift",
+    imageUrl: "https://i.etsystatic.com/17305851/c/1801/1432/177/346/il/4ad87f/3411776815/il_340x270.3411776815_s6oc.jpg",
+    rating: 4.6,
+    ratingCount: 1399,
+    store: "Plexida",
+    price: 25.99,
+    discount: 0.2,
+    freeShipping: true,
+    link: "/product"
+}
+
 class CardListing extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            title: "Personalized Name Puzzle With Pegs, Personalized Name Puzzle With Pegs, New Baby Gift",
-            imageUrl: "https://i.etsystatic.com/17305851/c/1801/1432/177/346/il/4ad87f/3411776815/il_340x270.3411776815_s6oc.jpg"
+            title: props.title,
+            imageUrl: props.imageUrl,
+            rating: props.rating || 0,
+            ratingCount: props.ratingCount || 0,
+            store: props.store,
+            freeShipping: props.freeShipping || false,
+            price: props.price || 0,
+            discount: props.discount || 0,
+            link: props.link
         }
+        if (typeof this.state.title === "undefined")
+            this.state = {...defaultListing};
+
         this.onclick = props.onClick || this.onClick.bind(this);
     }
+
     resize(title){
+        console.log(`title: ${title}`);
         if (title.length > 70) {
             return `${title.slice(0, 65)}...`
         }
@@ -110,14 +141,16 @@ class CardListing extends React.Component {
                      aria-hidden="true" src={this.state.imageUrl} />
             </div>,
             'title': <label className="global-card-listing-title">{this.resize(this.state.title)}</label>,
-            'rating': <Rating rating={4.6} disabled={true}/>,
-            'price': <Price />,
-            'additional': <Additional />
+            'rating': <Rating rating={this.state.rating} count={this.state.ratingCount} disabled={true}/>,
+            'price': <Price price={this.state.price} discount={this.state.discount}/>,
+            'additional': <Additional freeShipping={this.state.freeShipping}/>
         }
-        return <GridLayout areas={areas}
+        return <Link to={this.state.link}>
+        <GridLayout areas={areas}
                            components={components}
                            classGrid="global-card-listing-grid"
-                           classItems="global-card-listing-items"/>
+                           classItems="global-card-listing-items" />
+            </Link>
     }
 }
 

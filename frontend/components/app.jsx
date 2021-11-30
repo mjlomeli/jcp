@@ -29,6 +29,8 @@ import Products from "./pages/products";
 import ProductsTemplate from "./themes/products_template/products_template";
 import ProductsList from "./user_controls/product_list/products_list";
 import FlowLayout from "./user_controls/flow_layout/flow_layout";
+import Cart from "./pages/cart";
+import CartTemplate from "./themes/cart_template/cart_template";
 
 /* learn more about grid-auto-flow */
 
@@ -47,7 +49,8 @@ const App = () => (
             <AuthRoute exact path="/demo" component={DemoLogInFormContainer} />
             {/*<ProtectedRoute exact path="/user/:id" component={ProfileContainer} />*/}
             <Route exact path="/gallery" component={Gallery} />
-            <ProtectedRoute exact path="/cart" component={CartItem} />
+            <ProtectedRoute exact path="/cart" component={Cart} />
+            <ProtectedRoute exact path="/cart_template" component={CartTemplate} />
             <Route exact path="/products" component={Products} />
             <Route exact path="/home" component={Home} />
             <Route exact path="/card_featured" component={CardFeatured} />

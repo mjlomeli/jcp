@@ -1,0 +1,282 @@
+.payment-checkout-form {
+    background-color: white;
+    box-shadow: 0em 0em 1.5em 0 rgba(26, 26, 26, 0.19);
+    border-radius: 1em;
+    padding: 2em 2em 2em 2em;
+}
+
+.payment-type-radio {
+    display: block;
+    position: relative;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.payment-type-radio input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+}
+
+.payment-checkmark {
+    top: 0;
+    left: 0;
+    width: 2em;
+    height: 2em;
+    background-color: #eee;
+    border-radius: 50%;
+}
+
+.payment-type-radio:hover input ~ .payment-checkmark {
+    background-color: #ccc;
+}
+
+.payment-type-radio input:checked ~ .payment-checkmark {
+    background-color: black;
+}
+
+.payment-checkmark::after {
+    content: "";
+    display: none;
+    position: absolute;
+}
+
+.payment-type-radio input:checked ~ .payment-checkmark:after {
+    display: block;
+}
+
+.payment-type-radio .payment-checkmark:after {
+    top: 0.7em;
+    left: 0.6em;
+    width: 0.8em;
+    height: 0.8em;
+    border-radius: 50%;
+    background: white;
+}
+
+.payment-type-creditcards {
+    display: flex;
+    align-items: center;
+    align-content: center;
+}
+
+.payment-types-creditcards-grid {
+    grid-column-gap: 0.2em;
+    margin-left: 1em;
+}
+
+.payment-type-creditcards img {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: contain;
+}
+
+.payment-types-creditcards-items {
+    align-self: center;
+    border: 1px solid rgba(112, 112, 112, 0.51);
+    width: 2em;
+    height: 2em;
+}
+
+.payment-type-onlinepayment {
+    display: flex;
+    align-items: center;
+    align-content: center;
+}
+
+.payment-type-onlinepayment img {
+    width: 2em;
+    height: 2em;
+    display: block;
+    border: 1px solid rgba(112, 112, 112, 0.51);
+    object-fit: contain;
+    margin-left: 1em;
+}
+
+.payment-type-klarna {
+    display: inline-flex;
+    align-items: center;
+    align-content: center;
+}
+
+.payment-type-klarna img {
+    width: 2em;
+    height: 2em;
+    display: block;
+    border: 1px solid rgba(112, 112, 112, 0.51);
+    object-fit: contain;
+    margin-left: 1em;
+}
+
+.payment-checkout-price-item {
+    display: flex;
+    align-items: baseline;
+}
+
+.payment-checkout-price-item > label:first-child{
+    font-family: -apple-system, BlinkMacSystemFont, "Roboto", "Droid Sans", "Segoe UI", "Helvetica", Arial, sans-serif;
+    font-size: 1.3em;
+    font-weight: 500;
+    margin-right: 10%;
+}
+
+.payment-checkout-price-item > label:last-child{
+    font-family: -apple-system, BlinkMacSystemFont, "Roboto", "Droid Sans", "Segoe UI", "Helvetica", Arial, sans-serif;
+    font-size: 1em;
+    font-weight: 400;
+    margin-left: 10%;
+}
+
+.payment-checkout-submit {
+    font-family: -apple-system, BlinkMacSystemFont, "Roboto", "Droid Sans", "Segoe UI", "Helvetica", Arial, sans-serif;
+    font-size: 1em;
+    font-weight: 500;
+    border-radius: 96px;
+    border: 0.15em solid black;
+    margin-left: 1em;
+    margin-right: 1em;
+    padding: 1em 5em 1em 5em;
+    cursor: pointer;
+    background-color: black;
+    color: white;
+}
+
+.payment-checkout-price-total {
+    display: flex;
+    align-items: baseline;
+    border-top: 0.2em solid rgba(89, 89, 89, 0.54);
+}
+
+.payment-checkout-price-total > label:first-child{
+    font-family: -apple-system, BlinkMacSystemFont, "Roboto", "Droid Sans", "Segoe UI", "Helvetica", Arial, sans-serif;
+    font-size: 1.3em;
+    font-weight: 500;
+    margin-right: 10%;
+}
+
+.payment-checkout-price-total > label:last-child{
+    font-family: -apple-system, BlinkMacSystemFont, "Roboto", "Droid Sans", "Segoe UI", "Helvetica", Arial, sans-serif;
+    font-size: 1em;
+    font-weight: 400;
+    margin-left: 10%;
+}
+
+.payment-checkout-submit:hover {
+    transform: scale(1.025);
+    background-color: #222222;
+    box-shadow: 0em 0em 1.5em 0 rgba(26, 26, 26, 0.12);
+    transition: transform 0.02s ease, box-shadow 0.3s ease;
+}
+
+.cart-item-grid {
+    margin: 0;
+    box-sizing: inherit;
+    cursor: pointer;
+    grid-row-end: 2;
+    grid-row-gap: 0.2em;
+    grid-column-gap: 1em;
+}
+
+.cart-item-items {
+    cursor: inherit;
+}
+
+
+.cart-item-image{
+    box-sizing: inherit;
+    border-radius: 0.25em;
+    cursor: inherit;
+}
+
+.cart-item-store {
+    text-decoration: underline;
+}
+
+.cart-item-title {
+    color: #222;
+    font-weight: 640;
+    font-size: 1.5em;
+    position: relative;
+    font-family: -apple-system, BlinkMacSystemFont, "Roboto", "Droid Sans", "Segoe UI", "Helvetica", Arial, sans-serif;
+    word-wrap: break-word;
+    -webkit-font-smoothing: antialiased;
+    cursor: inherit;
+}
+
+.cart-item-price-container {
+    font-family: -apple-system, BlinkMacSystemFont, "Roboto", "Droid Sans", "Segoe UI", "Helvetica", Arial, sans-serif;
+    cursor: inherit;
+}
+
+.cart-item-calculated-price {
+    color: #222;
+    font-size: 1.5em;
+    font-weight: 575;
+    font-family: -apple-system, BlinkMacSystemFont, "Roboto", "Droid Sans", "Segoe UI", "Helvetica", Arial, sans-serif;
+    word-wrap: break-word;
+    cursor: inherit;
+}
+
+.cart-item-price-mod {
+    color: #258635;
+    word-wrap: break-word;
+    cursor: inherit;
+}
+
+.cart-item-original-price {
+    text-decoration: line-through;
+    font-family: -apple-system, BlinkMacSystemFont, "Roboto", "Droid Sans", "Segoe UI", "Helvetica", Arial, sans-serif;
+    word-wrap: break-word;
+    cursor: inherit;
+}
+
+
+.cart-item-additional-label {
+    color: #222;
+    font-size: 1em;
+    font-weight: 600;
+    font-family: -apple-system, BlinkMacSystemFont, "Roboto", "Droid Sans", "Segoe UI", "Helvetica", Arial, sans-serif;
+    word-wrap: break-word;
+    cursor: inherit;
+}
+
+.cart-item-group-price {
+}
+
+.cart-item-additional {
+    background-color: #D4E9D7;
+    border-radius: 96px;
+    cursor: inherit;
+    display: inline-flex;
+}
+
+.cart-item-additional-label {
+    margin-left: 0.5em;
+    margin-right: 0.5em;
+}
+
+.cart-item-rating-count {
+    color: #222222;
+}
+
+.cart-item-submit {
+    font-family: -apple-system, BlinkMacSystemFont, "Roboto", "Droid Sans", "Segoe UI", "Helvetica", Arial, sans-serif;
+    background: transparent;
+    font-size: 1em;
+    font-weight: 500;
+    border-radius: 96px;
+    border: 0.15em solid black;
+    padding: 1em 3.5em 1em 3.5em;
+    cursor: pointer;
+}
+
+
+.cart-item-submit:hover {
+    transform: scale(1.01);
+    box-shadow: 0em 0em 1.5em 0 rgba(26, 26, 26, 0.12);
+    transition: transform 0.07s ease, box-shadow 0.3s ease;
+}

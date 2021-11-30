@@ -1,3 +1,10 @@
+import {
+    Route,
+    Redirect,
+    Switch,
+    Link,
+    HashRouter
+} from 'react-router-dom';
 import {connect} from 'react-redux';
 import React from 'react';
 import './navbar.css'
@@ -16,12 +23,12 @@ const mapDispatchToProps = dispatch => ({
 
 class NavbarLayout extends React.Component {
     static defaultNavEntries = {
-        "Home": "#/home",    // no dropdown
-        "Products": "#/Products",    // no dropdown
+        "Home": "/home",    // no dropdown
+        "Products": "/Products",    // no dropdown
         "dropdown": {   // has 3 drop downs
-            "link 1": "#",
-            "link 2": "#",
-            "link 3": "#"
+            "link 1": "/",
+            "link 2": "/",
+            "link 3": "/"
         }
     }
 
@@ -39,10 +46,10 @@ class NavbarLayout extends React.Component {
                 let [title, element] = pair;
                 if (isHTML(element))
                     return <React.Fragment key={idx}>{element}</React.Fragment>;
-                return <a key={idx} className={`navbar-dropdown-link navbar-dropdown-link-${title}`}
-                          href={`${element}`}>
+                return <Link key={idx} className={`navbar-dropdown-link navbar-dropdown-link-${title}`}
+                          to={`${element}`}>
                     {`${title}`}
-                </a>
+                </Link>
             })
 
         return <div className={`navbar-dropdown navbar-dropdown-${navTitle.toLowerCase()}`}>
@@ -59,9 +66,9 @@ class NavbarLayout extends React.Component {
     navLink(navTitle, navElement){
         if (isHTML(navElement))
             return navElement;
-        return <a className={`navbar-link navbar-link-${navTitle.toLowerCase()}`} href={`${navElement}`}>
+        return <Link className={`navbar-link navbar-link-${navTitle.toLowerCase()}`} to={`${navElement}`}>
             {`${navTitle}`}
-        </a>
+        </Link>
     }
 
     generateNavElement(navObject){

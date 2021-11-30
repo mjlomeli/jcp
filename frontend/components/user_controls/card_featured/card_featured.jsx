@@ -18,7 +18,7 @@ const mapDispatchToProps = dispatch => ({
 class Price extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {price: 7.47, discount: 0.6}
+        this.state = {price: props.price || 0, discount: props.discount || 0}
     }
 
     calculatedPrice(){
@@ -55,15 +55,15 @@ class Price extends React.Component {
 class Additional extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {}
+        this.state = {freeShipping: props.freeShipping || false}
     }
 
     shipping(){
-        return <>
+        return (this.state.freeShipping) ?
             <div className="card-featured-additional">
                 <label className="card-featured-additional-label">FREE shipping</label>
-            </div>
-        </>
+            </div> :
+            <></>;
     }
 
     recommendation(){
@@ -80,15 +80,35 @@ class Additional extends React.Component {
     }
 }
 
+
+let defaultFeatured = {
+    store: "ClarkandTaft",
+    rating: 3.6,
+    ratingCount: 2,
+    title: "Personalized Name Puzzle With Pegs, Personalized Name Puzzle With Pegs, New Baby Gift",
+    imageUrl: "https://i.etsystatic.com/17305851/c/1801/1432/177/346/il/4ad87f/3411776815/il_340x270.3411776815_s6oc.jpg",
+    discount: 0.5,
+    price: 54.99,
+    freeShipping: true
+}
+
 class CardFeatured extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            storeName: "ClarkandTaft",
-            rating: 4.6,
-            title: "Personalized Name Puzzle With Pegs, Personalized Name Puzzle With Pegs, New Baby Gift",
-            imageUrl: "https://i.etsystatic.com/17305851/c/1801/1432/177/346/il/4ad87f/3411776815/il_340x270.3411776815_s6oc.jpg"
+            title: props.title,
+            imageUrl: props.imageUrl,
+            store: props.store,
+            rating: props.rating || 0,
+            ratingCount: props.ratingCount || 0,
+            discount: props.discount || 0,
+            price: props.price || 0,
+            freeShipping: props.freeShipping || false
         }
+
+        if (typeof this.state.title === "undefined")
+            this.state = {...defaultFeatured};
+
         this.onclick = props.onClick || this.onClick.bind(this);
     }
     resize(title){
@@ -111,12 +131,14 @@ class CardFeatured extends React.Component {
         let infoAreas = ['rating', 'title', 'price', 'button']
         let infoComponents = {
             'rating': <>
-                <label className="card-featured-store">{this.state.storeName}</label>
-                <Rating rating={4.6} disabled={true} classCount="card-featured-rating-count"/>
+                <label className="card-featured-store">{this.state.store}</label>
+                <Rating rating={this.state.rating} count={this.state.ratingCount}
+                        disabled={true} classCount="card-featured-rating-count"/>
                 </>,
             'title': <label className="card-featured-title">{this.resize(this.state.title)}</label>,
-            'price': <div className="card-featured-grouped-price"><Price />
-                <Additional /></div>,
+            'price': <div className="card-featured-grouped-price">
+                <Price price={this.state.price} discount={this.state.discount}/>
+                <Additional freeShipping={this.state.freeShipping}/></div>,
             'button': <button className="card-featured-submit">
                 <label className="card-featured-submit-label">Shop this item</label>
                 </button>
@@ -125,8 +147,7 @@ class CardFeatured extends React.Component {
         let areas = ['image image info']
         let components = {
             'image': <div className="card-featured-image-div">
-                <img className="card-featured-image" alt="img"
-                     aria-hidden="true" src={this.state.imageUrl} />
+                <img className="card-featured-image" alt="img" aria-hidden="true" src={this.state.imageUrl} />
             </div>,
             'info': <GridLayout areas={infoAreas}
                                 components={infoComponents}
