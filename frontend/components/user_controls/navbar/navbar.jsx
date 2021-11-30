@@ -10,6 +10,8 @@ import React from 'react';
 import './navbar.css'
 import {isHTML} from '../../../utils/component_utils'
 import {NavbarEntriesError, NavbarEntriesTitleErrors} from "./navbar_error";
+import CardListing from "../card_listing/card_listing";
+import CardFeatured from "../card_featured/card_featured";
 
 const mapStateToProps = ({errors}) => ({
     //errors: errors.session, // need to add a ui or user_control errors
@@ -24,20 +26,20 @@ const mapDispatchToProps = dispatch => ({
 class NavbarLayout extends React.Component {
     static defaultNavEntries = {
         "Home": "/home",    // no dropdown
-        "Products": "/products",    // no dropdown
+        "Products": {"link 1": <CardFeatured />},
         "Dropdown": {   // has 3 drop downs
             "link 1": "/nav_bar",
             "link 2": "/nav_bar",
-            "link 3": "/nav_bar"
+            "link 3": <CardListing />
         }
     }
 
     constructor(props) {
         super(props);
-        let navEntries = props.navEntries || NavbarLayout.defaultNavEntries;
-        if (isHTML(navEntries))
+        let components = props.components || NavbarLayout.defaultNavEntries;
+        if (isHTML(components))
             throw new NavbarEntriesError();
-        this.state = {...navEntries}
+        this.state = {...components}
     }
 
     navDropDown(navTitle, navElement){

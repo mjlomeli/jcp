@@ -9,9 +9,9 @@ import {connect} from 'react-redux';
 import React from 'react';
 import './header_template.css'
 import './navlinks_template.css'
-import './navbar_template.css'
 import SearchBarComponent from "../../user_controls/searchbar/searchbar";
 import GridLayout from "../../user_controls/grid_layout/grid_layout";
+import NavbarLayout from "../../user_controls/navbar/navbar";
 
 const mapStateToProps = ({errors}) => ({
     //errors: errors.session, // need to add a ui or user_control errors
@@ -144,66 +144,24 @@ class NavLinksComponent extends React.Component {
     }
 }
 
-class NavBarComponent extends React.Component {
-    constructor(props) {
-        super(props);
-    }
-
-    onMouseEnter(e) {
-        let element = e.currentTarget
-        if (element.classList.contains("navbar-template-component-mouse-leave")) {
-            e.currentTarget.classList.replace('navbar-template-component-mouse-leave','navbar-template-component-mouse-enter')
-        }
-
-    }
-
-    onMouseLeave(e){
-        let element = e.currentTarget
-        if (element.classList.contains("navbar-template-component-mouse-enter")) {
-            e.currentTarget.classList.replace('navbar-template-component-mouse-enter','navbar-template-component-mouse-leave')
-        }
-    }
-
-    render(){
-        return <div className="navbar-template">
-            <ul className="navbar-template-list" role="menubar">
-                <li className="navbar-template-component-mouse-leave" onMouseEnter={this.onMouseEnter} onMouseLeave={this.onMouseLeave}>
-                    <Link to="/products">Cyber Sales Event</Link></li>
-                <li className="navbar-template-component-mouse-leave" onMouseEnter={this.onMouseEnter} onMouseLeave={this.onMouseLeave}>
-                    <Link to="/products">Jewelry &amp; Accessories</Link>
-                </li>
-                <li className="navbar-template-component-mouse-leave" onMouseEnter={this.onMouseEnter} onMouseLeave={this.onMouseLeave}>
-                    <Link to="/products">Clothing &amp; Shoes</Link>
-                </li>
-                <li className="navbar-template-component-mouse-leave" onMouseEnter={this.onMouseEnter} onMouseLeave={this.onMouseLeave}>
-                    <Link to="/products">Home &amp; Living</Link>
-                </li>
-                <li className="navbar-template-component-mouse-leave" onMouseEnter={this.onMouseEnter} onMouseLeave={this.onMouseLeave}>
-                    <Link to="/products">Wedding &amp; Party</Link>
-                </li>
-                <li className="navbar-template-component-mouse-leave" onMouseEnter={this.onMouseEnter} onMouseLeave={this.onMouseLeave}>
-                    <Link to="/products">Toys &amp; Entertainment</Link>
-                </li>
-                <li className="navbar-template-component-mouse-leave" onMouseEnter={this.onMouseEnter} onMouseLeave={this.onMouseLeave}>
-                    <Link to="/products">Art &amp; Collectibles</Link>
-                </li>
-                <li className="navbar-template-component-mouse-leave" onMouseEnter={this.onMouseEnter} onMouseLeave={this.onMouseLeave}>
-                    <Link to="/products">Craft Supplies</Link>
-                </li>
-                <li className="navbar-template-component-mouse-leave" onMouseEnter={this.onMouseEnter} onMouseLeave={this.onMouseLeave}>
-                    <Link to="/products">Gifts &amp; Gift Cards</Link>
-                </li>
-            </ul>
-        </div>
-    }
-}
-
 class HeaderTemplate extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             message: "Enjoy Cyber Week deals on small business cheer!",
         }
+    }
+
+    navbar(){
+        let navs = ["Cyber Sales Event", "Jewelry & Accessories", "Clothing & Shoes",
+        "Home & Living", "Wedding & Party", "Toys & Entertainment", "Art & Collectibles",
+        "Craft Supplies", "Gifts & Gift Cards"];
+
+        let components = Object.fromEntries(navs.map(title => {
+            return [title, `/products`]
+        }));
+
+        return <NavbarLayout components={components} />
     }
 
     logo(){
@@ -221,9 +179,8 @@ class HeaderTemplate extends React.Component {
         }
         let headerBarLayout = <GridLayout areas={headerBarAreas} components={headerBarComponents}/>
         return <>
-
             {headerBarLayout}
-            <NavBarComponent />
+            {this.navbar()}
         </>
     }
 }
