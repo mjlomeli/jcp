@@ -33,15 +33,15 @@ class ProductsList extends React.Component {
     }
 
     render() {
-        if (typeof this.state.products === "undefined")
+        if (this.state.products === undefined)
             return null;
-        let components = Object.entries(this.props.products).map(pair => {
+        let components = Object.entries(this.state.products).map(pair => {
             let [id, contents] = pair;
-            let imageUrls = JSON.parse(contents.image_urls);
+            let imageUrls = JSON.parse(contents.imageUrls);
             return <CardListing title={contents.title} imageUrl={imageUrls[0]} price={contents.price}
                                 store="StoreName" rating={4.6} ratingCount={100} discount={0} freeShipping={true} />
         })
-        return <FlowLayout components={components} maxColumns={4}
+        return <FlowLayout components={defaultComponents} maxColumns={this.state.maxColumns}
                            classGrid={this.classGrid} classItems={this.classItem}/>
     }
 }
