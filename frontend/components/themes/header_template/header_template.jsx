@@ -140,7 +140,7 @@ class NavLinksComponent extends React.Component {
             'account': this.account(),
             'cart': this.cart()
         }
-        return <GridLayout areas={navlinkAreas} components={components}/>
+        return <GridLayout areas={navlinkAreas} components={components} classGrid="navlinks-grid" classItems="naglinks-items"/>
     }
 }
 
@@ -173,14 +173,16 @@ class HeaderTemplate extends React.Component {
     render() {
         let headerBarAreas = ['logo search search search navlinks'];
         let headerBarComponents = {
-            'logo': <a href="#/home">{this.logo()}</a>,
+            'logo': <Link to="/home">{this.logo()}</Link>,
             'search': <SearchBarComponent />,
             'navlinks': <NavLinksComponent />
         }
         let headerBarLayout = <GridLayout areas={headerBarAreas} components={headerBarComponents}/>
         return <>
+            <div className="navlinks">
             {headerBarLayout}
             {this.navbar()}
+            </div>
         </>
     }
 }

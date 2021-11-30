@@ -7,7 +7,7 @@ export const REMOVE_PRODUCT = "REMOVE_PRODUCT";
 
 const receiveProducts = products =>({
     type: RECEIVE_PRODUCTS,
-    product: products
+    products: products
 })
 
 const receiveProduct = product =>({
@@ -32,7 +32,9 @@ const removeProduct = productId =>({
 
 export const fetchProducts = () => dispatch =>(
     ProductUtil.fetchProducts().then(
-        products => dispatch(receiveProducts(products)),
+        products => {
+            return dispatch(receiveProducts(products))
+        },
         err => dispatch(receiveProductError(err.responseJSON))
     )
 )

@@ -1,4 +1,19 @@
+.logo {
+    height: 10vw;
+    width: 10vw;
+}
+
+.navlinks-grid {
+    width: 100%;
+    display: inline-flex;
+}
+
+.navlinks-items {
+    justify-content: space-evenly;
+}
+
 .nav-links {
+    width: 100%;
     display: flex;
     justify-content: stretch;
     justify-items: stretch;

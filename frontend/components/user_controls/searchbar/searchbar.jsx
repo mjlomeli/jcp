@@ -15,20 +15,25 @@ const mapDispatchToProps = dispatch => ({
 class SearchBar extends React.Component {
     constructor(props) {
         super(props);
+
+        this.onclick = this.onClick.bind(this);
+        this.onchange = this.onChange.bind(this);
     }
 
-    onMouseEnter(e) {
+    onClick(e){
         e.preventDefault();
+        let search_query = e.currentTarget.value;
+        // use the search query to route to a products page with the query results
     }
 
-    onMouseLeave(e) {
+    onChange(e){
         e.preventDefault();
     }
 
     render() {
         return <form className="searchbar-form">
             <div className="search-bar">
-                <input type="text" className="search-input" />
+                <input type="text" className="search-input" name="search-field" onClick={this.onclick} onChange={this.onchange}/>
                 <button type="submit" className="search-button">
                     <span className="search-icon">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true" focusable="false">

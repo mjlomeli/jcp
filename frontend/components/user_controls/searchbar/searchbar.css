@@ -1,20 +1,21 @@
-searchbar-form {
+.searchbar-form {
     display: flex;
-    box-sizing: inherit;
-    min-width: 100%;
+    width: 100%;
     justify-content: center;
 }
 .search-bar {
+    justify-content: space-evenly;
+    width: 100%;
     margin: 0;
     box-sizing: inherit;
     border-radius: 96px;
-    box-shadow: 1px 2px 4px 0 rgba(34, 34, 34, 0.1) inset;
+    box-shadow: 1vw 2vw 4vw 0 rgba(34, 34, 34, 0.1) inset;
     background: #FFFFFF;
     border-color: #222222;
     border-style: solid;
-    border-width: 2px;
+    border-width: 0.3vw;
     font-family: "Graphik Webfont", -apple-system, "Helvetica Neue", "Droid Sans", Arial, sans-serif;
-    transform: scale(1) perspective(1px);
+    transform: scale(1) perspective(1vw);
 }
 
 .search-input {
@@ -27,8 +28,8 @@ searchbar-form {
     outline: none;
     font-family: inherit;
     font-size: inherit;
-    line-height: 28px;
-    padding-left: 1em;
+    line-height: 1.5vw;
+    padding-left: 1.5vw;
     cursor: text;
 
 }
@@ -41,13 +42,13 @@ searchbar-form {
     color: #222222;
     border: none;
     font: inherit;
-    font-size: 16px;
+    font-size: 1.5vw;
     cursor: pointer;
     text-align: left;
     -webkit-appearance: none;
     position: relative;
-    padding-top: 0.5em;
-    padding-bottom: 0.5em;
+    padding-top: 2vw;
+    padding-bottom: 1vw;
     white-space: nowrap;
     z-index: 10;
     border-top-left-radius: 0;
@@ -62,10 +63,10 @@ searchbar-form {
     margin: 0;
     box-sizing: inherit;
     display: inline-block;
-    height: 1.2em;
-    width: 1.2em;
-    padding-right: 0.5em;
+    height: 4vw;
+    width: 4vw;
+    padding-right: 0.5vw;
     vertical-align: middle;
     position: relative;
-    bottom: 1px;
+    bottom: 0.5vw;
 }
