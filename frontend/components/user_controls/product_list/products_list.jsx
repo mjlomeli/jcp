@@ -17,6 +17,8 @@ const mapDispatchToProps = dispatch => ({
     fetchProductsRange: (start, ending) => dispatch(fetchProductsRange(start, ending))
 });
 
+
+/* defaults */
 const defaultComponents = Array(17).fill(<CardListing />);
 
 class ProductsList extends React.Component {
