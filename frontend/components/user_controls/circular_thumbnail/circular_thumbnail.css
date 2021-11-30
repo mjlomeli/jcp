@@ -1,5 +1,4 @@
 .global-circular-thumbnail-grid {
-    grid-template-columns: fit-content(1vw);
     grid-gap: 1vw;
     border: 1vw solid transparent;
     object-fit: scale-down;
@@ -25,14 +24,21 @@
     -webkit-font-smoothing: antialiased;
 }
 
+.global-circular-thumbnail-products-grid:hover > .global-circular-thumbnail-items > .global-circular-thumbnail-image-div > .global-circular-thumbnail-image {
+    box-shadow: 0em 0em 2vw 0 rgba(26, 26, 26, 0.29);
+    border-radius: 96px;
+    transition: box-shadow 0.3s ease;
+    cursor: pointer;
+}
+
 
 .global-circular-thumbnail-category {
     color: #222222;
     font-weight: 640;
-    font-size: 1.5vw;
+    font-size: 2vw;
+    line-height: 2vw;
     position: relative;
     font-family: -apple-system, BlinkMacSystemFont, "Roboto", "Droid Sans", "Segoe UI", "Helvetica", Arial, sans-serif;
-    line-height: 2;
     word-wrap: break-word;
     border-bottom: 0.5vw solid transparent;
     -webkit-font-smoothing: antialiased;
@@ -41,6 +47,7 @@
 .global-circular-thumbnail-image-div {
     object-fit: scale-down;
     object-position: center;
+    width: 80%;
 }
 
 .global-circular-thumbnail-image {

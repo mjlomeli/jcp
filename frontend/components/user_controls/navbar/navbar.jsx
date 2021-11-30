@@ -16,8 +16,8 @@ const mapDispatchToProps = dispatch => ({
 
 class NavbarLayout extends React.Component {
     static defaultNavEntries = {
-        "home": "#",    // no dropdown
-        "news": "#",    // no dropdown
+        "Home": "#/home",    // no dropdown
+        "Products": "#/Products",    // no dropdown
         "dropdown": {   // has 3 drop downs
             "link 1": "#",
             "link 2": "#",

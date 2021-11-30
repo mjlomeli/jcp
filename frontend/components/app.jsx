@@ -36,7 +36,7 @@ const App = () => (
     <div>
         {/*DON'T REMOVE*/}
         <header>
-            <Link to="/" className="header-link">
+            <Link to="/home" className="header-link">
                 <h1>JCP</h1>
             </Link>
             <GreetingContainer />

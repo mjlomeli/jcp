@@ -20,6 +20,10 @@ class CircularThumbnail extends React.Component {
             category: "Baby Puzzles",
             imageUrl: "https://i.etsystatic.com/17305851/c/1801/1432/177/346/il/4ad87f/3411776815/il_340x270.3411776815_s6oc.jpg"
         }
+
+        this.classGrid = `global-circular-thumbnail-grid`;
+        this.classItems = `global-circular-thumbnail-items`;
+
         this.onclick = props.onClick || this.onClick.bind(this);
     }
 
@@ -40,7 +44,7 @@ class CircularThumbnail extends React.Component {
     }
 
     render() {
-        let areas = ['image', 'title']
+        let areas = ['image', 'image', 'image', 'title']
         let components = {
             'image': <div className="global-circular-thumbnail-image-div">
                 <img className="global-circular-thumbnail-image" alt="img" aria-hidden="true" src={this.state.imageUrl}/>
@@ -49,8 +53,8 @@ class CircularThumbnail extends React.Component {
         }
         return <>
             <GridLayout
-                classGrid="global-circular-thumbnail-grid"
-                classItems="global-circular-thumbnail-items"
+                classGrid={this.classGrid}
+                classItems={this.classItems}
                 areas={areas}
                 components={components} />
         </>

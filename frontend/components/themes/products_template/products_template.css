@@ -13,5 +13,12 @@
 .product-template-rec-grid {
     margin-left: 10vw;
     margin-right: 10vw;
+    display: flex;
+    flex-direction: row;
+    flex-grow: 1;
+    justify-content: space-evenly;
 }
 
+.product-template-rec-items {
+
+}
