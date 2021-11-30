@@ -24,14 +24,14 @@ class Price extends React.Component {
     calculatedPrice(){
         if (this.state.discount){
             let price = this.state.price - (this.state.price * this.state.discount);
-            return <><span className="global-card-listing-calculated-price">${price.toFixed(2)}</span>&nbsp;</>;
+            return <><span className="global-card-listing-calculated-price">${price.toFixed(2)}</span></>;
         }
     }
 
     discounted(){
         let percentage = (this.state.discount) ? this.state.discount * 100 >> 0 : 0
         if (percentage)
-            return <>&nbsp;<span className="global-card-listing-discount">({percentage}% off)</span></>
+            return <><span className="global-card-listing-discount">({percentage}% off)</span></>
         return <></>
     }
 
@@ -57,7 +57,7 @@ class Additional extends React.Component {
     shipping(){
         return <>
             <div className="global-card-listing-additional">
-                <label className="global-card-listing-additional-label">&nbsp;&nbsp;FREE shipping&nbsp;&nbsp;</label>
+                <label className="global-card-listing-additional-label">FREE shipping</label>
             </div>
         </>
     }
@@ -116,8 +116,8 @@ class CardListing extends React.Component {
         }
         return <GridLayout areas={areas}
                            components={components}
-                           classGrid="global-card-listing-grid"
-                           classItems="global-card-listing-items"/>
+                           classGrid="global-viewlayout-grid"
+                           classItems="global-viewlayout-items"/>
     }
 }
 

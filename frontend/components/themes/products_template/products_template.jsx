@@ -5,6 +5,7 @@ import CardListing from "../../user_controls/card_listing/card_listing";
 import CardFeatured from "../../user_controls/card_featured/card_featured";
 import GridLayout from "../../user_controls/grid_layout/grid_layout";
 import CircularThumbnail from "../../user_controls/circular_thumbnail/circular_thumbnail";
+import ProductsList from "../../user_controls/product_list/products_list";
 
 
 const mapStateToProps = ({errors}) => ({
@@ -29,21 +30,7 @@ class ProductsTemplate extends React.Component {
 
 
     productList(){
-        let layout5x4 = [];
-        let components = {};
-        let thumbnail = <CardListing />
-        let idx = 0;
-        for (let i = 0; i < Math.ceil(this.state.perPage / 4); i++){
-            let s = [];
-            for (let j = 0; j < 4; j++) {
-                let comp = `item${idx + 1}`
-                s.push(comp);
-                components[comp] = thumbnail;
-                idx++;
-            }
-            layout5x4.push(s.join(" "));
-        }
-        return <GridLayout areas={layout5x4} components={components} gridClass="product-feature-list-grid" itemClass="product-feature-list-items"/>
+        return <div className="product-template-productlist"><ProductsList /></div>
     }
 
     recommended(){
@@ -55,7 +42,8 @@ class ProductsTemplate extends React.Component {
             'rec3': thumbnail,
             'rec4': thumbnail
         };
-        return <GridLayout areas={layout1x4} components={components} gridClass="product-feature-rec-grid" itemClass="product-feature-rec-items"/>
+        return <GridLayout areas={layout1x4} components={components}
+                           classGrid="product-template-rec-grid" classItems="product-template-rec-items"/>
     }
 
     render() {
@@ -65,13 +53,10 @@ class ProductsTemplate extends React.Component {
             'recommended': this.recommended()
         }
         let areas = ['featured', 'products', 'recommended']
-        return <>
-            <div className="background">
-                <div className="home-module">
-                    <GridLayout areas={areas} components={components} gridClass="product-template-grid"/>
-                </div>
-            </div>
-        </>
+        return <GridLayout areas={areas} components={components}
+                                classGrid="product-template-grid"
+                                classItems="product-template-items"
+        />
     }
 }
 

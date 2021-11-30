@@ -1,9 +1,10 @@
 .global-viewlayout-grid {
-
+    --grid-template-columns: repeat(auto-fit, minmax(10em, 100%));
+    grid-template-columns: repeat(auto-fit, minmax(10em, 100%));
 }
 
 .global-viewlayout-items {
-
+    font-size: var(--grid-template-columns)
 }
 
 .global-default-viewlayout-grid {

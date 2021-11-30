@@ -6,7 +6,7 @@ import Rating from "../rating/rating";
 
 const mapStateToProps = ({errors}) => ({
     //errors: errors.session, // need to add a ui or user_control errors
-    nameId: "card_listing"
+    nameId: "card_featured"
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -44,7 +44,8 @@ class Price extends React.Component {
             <div className="card-featured-price-container">
                 {this.calculatedPrice()}
                 <label className="card-featured-price-mod">
-                    {this.originalPrice()} {this.discounted()}
+                    {this.originalPrice()}
+                    {this.discounted()}
                 </label>
             </div>
         </>
@@ -68,7 +69,6 @@ class Additional extends React.Component {
     recommendation(){
         return <>
             <div className="card-featured-additional">
-
             </div>
         </>
     }
@@ -92,7 +92,7 @@ class CardFeatured extends React.Component {
         this.onclick = props.onClick || this.onClick.bind(this);
     }
     resize(title){
-        if (title.length > 75) {
+        if (title.length > 200) {
             return `${title.slice(0, 72)}...`
         }
         return title;
@@ -108,16 +108,12 @@ class CardFeatured extends React.Component {
     }
 
     render() {
-        let areas = ['image rating', 'image title', 'image price', 'image button']
-        let components = {
+        let infoAreas = ['rating', 'title', 'price', 'button']
+        let infoComponents = {
             'rating': <>
                 <label className="card-featured-store">{this.state.storeName}</label>
                 <Rating rating={4.6} disabled={true} classCount="card-featured-rating-count"/>
                 </>,
-            'image': <div className="card-list-image-div">
-                <img className="card-featured-image" alt="img"
-                     aria-hidden="true" src={this.state.imageUrl} />
-            </div>,
             'title': <label className="card-featured-title">{this.resize(this.state.title)}</label>,
             'price': <div className="card-featured-grouped-price"><Price />
                 <Additional /></div>,
@@ -125,10 +121,24 @@ class CardFeatured extends React.Component {
                 <label className="card-featured-submit-label">Shop this item</label>
                 </button>
         }
+
+        let areas = ['image image info']
+        let components = {
+            'image': <div className="card-featured-image-div">
+                <img className="card-featured-image" alt="img"
+                     aria-hidden="true" src={this.state.imageUrl} />
+            </div>,
+            'info': <GridLayout areas={infoAreas}
+                                components={infoComponents}
+                                classGrid="card-featured-info-grid"
+                                classItems="card-featured-info-items"
+            />
+        }
+
         return <GridLayout areas={areas}
                            components={components}
-                           classGrid="card-featured-grid grid-test-featured"
-                           classItems="card-featured-items item-test-featured"
+                           classGrid="card-featured-grid"
+                           classItems="card-featured-items"
         />
     }
 }

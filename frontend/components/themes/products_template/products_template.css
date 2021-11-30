@@ -1,14 +1,17 @@
 .product-template-grid {
-    grid-row-gap: 3em;
+    grid-row-gap: 5vw;
 }
 
-.product-feature-list-grid {
-    grid-row-gap: 1em;
-    grid-column-gap: 1em;
+.product-template-productlist {
 }
 
-.product-feature-rec-grid {
-    margin-left: 10em;
-    margin-right: 10em;
+.product-template-list-grid {
+}
+.product-template-list-grid {
+}
+
+.product-template-rec-grid {
+    margin-left: 10vw;
+    margin-right: 10vw;
 }
 
