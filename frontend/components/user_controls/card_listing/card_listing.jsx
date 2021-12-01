@@ -10,7 +10,6 @@ import './card_listing.css'
 import GridLayout from "../grid_layout/grid_layout";
 import Rating from "../rating/rating";
 
-
 class Price extends React.Component {
     constructor(props) {
         super(props);
@@ -91,8 +90,13 @@ class CardListing extends React.Component {
     constructor(props) {
         // fetchProduct(productId)
         super(props);
+
         this.state = {}
-        this.onclick = props.onClick || this.onClick.bind(this);
+    }
+
+    componentDidMount() {
+        if (!this.state.listing)
+            this.setState({listing: defaultListing});
     }
 
     resize(title){
@@ -102,23 +106,20 @@ class CardListing extends React.Component {
         return title;
     }
 
-    onClick(e) {
-        e.preventDefault();
-    }
-
     render() {
-        let product = this.props.product || this.props.products[this.props.productId];
-
-        let {id, image_urls, price, quantity, store_id, title, user_id, views} = product;
+        if (!this.state.listing)
+            return null;
+        let {id, link, imageUrl, price, rating, ratingCount, discount, store, quantity,
+            store_id, title, user_id, views} = this.state.listing;
         let areas = ['image', 'title', 'rating', 'price', 'additional']
         let components = {
             'image': <div className="global-card-listing-image-div">
                 <img className="global-card-listing-image" alt="img"
-                     aria-hidden="true" src={image_urls[0]} />
+                     aria-hidden="true" src={imageUrl} />
             </div>,
             'title': <label className="global-card-listing-title">{this.resize(title)}</label>,
-            'rating': <Rating rating={0} count={0} disabled={true}/>,
-            'price': <Price price={price} discount={0}/>,
+            'rating': <Rating rating={rating} count={ratingCount} disabled={true}/>,
+            'price': <Price price={price} discount={discount}/>,
             'additional': <Additional freeShipping={true}/>
         }
         return <Link to={`/product/${id}`}>

@@ -18,7 +18,7 @@ const mapDispatchToProps = dispatch => ({
 class Price extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {price: props.price || 0, discount: props.discount || 0}
+        this.state = {}
     }
 
     calculatedPrice(){
