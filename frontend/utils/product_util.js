@@ -12,6 +12,13 @@ export const fetchProductsRange = (start, end) => {
     });
 };
 
+export const fetchRandomProductsRange = (start, end) => {
+    return $.ajax({
+        url: `/api/products?start=${start}&end=${end}&random=${true}`,
+        method: 'GET'
+    });
+};
+
 export const fetchProduct = (productId) => {
     return $.ajax({
         url: `/api/products/${productId}`,
@@ -44,6 +51,7 @@ export const deleteProduct = (productId) => {
 
 window.fetchProducts = fetchProducts
 window.fetchProductsRange = fetchProductsRange
+window.fetchRandomProductsRange = fetchRandomProductsRange
 window.fetchProduct = fetchProduct
 window.createProduct = createProduct
 window.updateProduct = updateProduct

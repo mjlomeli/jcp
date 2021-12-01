@@ -46,6 +46,13 @@ export const fetchProductsRange = (start, end) => dispatch =>(
     )
 )
 
+export const fetchRandomProductsRange = (start, end) => dispatch =>(
+    ProductUtil.fetchRandomProductsRange(start, end).then(
+        products => dispatch(receiveProducts(products)),
+        err => dispatch(receiveProductError(err.responseJSON))
+    )
+)
+
 export const fetchProduct = productId => (dispatch) => {
     return ProductUtil.fetchProduct(productId).then(
         product => dispatch(receiveProduct(product)),

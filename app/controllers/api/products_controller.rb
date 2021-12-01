@@ -2,14 +2,17 @@ require 'json'
 
 class Api::ProductsController < ApplicationController
   def index
-    args = params.permit(:start, :end)
+    args = params.permit(:start, :end, :random)
     if !args.empty?
-      @products = find_in_batches(args[:start], args[:end])
-      render json: @products
+      if params[:random]
+        @product = find_in_random_batches(args[:start], args[:end])
+      else
+        @products = find_in_batches(args[:start], args[:end])
+      end
     else
       @products = Product.all
-      render json: @products
     end
+      render json: @product
   end
 
   def show
@@ -61,12 +64,22 @@ class Api::ProductsController < ApplicationController
     params.require(:product)
           .permit(:title, :price, :quantity, :views, :num_favorers,
                   :description, :image_urls, :category, :tags, :user_id,
-                  :store_id)
+                  :store_id, :random)
   end
 
   def find_in_batches(start, finish, batch_size = 25)
     enu = Product.find_in_batches(start: start, finish: finish, batch_size: batch_size)
     enu.reduce(:concat)
+  end
+
+  def find_in_random_batches(start, finish)
+    puts "entered"
+    randoms = []
+    while randoms.length < finish.to_i - start.to_i
+      offset = rand(Product.count)
+      randoms.append(Product.offset(offset).first)
+    end
+    randoms
   end
 end
 

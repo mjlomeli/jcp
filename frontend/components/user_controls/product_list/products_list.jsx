@@ -3,7 +3,7 @@ import React from 'react';
 import './products_list.css';
 import FlowLayout from "../flow_layout/flow_layout";
 import CardListing from "../card_listing/card_listing";
-import {fetchProducts, fetchProductsRange} from "../../../actions/product_actions";
+import {fetchProducts, fetchProductsRange, fetchRandomProductsRange} from "../../../actions/product_actions";
 
 const mapStateToProps = (state, ownProps) =>{
     let products = state.entities.products
@@ -16,7 +16,8 @@ const mapStateToProps = (state, ownProps) =>{
 
 const mapDispatchToProps = dispatch => ({
     fetchProducts: () => dispatch(fetchProducts()),
-    fetchProductsRange: (start, end) => dispatch(fetchProductsRange(start, end))
+    fetchProductsRange: (start, end) => dispatch(fetchProductsRange(start, end)),
+    fetchRandomProductsRange: (start, end) => dispatch(fetchRandomProductsRange(start, end))
 });
 
 
@@ -33,7 +34,7 @@ class ProductsList extends React.Component {
     }
 
     componentDidMount() {
-        this.props.fetchProductsRange(this.props.start || 0, this.props.end || 20);
+        this.props.fetchRandomProductsRange(this.props.start || 0, this.props.end || 20);
     }
 
     render() {
@@ -42,7 +43,6 @@ class ProductsList extends React.Component {
 
         let components = this.props.productsIds.map(
             productId => <CardListing productId={productId} products={this.props.products} product={this.props.products[productId]}/>);
-        console.log(components);
         return <FlowLayout components={components || defaultComponents}
                            maxColumns={this.props.maxColumns || 4}
                            classGrid={this.classGrid}
