@@ -9,6 +9,8 @@
     grid-auto-flow: row dense;
     border: 1vw solid transparent;
     cursor: pointer;
+    text-decoration: none;
+
 }
 
 .global-card-listing-items {

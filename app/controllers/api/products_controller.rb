@@ -1,3 +1,5 @@
+require 'json'
+
 class Api::ProductsController < ApplicationController
   def index
     args = params.permit(:start, :end)
@@ -51,6 +53,7 @@ class Api::ProductsController < ApplicationController
   end
 
   private
+
   def product_params
     # the .require makes it so that when a controller is using the
     # product_params function, if product doesn't exist in the body_template
@@ -61,8 +64,10 @@ class Api::ProductsController < ApplicationController
                   :store_id)
   end
 
-  def find_in_batches(start, finish, batch_size=25)
-    enu = Product.find_in_batches(start: start, finish:finish, batch_size:batch_size)
+  def find_in_batches(start, finish, batch_size = 25)
+    enu = Product.find_in_batches(start: start, finish: finish, batch_size: batch_size)
     enu.reduce(:concat)
   end
 end
+
+

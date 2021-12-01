@@ -4,7 +4,7 @@ import './card_featured.css'
 import GridLayout from "../grid_layout/grid_layout";
 import Rating from "../rating/rating";
 
-const mapStateToProps = ({errors}) => ({
+const mapStateToProps = ({entities, session, errors}) => ({
     //errors: errors.session, // need to add a ui or user_control errors
     nameId: "card_featured"
 });

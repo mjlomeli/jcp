@@ -10,7 +10,7 @@ import React from 'react';
 import './card_thumbnail.css'
 import GridLayout from "../grid_layout/grid_layout";
 
-const mapStateToProps = ({errors}) => ({
+const mapStateToProps = ({entities, session, errors}) => ({
     //errors: errors.session, // need to add a ui or user_control errors
     nameId: "card_listing"
 });

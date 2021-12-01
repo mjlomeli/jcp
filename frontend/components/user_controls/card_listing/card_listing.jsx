@@ -10,33 +10,43 @@ import React from 'react';
 import './card_listing.css'
 import GridLayout from "../grid_layout/grid_layout";
 import Rating from "../rating/rating";
+import {fetchProduct} from "../../../actions/product_actions";
 
-const mapStateToProps = ({errors}) => ({
-    //errors: errors.session, // need to add a ui or user_control errors
-    nameId: "card_listing"
-});
+const mapStateToProps = (state, ownProp) => {
+    //errors: errors.entities.products, // need to add a ui or user_control errors
+    let products = state.entities.products
+    console.log(state, ownProp);
+    return {
+        productId: products.one && products.one.id,
+        product: products.one,
+        products: products.all
+    };
+};
 
-const mapDispatchToProps = dispatch => ({
-    afunction: () => {
+const mapDispatchToProps = (dispatch) => {
+    return {
+        fetchProduct: (productId) => dispatch(fetchProduct(productId))
     }
-});
+};
 
 
 class Price extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {price: props.price || 0, discount: props.discount || 0}
+        this.state = {}
     }
 
     calculatedPrice(){
-        if (this.state.discount){
-            let price = this.state.price - (this.state.price * this.state.discount);
-            return <><span className="global-card-listing-calculated-price">${price.toFixed(2)}</span></>;
+        if (this.props.discount){
+            let price = this.props.price || 0;
+            let discount = this.props.discount || 0;
+            let total = price - (price * discount);
+            return <><span className="global-card-listing-calculated-price">${total.toFixed(2)}</span></>;
         }
     }
 
     discounted(){
-        let percentage = (this.state.discount) ? this.state.discount * 100 >> 0 : 0
+        let percentage = (this.props.discount) ? this.props.discount * 100 >> 0 : 0
         if (percentage)
             return <><span className="global-card-listing-discount">({percentage}% off)</span></>
         return <></>
@@ -44,13 +54,13 @@ class Price extends React.Component {
 
     render() {
         return <>
-            <div className="global-card-listing-price-container">
+            <Route className="global-card-listing-price-container">
                 {this.calculatedPrice()}
                 <span className="global-card-listing-original-price">
-                    ${this.state.price}
+                    ${this.props.price}
                 </span>
                 {this.discounted()}
-            </div>
+            </Route>
         </>
     }
 }
@@ -98,26 +108,14 @@ let defaultListing = {
 
 class CardListing extends React.Component {
     constructor(props) {
+        // fetchProduct(productId)
         super(props);
-        this.state = {
-            title: props.title,
-            imageUrl: props.imageUrl,
-            rating: props.rating || 0,
-            ratingCount: props.ratingCount || 0,
-            store: props.store,
-            freeShipping: props.freeShipping || false,
-            price: props.price || 0,
-            discount: props.discount || 0,
-            link: props.link
-        }
-        if (typeof this.state.title === "undefined")
-            this.state = {...defaultListing};
-
+        this.state = {}
+        console.debug(props)
         this.onclick = props.onClick || this.onClick.bind(this);
     }
 
     resize(title){
-        console.log(`title: ${title}`);
         if (title.length > 70) {
             return `${title.slice(0, 65)}...`
         }
@@ -125,27 +123,41 @@ class CardListing extends React.Component {
     }
 
     componentDidMount() {
-        // TODO: make sure title is resized
+        console.log(this.props)
+        if (!!this.props.productId)
+            this.props.fetchProduct(this.props.productId);
+        else if (!!this.props.match.params.id)
+            this.props.fetchProduct(this.props.match.params.id)
+        else {
+            console.error("No product ID was passed in the props nor found in the link params.");
+            console.warn("Default product is being used");
+            this.props.fetchProduct(1551);
+        }
     }
 
     onClick(e) {
         e.preventDefault();
-        // TODO: send to product page
     }
 
     render() {
+        console.log(this.props);
+        if (!this.props.product)
+            return null;
+        console.debug(`Getting: <CardListing productId={${this.props.product.id}}>`)
+
+        let {id, image_urls, price, quantity, store_id, title, user_id, views} = this.props.product;
         let areas = ['image', 'title', 'rating', 'price', 'additional']
         let components = {
             'image': <div className="global-card-listing-image-div">
                 <img className="global-card-listing-image" alt="img"
-                     aria-hidden="true" src={this.state.imageUrl} />
+                     aria-hidden="true" src={image_urls[0]} />
             </div>,
-            'title': <label className="global-card-listing-title">{this.resize(this.state.title)}</label>,
-            'rating': <Rating rating={this.state.rating} count={this.state.ratingCount} disabled={true}/>,
-            'price': <Price price={this.state.price} discount={this.state.discount}/>,
-            'additional': <Additional freeShipping={this.state.freeShipping}/>
+            'title': <label className="global-card-listing-title">{this.resize(title)}</label>,
+            'rating': <Rating rating={0} count={0} disabled={true}/>,
+            'price': <Price price={price} discount={0}/>,
+            'additional': <Additional freeShipping={true}/>
         }
-        return <Link to={this.state.link}>
+        return <Link to={`/product/${id}`}>
         <GridLayout areas={areas}
                            components={components}
                            classGrid="global-card-listing-grid"

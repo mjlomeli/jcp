@@ -13,7 +13,7 @@ import {NavbarEntriesError, NavbarEntriesTitleErrors} from "./navbar_error";
 import CardListing from "../card_listing/card_listing";
 import CardFeatured from "../card_featured/card_featured";
 
-const mapStateToProps = ({errors}) => ({
+const mapStateToProps = ({entities, session, errors}) => ({
     //errors: errors.session, // need to add a ui or user_control errors
     nameId: "card_listing"
 });

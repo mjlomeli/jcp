@@ -39,16 +39,16 @@ ActiveRecord::Schema.define(version: 2021_11_22_040502) do
     t.index ["user_id"], name: "index_orders_on_user_id"
   end
 
-  create_table "products_template", force: :cascade do |t|
+  create_table "products", force: :cascade do |t|
     t.string "title", null: false
     t.float "price", null: false
     t.integer "quantity", default: 1
     t.integer "views", default: 0
     t.integer "num_favorers", default: 0
     t.string "description", null: false
-    t.string "image_urls", null: false
+    t.string "image_urls", null: false, array: true
     t.string "category"
-    t.string "tags"
+    t.string "tags", array: true
     t.integer "user_id", null: false
     t.integer "store_id", null: false
     t.datetime "created_at", null: false

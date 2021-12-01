@@ -3,14 +3,13 @@ import React from 'react';
 import './cart_item.css'
 import GridLayout from "../grid_layout/grid_layout";
 
-const mapStateToProps = ({errors}) => ({
+const mapStateToProps = ({entities, session, errors}) => ({
     //errors: errors.session, // need to add a ui or user_control errors
-    nameId: "card_listing"
+    cart: entities.cart
 });
 
 const mapDispatchToProps = dispatch => ({
-    afunction: () => {
-    }
+    // fetchCart: (sessionId) => dispatch(fetchCart(sessionId))
 });
 
 

@@ -8,13 +8,13 @@ import {fetchProducts, fetchProductsRange} from "../../../actions/product_action
 const mapStateToProps = ({session, entities, errors}) =>{
     return {
         //errors: errors.session, // need to add a ui or user_control errors
-        products: entities.products
+        productsIds: entities.products.list
     }
 };
 
 const mapDispatchToProps = dispatch => ({
     fetchProducts: () => dispatch(fetchProducts()),
-    fetchProductsRange: (start, ending) => dispatch(fetchProductsRange(start, ending))
+    fetchProductsRange: (start, end) => dispatch(fetchProductsRange(start, end))
 });
 
 
@@ -24,22 +24,26 @@ const defaultComponents = Array(17).fill(<CardListing />);
 class ProductsList extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {products: props.products, maxColumns: props.maxColumns || 4}
+        this.state = {}
 
         this.classGrid = `global-products-list-grid ${props.className || props.classGrid || ""}`;
         this.classItem = `global-products-list-items ${props.className || props.classItems || ""}`;
     }
 
     componentDidMount() {
-        this.props.fetchProducts();
+        this.props.fetchProductsRange(this.props.start || 0, this.props.end || 20);
     }
 
     render() {
-        if (this.state.products === undefined)
+        if (this.props.productsIds && !this.props.productsIds.length)
             return null;
 
-        return <FlowLayout components={defaultComponents} maxColumns={this.state.maxColumns}
-                           classGrid={this.classGrid} classItems={this.classItem}/>
+        let components = this.props.productsIds.map(productId => <CardListing productId={productId}/>);
+
+        return <FlowLayout components={components || defaultComponents}
+                           maxColumns={this.props.maxColumns || 4}
+                           classGrid={this.classGrid}
+                           classItems={this.classItem}/>
     }
 }
 

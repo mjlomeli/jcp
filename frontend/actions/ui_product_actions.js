@@ -1,5 +1,3 @@
-import * as ProductUtil from '../utils/product_util'
-
 export const RECEIVE_PRODUCTS = "RECEIVE_PRODUCTS";
 export const RECEIVE_PRODUCT = "RECEIVE_PRODUCT";
 export const RECEIVE_PRODUCT_ERROR = "RECEIVE_PRODUCT_ERROR";
@@ -30,7 +28,7 @@ const removeProduct = productId =>({
 /*    Separation      */
 
 
-export const fetchProducts = () => dispatch =>(
+export const fetchProductsList = (products) => dispatch =>(
     ProductUtil.fetchProducts().then(
         products => {
             return dispatch(receiveProducts(products))
@@ -46,12 +44,12 @@ export const fetchProductsRange = (start, end) => dispatch =>(
     )
 )
 
-export const fetchProduct = productId => (dispatch) => {
-    return ProductUtil.fetchProduct(productId).then(
+export const fetchProduct = productId => dispatch =>(
+    ProductUtil.fetchProduct(productId).then(
         product => dispatch(receiveProduct(product)),
         err => dispatch(receiveProductError(err.responseJSON))
     )
-}
+)
 
 export const createProduct = product => dispatch =>(
     ProductUtil.createProduct(product).then(
