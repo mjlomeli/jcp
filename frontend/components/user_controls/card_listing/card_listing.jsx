@@ -12,23 +12,6 @@ import GridLayout from "../grid_layout/grid_layout";
 import Rating from "../rating/rating";
 import {fetchProduct} from "../../../actions/product_actions";
 
-const mapStateToProps = (state, ownProp) => {
-    //errors: errors.entities.products, // need to add a ui or user_control errors
-    let products = state.entities.products
-    console.log(state, ownProp);
-    return {
-        productId: products.one && products.one.id,
-        product: products.one,
-        products: products.all
-    };
-};
-
-const mapDispatchToProps = (dispatch) => {
-    return {
-        fetchProduct: (productId) => dispatch(fetchProduct(productId))
-    }
-};
-
 
 class Price extends React.Component {
     constructor(props) {
@@ -111,7 +94,6 @@ class CardListing extends React.Component {
         // fetchProduct(productId)
         super(props);
         this.state = {}
-        console.debug(props)
         this.onclick = props.onClick || this.onClick.bind(this);
     }
 
@@ -122,30 +104,16 @@ class CardListing extends React.Component {
         return title;
     }
 
-    componentDidMount() {
-        console.log(this.props)
-        if (!!this.props.productId)
-            this.props.fetchProduct(this.props.productId);
-        else if (!!this.props.match.params.id)
-            this.props.fetchProduct(this.props.match.params.id)
-        else {
-            console.error("No product ID was passed in the props nor found in the link params.");
-            console.warn("Default product is being used");
-            this.props.fetchProduct(1551);
-        }
-    }
-
     onClick(e) {
         e.preventDefault();
     }
 
     render() {
+        console.log("render cards list")
         console.log(this.props);
-        if (!this.props.product)
-            return null;
-        console.debug(`Getting: <CardListing productId={${this.props.product.id}}>`)
+        let product = this.props.product || this.props.products[this.props.productId];
 
-        let {id, image_urls, price, quantity, store_id, title, user_id, views} = this.props.product;
+        let {id, image_urls, price, quantity, store_id, title, user_id, views} = product;
         let areas = ['image', 'title', 'rating', 'price', 'additional']
         let components = {
             'image': <div className="global-card-listing-image-div">
@@ -166,4 +134,4 @@ class CardListing extends React.Component {
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(CardListing);
+export default CardListing
