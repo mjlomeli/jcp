@@ -5,12 +5,10 @@ import {
     Link,
     HashRouter
 } from 'react-router-dom';
-import {connect} from 'react-redux';
 import React from 'react';
 import './card_listing.css'
 import GridLayout from "../grid_layout/grid_layout";
 import Rating from "../rating/rating";
-import {fetchProduct} from "../../../actions/product_actions";
 
 
 class Price extends React.Component {
@@ -109,8 +107,6 @@ class CardListing extends React.Component {
     }
 
     render() {
-        console.log("render cards list")
-        console.log(this.props);
         let product = this.props.product || this.props.products[this.props.productId];
 
         let {id, image_urls, price, quantity, store_id, title, user_id, views} = product;
