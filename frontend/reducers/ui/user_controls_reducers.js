@@ -2,7 +2,7 @@ import {
     RECEIVE_USER_CONTROL
 } from "../../actions/ui_user_control_actions";
 
-export const defaultUserControls = {
+export const defaultUserControlsReducer = {
     cardFeatured: {},
     cardListing: {},
     cardThumbnail: {},
@@ -20,7 +20,7 @@ export const defaultUserControls = {
     product: {}
 }
 
-export default function UserControlsReducer(prevState=defaultUserControls, action){
+export default function UserControlsReducer(prevState=defaultUserControlsReducer, action){
     Object.freeze(prevState);
     let newState = Object.assign({}, prevState) // this isn't a deep copy
     switch(action.type){

@@ -51,8 +51,6 @@ class Gallery extends React.Component {
 
         return <div>
             <GridLayout callback={this.setImage.bind(this)} areas={areas} components={components} classGrid="gallery-grid" classItems="gallery-items"/>
-            <br />
-            <img className="gallery-carousel" src={this.state.galleryImage} alt="image"/>
         </div>
     }
 }

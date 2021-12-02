@@ -1,4 +1,4 @@
-const defaultTheme = {
+const defaultThemeReducer = {
     bodyTemplate: {},
     cartTemplate: {},
     collections: {},
@@ -9,19 +9,18 @@ const defaultTheme = {
 }
 
 import {
-    RECEIVE_THEME_UI
+    RECEIVE_THEME
 } from "../../actions/ui_theme_actions";
 
 
-export default function UserControlsReducer(prevState=defaultTheme, action){
+export default function ThemeReducer(prevState=defaultThemeReducer, action){
     Object.freeze(prevState);
     let newState = Object.assign({}, prevState) // this isn't a deep copy
     switch(action.type){
-        case RECEIVE_UI:
-            newState[action.uiid.reducer][action.uiid.id] = action.ui;
+        case RECEIVE_THEME:
+            newState[action.reducer][action.id] = action.ui;
             return newState;
         default:
-            console.debug("[UIProduct]: No case matched \n\t↳ frontend/reducers/products_error_reducer.js:17")
             return newState
     }
 }
