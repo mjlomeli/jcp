@@ -45,14 +45,13 @@ class GridLayout extends React.Component {
     render() {
         let areas = this.state.areas.map(r => `'${r}'`)
         let style = {gridTemplateAreas: areas.join(' ')}
-        console.log(this.state.components);
         return <>
             <div onMouseEnter={this.onmouseenter} onMouseLeave={this.onmouseleave} onClick={this.onclick}
                  className={this.classGrid} style={style}>{
                 Object.entries(this.state.components).map(
                     (obj, i) => {
                         let [key, value] = obj;
-                        return <div key={uuidv4()} className={this.classItems} style={{gridArea: `${key}`}}>{value}</div>
+                        return <div key={i} className={this.classItems} style={{gridArea: `${key}`}}>{value}</div>
                     })
             }</div>
         </>

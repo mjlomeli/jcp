@@ -27,7 +27,7 @@ class Gallery extends React.Component {
             this.setState({...defaultGallery});
     }
 
-    setImage(index) {
+    setImage(index, e) {
         this.setState({galleryImage: this.state.images[index], galleryIndex: index});
     }
 
@@ -42,15 +42,15 @@ class Gallery extends React.Component {
             "image3 carousel carousel carousel",
         ];
         let components = {
-            'carousel': <img className="gallery-carousel" src={this.state.galleryImage} alt="image"/>,
-            'image0': <img onClick={() => this.setImage(0)} src={this.state.images[0]} alt="img"/>,
+            'image0': <img onClick={this.setImage.bind(this, 0)} src={this.state.images[0]} alt="img"/>,
             'image1': <img onClick={() => this.setImage(1)} src={this.state.images[1]} alt="img"/>,
             'image2': <img onClick={() => this.setImage(2)} src={this.state.images[2]} alt="img"/>,
-            'image3': <img onClick={() => this.setImage(3)} src={this.state.images[3]} alt="img"/>
+            'image3': <img onClick={() => this.setImage(3)} src={this.state.images[3]} alt="img"/>,
+            'carousel': <img className="gallery-carousel" src={this.state.galleryImage} alt="image"/>
         }
 
         return <div>
-            <GridLayout areas={areas} components={components} classGrid="gallery-grid" classItems="gallery-items"/>
+            <GridLayout callback={this.setImage.bind(this)} areas={areas} components={components} classGrid="gallery-grid" classItems="gallery-items"/>
             <br />
             <img className="gallery-carousel" src={this.state.galleryImage} alt="image"/>
         </div>
