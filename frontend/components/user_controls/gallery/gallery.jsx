@@ -92,7 +92,7 @@ class Gallery extends React.Component {
         </div>
 
         this.props.updateUserControl(Gallery.REDUCER, this.id,
-            {component: gallery, carousel: this.state.carousel, images: defaultGallery.images})
+            {component: gallery, carousel: this.state.carousel, images: this.state.images})
         return null;
     }
 
