@@ -51,13 +51,19 @@ class Gallery extends React.Component {
         super(props);
         this.state = {
             carousel: props.carousel || defaultGallery.galleryImage,
-            images: props.images || defaultGallery.images
+            images: props.images || defaultGallery.images,
+            lowerImage: defaultGallery.galleryImage,
+            index: 0,
+            components: {
+                'carousel':<img className="gallery-carousel" src={defaultGallery.galleryImage} alt="carousel" />,
+                '0': <img onClick={() => this.setImage(0)} src={defaultGallery.images[0]} alt="img"/>,
+                '1': <img onClick={() => this.setImage(1)} src={defaultGallery.images[1]} alt="img"/>,
+                '2': <img onClick={() => this.setImage(2)} src={defaultGallery.images[2]} alt="img"/>,
+                '3': <img onClick={() => this.setImage(3)} src={defaultGallery.images[3]} alt="img"/>
+            },
+            component: props.component
         }
         this.id = this.props.galleryId || this.props.match && this.props.match.params.id;
-    }
-
-    componentDidMount() {
-        this.setState({carousel: this.props.carousel || defaultGallery.galleryImage});
     }
 
     isValid(){
@@ -88,7 +94,7 @@ class Gallery extends React.Component {
             <GridLayout gridLayoutId={this.props.galleryId}
                         classGrid="gallery-grid"
                         classItems="gallery-items"/>
-            <img src={this.state.carousel} alt="image"/>
+            {this.state.components['carousel']}
         </div>
 
         this.props.updateUserControl(Gallery.REDUCER, this.id,
@@ -96,8 +102,10 @@ class Gallery extends React.Component {
         return null;
     }
 
-    setImage(index) {
-        this.setState({carousel: this.props.images[index]})
+    setImage(index, e) {
+        let components = this.state.components;
+        components['carousel'] = this.state.components[index]
+        this.setState({carousel: this.state.images[index], components, lowerImage: this.state.images[index]})
     }
 
     render() {
