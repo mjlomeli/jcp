@@ -20,7 +20,7 @@ class Api::ProductsController < ApplicationController
     if @product
       render json: @product
     else
-      render json: ["Could not locate product id: #{params[:id]}"], status: 400
+      render json: ["Could not locate product_template id: #{params[:id]}"], status: 400
     end
   end
 
@@ -38,7 +38,7 @@ class Api::ProductsController < ApplicationController
     if @product && @product.update_attributes(product_params)
       render :show
     elsif !@product
-      render json: ["Could not locate product id: #{params[:id]}"], status: 400
+      render json: ["Could not locate product_template id: #{params[:id]}"], status: 400
     else
       render json: @product.errors.full_messages, status: 401
     end
@@ -49,7 +49,7 @@ class Api::ProductsController < ApplicationController
     if @product && @product.destroy
       render :show
     elsif !@product
-      render json: ["Could not locate product id: #{params[:id]}"], status: 400
+      render json: ["Could not locate product_template id: #{params[:id]}"], status: 400
     else
       render json: @product.errors.full_messages, status: 401
     end
@@ -59,7 +59,7 @@ class Api::ProductsController < ApplicationController
 
   def product_params
     # the .require makes it so that when a controller is using the
-    # product_params function, if product doesn't exist in the body_template
+    # product_params function, if product_template doesn't exist in the body_template
     # provided by a form, then the controller will not continue
     params.require(:product)
           .permit(:title, :price, :quantity, :views, :num_favorers,

@@ -34,15 +34,18 @@ class ProductsList extends React.Component {
     }
 
     componentDidMount() {
-        this.props.fetchRandomProductsRange(this.props.start || 0, this.props.end || 20);
+        if (!this.props.productsIds || this.props.products) {
+            this.props.fetchRandomProductsRange(this.props.start || 0, this.props.end || 20);
+        }
     }
 
     render() {
         if (this.props.productsIds && !this.props.productsIds.length)
             return null;
 
-        let components = this.props.productsIds.map(
-            productId => <CardListing productId={productId} products={this.props.products} product={this.props.products[productId]}/>);
+        let components = this.props.productsIds.map(productId => {
+            return <CardListing productId={productId} products={this.props.products} listing={this.props.products[productId]}/>
+        });
         return <FlowLayout components={components || defaultComponents}
                            maxColumns={this.props.maxColumns || 4}
                            classGrid={this.classGrid}

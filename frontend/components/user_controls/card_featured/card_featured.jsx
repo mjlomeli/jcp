@@ -124,7 +124,7 @@ class CardFeatured extends React.Component {
 
     onClick(e) {
         e.preventDefault();
-        // TODO: send to product page
+        // TODO: send to product_template page
     }
 
     render() {

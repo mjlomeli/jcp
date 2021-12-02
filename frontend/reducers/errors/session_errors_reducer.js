@@ -1,17 +1,16 @@
 import {
-    RECEIVE_PRODUCT,
-    RECEIVE_PRODUCT_ERROR
-} from "../../actions/product_actions";
+    RECEIVE_SESSION_ERRORS,
+    RECEIVE_USER,
+} from '../../actions/session_actions';
 
-export default (prevState = [], action) => {
-    Object.freeze(prevState);
+export default (state = [], action) => {
+    Object.freeze(state);
     switch (action.type) {
-        case RECEIVE_PRODUCT_ERROR:
+        case RECEIVE_SESSION_ERRORS:
             return action.errors;
-        case RECEIVE_PRODUCT:
-            // If the product is valid, return empty errors
+        case RECEIVE_USER:
             return [];
         default:
-            return prevState;
+            return state;
     }
 };

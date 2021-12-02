@@ -28,10 +28,8 @@ export default function ProductReducer(prevState={list: [], all: {}, one: null},
                 newState.one = null;
             return newState;
         case RECEIVE_PRODUCT_ERROR:
-            console.debug("[ProductReducer]: Error needs to be in errors reducer. \n\t↳ frontend/reducers/products_error_reducer.js:21")
             return newState
         default:
-            console.debug("[ProductReducer]: No case matched \n\t↳ frontend/reducers/products_error_reducer.js:24")
             return newState
     }
 }

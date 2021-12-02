@@ -83,7 +83,7 @@ let defaultListing = {
     price: 25.99,
     discount: 0.2,
     freeShipping: true,
-    link: "/product"
+    link: "/product_template"
 }
 
 class CardListing extends React.Component {
@@ -95,8 +95,12 @@ class CardListing extends React.Component {
     }
 
     componentDidMount() {
-        if (!this.state.listing)
-            this.setState({listing: defaultListing});
+        if (!this.state.listing) {
+            if (this.props.listing)
+                this.setState({listing: this.props.listing});
+            else
+                this.setState({listing: defaultListing});
+        }
     }
 
     resize(title){
@@ -109,8 +113,9 @@ class CardListing extends React.Component {
     render() {
         if (!this.state.listing)
             return null;
-        let {id, link, imageUrl, price, rating, ratingCount, discount, store, quantity,
+        let {id, link, image_urls, imageUrl, price, rating, ratingCount, discount, store, quantity,
             store_id, title, user_id, views} = this.state.listing;
+        imageUrl = (image_urls && image_urls[0]) || imageUrl
         let areas = ['image', 'title', 'rating', 'price', 'additional']
         let components = {
             'image': <div className="global-card-listing-image-div">

@@ -31,6 +31,8 @@ import ProductsTemplate from "./themes/products_template/products_template";
 import ProductsList from "./user_controls/product_list/products_list";
 import FlowLayout from "./user_controls/flow_layout/flow_layout";
 import CartTemplate from "./themes/cart_template/cart_template";
+import ProductTemplate from "./themes/product_template/product_template";
+import GridLayout from "./user_controls/grid_layout/grid_layout";
 
 /* learn more about grid-auto-flow */
 
@@ -59,7 +61,7 @@ const App = () => (
             <Route exact path="/card_thumbnail" component={CardThumbnail} />
             <Route exact path="/cart_item" component={CartItem} />
             <Route exact path="/circular_thumbnail" component={CircularThumbnail} />
-            <Route exact path="/gallery" component={Gallery} />
+            <Route exact path="/gallery/:id" component={Gallery} />
             <Route exact path="/rating" component={Rating} />
             <Route exact path="/searchbar" component={SearchBar} />
             <Route exact path="/view_layout" component={ViewLayout} />
@@ -69,6 +71,8 @@ const App = () => (
             <Route exact path="/flow_layout" component={FlowLayout} />
             <Route exact path="/rating" component={Rating} />
             <Route exact path="/card_listing/:id" component={CardListing} />
+            <Route exact path="/product/:id" component={ProductTemplate} />
+            <Route exact path="/grid_layout/:id" component={GridLayout} />
         </Switch>
         {/*END OF DON'T REMOVE*/}
 

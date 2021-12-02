@@ -54,7 +54,7 @@ let defaultCard = {
     price: 33.99,
     freeShipping: true,
     discount: 0,
-    link: "/product"
+    link: "/product_template"
 }
 
 class CardThumbnail extends React.Component {
@@ -81,7 +81,7 @@ class CardThumbnail extends React.Component {
 
     onClick(e) {
         e.preventDefault();
-        // TODO: send to product page
+        // TODO: send to product_template page
     }
 
     render() {
