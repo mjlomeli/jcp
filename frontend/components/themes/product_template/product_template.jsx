@@ -10,41 +10,31 @@ import {connect} from 'react-redux';
 import React from 'react';
 import './product_template.css'
 import GridLayout from "../../user_controls/grid_layout/grid_layout";
-import Gallery from "../../user_controls/gallery/gallery";
-import {fetchTheme} from "../../../actions/ui_theme_actions";
 import {fetchProduct} from "../../../actions/product_actions";
-import {Link} from "react-router-dom";
-
+import Gallery from "../../user_controls/gallery/gallery";
 
 const mapStateToProps = (state, ownProps) => {
+    let products = state.entities.products;
     let productId = (ownProps.match && ownProps.match.params.id) || ownProps.productId || null;
-    let productTheme = state.ui.theme.productTemplate[productId];
-    let productEntity = state.entities.products.all[productId];
-    let component = productTheme && productTheme.component || null;
-    let userId = state.session.id || null;
+    let product = (productId && products.all[productId]) || null;
 
     return {
         //errors: errors.session, // need to add a ui or user_control errors
+        products: products.all,
         productId: productId,
-        component: component,
-        product: productEntity,
-        reducer: "productTemplate",
-        userId: userId
+        product: product
     }
 };
 
-const mapDispatchToProps = (dispatch, ownProp) => {
-    let id = ownProp.match.params.id;
+const mapDispatchToProps = dispatch => {
     return {
-        fetchTheme: () => dispatch(fetchTheme(ProductTemplate.REDUCER, id)) || null,
-        updateTheme: (ui) => dispatch(updateTheme(ProductTemplate.REDUCER, id, ui)) || null,
-        fetchProduct: (productId) => dispatch(fetchProduct(productId)) || null
+        fetchProduct: (productId) => dispatch(fetchProduct(productId))
     }
 };
 
 let defaultProduct = {
-    productId: 1,
     title: "Personalized Name Puzzle With Pegs, Personalized Name Puzzle With Pegs, New Baby Gift",
+    imageUrl: "https://i.etsystatic.com/17305851/c/1801/1432/177/346/il/4ad87f/3411776815/il_340x270.3411776815_s6oc.jpg",
     rating: 4.6,
     ratingCount: 1399,
     store: "Plexida",
@@ -62,15 +52,15 @@ let defaultProduct = {
         "This instrument will brings you a pleasurable musical joy and completely involves you into a great high-quality sound.\n" +
         "If you have any questions, please feel free to contact me.\n" +
         "Shipping will include tracking. The amp will be carefully packed.",
-    images: [
+    image_urls: [
         "https://i.etsystatic.com/21035245/r/il/39a4e2/2038971261/il_794xN.2038971261_9zrx.jpg",
         "https://i.etsystatic.com/21035245/r/il/5fc9a7/2038971731/il_794xN.2038971731_8ffn.jpg",
         "https://i.etsystatic.com/21035245/r/il/477ace/2038972099/il_794xN.2038972099_8k6b.jpg",
         "https://i.etsystatic.com/21035245/r/il/22765d/1991411394/il_794xN.1991411394_1nzf.jpg"]
 }
 
+
 class ProductTemplate extends React.Component {
-    static REDUCER = "productTemplate";
     /** Creates a product_template show page.
      * @param {Object} props                - The inputs passed to the components
      * @property {Object} state             - The data of the product_template having product_template: Object.
@@ -80,18 +70,8 @@ class ProductTemplate extends React.Component {
      */
     constructor(props) {
         super(props);
-        console.log(props)
-        if (props.product) {
-            this.state = {
-                component: props.component,
-                productId: props.productId,
-                product: props.product
-            }
-        }
-        else
-            this.state = {component: props.component, product: defaultProduct}
-
-        this.id = this.props.productId || this.props.match && this.props.match.params.id;
+        console.log("Constructor")
+        this.state = {}
         this.onclick = props.onClick || this.onClick.bind(this);
     }
 
@@ -99,7 +79,8 @@ class ProductTemplate extends React.Component {
      * @type {()  => VoidFunction}
      * */
     componentDidMount() {
-        this.props.fetchProduct(this.id);
+        if (!this.isValid())
+            return this.resolve();
     }
 
     /** Action when the product_template page has a click.
@@ -133,53 +114,65 @@ class ProductTemplate extends React.Component {
      * @type {()  => true | false}
      */
     isValid(){
-        let theme = this.props.fetchTheme();
-        return this.props.component || this.state.component || theme && theme.component || false;
+        return this.state.product ||
+            this.props.productId && (this.props.productId in this.props.products) ||
+            this.state.productId && (this.state.productId in this.props.products)
     }
 
     /** Tries to resolve any issues when the data isn't sufficient to render the page.
      * @return {null} - Returns null for shorthand ending in an if statement
      **/
     resolve(){
+        if (this.props.product)
+            this.setState({product: this.props.product});
+        else if (this.props.productId)
+            this.props.fetchProduct(this.props.productId);
+        else if (this.props.match && this.props.match.params.id)
+            this.props.fetchProduct(this.props.match.params.id);
+        else
+            this.setState({product: defaultProduct});
+        return null;
+    }
 
+    getProduct(){
+        if (this.state.product)
+            return this.state.product;
+        else if (this.props.productId && this.props.products)
+            return this.props.products[this.props.productId];
+        else
+            console.warn("Product: unable to find product.")
+        return null;
+    }
+
+
+    description(product){
+        return <div>
+            <h2>Description</h2>{
+            product.description.replace(/(\\r\\n|\\n|\\r)/gm, "\n").replace(/(\\t)/gm, "\t").split("\n").map(
+                (line, index) => <p key={index}>{line}</p>
+            )
+        }</div>
     }
 
     /** Renders the component
      * @returns {JSX.Element}
      */
-    render(){
-        let product = this.props.product;
-        if (!product)
-            return null;
+    render() {
+        if (!this.isValid())
+            return this.resolve();
+        let product = this.getProduct();
 
         let areas = [
             'gallery gallery options',
             'details details options'
         ]
-
-        let description = (!product.description) ? null : <div>
-            <h2>Description</h2>{
-            product.description.replace("\\r\\n", "\\n").replace("\\r", "").split("\\n").map(
-                (line, index) => <p key={index}>{line}</p>
-            )
-        }</div>
-
-        let options = <>
-            <h3>{product.store}</h3>
-            <h2>{product.title}</h2>
-            <h2>{product.price}</h2>
-            <a href={`#`}>Add to cart</a>
-        </>
-
         let components = {
-            gallery: <Gallery images={product.images || product.image_urls || null}/>,
-            details: description,
-            options: options
+            gallery: <Gallery />,
+            details: this.description(product),
+            options: this.description(product)
         }
-
         return <GridLayout areas={areas} components={components} />
     }
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(ProductTemplate)
-
