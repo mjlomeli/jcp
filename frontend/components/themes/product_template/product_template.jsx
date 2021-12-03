@@ -47,10 +47,20 @@ const mapDispatchToProps = dispatch => {
     return {
         //fetchTheme: () => dispatch(fetchTheme(ProductTemplate.REDUCER, id)) || null,
         //updateTheme: (ui) => dispatch(updateTheme(ProductTemplate.REDUCER, id, ui)) || null,
-        fetchProduct: (productId) => dispatch(fetchProduct(productId))
+        fetchProduct: (productId) => dispatch(fetchProduct(productId)),
+        //createCartItem: (productId) => dispatch(createCartItem(productId))
     }
 };
 
+let defaultGallery = {
+    carousel: "https://i.etsystatic.com/21035245/r/il/39a4e2/2038971261/il_794xN.2038971261_9zrx.jpg",
+    image1: "https://i.etsystatic.com/21035245/r/il/39a4e2/2038971261/il_794xN.2038971261_9zrx.jpg",
+    image2: "https://i.etsystatic.com/21035245/r/il/5fc9a7/2038971731/il_794xN.2038971731_8ffn.jpg",
+    image3: "https://i.etsystatic.com/21035245/r/il/477ace/2038972099/il_794xN.2038972099_8k6b.jpg",
+    image4: "https://i.etsystatic.com/21035245/r/il/22765d/1991411394/il_794xN.1991411394_1nzf.jpg",
+    imageIndex: 1,
+    length: 4
+}
 let defaultProduct = {
     title: "Personalized Name Puzzle With Pegs, Personalized Name Puzzle With Pegs, New Baby Gift",
     imageUrl: "https://i.etsystatic.com/17305851/c/1801/1432/177/346/il/4ad87f/3411776815/il_340x270.3411776815_s6oc.jpg",
@@ -78,7 +88,6 @@ let defaultProduct = {
         "https://i.etsystatic.com/21035245/r/il/22765d/1991411394/il_794xN.1991411394_1nzf.jpg"]
 }
 
-
 class ProductTemplate extends React.Component {
     /** Creates a product_template show page.
      * @param {Object} props                - The inputs passed to the components
@@ -97,6 +106,11 @@ class ProductTemplate extends React.Component {
      * @type {()  => VoidFunction}
      * */
     componentDidMount() {
+        if (!this.props.gallery)
+            this.setState({gallery: defaultGallery});
+        else
+            this.setState({gallery: this.props.gallery})
+
         if (!this.isValid())
             return this.resolve();
     }
@@ -107,6 +121,8 @@ class ProductTemplate extends React.Component {
      */
     onClick(e) {
         e.preventDefault();
+        let index = parseInt(e.currentTarget.dataset.index);
+        this.setState({imageIndex: index});
     }
 
 
@@ -164,12 +180,29 @@ class ProductTemplate extends React.Component {
 
 
     description(product){
-        return <div>
+        return <div className="product-template-items-description">
             <h2>Description</h2>{
             product.description.replace(/(\\r\\n|\\n|\\r)/gm, "\n").replace(/(\\t)/gm, "\t").split("\n").map(
                 (line, index) => <p key={index}>{line}</p>
             )
         }</div>
+    }
+
+    addToCart(e){
+        e.preventDefault();
+        //this.props.createCartItem(this.props.productId);
+    }
+
+    options(){
+        let product = this.getProduct();
+        return <div className="product-template-items-options">
+            <h3>{product.store}</h3>
+            <h2>{product.title}</h2>
+            <h2>{product.price}</h2>
+            <form onSubmit={this.addToCart.bind(this)}>
+                <button type="submit" className="product-template-items-options-submit">Proceed to checkout</button>
+            </form>
+        </div>
     }
 
     /** Renders the component
@@ -185,13 +218,6 @@ class ProductTemplate extends React.Component {
             'details details options'
         ]
 
-        let options = <>
-            <h3>{product.store}</h3>
-            <h2>{product.title}</h2>
-            <h2>{product.price}</h2>
-            <a href={`#`}>Add to cart</a>
-        </>
-
         let images = product.image_urls || product.images ||  null;
         let gallery = {
             carousel: images && images[0] || null,
@@ -204,11 +230,86 @@ class ProductTemplate extends React.Component {
         }
 
         let components = {
-            gallery: <Gallery gallery={gallery || product.images || product.image_urls || null}/>,
+            gallery: this.gallery(gallery || product.images || product.image_urls || null),
             details: this.description(product),
-            options: options
+            options: this.options()
         }
-        return <GridLayout areas={areas} components={components} />
+
+
+        return this.gridLayout(areas, components, "product-template-grid", "product-template-items")
+    }
+
+
+    gridLayout(areas, components, classGrid, classItems){
+        let a = areas.map(r => `'${r}'`)
+        let s = {gridTemplateAreas: a.join(' ')}
+        return <>
+            <div className={`global-gridlayout-grid ${classGrid || ""}`} style={s}>{
+                Object.entries(components).map(
+                    (obj, i) => {
+                        let [key, value] = obj;
+                        return <div key={i}
+                                    className={`global-gridlayout-items ${classItems || ""}`}
+                                    style={{gridArea: `${key}`}}>{value}
+                        </div>
+                    })
+            }</div>
+
+        </>
+    }
+
+    gallery(gallery){
+        let mainImage = <>
+            {this.buttonLeft()}
+            <img id="gallery-image" className="gallery-carousel" src={gallery.carousel} alt="img"/>
+            {this.buttonRight()}
+        </>
+
+        let areas = [];
+        let components = {'carousel': mainImage}
+        for (let i = 0; i < gallery.length; i++){
+            let row = [`image${i+1}`].concat(Array(gallery.length-1).fill('carousel'));
+            areas.push(row.join(" "));
+            components[i+1] = this.generateImage(i+1);
+        }
+
+        return this.gridLayout(areas, components, "product-template-gallery-grid", "gallery-items")
+    }
+
+    leftClick() {
+        let gallery = this.state.gallery;
+        let imageIndex = gallery.imageIndex <= 1 ? gallery.length : gallery.imageIndex - 1;
+        let carousel = gallery[`image${imageIndex}`];
+        this.setState({imageIndex, carousel})
+    }
+
+    rightClick() {
+        let gallery = this.state.gallery;
+        let imageIndex = gallery.imageIndex <= 1 ? gallery.length : gallery.imageIndex - 1;
+        let carousel = gallery[`image${imageIndex}`];
+        this.setState({imageIndex, carousel})
+    }
+
+    generateImage(index){
+        return <img src={this.state.gallery[`image${index}`]} alt="img" data-index={index}/>
+    }
+
+    buttonLeft() {
+        return <svg className="gallery-button gallery-button-left"
+                    onClick={() => this.leftClick()}
+                    xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+            <path
+                d="M16,21a0.994,0.994,0,0,1-.664-0.253L5.5,12l9.841-8.747a1,1,0,0,1,1.328,1.494L8.5,12l8.159,7.253A1,1,0,0,1,16,21Z"></path>
+        </svg>
+    }
+
+    buttonRight() {
+        return <svg className="gallery-button gallery-button-right"
+                    onClick={() => this.rightClick()}
+                    xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+            <path
+                d="M8,21a1,1,0,0,1-.664-1.747L15.5,12,7.336,4.747A1,1,0,0,1,8.664,3.253L18.5,12,8.664,20.747A0.994,0.994,0,0,1,8,21Z"></path>
+        </svg>
     }
 }
 

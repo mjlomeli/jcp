@@ -28,14 +28,14 @@ export const updateCartItem = (cartItem) => {
     });
 };
 
-export const deleteCartItems = (cartItemId) => {
+export const deleteCartItem = (cartItemId) => {
     return $.ajax({
         url: `/api/cartItems/${cartItemId}`,
         method: 'DELETE'
     });
 };
 
-window.fetchCartItems = fetchCartItems;
+window.fetchCartItem = fetchCartItem;
 window.fetchCartItem = fetchCartItem;
 window.createCartItem = createCartItem;
 window.updateCartItem = updateCartItem;

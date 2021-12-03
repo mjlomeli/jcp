@@ -1,0 +1,115 @@
+.product-template-grid {
+    display: inline-grid; /* DO NOT REMOVE */
+    /* the original gridlayout-container
+    Nothing here unless something new comes up.
+    This will override every existing gridlayout container.
+    */
+
+    /* remove comment for testing purposes */
+    /*background-color: rgba(33, 150, 243, 0.39);*/
+}
+
+
+.product-template-items {
+
+}
+
+
+.product-template-items-gallery {
+
+}
+
+.product-template-items-options {
+
+
+}
+
+.product-template-items-description {
+    
+}
+
+
+
+
+.gallery-items img {
+    border-radius: 0.5em;
+}
+
+.gallery-carousel {
+    max-height: 100%;
+    max-width: 100%;
+    overflow: hidden;
+}
+
+.gallery-grid {
+    column-gap: 1em;
+    row-gap: 0.3em;
+}
+
+.gallery-items img:not(.gallery-carousel){
+    width: 60px;
+    height: 60px;
+    z-index: 90;
+    left: 0;
+    top: 0;
+    box-sizing: inherit;
+    display: block;
+    filter: opacity(60%);
+    object-fit: cover;
+}
+
+
+.gallery-items:hover img:not(.gallery-carousel){
+    filter: opacity(100%);
+}
+
+
+.gallery-button {
+    color: #222222;
+    background-color: white;
+    line-height: 1;
+    padding: 0.5em;
+    text-decoration: none;
+    height: 3em;
+    width: 3em;
+    z-index: 10;
+    border-radius: 50%;
+    overflow: hidden;
+    position: absolute;
+    display: inline-flex;
+    box-sizing: inherit;
+}
+
+.gallery-button:hover {
+    box-shadow: 0em 0em 1em 0 rgba(26, 26, 26, 0.44);
+    transform: scale(1.025);
+    transition: transform 0.02s ease, box-shadow 0.2s ease;
+}
+
+.gallery-button-right {
+    margin-right: 2em;
+    right: 0;
+}
+
+.gallery-button-left {
+    margin-left: 2em;
+    left: 0;
+}
+
+.product-template-items-options-submit {
+    font-family: -apple-system, BlinkMacSystemFont, "Roboto", "Droid Sans", "Segoe UI", "Helvetica", Arial, sans-serif;
+    background: transparent;
+    font-size: 1em;
+    font-weight: 500;
+    border-radius: 96px;
+    border: 0.15em solid black;
+    padding: 1em 3.5em 1em 3.5em;
+    cursor: pointer;
+}
+
+
+.product-template-items-options-submit:hover {
+    transform: scale(1.01);
+    box-shadow: 0em 0em 1.5em 0 rgba(26, 26, 26, 0.12);
+    transition: transform 0.07s ease, box-shadow 0.3s ease;
+}
