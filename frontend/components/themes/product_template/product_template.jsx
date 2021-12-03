@@ -11,6 +11,7 @@ import React from 'react';
 import './product_template.css'
 import GridLayout from "../../user_controls/grid_layout/grid_layout";
 import {fetchProduct} from "../../../actions/product_actions";
+import {fetchTheme, updateTheme} from "../../../actions/ui_theme_actions";
 import Gallery from "../../user_controls/gallery/gallery";
 
 const mapStateToProps = (state, ownProps) => {
@@ -18,16 +19,34 @@ const mapStateToProps = (state, ownProps) => {
     let productId = (ownProps.match && ownProps.match.params.id) || ownProps.productId || null;
     let product = (productId && products.all[productId]) || null;
 
+    /*
+    let productId = (ownProps.match && ownProps.match.params.id) || ownProps.productId || null;
+    let productTheme = state.ui.theme.productTemplate[productId];
+    let productEntity = state.entities.products.all[productId];
+    let component = productTheme && productTheme.component || null;
+    let userId = state.session.id || null;
+     */
+
     return {
         //errors: errors.session, // need to add a ui or user_control errors
         products: products.all,
         productId: productId,
         product: product
+
+        /*
+        productId: productId,
+        component: component,
+        product: productEntity,
+        reducer: "productTemplate",
+        userId: userId
+         */
     }
 };
 
 const mapDispatchToProps = dispatch => {
     return {
+        //fetchTheme: () => dispatch(fetchTheme(ProductTemplate.REDUCER, id)) || null,
+        //updateTheme: (ui) => dispatch(updateTheme(ProductTemplate.REDUCER, id, ui)) || null,
         fetchProduct: (productId) => dispatch(fetchProduct(productId))
     }
 };
@@ -70,7 +89,6 @@ class ProductTemplate extends React.Component {
      */
     constructor(props) {
         super(props);
-        console.log("Constructor")
         this.state = {}
         this.onclick = props.onClick || this.onClick.bind(this);
     }
@@ -166,10 +184,29 @@ class ProductTemplate extends React.Component {
             'gallery gallery options',
             'details details options'
         ]
+
+        let options = <>
+            <h3>{product.store}</h3>
+            <h2>{product.title}</h2>
+            <h2>{product.price}</h2>
+            <a href={`#`}>Add to cart</a>
+        </>
+
+        let images = product.image_urls || product.images ||  null;
+        let gallery = {
+            carousel: images && images[0] || null,
+            image1: images && images[0] || null,
+            image2: images && images[1] || null,
+            image3: images && images[2] || null,
+            image4: images && images[3] || null,
+            imageIndex: 1,
+            length: 4
+        }
+
         let components = {
-            gallery: <Gallery />,
+            gallery: <Gallery gallery={gallery || product.images || product.image_urls || null}/>,
             details: this.description(product),
-            options: this.description(product)
+            options: options
         }
         return <GridLayout areas={areas} components={components} />
     }

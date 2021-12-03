@@ -31,7 +31,6 @@ class Gallery extends React.Component {
     }
 
     componentDidMount() {
-        console.log("entered")
         if (!this.props.gallery)
             this.setState({gallery: defaultGallery});
         else
@@ -92,10 +91,8 @@ class Gallery extends React.Component {
         if (!this.state.gallery)
             return null;
 
-        console.log("pass")
         let areas = [];
-        let components = {'carousel': this.gallery(),}
-        console.log(this.state)
+        let components = {'carousel': this.gallery()}
         for (let i = 0; i < this.state.gallery.length; i++){
             let row = [`image${i+1}`].concat(Array(this.state.gallery.length-1).fill('carousel'));
             areas.push(row.join(" "));
