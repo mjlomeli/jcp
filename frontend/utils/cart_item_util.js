@@ -1,41 +1,39 @@
-export const fetchCartItems = () => {
+export const fetchCartItems = (userId) => {
     return $.ajax({
-        url: '/api/cartItems',
+        url: `/api/users/${userId}/cart_items`,
         method: 'GET'
     });
 };
 
-export const fetchCartItem = (cartItemId) => {
+export const createCartItem = (cartItem, userId) => {
+    // Column user_id doesnt exist must use find_by(id: params[:user_id])
+    let cart_item = {...cartItem, user_id: userId};
     return $.ajax({
-        url: `/api/cartItems/${cartItemId}`,
-        method: 'GET'
-    });
-};
-
-export const createCartItem = (cartItem) => {
-    return $.ajax({
-        url: '/api/cartItems',
+        url: `/api/users/${userId}/cart_items`,
         method: 'POST',
-        data: {cartItem: cartItem}
+        data: {cart_item}
     });
 };
 
-export const updateCartItem = (cartItem) => {
+export const updateCartItem = (cartItem, userId) => {
+    // Column user_id doesnt exist must use find_by(id: params[:user_id])
+    let cart_item = {...cartItem, user_id: userId};
     return $.ajax({
-        url: `/api/cartItems/${cartItem.id}`,
+        url: `/api/users/${userId}/cart_items/${cartItem.id}`,
         method: 'PATCH',
-        data: {cartItem: cartItem}
+        data: {cart_item}
     });
 };
 
-export const deleteCartItem = (cartItemId) => {
+export const deleteCartItem = (cartItemId, userId) => {
+    // Column user_id doesnt exist must use find_by(id: params[:user_id])
     return $.ajax({
-        url: `/api/cartItems/${cartItemId}`,
+        url: `/api/users/${userId}/cart_items/${cartItemId}`,
         method: 'DELETE'
     });
 };
 
-window.fetchCartItem = fetchCartItem;
+window.fetchCartItems = fetchCartItems;
 window.fetchCartItem = fetchCartItem;
 window.createCartItem = createCartItem;
 window.updateCartItem = updateCartItem;

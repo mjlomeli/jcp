@@ -4,12 +4,15 @@ Rails.application.routes.draw do
     # API routes
     namespace :api, defaults: { format: :json } do
       resource :session, only: [:create, :destroy]
-      resources :users, only: [:index, :create, :show, :update]
-      resources :products, only: [:index, :create, :show, :update, :destroy]
 
-      # TODO: these two routes need to be nested inside users routes or products_template
-      resources :reviews, only: [:index, :create, :show, :update, :destroy]
-      resources :cart_items, only: [:create, :show, :update]
+      resources :users, only: [:index, :create, :show, :update] do
+        resources :reviews, only: [:index]
+        resources :cart_items, only: [:index, :create, :destroy, :update]
+      end
+
+      resources :products, only: [:index, :create, :show, :update, :destroy] do
+        resources :reviews, only: [:index, :create, :update, :destroy]
+      end
     end
 
     # Home page route
