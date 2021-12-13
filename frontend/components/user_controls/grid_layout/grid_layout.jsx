@@ -42,7 +42,6 @@ class GridLayout extends React.Component {
     }
 
     render() {
-        // fixed gallery layout. found out
         // Everything must be direct prop passing to keep event driven functionality.
         // Any component assigned to `this` or `state` will no longer have visible actions.
         let areaNames = this.props.areas || defaultArea;
