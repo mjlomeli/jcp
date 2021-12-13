@@ -1,6 +1,5 @@
 import React from 'react';
 import './grid_layout.css'
-import {v4 as uuidv4} from "uuid";
 
 let defaultGrid = () => {
     let layout4x5 = [];
@@ -23,36 +22,44 @@ let [defaultArea, defaultComponents] = defaultGrid();
 
 class GridLayout extends React.Component {
 
+    /** Everything must be direct prop passing to keep event
+     * driven functionality.
+     * @param props
+     */
     constructor(props) {
         super(props);
-        this.state = {
-            areas: props.areas || defaultArea,
-            components: props.components || defaultComponents
-        }
         if (props.areas && props.components) {
-            this.classGrid = `global-gridlayout-grid ${props.classGrid || ""}`;
+            this.className = `global-gridlayout-grid ${props.classGrid || ""}`;
             this.classItems = `global-gridlayout-items ${props.classItems || ""}`;
         } else {
-            this.classGrid = `global-gridlayout-grid global-default-gridlayout-grid`;
+            this.className = `global-gridlayout-grid global-default-gridlayout-grid`;
             this.classItems = `global-gridlayout-items global-default-gridlayout-items`;
         }
 
-        this.onmouseenter = props.onMouseEnter;
-        this.onmouseleave = props.onMouseLeave;
-        this.onclick = props.onClick;
+        this.onmouseenter = props.onMouseEnter || null;
+        this.onmouseleave = props.onMouseLeave || null;
+        this.onclick = props.onClick || null;
     }
 
     render() {
-        let areas = this.state.areas.map(r => `'${r}'`)
+        // fixed gallery layout. found out
+        // Everything must be direct prop passing to keep event driven functionality.
+        // Any component assigned to `this` or `state` will no longer have visible actions.
+        let areaNames = this.props.areas || defaultArea;
+        let components = this.props.components || defaultComponents;
+        let areas = areaNames.map(r => `'${r}'`)
         let style = {gridTemplateAreas: areas.join(' ')}
         return <>
-            <div onMouseEnter={this.onmouseenter} onMouseLeave={this.onmouseleave} onClick={this.onclick}
-                 className={this.classGrid} style={style}>{
-                Object.entries(this.state.components).map(
-                    (obj, i) => {
-                        let [key, value] = obj;
-                        return <div key={i} className={this.classItems} style={{gridArea: `${key}`}}>{value}</div>
-                    })
+            <div onMouseEnter={this.onmouseenter}
+                 onMouseLeave={this.onmouseleave}
+                 onClick={this.onclick}
+                 className={this.className}
+                 style={style}>{
+                     Object.entries(components).map(
+                         (obj, i) => {
+                             let [key, value] = obj;
+                             return <div key={i} className={this.classItems} style={{gridArea: `${key}`}}>{value}</div>
+                         })
             }</div>
         </>
     }

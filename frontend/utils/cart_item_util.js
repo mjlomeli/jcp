@@ -34,7 +34,6 @@ export const deleteCartItem = (cartItemId, userId) => {
 };
 
 window.fetchCartItems = fetchCartItems;
-window.fetchCartItem = fetchCartItem;
 window.createCartItem = createCartItem;
 window.updateCartItem = updateCartItem;
 window.deleteCartItem = deleteCartItem;

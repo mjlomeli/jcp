@@ -1,5 +1,19 @@
+.gallery-grid {
+    background-color: #2196F3;
+    padding: 10px;
+}
 
-.gallery-items img {
+.gallery-items {
+    grid-row-gap: 1em;
+    background-color: rgba(255, 255, 255, 0.8);
+    border: 1px solid rgba(0, 0, 0, 0.8);
+    padding: 20px;
+    font-size: 30px;
+    text-align: center;
+}
+
+
+.gallery-image {
     border-radius: 0.5em;
 }
 
@@ -7,11 +21,6 @@
     max-height: 100%;
     max-width: 100%;
     overflow: hidden;
-}
-
-.gallery-grid {
-    column-gap: 1em;
-    row-gap: 0.3em;
 }
 
 .gallery-items img:not(.gallery-carousel){

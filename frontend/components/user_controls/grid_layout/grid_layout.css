@@ -20,7 +20,7 @@
 }
 
 .global-default-gridlayout-grid {
-    display: grid;
+    display: inline-grid;
     background-color: #2196F3;
     padding: 10px;
 }
