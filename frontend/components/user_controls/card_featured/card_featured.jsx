@@ -152,14 +152,14 @@ class CardFeatured extends React.Component {
             'info': <GridLayout areas={infoAreas}
                                 components={infoComponents}
                                 classGrid="card-featured-info-grid"
-                                classItems="card-featured-info-items"
+                                classElements="card-featured-info-items"
             />
         }
 
         return <GridLayout areas={areas}
                            components={components}
                            classGrid="card-featured-grid"
-                           classItems="card-featured-items"
+                           classElements="card-featured-items"
         />
     }
 }

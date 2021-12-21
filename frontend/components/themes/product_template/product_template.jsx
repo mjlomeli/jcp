@@ -240,7 +240,7 @@ class ProductTemplate extends React.Component {
     }
 
 
-    gridLayout(areas, components, classGrid, classItems){
+    gridLayout(areas, components, classGrid, classElements){
         let a = areas.map(r => `'${r}'`)
         let s = {gridTemplateAreas: a.join(' ')}
         return <>
@@ -249,7 +249,7 @@ class ProductTemplate extends React.Component {
                     (obj, i) => {
                         let [key, value] = obj;
                         return <div key={i}
-                                    className={`global-gridlayout-items ${classItems || ""}`}
+                                    className={`global-gridlayout-items ${classElements || ""}`}
                                     style={{gridArea: `${key}`}}>{value}
                         </div>
                     })

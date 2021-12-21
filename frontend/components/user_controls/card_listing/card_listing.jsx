@@ -131,7 +131,7 @@ class CardListing extends React.Component {
         <GridLayout areas={areas}
                            components={components}
                            classGrid="global-card-listing-grid"
-                           classItems="global-card-listing-items" />
+                           classElements="global-card-listing-items" />
             </Link>
     }
 }

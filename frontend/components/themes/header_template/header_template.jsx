@@ -140,7 +140,7 @@ class NavLinksComponent extends React.Component {
             'account': this.account(),
             'cart': this.cart()
         }
-        return <GridLayout areas={navlinkAreas} components={components} classGrid="navlinks-grid" classItems="naglinks-items"/>
+        return <GridLayout areas={navlinkAreas} components={components} classGrid="navlinks-grid" classElements="naglinks-items"/>
     }
 }
 

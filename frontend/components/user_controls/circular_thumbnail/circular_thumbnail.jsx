@@ -23,7 +23,7 @@ class CircularThumbnail extends React.Component {
         this.state = {}
 
         this.classGrid = `global-circular-thumbnail-grid`;
-        this.classItems = `global-circular-thumbnail-items`;
+        this.classElements = `global-circular-thumbnail-items`;
     }
 
     componentDidMount() {
@@ -53,7 +53,7 @@ class CircularThumbnail extends React.Component {
         return <Link to={thumbnail.link}>
             <GridLayout
                 classGrid={this.classGrid}
-                classItems={this.classItems}
+                classElements={this.classElements}
                 areas={areas}
                 components={components} />
         </Link>

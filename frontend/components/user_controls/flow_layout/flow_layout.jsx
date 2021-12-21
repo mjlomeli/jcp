@@ -19,14 +19,14 @@ class FlowLayout extends React.Component {
         super(props);
         if (props.components) {
             this.classGrid = `global-flowlayout-grid ${props.classGrid || ""}`;
-            this.classItems = `global-flowlayout-items ${props.classItem || ""}`;
+            this.classElements = `global-flowlayout-items ${props.classElements || ""}`;
             this.state = {
                 components: props.components || defaultComponents(),
                 maxColumns: props.maxColumns || 0
             }
         } else {
             this.classGrid = `global-flowlayout-grid global-default-flowlayout-grid`;
-            this.classItems = `global-flowlayout-items global-default-flowlayout-items`;
+            this.classElements = `global-flowlayout-items global-default-flowlayout-items`;
             this.state = {
                 components: defaultComponents(),
                 maxColumns: 1
@@ -45,7 +45,7 @@ class FlowLayout extends React.Component {
             <div onMouseEnter={this.onmouseenter} onMouseLeave={this.onmouseleave} onClick={this.onclick}
                  className={this.classGrid} >{
                 this.state.components.map(component => {
-                        return <div key={uuidv4()} className={this.classItems} style={style}>{component}</div>
+                        return <div key={uuidv4()} className={this.classElements} style={style}>{component}</div>
                     })
             }</div>
         </>

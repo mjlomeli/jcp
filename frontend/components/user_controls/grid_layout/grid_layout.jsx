@@ -1,5 +1,4 @@
 import React from 'react';
-import './grid_layout.css'
 
 let defaultGrid = () => {
     let layout4x5 = [];
@@ -15,12 +14,35 @@ let defaultGrid = () => {
         }
         layout4x5.push(s.join(" "));
     }
+    components.title = <h2>Default Grid Layout</h2>
+    components.description = <label>
+        This is the default grid layout. If you're seeing this its because no components or
+        areas were provided. You must provide a component and areas prop. Read more about it
+        in the examples provided in the grid_layout.md in the directory of this component.
+    </label>
+    layout4x5 = ['title title title title', 'description description description description'].concat(layout4x5);
     return [layout4x5, components]
 }
+const [defaultArea, defaultComponents] = defaultGrid();
+const defaultGridStyle = {
+    display: 'inline-grid',
+    backgroundColor: '#2196F3',
+    padding: '1%',
+    width: '98%',
+    height: '100%'
+};
 
-let [defaultArea, defaultComponents] = defaultGrid();
+const defaultElementsStyle = {
+    backgroundColor: 'rgba(255, 255, 255, 0.8)',
+    border: '1px solid rgba(0, 0, 0, 0.8)',
+    fontSize: '2em',
+    textAlign: 'center'
+};
+
 
 class GridLayout extends React.Component {
+    #gridStyle = {display: 'inline-grid'};
+    #itemsStyle = {};
 
     /** Everything must be direct prop passing to keep event
      * driven functionality.
@@ -28,37 +50,57 @@ class GridLayout extends React.Component {
      */
     constructor(props) {
         super(props);
-        if (props.areas && props.components) {
-            this.className = `global-gridlayout-grid ${props.classGrid || ""}`;
-            this.classItems = `global-gridlayout-items ${props.classItems || ""}`;
-        } else {
-            this.className = `global-gridlayout-grid global-default-gridlayout-grid`;
-            this.classItems = `global-gridlayout-items global-default-gridlayout-items`;
-        }
+
+        this.className = '';
+        this.classElements = '';
+
+        this.#assignClassNames(props);
+        this.#assignAreas(props);
 
         this.onmouseenter = props.onMouseEnter || null;
         this.onmouseleave = props.onMouseLeave || null;
         this.onclick = props.onClick || null;
     }
 
+    #assignClassNames(props){
+        if (props.areas && props.components) {
+            this.className = props.className || null;
+            this.classElements = props.classElements || null;
+        } else {
+            this.#gridStyle = {...this.#gridStyle, ...defaultGridStyle};
+            this.#itemsStyle = {...this.#itemsStyle, ...defaultElementsStyle};
+            console.warn("Default GridLayout is used");
+        }
+    }
+
+    #assignAreas(props){
+        let areaNames = (props.areas || defaultArea);
+        let areas = areaNames.map(r => `'${r}'`)
+        this.#gridStyle.gridTemplateAreas = areas.join(' ')
+    }
+
+    #makeElements(components){
+        return Object.entries(components).map(
+            (obj, i) => {
+                let [key, value] = obj;
+                return <div key={i}
+                            className={this.classElements}
+                            style={{...this.#itemsStyle, gridArea: `${key}`}}>{value}</div>
+            })
+    }
+
     render() {
         // Everything must be direct prop passing to keep event driven functionality.
         // Any component assigned to `this` or `state` will no longer have visible actions.
-        let areaNames = this.props.areas || defaultArea;
         let components = this.props.components || defaultComponents;
-        let areas = areaNames.map(r => `'${r}'`)
-        let style = {gridTemplateAreas: areas.join(' ')}
         return <>
             <div onMouseEnter={this.onmouseenter}
                  onMouseLeave={this.onmouseleave}
                  onClick={this.onclick}
                  className={this.className}
-                 style={style}>{
-                     Object.entries(components).map(
-                         (obj, i) => {
-                             let [key, value] = obj;
-                             return <div key={i} className={this.classItems} style={{gridArea: `${key}`}}>{value}</div>
-                         })
+                 onDrag={this.ondrag}
+                 style={this.#gridStyle}>{
+                     this.#makeElements(components)
             }</div>
         </>
     }

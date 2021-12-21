@@ -190,7 +190,7 @@ class CartItem extends React.Component {
         return <GridLayout areas={areas}
                            components={components}
                            classGrid="card-featured-grid grid-test-featured"
-                           classItems="card-featured-items item-test-featured"
+                           classElements="card-featured-items item-test-featured"
         />
     }
 

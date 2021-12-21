@@ -1,74 +1,69 @@
-.gallery-grid {
-    background-color: #2196F3;
-    padding: 10px;
-}
-
-.gallery-items {
-    grid-row-gap: 1em;
-    background-color: rgba(255, 255, 255, 0.8);
-    border: 1px solid rgba(0, 0, 0, 0.8);
-    padding: 20px;
-    font-size: 30px;
-    text-align: center;
-}
-
-
-.gallery-image {
-    border-radius: 0.5em;
+.gallery-elements {
+    padding: 1vw;
 }
 
 .gallery-carousel {
-    max-height: 100%;
-    max-width: 100%;
-    overflow: hidden;
+    position: relative;
 }
 
-.gallery-items img:not(.gallery-carousel){
-    width: 60px;
-    height: 60px;
-    z-index: 90;
-    left: 0;
-    top: 0;
-    box-sizing: inherit;
-    display: block;
-    filter: opacity(60%);
+.gallery-carousel-image {
+    position: relative;
     object-fit: cover;
+    width: 80vw;
+    height: 80vw;
+    border-radius: 1em;
 }
 
+.gallery-elements img:not(.gallery-carousel-image){
+    position: relative;
+    margin-top: 30%;
+}
 
-.gallery-items:hover img:not(.gallery-carousel){
+.gallery-image-selections {
+    position: relative;
+    object-fit: cover;
+    width: 10vw;
+    height: 10vw;
+    border-radius: 1vw;
+    filter: opacity(60%);
+}
+
+.gallery-elements:hover img:not(.gallery-carousel-image){
     filter: opacity(100%);
 }
-
 
 .gallery-button {
     color: #222222;
     background-color: white;
-    line-height: 1;
     padding: 0.5em;
-    text-decoration: none;
-    height: 3em;
-    width: 3em;
+    height: 2em;
     z-index: 10;
     border-radius: 50%;
-    overflow: hidden;
     position: absolute;
-    display: inline-flex;
-    box-sizing: inherit;
+    opacity: 0;
+    transition: opacity 0.2s linear;
 }
 
 .gallery-button:hover {
-    box-shadow: 0em 0em 1em 0 rgba(26, 26, 26, 0.44);
+    box-shadow: 0 0 1em 0 rgba(26, 26, 26, 0.44);
     transform: scale(1.025);
     transition: transform 0.02s ease, box-shadow 0.2s ease;
 }
 
 .gallery-button-right {
-    margin-right: 2em;
+    margin-right: 5%;
     right: 0;
+    top: 50%;
 }
 
 .gallery-button-left {
-    margin-left: 2em;
+    margin-left: 5%;
     left: 0;
+    top: 50%;
 }
+
+.visibility-transition {
+    opacity: 100%;
+}
+
+

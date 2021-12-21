@@ -75,7 +75,7 @@ To add styles to the grid or the grid items, a class name to either can be passe
 down by defining the props ```grid``` and ```item```.
 
 ```javascript
-<GridLayout gridClass="grid" itemClass="item" .../>
+<GridLayout className="grid" classElements="elements" .../>
 ```
 
 Now in the css file, the container and the grid items can be accessed.
@@ -86,7 +86,7 @@ Now in the css file, the container and the grid items can be accessed.
     padding: 10px;
 }
 
-.item {
+.elements {
     background-color: rgba(255, 255, 255, 0.8);
     text-align: center;
     padding: 20px 0;

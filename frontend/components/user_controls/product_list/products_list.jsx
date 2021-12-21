@@ -30,7 +30,7 @@ class ProductsList extends React.Component {
         this.state = {}
 
         this.classGrid = `global-products-list-grid ${props.className || props.classGrid || ""}`;
-        this.classItem = `global-products-list-items ${props.className || props.classItems || ""}`;
+        this.classElements = `global-products-list-items ${props.className || props.classElements || ""}`;
     }
 
     componentDidMount() {
@@ -49,7 +49,7 @@ class ProductsList extends React.Component {
         return <FlowLayout components={components || defaultComponents}
                            maxColumns={this.props.maxColumns || 4}
                            classGrid={this.classGrid}
-                           classItems={this.classItem}/>
+                           classElements={this.classElements}/>
     }
 }
 

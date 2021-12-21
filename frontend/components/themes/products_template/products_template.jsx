@@ -43,7 +43,7 @@ class ProductsTemplate extends React.Component {
             'rec4': thumbnail
         };
         return <GridLayout areas={layout1x4} components={components}
-                           classGrid="product-template-rec-grid" classItems="product-template-rec-items"/>
+                           classGrid="product-template-rec-grid" classElements="product-template-rec-items"/>
     }
 
     render() {
@@ -55,7 +55,7 @@ class ProductsTemplate extends React.Component {
         let areas = ['featured', 'products', 'recommended']
         return <GridLayout areas={areas} components={components}
                                 classGrid="product-template-grid"
-                                classItems="product-template-items"
+                                classElements="product-template-items"
         />
     }
 }
