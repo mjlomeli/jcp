@@ -11,10 +11,16 @@
     cursor: pointer;
     text-decoration: none;
 
+    /*background-color: #2196F3;*/
+    /*padding: 1%;*/
 }
 
 .global-card-listing-items {
     cursor: inherit;
+
+    /*background-color: rgba(255, 255, 255, 0.8);*/
+    /*border: 1px solid rgba(0, 0, 0, 0.8);*/
+    /*font-size: 2em;*/
 }
 
 .global-card-listing-grid:hover img {
@@ -48,8 +54,7 @@
     display: inline-block;
     color: #222;
     font-weight: 600;
-    font-size: 1.5vw;
-    line-height: 1.5vw;
+    font-size: 1em;
     position: relative;
     font-family: -apple-system, BlinkMacSystemFont, "Roboto", "Droid Sans", "Segoe UI", "Helvetica", Arial, sans-serif;
     word-wrap: break-word;
@@ -59,8 +64,8 @@
 
 .global-card-listing-calculated-price {
     color: #222;
-    font-size: 1.5vw;
-    line-height: 1.5vw;
+    font-size: 1em;
+    line-height: 1em;
     font-weight: 600;
     font-family: -apple-system, BlinkMacSystemFont, "Roboto", "Droid Sans", "Segoe UI", "Helvetica", Arial, sans-serif;
     word-wrap: break-word;
@@ -72,8 +77,8 @@
     color: #258635;
     text-decoration: line-through;
     font-family: -apple-system, BlinkMacSystemFont, "Roboto", "Droid Sans", "Segoe UI", "Helvetica", Arial, sans-serif;
-    font-size: 1vw;
-    line-height: 1vw;
+    font-size: 0.5em;
+    line-height: 0.5em;
     word-wrap: break-word;
     -webkit-font-smoothing: antialiased;
     cursor: inherit;
@@ -85,8 +90,8 @@
 
 .global-card-listing-discount {
     color: #258635;
-    font-size: 1vw;
-    line-height: 1vw;
+    font-size: 0.5em;
+    line-height: 0.5em;
     font-family: -apple-system, BlinkMacSystemFont, "Roboto", "Droid Sans", "Segoe UI", "Helvetica", Arial, sans-serif;
     word-wrap: break-word;
     -webkit-font-smoothing: antialiased;
@@ -95,8 +100,8 @@
 
 .global-card-listing-additional-label {
     color: #222;
-    font-size: 1vw;
-    line-height: 1vw;
+    font-size: 0.5em;
+    line-height: 0.5em;
     font-weight: 600;
     font-family: -apple-system, BlinkMacSystemFont, "Roboto", "Droid Sans", "Segoe UI", "Helvetica", Arial, sans-serif;
     word-wrap: break-word;
@@ -104,7 +109,6 @@
 }
 
 .global-card-listing-additional {
-    background-color: #D4E9D7;
     border-radius: 1vw;
     overflow: hidden;
     display: inline-flex;
