@@ -28,8 +28,18 @@
     transition: box-shadow 0.2s ease;
 }
 
+.global-card-listing-grid:hover .card-listing-favorite{
+    transform: translateY(0%) scale(1);
+    opacity: 100%;
+}
 
-.global-card-listing-image-div {
+.global-card-listing-grid .card-listing-favorite:hover{
+    transform: scale(1.2);
+}
+
+
+.card-listing-image-div {
+    position: relative;
     width: 100%;
     height: 100%;
     object-position: center;
@@ -37,9 +47,10 @@
     object-fit: scale-down; /* Scales down the div to fit the maximum allowable by the window (e.g. the grid)*/
 }
 
-.global-card-listing-image{
+.card-listing-image{
+    position: relative;
     box-sizing: inherit;
-    border-radius: 0.5vw;
+    border-radius: 0.3vw;
     cursor: inherit;
 
     /* Set the image to be infinite sized */
@@ -50,19 +61,47 @@
     */
 }
 
-.global-card-listing-title {
+.card-listing-favorite {
+    width: 1em;
+    height: 1em;
+    color: #222222;
+    background-color: white;
+    z-index: 10;
+    padding: 0.5em;
+    border-radius: 50%;
+
+    position: absolute;
+    transition: opacity 0.2s linear, transform 0.1s ease-out, opacity 0.1s linear;
+    right: 5%;
+    top: 5%;
+    transform: translateY(100%);
+    opacity: 0;
+}
+
+.card-listing-favorite-image {
+    position: relative;
+    margin-top: 0.1em;
+    width: 90%;
+    height: 90%;
+}
+
+.card-listing-favorite:hover {
+    box-shadow: 0 0 1em 0 rgba(26, 26, 26, 0.44);
+    transition: transform 0.02s ease, box-shadow 0.2s ease;
+}
+
+.card-listing-title {
     display: inline-block;
     color: #222;
     font-weight: 600;
     font-size: 1em;
-    position: relative;
     font-family: -apple-system, BlinkMacSystemFont, "Roboto", "Droid Sans", "Segoe UI", "Helvetica", Arial, sans-serif;
     word-wrap: break-word;
     -webkit-font-smoothing: antialiased;
     cursor: inherit;
 }
 
-.global-card-listing-calculated-price {
+.card-listing-price {
     color: #222;
     font-size: 1em;
     line-height: 1em;
@@ -73,12 +112,12 @@
     cursor: inherit;
 }
 
-.global-card-listing-original-price {
+.card-listing-discounted {
     color: #258635;
     text-decoration: line-through;
     font-family: -apple-system, BlinkMacSystemFont, "Roboto", "Droid Sans", "Segoe UI", "Helvetica", Arial, sans-serif;
-    font-size: 0.5em;
-    line-height: 0.5em;
+    font-size: 0.75em;
+    line-height: 0.75em;
     word-wrap: break-word;
     -webkit-font-smoothing: antialiased;
     cursor: inherit;
@@ -88,31 +127,31 @@
 
 }
 
-.global-card-listing-discount {
+.card-listing-percentage-off {
     color: #258635;
-    font-size: 0.5em;
-    line-height: 0.5em;
+    font-size: 0.75em;
+    line-height: 0.75em;
     font-family: -apple-system, BlinkMacSystemFont, "Roboto", "Droid Sans", "Segoe UI", "Helvetica", Arial, sans-serif;
     word-wrap: break-word;
     -webkit-font-smoothing: antialiased;
     cursor: inherit;
 }
 
-.global-card-listing-additional-label {
+.card-listing-tags-label {
     color: #222;
-    font-size: 0.5em;
-    line-height: 0.5em;
+    font-size: 0.72em;
+    line-height: 0.72em;
     font-weight: 600;
     font-family: -apple-system, BlinkMacSystemFont, "Roboto", "Droid Sans", "Segoe UI", "Helvetica", Arial, sans-serif;
     word-wrap: break-word;
     cursor: inherit;
 }
 
-.global-card-listing-additional {
+.card-listing-tags {
     border-radius: 1vw;
     overflow: hidden;
     display: inline-flex;
     cursor: inherit;
-    padding: 1% 3% 2% 3%;
+    padding: 2% 4% 2% 4%;
 }
 
