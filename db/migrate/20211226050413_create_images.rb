@@ -1,15 +1,11 @@
 class CreateImages < ActiveRecord::Migration[5.2]
   def change
     create_table :images do |t|
-      t.string :image_small
-      t.string :image_medium
-      t.string :image_large
-      t.string :image_full
-      t.string :data
-      t.string :mimetype
+      t.string :data, null: false
+      t.string :mimetype, null: false
       t.integer :size
       t.string :url
-      t.string :encoding
+      t.string :encoding, null: false
     end
     add_index :images, :url
   end

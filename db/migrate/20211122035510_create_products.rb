@@ -7,6 +7,14 @@ class CreateProducts < ActiveRecord::Migration[5.2]
       t.string :description
       t.integer :user_id, null: false
       t.integer :shop_id, null: false
+      t.integer :image_id_small
+      t.integer :image_id_medium
+      t.integer :image_id_large
+      t.integer :image_id_full
+      t.integer :icon_id_small
+      t.integer :icon_id_medium
+      t.integer :icon_id_large
+      t.integer :icon_id_full
       t.string :state, default: 'active'
       t.string :category_id
       t.string :categories, array: true, default: []

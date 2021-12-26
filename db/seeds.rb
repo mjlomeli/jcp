@@ -6,7 +6,7 @@ CartItem.delete_all
 Order.delete_all
 
 user = User.create(id: 581965828, email: 'kg1fsq04tetqirwv@email.com', password: 'password')
-image = Image.create(user_id: 581965828, shop_id: 33497523, image: nil)
+image = Image.create(data: "jfdklajf", mimetype: "kdfjsl", encoding: "kfdjaslj")
 icon = Image.create(user_id: 581965828, shop_id: 33497523, icon: nil)
 shop = Store.create(id: 33497523, shop_name: 'SonyaFlemingArt', user_id: 581965828, creation_tsz: 1640325141, title: nil, announcement: nil, currency_code: 'AUD', is_vacation: false, vacation_message: nil, sale_message: nil, digital_sale_message: nil, last_updated_tsz: 1640325141, listing_active_count: 1, digital_listing_count: 0, login_name: 'kg1fsq04tetqirwv', accepts_custom_requests: false, policy_welcome: nil, policy_payment: nil, policy_shipping: nil, policy_refunds: nil, policy_additional: nil, policy_seller_info: nil, policy_updated_tsz: 0, policy_has_private_receipt_info: false, vacation_autoreply: nil, url: 'https://www.etsy.com/shop/SonyaFlemingArt?utm_source=educationalclone&utm_medium=api&utm_campaign=api', image_url_760x100: nil, num_favorers: 0, languages: ['de'], upcoming_local_event_id: nil, icon_url_fullxfull: nil, is_using_structured_policies: false, has_onboarded_structured_policies: false, has_unstructured_policies: false, include_dispute_form_link: false, is_direct_checkout_onboarded: true, policy_privacy: nil, is_calculated_eligible: false, is_opted_in_to_buyer_promise: false, is_shop_us_based: false, results_per_page: 100, page_number: 1, image_id: image.id, icon_id: icon.id)
 

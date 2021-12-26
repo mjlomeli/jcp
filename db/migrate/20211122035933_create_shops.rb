@@ -1,6 +1,6 @@
-class CreateStores < ActiveRecord::Migration[5.2]
+class CreateShops < ActiveRecord::Migration[5.2]
   def change
-    create_table :stores do |t|
+    create_table :shops do |t|
       t.string :shop_name, null: false
       t.string :title
       t.integer :user_id, null: false
@@ -27,7 +27,7 @@ class CreateStores < ActiveRecord::Migration[5.2]
       t.string :vacation_autoreply
       t.string :url
       t.integer :num_favorers, default: 0
-      t.list :languages
+      t.string :languages, array: true, default: []
       t.integer :upcoming_local_event_id
       t.boolean :is_using_structured_policies, default: false
       t.boolean :has_onboarded_structured_policies, default: false
