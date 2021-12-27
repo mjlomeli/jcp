@@ -6,25 +6,32 @@ class User < ApplicationRecord
   attr_reader :password
   after_initialize :ensure_session_token
 
-  has_one :store,
+  has_one :shop,
           foreign_key: :user_id,
-          class_name: :Store
-
-  has_one :profile,
-          foreign_key: :user_id,
-          class_name: :Profile
+          class_name: :Shop
 
   has_many :cart_items,
            foreign_key: :user_id,
            class_name: :CartItem
 
-  has_many :orders,
-           foreign_key: :user_id,
-           class_name: :Order
-
   has_many :reviews,
            foreign_key: :user_id,
            class_name: :Review
+
+  has_many :products,
+           through: :shop,
+           source: :products
+
+
+  def images
+    imgs = self.image_ids.map {|image_id| Image.where(group_id: image_id, group_name: 'user')}
+    imgs.select {|img| !img.nil?}
+  end
+
+  def icons
+    imgs = self.icon_ids.map {|icon_id| Image.where(group_id: icon_id, group_name: 'user')}
+    imgs.select {|img| !img.nil?}
+  end
 
   def cart_price
     # reduced the (N+1) query

@@ -64,7 +64,7 @@ class Api::ProductsController < ApplicationController
     params.require(:product)
           .permit(:title, :price, :quantity, :views, :num_favorers,
                   :description, :image_urls, :category, :tags, :user_id,
-                  :store_id, :random)
+                  :shop_id, :random)
   end
 
   def find_in_batches(start, finish, batch_size = 25)

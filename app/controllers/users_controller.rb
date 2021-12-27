@@ -21,11 +21,11 @@ class UsersController < ApplicationController
     end
   end
 
-    def show
-      @user = selected_user
-    end
+  def show
+    @user = selected_user
+  end
 
-      def user_params
-        params.require(:user).permit(:username, :email, :password)
-      end
+  def user_params
+    params.require(:user).permit(:username, :email, :password)
+  end
 end

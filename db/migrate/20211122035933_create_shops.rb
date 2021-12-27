@@ -3,26 +3,24 @@ class CreateShops < ActiveRecord::Migration[5.2]
     create_table :shops do |t|
       t.string :shop_name, null: false
       t.string :title
-      t.integer :user_id, null: false
+      t.decimal :user_id, null: false, limit: 15
       t.string :login_name
-      t.integer :creation_tsz
       t.string :announcement
       t.string :currency_code
       t.boolean :is_vacation, default: false
       t.string :vacation_message
       t.string :sale_message
       t.string :digital_sale_message
-      t.integer :last_updated_tsz
       t.integer :listing_active_count, default: 0
       t.integer :digital_listing_count, default: 0
       t.boolean :accepts_custom_requests, default: false
+      t.integer :custom_shops_state
       t.string :policy_welcome
       t.string :policy_payment
       t.string :policy_shipping
       t.string :policy_refunds
       t.string :policy_additional
       t.string :policy_seller_info
-      t.integer :policy_updated_tsz
       t.boolean :policy_has_private_receipt_info, default: false
       t.string :vacation_autoreply
       t.string :url
@@ -40,13 +38,17 @@ class CreateShops < ActiveRecord::Migration[5.2]
       t.boolean :is_shop_us_based, default: false
       t.integer :results_per_page, default: 100
       t.integer :page_number
-      t.integer :image_id, default: 1
-      t.integer :icon_id, default: 2
+      t.decimal :last_updated_tsz, limit: 15
+      t.decimal :creation_tsz, limit: 15
+      t.decimal :policy_updated_tsz, limit: 15
+      t.decimal :image_ids, array: true, default: [], limit: 15
+      t.decimal :icon_ids, array: true, default: [], limit: 15
 
 
-      t.timestamps
+          t.timestamps
     end
-    add_index :stores, :shop_name, unique: true
-    add_index :stores, :user_id, unique: true
+    change_column :shops, :id, :decimal, limit: 15
+    add_index :shops, :shop_name, unique: true
+    add_index :shops, :user_id, unique: true
   end
 end

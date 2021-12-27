@@ -1,4 +1,18 @@
 Rails.application.routes.draw do
+  namespace :api do
+    get 'shops/index'
+    get 'shops/create'
+    get 'shops/show'
+    get 'shops/update'
+    get 'shops/destroy'
+  end
+  namespace :api do
+    get 'images/index'
+    get 'images/create'
+    get 'images/show'
+    get 'images/update'
+    get 'images/destroy'
+  end
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 
     # API routes
