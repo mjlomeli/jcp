@@ -2,7 +2,7 @@ export const createSession = (user) => {
     return $.ajax({
         url: '/api/session',
         method: 'POST',
-        data: { user: user }
+        data: {user: user}
     });
 };
 
@@ -17,11 +17,13 @@ export const createUser = (user) => {
     return $.ajax({
         url: '/api/users',
         method: 'POST',
-        data: { user: user }
+        data: {user: user}
     });
 };
 
 
-window.createUser = createUser;
-window.createSession = createSession;
-window.deleteSession = deleteSession;
+window.SessionUtil = {
+    createUser,
+    createSession,
+    deleteSession
+}

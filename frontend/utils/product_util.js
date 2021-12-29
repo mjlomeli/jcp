@@ -49,10 +49,12 @@ export const deleteProduct = (productId) => {
     });
 };
 
-window.fetchProducts = fetchProducts
-window.fetchProductsRange = fetchProductsRange
-window.fetchRandomProductsRange = fetchRandomProductsRange
-window.fetchProduct = fetchProduct
-window.createProduct = createProduct
-window.updateProduct = updateProduct
-window.deleteProduct = deleteProduct
+window.ProductUtil = {
+    fetchProducts,
+    fetchProductsRange,
+    fetchRandomProductsRange,
+    fetchProduct,
+    createProduct,
+    updateProduct,
+    deleteProduct
+}

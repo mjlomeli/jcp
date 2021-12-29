@@ -1,4 +1,11 @@
-export const fetchCartItems = (userId) => {
+export const fetchCartItems = () => {
+    return $.ajax({
+        url: `/api/cart_items`,
+        method: 'GET'
+    });
+};
+
+export const fetchCartItem = (userId) => {
     return $.ajax({
         url: `/api/users/${userId}/cart_items`,
         method: 'GET'
@@ -33,7 +40,10 @@ export const deleteCartItem = (cartItemId, userId) => {
     });
 };
 
-window.fetchCartItems = fetchCartItems;
-window.createCartItem = createCartItem;
-window.updateCartItem = updateCartItem;
-window.deleteCartItem = deleteCartItem;
+window.CartUtil = {
+    fetchCartItems,
+    fetchCartItem,
+    createCartItem,
+    updateCartItem,
+    deleteCartItem
+}

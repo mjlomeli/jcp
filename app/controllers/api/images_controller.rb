@@ -1,4 +1,5 @@
 require 'json'
+
 class Api::ImagesController < ApplicationController
   def index
     @image = Image.where(**query_params)
@@ -64,9 +65,8 @@ class Api::ImagesController < ApplicationController
     # image_params function, if image_template doesn't exist in the body_template
     # provided by a form, then the controller will not continue
     params.require(:image)
-          .permit(:title, :price, :quantity, :views, :num_favorers,
-                  :description, :image_urls, :category, :tags, :user_id,
-                  :shop_id, :random, :format)
+          .permit(:data, :mimetype, :size, :url, :encoding, :name, :group_name,
+                  :group_id, :dimension, :created_at, :updated_at)
   end
 
 end

@@ -1,36 +1,45 @@
-export const fetchStores = () => {
+export const fetchShops = () => {
     return $.ajax({
-        url: '/api/stores',
+        url: '/api/shops',
         method: 'GET'
     });
 };
 
-export const fetchStore = (storeId) => {
+export const fetchShop = (shopId) => {
     return $.ajax({
-        url: `/api/stores/${storeId}`,
+        url: `/api/shops/${shopId}`,
         method: 'GET'
     });
 };
 
-export const createStore = (store) => {
+export const createShop = (shop) => {
     return $.ajax({
-        url: '/api/stores',
+        url: '/api/shops',
         method: 'POST',
-        data: {store: store}
+        data: {shop: shop}
     });
 };
 
-export const updateStores = (store) => {
+export const updateShop = (shop) => {
     return $.ajax({
-        url: `/api/stores/${store.id}`,
+        url: `/api/shops/${shop.id}`,
         method: 'PATCH',
-        data: {store: store}
+        data: {shop: shop}
     });
 };
 
-export const deleteStores = (storeId) => {
+export const deleteShop = (shopId) => {
     return $.ajax({
-        url: `/api/stores/${storeId}`,
+        url: `/api/shops/${shopId}`,
         method: 'DELETE'
     });
 };
+
+
+window.ShopUtil = {
+    fetchShops,
+    fetchShop,
+    createShop,
+    updateShop,
+    deleteShop
+}

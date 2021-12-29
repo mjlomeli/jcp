@@ -4,6 +4,7 @@ class Api::ProductsController < ApplicationController
   def index
     query_args = query_params
     if !query_args.empty?
+      #TODO: Search by query
       @product = Product.first
     else
       range_args = range_params
@@ -24,13 +25,14 @@ class Api::ProductsController < ApplicationController
   def create
     @product = Product.new(product_params)
     if @product.save
-      render :show
+      render json: @product
     else
       render json: @product.errors.full_messages, status: 401
     end
   end
 
   def update
+    #TODO: Test using web html
     @product = Product.find_by(id: params[:id])
     if @product && @product.update_attributes(product_params)
       render :show
@@ -66,7 +68,7 @@ class Api::ProductsController < ApplicationController
     finish = !!finish ? finish.to_i : Product.count
     limit = !!limit ? limit.to_i : finish - start
 
-    {start: start, finish: finish, limit: limit, random: random}
+    { start: start, finish: finish, limit: limit, random: random }
   end
 
   def query_params
@@ -97,7 +99,7 @@ class Api::ProductsController < ApplicationController
   end
 
   def product_range(start: nil, finish: nil, limit: nil, random: false)
-    products = Product.offset(start).limit(finish-start)
+    products = Product.offset(start).limit(finish - start)
     if random
       randoms = []
       while randoms.length < limit

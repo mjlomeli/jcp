@@ -55,8 +55,10 @@ export const deleteReview = (productId, reviewId) => {
 };
 
 
-window.fetchUserReviews = fetchUserReviews;
-window.fetchProductReviews = fetchProductReviews;
-window.createReview = createReview;
-window.updateReview = updateReview;
-window.deleteReview = deleteReview;
+window.ReviewUtil = {
+    fetchUserReviews,
+    fetchProductReviews,
+    createReview,
+    updateReview,
+    deleteReview
+}

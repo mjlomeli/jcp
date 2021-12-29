@@ -18,5 +18,10 @@ module JcpPostgres
     #
     # config.time_zone = "Central Time (US & Canada)"
     # config.eager_load_paths << Rails.root.join("extras")
+    #TODO: check if this is working
+    Rails.configuration.action_controller.per_form_csrf_tokens = true
+
+    #TODO: remove this after auth tokens have been used with app/helpers/application_helper.rb
+    config.action_controller.default_protect_from_forgery = false
   end
 end

@@ -1,3 +1,3 @@
-json.extract! product, :id, :price, :seller_id
-json.rating_count product.ratings.count
-json.rating_by_current_user !!product.reviews.find_by(user_id: current_user.id)
+json.extract! shop, :id
+json.shop_id shop.shop_id
+json.title !!shop.title.find_by(user_id: current_user.id)

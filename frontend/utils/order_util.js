@@ -20,7 +20,7 @@ export const createOrder = (order) => {
     });
 };
 
-export const updateOrders = (order) => {
+export const updateOrder = (order) => {
     return $.ajax({
         url: `/api/orders/${order.id}`,
         method: 'PATCH',
@@ -28,15 +28,18 @@ export const updateOrders = (order) => {
     });
 };
 
-export const deleteOrders = (orderId) => {
+export const deleteOrder = (orderId) => {
     return $.ajax({
         url: `/api/orders/${orderId}`,
         method: 'DELETE'
     });
 };
 
-window.fetchOrders = fetchCartItems;
-window.fetchOrder = fetchOrder;
-window.createOrder = createOrder;
-window.updateOrder = updateOrder;
-window.deleteOrder = deleteOrder;
+window.OrderUtil = {
+    fetchOrders,
+    fetchOrder,
+    createOrder,
+    updateOrder,
+    deleteOrder
+}
+

@@ -5,7 +5,7 @@ class Api::UsersController < ApplicationController
       @users = find_in_batches(args[:start], args[:end])
       render json: @users
     else
-      @users = Product.all
+      @users = User.all
       render json: @users
     end
   end
