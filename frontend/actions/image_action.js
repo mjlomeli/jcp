@@ -15,14 +15,14 @@ const receiveImage = image =>({
     image: image
 })
 
-const receiveImageError = imageError =>({
-    type: RECEIVE_IMAGE_ERROR,
-    imageError: imageError
-})
-
 const removeImage = imageId =>({
     type: REMOVE_IMAGE,
     imageId: imageId
+})
+
+const receiveImageError = errors =>({
+    type: RECEIVE_IMAGE_ERROR,
+    errors: errors
 })
 
 
@@ -32,9 +32,7 @@ const removeImage = imageId =>({
 
 export const fetchImages = () => dispatch =>(
     ImageUtil.fetchImages().then(
-        images => {
-            return dispatch(receiveImages(images))
-        },
+        images => dispatch(receiveImages(images)),
         err => dispatch(receiveImageError(err.responseJSON))
     )
 )

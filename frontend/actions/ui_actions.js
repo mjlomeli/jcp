@@ -9,9 +9,9 @@ const receiveUI = ({uiid, ui}) =>({
     ui: ui
 })
 
-const receiveUIError = uiError =>({
+const receiveUIError = errors =>({
     type: RECEIVE_UI_ERROR,
-    errors: uiError
+    errors: errors
 })
 
 

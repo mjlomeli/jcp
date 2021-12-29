@@ -16,6 +16,7 @@ Rails.application.routes.draw do
 
       resources :images
       resources :shops
+      resources :cart_items, only: [:index]
     end
 
     # Home page route

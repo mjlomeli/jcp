@@ -10,9 +10,9 @@ const receiveTheme = (reducer, id, ui) =>({
     ui: ui
 })
 
-const receiveThemeError = error =>({
+const receiveThemeError = errors =>({
     type: RECEIVE_THEME_ERROR,
-    errors: error
+    errors: errors
 })
 
 

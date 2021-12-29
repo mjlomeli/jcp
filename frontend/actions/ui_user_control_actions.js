@@ -10,9 +10,9 @@ const receiveUserControl = (reducer, id, ui) =>({
     ui: ui
 })
 
-const receiveUserControlError = error =>({
+const receiveUserControlError = errors =>({
     type: RECEIVE_USER_CONTROL_ERROR,
-    errors: error
+    errors: errors
 })
 
 

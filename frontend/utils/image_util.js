@@ -9,7 +9,7 @@ export const fetchImages = () => {
 
 export const fetchImage = (imageId) => {
     if (!imageId) {
-        return debug.error(`An image id must be provided for fetchImage.`)
+        debug.error(`An image id must be provided for fetchImage.`)
     }
 
     return $.ajax({
@@ -20,7 +20,7 @@ export const fetchImage = (imageId) => {
 
 export const createImage = (image) => {
     if (!image) {
-        return debug.error(`An image object must be provided for createImage.`)
+        debug.error(`An image object must be provided for createImage.`)
     }
 
     return $.ajax({
@@ -32,7 +32,7 @@ export const createImage = (image) => {
 
 export const updateImage = (image) => {
     if (!image) {
-        return debug.error(`An image object be provided for updateImage.`)
+        debug.error(`An image object be provided for updateImage.`)
     }
 
     return $.ajax({
@@ -44,7 +44,7 @@ export const updateImage = (image) => {
 
 export const deleteImage = (imageId) => {
     if (!imageId) {
-        return debug.error(`An image id must be provided for deleteImage.`)
+        debug.error(`An image id must be provided for deleteImage.`)
     }
 
     return $.ajax({

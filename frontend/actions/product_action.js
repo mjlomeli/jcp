@@ -15,16 +15,15 @@ const receiveProduct = product =>({
     product: product
 })
 
-const receiveProductError = productError =>({
-    type: RECEIVE_PRODUCT_ERROR,
-    productError: productError
-})
-
 const removeProduct = productId =>({
     type: REMOVE_PRODUCT,
     productId: productId
 })
 
+const receiveProductError = errors =>({
+    type: RECEIVE_PRODUCT_ERROR,
+    errors: errors
+})
 
 
 /*    Separation      */

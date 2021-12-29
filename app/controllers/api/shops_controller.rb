@@ -11,7 +11,7 @@ class Api::ShopsController < ApplicationController
   end
 
   def show
-    @shop = Shop.find_by(id: params[:id])
+    @shop = shop_from_params
     if @shop
       render :show
     else
@@ -30,7 +30,7 @@ class Api::ShopsController < ApplicationController
   end
 
   def update
-    @shop = Shop.find_by(id: params[:id])
+    @shop = shop_from_params
     if @shop && @shop.update_attributes(shop_params)
       render :show
     elsif !@shop
@@ -41,7 +41,7 @@ class Api::ShopsController < ApplicationController
   end
 
   def destroy
-    @shop = Shop.find_by(id: params[:id])
+    @shop = shop_from_params
     if @shop && @shop.destroy
       render :show
     elsif !@shop
@@ -52,6 +52,12 @@ class Api::ShopsController < ApplicationController
   end
 
   private
+  def shop_from_params
+    shop_id = Integer(params[:shop_id]) rescue nil #converts to integer on fail set to nil
+    return nil unless !!shop_id
+    Shop.find_by(id: params[:shop_id])
+  end
+
   def query_params
     integer_data = %w[id user_id listing_active_count digital_listing_count custom_shops_state num_favorers upcoming_local_event_id results_per_page page_number last_updated_tsz creation_tsz policy_updated_tsz start]
     string_data = %w[shop_name title login_name announcement currency_code vacation_message sale_message digital_sale_message policy_welcome policy_payment policy_shipping policy_refunds policy_additional policy_seller_info vacation_autoreply url languages policy_privacy]

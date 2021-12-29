@@ -9,7 +9,7 @@ export const fetchShops = () => {
 
 export const fetchShop = (shopId) => {
     if (!shopId) {
-        return debug.error(`A shop id must be provided for fetchShop.`)
+        debug.error(`A shop id must be provided for fetchShop.`)
     }
 
     return $.ajax({
@@ -20,7 +20,7 @@ export const fetchShop = (shopId) => {
 
 export const createShop = (shop) => {
     if (!shop) {
-        return debug.error(`A shop object must be provided for createShop.`)
+        debug.error(`A shop object must be provided for createShop.`)
     }
 
     return $.ajax({
@@ -32,7 +32,7 @@ export const createShop = (shop) => {
 
 export const updateShop = (shop) => {
     if (!shop) {
-        return debug.error(`A shop object must be provided for updateShop.`)
+        debug.error(`A shop object must be provided for updateShop.`)
     }
 
     return $.ajax({
@@ -44,7 +44,7 @@ export const updateShop = (shop) => {
 
 export const deleteShop = (shopId) => {
     if (!shopId) {
-        return debug.error(`A shop id must be provided for deleteShop.`)
+        debug.error(`A shop id must be provided for deleteShop.`)
     }
 
     return $.ajax({

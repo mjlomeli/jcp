@@ -10,9 +10,9 @@ const receivePage = (reducer, id, ui) =>({
     ui: ui
 })
 
-const receivePageError = error =>({
+const receivePageError = errors =>({
     type: RECEIVE_PAGE_ERROR,
-    errors: error
+    errors: errors
 })
 
 

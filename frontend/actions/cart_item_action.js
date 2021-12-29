@@ -15,14 +15,14 @@ const receiveCartItem = cartItem =>({
     cartItem: cartItem
 })
 
-const receiveCartItemError = cartItemError =>({
-    type: RECEIVE_CART_ITEM_ERROR,
-    cartItemError: cartItemError
-})
-
 const removeCartItem = cartItemId =>({
     type: REMOVE_CART_ITEM,
     cartItemId: cartItemId
+})
+
+const receiveCartItemError = errors =>({
+    type: RECEIVE_CART_ITEM_ERROR,
+    errors: errors
 })
 
 
@@ -30,21 +30,12 @@ const removeCartItem = cartItemId =>({
 /*    Separation      */
 
 
-export const fetchCartItems = () => dispatch =>(
-    CartItemUtil.fetchCartItems().then(
-        cartItems => {
-            return dispatch(receiveCartItems(cartItems))
-        },
+export const fetchCartItems = (user_id) => dispatch => (
+    CartItemUtil.fetchCartItems(user_id).then(
+        cartItems => dispatch(receiveCartItems(cartItems)),
         err => dispatch(receiveCartItemError(err.responseJSON))
     )
 )
-
-export const fetchCartItem = cartItemId => (dispatch) => {
-    return CartItemUtil.fetchCartItem(cartItemId).then(
-        cartItem => dispatch(receiveCartItem(cartItem)),
-        err => dispatch(receiveCartItemError(err.responseJSON))
-    )
-}
 
 export const createCartItem = cartItem => dispatch =>(
     CartItemUtil.createCartItem(cartItem).then(
@@ -68,7 +59,6 @@ export const deleteCartItem = cartItemId => dispatch =>(
 )
 
 window.CartItemAction = {
-    fetchCartItem,
     fetchCartItems,
     createCartItem,
     updateCartItem,

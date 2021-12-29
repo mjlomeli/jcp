@@ -9,7 +9,7 @@ export const fetchProducts = () => {
 
 export const fetchProductsRange = (start, end) => {
     if (!start || !end) {
-        return debug.error(`A start and end must be provided for fetchProductsRange.`)
+        debug.error(`A start and end must be provided for fetchProductsRange.`)
     }
 
     return $.ajax({
@@ -20,7 +20,7 @@ export const fetchProductsRange = (start, end) => {
 
 export const fetchRandomProductsRange = (start, end) => {
     if (!start || !end) {
-        return debug.error(`A start and end must be provided for fetchRandomProductsRange.`)
+        debug.error(`A start and end must be provided for fetchRandomProductsRange.`)
     }
 
     return $.ajax({
@@ -31,7 +31,7 @@ export const fetchRandomProductsRange = (start, end) => {
 
 export const fetchProduct = (productId) => {
     if (!productId) {
-        return debug.error(`A product id must be provided for fetchProduct.`)
+        debug.error(`A product id must be provided for fetchProduct.`)
     }
 
     return $.ajax({
@@ -42,7 +42,7 @@ export const fetchProduct = (productId) => {
 
 export const createProduct = (product) => {
     if (!product) {
-        return debug.error(`A product object must be provided for createProduct.`)
+        debug.error(`A product object must be provided for createProduct.`)
     }
 
     return $.ajax({
@@ -54,7 +54,7 @@ export const createProduct = (product) => {
 
 export const updateProduct = (product) => {
     if (!product) {
-        return debug.error(`A product object be provided for updateProduct.`)
+        debug.error(`A product object be provided for updateProduct.`)
     }
 
     return $.ajax({
@@ -66,7 +66,7 @@ export const updateProduct = (product) => {
 
 export const deleteProduct = (productId) => {
     if (!productId) {
-        return debug.error(`A product id must be provided for deleteProduct.`)
+        debug.error(`A product id must be provided for deleteProduct.`)
     }
 
     return $.ajax({

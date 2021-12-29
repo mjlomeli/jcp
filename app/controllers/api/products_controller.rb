@@ -14,7 +14,7 @@ class Api::ProductsController < ApplicationController
   end
 
   def show
-    @product = Product.find_by(id: params[:id])
+    @product = product_from_params
     if @product
       render json: @product
     else
@@ -33,7 +33,7 @@ class Api::ProductsController < ApplicationController
 
   def update
     #TODO: Test using web html
-    @product = Product.find_by(id: params[:id])
+    @product = product_from_params
     if @product && @product.update_attributes(product_params)
       render :show
     elsif !@product
@@ -44,7 +44,7 @@ class Api::ProductsController < ApplicationController
   end
 
   def destroy
-    @product = Product.find_by(id: params[:id])
+    @product = product_from_params
     if @product && @product.destroy
       render :show
     elsif !@product
@@ -55,6 +55,11 @@ class Api::ProductsController < ApplicationController
   end
 
   private
+  def product_from_params
+    product_id = Integer(params[:product_id]) rescue nil #converts to integer on fail set to nil
+    return nil unless !!product_id
+    Product.find_by(id: params[:product_id])
+  end
 
   def range_params
     args = params.permit(:start, :finish, :random, :limit, :format)

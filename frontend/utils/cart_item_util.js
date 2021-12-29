@@ -1,13 +1,6 @@
 import {debug} from "./tools";
 
-export const fetchCartItems = () => {
-    return $.ajax({
-        url: `/api/cart_items`,
-        method: 'GET'
-    });
-};
-
-export const fetchCartItem = (userId) => {
+export const fetchCartItems = (userId) => {
     if (!userId){
         debug.error("A user id must be provided for fetchCartItem.");
     }
@@ -55,7 +48,6 @@ export const deleteCartItem = (cartItemId, userId) => {
 
 window.CartUtil = {
     fetchCartItems,
-    fetchCartItem,
     createCartItem,
     updateCartItem,
     deleteCartItem

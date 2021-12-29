@@ -22,16 +22,15 @@ const receiveShop = shop =>({
     shop: shop
 })
 
-const receiveShopError = shopError =>({
-    type: RECEIVE_SHOP_ERROR,
-    shopError: shopError
-})
-
 const removeShop = shopId =>({
     type: REMOVE_SHOP,
     shopId: shopId
 })
 
+const receiveShopError = errors =>({
+    type: RECEIVE_SHOP_ERROR,
+    errors: errors
+})
 
 
 /*    Separation      */

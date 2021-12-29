@@ -1,3 +1,4 @@
+import {debug} from "../../utils/tools";
 import {
     RECEIVE_CART_ITEM,
     RECEIVE_CART_ITEM_ERROR
@@ -9,7 +10,7 @@ export default (prevState = [], action) => {
         case RECEIVE_CART_ITEM_ERROR:
             return action.errors;
         case RECEIVE_CART_ITEM:
-            return []; // If the product_template is valid, return empty errors
+            return []; // If the cart item is valid, return empty errors
         default:
             return prevState;
     }

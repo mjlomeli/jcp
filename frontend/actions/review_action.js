@@ -15,14 +15,14 @@ const receiveReview = review =>({
     review: review
 })
 
-const receiveReviewError = reviewError =>({
-    type: RECEIVE_REVIEW_ERROR,
-    reviewError: reviewError
-})
-
 const removeReview = reviewId =>({
     type: REMOVE_REVIEW,
     reviewId: reviewId
+})
+
+const receiveReviewError = errors =>({
+    type: RECEIVE_REVIEW_ERROR,
+    errors: errors
 })
 
 

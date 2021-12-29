@@ -3,8 +3,9 @@ class Api::ReviewsController < ApplicationController
     #TODO: test if this works
     # GET /api/users/:user_id/reviews
     # GET /api/products/:product_id/reviews
-    @user = User.find_by(params[:user_id])
-    @product = Product.find_by(params[:product_id])
+    @user = user_from_params
+    @review = review_from_params
+    @product = product_from_params
     if @user
       render json: @user.reviews
     elsif @product
@@ -16,7 +17,7 @@ class Api::ReviewsController < ApplicationController
 
   def create
     # POST /api/products/:product_id/reviews
-    @user = User.find_by(user_id: params[:user_id])
+    @user = user_from_params
     if !@user or @user.id != current_user.id
       render json: ["User id: #{params[:user_id]} is not authorized"], status: 400
     else
@@ -31,7 +32,7 @@ class Api::ReviewsController < ApplicationController
 
   def update
     # PATCH /api/products/:product_id/reviews/:review_id
-    @user = User.find_by(user_id: params[:user_id])
+    @user = user_from_params
     if !@user or @user.id != current_user.id
       render json: ["User id: #{params[:user_id]} is not authorized"], status: 400
     else
@@ -48,7 +49,7 @@ class Api::ReviewsController < ApplicationController
 
   def destroy
     # DELETE /api/products/:product_id/reviews/:review_id
-    @user = User.find_by(user_id: params[:user_id])
+    @user = user_from_params
     if !@user or @user.id != current_user.id
       render json: ["User id: #{params[:user_id]} is not authorized"], status: 400
     else
@@ -64,6 +65,24 @@ class Api::ReviewsController < ApplicationController
   end
 
   private
+  def review_from_params
+    review_id = Integer(params[:review_id]) rescue nil #converts to integer on fail set to nil
+    return nil unless !!review_id
+    Review.find_by(id: params[:review_id])
+  end
+
+  def product_from_params
+    product_id = Integer(params[:product_id]) rescue nil #converts to integer on fail set to nil
+    return nil unless !!product_id
+    Product.find_by(id: params[:product_id])
+  end
+
+  def user_from_params
+    user_id = Integer(params[:user_id]) rescue nil #converts to integer on fail set to nil
+    return nil unless !!user_id
+    User.find_by(id: params[:user_id])
+  end
+
   def review_params
     params.require(:review).permit(:product_id, :user_id, :rating, :comment)
   end
