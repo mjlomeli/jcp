@@ -1,5 +1,5 @@
 import {connect} from 'react-redux';
-import {deleteSession} from '../../actions/session_actions';
+import {deleteSession} from '../../actions/session_action';
 import Greeting from './greeting';
 
 const mapStateToProps = ({session, entities: {users}}) => ({

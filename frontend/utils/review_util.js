@@ -1,8 +1,9 @@
+import {debug} from "./tools";
+
 export const fetchUserReviews = (userId) => {
-    ```PG::DatatypeMismatch: ERROR:  argument of WHERE must be type boolean, not type integer
-    LINE 1: SELECT  "users".* FROM "users" WHERE (4) LIMIT $1
-                                                  ^
-    : SELECT  "users".* FROM "users" WHERE (4) LIMIT $1```
+    if (!userId){
+        debug.error("A user id must be provided for fetchUserReviews");
+    }
     return $.ajax({
         url: `/api/users/${userId}/reviews`,
         method: 'GET'
@@ -10,10 +11,9 @@ export const fetchUserReviews = (userId) => {
 };
 
 export const fetchProductReviews = (productId) => {
-    ```PG::DatatypeMismatch: ERROR:  argument of WHERE must be type boolean, not type integer
-    LINE 1: SELECT  "users".* FROM "users" WHERE (4) LIMIT $1
-                                                  ^
-    : SELECT  "users".* FROM "users" WHERE (4) LIMIT $1```
+    if (!productId){
+        debug.error("A product id must be provided for fetchProductReviews");
+    }
     return $.ajax({
         url: `/api/products/${productId}/reviews`,
         method: 'GET'
@@ -21,6 +21,10 @@ export const fetchProductReviews = (productId) => {
 };
 
 export const fetchReview = (productId, reviewId) => {
+    if (!productId, reviewId){
+        debug.error("A product id and review id must be provided for fetchReview");
+    }
+
     return $.ajax({
         url: `/api/products/${productId}/reviews/${reviewId}`,
         method: 'GET'
@@ -29,7 +33,9 @@ export const fetchReview = (productId, reviewId) => {
 
 
 export const createReview = (productId, review) => {
-    // Column user_id doesnt exist must use find_by(id: params[:user_id])
+    if (!productId || !review || Object.keys(review).length === 0){
+        debug.error("A product id and review object must be provided for createReview");
+    }
     return $.ajax({
         url: `/api/products/${productId}/reviews`,
         method: 'POST',
@@ -38,7 +44,9 @@ export const createReview = (productId, review) => {
 };
 
 export const updateReview = (productId, review) => {
-    // Column user_id doesnt exist must use find_by(id: params[:user_id])
+    if (!productId || !review || Object.keys(review).length === 0){
+        debug.error("A product id and review object must be provided for updateReview");
+    }
     return $.ajax({
         url: `/api/products/${productId}/reviews/${review.id}`,
         method: 'PATCH',
@@ -47,7 +55,9 @@ export const updateReview = (productId, review) => {
 };
 
 export const deleteReview = (productId, reviewId) => {
-    // Column user_id doesnt exist must use find_by(id: params[:user_id])
+    if (!productId || !reviewId){
+        debug.error("A product id and review id must be provided for deleteReview");
+    }
     return $.ajax({
         url: `/api/products/${productId}/reviews/${reviewId}`,
         method: 'DELETE'

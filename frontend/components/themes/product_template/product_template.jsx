@@ -10,7 +10,7 @@ import {connect} from 'react-redux';
 import React from 'react';
 import './product_template.css'
 import GridLayout from "../../user_controls/grid_layout/grid_layout";
-import {fetchProduct} from "../../../actions/product_actions";
+import {fetchProduct} from "../../../actions/product_action";
 import {fetchTheme, updateTheme} from "../../../actions/ui_theme_actions";
 import Gallery from "../../user_controls/gallery/gallery";
 

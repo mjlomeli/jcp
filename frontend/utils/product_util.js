@@ -1,3 +1,5 @@
+import {debug} from "./tools";
+
 export const fetchProducts = () => {
     return $.ajax({
         url: '/api/products',
@@ -6,6 +8,10 @@ export const fetchProducts = () => {
 };
 
 export const fetchProductsRange = (start, end) => {
+    if (!start || !end) {
+        return debug.error(`A start and end must be provided for fetchProductsRange.`)
+    }
+
     return $.ajax({
         url: `/api/products?start=${start}&end=${end}`,
         method: 'GET'
@@ -13,6 +19,10 @@ export const fetchProductsRange = (start, end) => {
 };
 
 export const fetchRandomProductsRange = (start, end) => {
+    if (!start || !end) {
+        return debug.error(`A start and end must be provided for fetchRandomProductsRange.`)
+    }
+
     return $.ajax({
         url: `/api/products?start=${start}&end=${end}&random=${true}`,
         method: 'GET'
@@ -20,6 +30,10 @@ export const fetchRandomProductsRange = (start, end) => {
 };
 
 export const fetchProduct = (productId) => {
+    if (!productId) {
+        return debug.error(`A product id must be provided for fetchProduct.`)
+    }
+
     return $.ajax({
         url: `/api/products/${productId}`,
         method: 'GET'
@@ -27,6 +41,10 @@ export const fetchProduct = (productId) => {
 };
 
 export const createProduct = (product) => {
+    if (!product) {
+        return debug.error(`A product object must be provided for createProduct.`)
+    }
+
     return $.ajax({
         url: '/api/products',
         method: 'POST',
@@ -35,6 +53,10 @@ export const createProduct = (product) => {
 };
 
 export const updateProduct = (product) => {
+    if (!product) {
+        return debug.error(`A product object be provided for updateProduct.`)
+    }
+
     return $.ajax({
         url: `/api/products/${product.id}`,
         method: 'PATCH',
@@ -43,6 +65,10 @@ export const updateProduct = (product) => {
 };
 
 export const deleteProduct = (productId) => {
+    if (!productId) {
+        return debug.error(`A product id must be provided for deleteProduct.`)
+    }
+
     return $.ajax({
         url: `/api/products/${productId}`,
         method: 'DELETE'

@@ -1,3 +1,5 @@
+import {debug} from "./tools";
+
 export const fetchCartItems = () => {
     return $.ajax({
         url: `/api/cart_items`,
@@ -6,6 +8,10 @@ export const fetchCartItems = () => {
 };
 
 export const fetchCartItem = (userId) => {
+    if (!userId){
+        debug.error("A user id must be provided for fetchCartItem.");
+    }
+
     return $.ajax({
         url: `/api/users/${userId}/cart_items`,
         method: 'GET'
@@ -13,7 +19,9 @@ export const fetchCartItem = (userId) => {
 };
 
 export const createCartItem = (cartItem, userId) => {
-    // Column user_id doesnt exist must use find_by(id: params[:user_id])
+    if (!cartItem || Object.keys(cartItem).length === 0 || !userId){
+        debug.error("A cart item object and user id must be provided for createCartItem.");
+    }
     let cart_item = {...cartItem, user_id: userId};
     return $.ajax({
         url: `/api/users/${userId}/cart_items`,
@@ -23,7 +31,10 @@ export const createCartItem = (cartItem, userId) => {
 };
 
 export const updateCartItem = (cartItem, userId) => {
-    // Column user_id doesnt exist must use find_by(id: params[:user_id])
+    if (!cartItem || Object.keys(cartItem).length === 0 || !userId){
+        debug.error("A cart item object and user id must be provided for updateCartItem.");
+    }
+
     let cart_item = {...cartItem, user_id: userId};
     return $.ajax({
         url: `/api/users/${userId}/cart_items/${cartItem.id}`,
@@ -33,7 +44,9 @@ export const updateCartItem = (cartItem, userId) => {
 };
 
 export const deleteCartItem = (cartItemId, userId) => {
-    // Column user_id doesnt exist must use find_by(id: params[:user_id])
+    if (!cartItemId || !userId){
+        debug.error("A cart item id and user id must be provided for deleteCartItem.");
+    }
     return $.ajax({
         url: `/api/users/${userId}/cart_items/${cartItemId}`,
         method: 'DELETE'

@@ -80,3 +80,13 @@ export const deleteProduct = productId => dispatch =>(
         err => dispatch(receiveProductError(err.responseJSON))
     )
 )
+
+window.ProductAction = {
+    fetchProduct,
+    fetchProducts,
+    fetchProductsRange,
+    fetchRandomProductsRange,
+    createProduct,
+    updateProduct,
+    deleteProduct
+}

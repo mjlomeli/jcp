@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import configureStore from "./store/store";
 import Root from "./components/root";
-
+import {debug, isNodeJs, isBrowser} from "./utils/tools";
 
 document.addEventListener("DOMContentLoaded", () => {
     let store;
@@ -20,4 +20,8 @@ document.addEventListener("DOMContentLoaded", () => {
     const root = document.getElementById("root");
     window.store = store;
     ReactDOM.render(<Root store={store} />, root);
+
+    window.debug = debug;
+    window.isNodeJs = isNodeJs
+    window.isBrowser = isBrowser
 });

@@ -3,7 +3,7 @@ import React from 'react';
 import './products_list.css';
 import FlowLayout from "../flow_layout/flow_layout";
 import CardListing from "../card_listing/card_listing";
-import {fetchProducts, fetchProductsRange, fetchRandomProductsRange} from "../../../actions/product_actions";
+import {fetchProducts, fetchProductsRange, fetchRandomProductsRange} from "../../../actions/product_action";
 
 const mapStateToProps = (state, ownProps) =>{
     let products = state.entities.products
