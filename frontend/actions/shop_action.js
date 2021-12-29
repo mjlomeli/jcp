@@ -1,4 +1,11 @@
 import * as ShopUtil from '../utils/shop_util'
+import {
+    createProduct, deleteProduct,
+    fetchProduct,
+    fetchProducts,
+    fetchProductsRange,
+    fetchRandomProductsRange, updateProduct
+} from "./product_action";
 
 export const RECEIVE_SHOPS = "RECEIVE_SHOPS";
 export const RECEIVE_SHOP = "RECEIVE_SHOP";
@@ -66,3 +73,11 @@ export const deleteShop = shopId => dispatch =>(
         err => dispatch(receiveShopError(err.responseJSON))
     )
 )
+
+window.ShopAction = {
+    fetchShops,
+    fetchShop,
+    createShop,
+    updateShop,
+    deleteShop
+}
