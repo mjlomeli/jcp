@@ -6,7 +6,7 @@ import {
     HashRouter
 } from 'react-router-dom';
 import React from 'react';
-import './navbar.css'
+import '../../themes/header_template/navbar.css'
 import {isHTML} from '../../../utils/component_utils'
 
 

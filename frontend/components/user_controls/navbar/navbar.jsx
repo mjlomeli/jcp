@@ -7,7 +7,7 @@ import {
 } from 'react-router-dom';
 import {connect} from 'react-redux';
 import React from 'react';
-import './navbar.css'
+import '../../themes/header_template/navbar.css'
 import {isHTML} from '../../../utils/component_utils'
 import {DropdownLayout} from "./dropdown";
 import {NavbarEntriesError, NavbarEntriesTitleErrors} from "./navbar_error";
