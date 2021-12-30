@@ -85,40 +85,42 @@ class NavbarLayout extends React.Component {
 
         this.classes = {}
         this.className = '';
-        this.headerClass = '';
-        this.dropperClass = '';
-        this.linksClass = '';
+        this.classHeader = '';
+        this.classDropper = '';
+        this.classLinks = '';
 
-        this.hoverClass = '';
-        this.headerHoverClass = '';
-        this.linksHoverClass = '';
+        this.classHover = '';
+        this.classHeaderHover = '';
+        this.classLinksHover = '';
 
         this.#assignClassNames(props);
     }
 
     #assignClassNames(props) {
         this.className = props.className || '';
-        this.headerClass = props.headerClass || '';
-        this.dropperClass = props.dropperClass || '';
-        this.linksClass = props.linksClass || '';
+        this.classHeader = props.classHeader || '';
+        this.classDropper = props.classDropper || '';
+        this.classLinks = props.classLinks || '';
 
-        this.hoverClass = props.hoverClass || '';
-        this.headerHoverClass = props.headerHoverClass || '';
-        this.linksHoverClass = props.linksHoverClass || '';
+        this.classHover = props.classHover || '';
+        this.classHeaderHover = props.classHeaderHover || '';
+        this.classLinksHover = props.classLinksHover || '';
 
         if (props.className) this.classes.className = props.className;
-        if (props.headerClass) this.classes.headerClass = props.headerClass;
-        if (props.dropperClass) this.classes.dropperClass = props.dropperClass;
-        if (props.linksClass) this.classes.linksClass = props.linksClass;
-        if (props.hoverClass) this.classes.hoverClass = props.hoverClass;
-        if (props.headerHoverClass) this.classes.headerHoverClass = props.headerHoverClass;
-        if (props.linksHoverClass) this.classes.linksHoverClass = props.linksHoverClass;
+        if (props.classHeader) this.classes.classHeader = props.classHeader;
+        if (props.classDropper) this.classes.classDropper = props.classDropper;
+        if (props.classLinks) this.classes.classLinks = props.classLinks;
+        if (props.classHover) this.classes.classHover = props.classHover;
+        if (props.classHeaderHover) this.classes.classHeaderHover = props.classHeaderHover;
+        if (props.classLinksHover) this.classes.classLinksHover = props.classLinksHover;
     }
 
     render() {
         let components = this.props.components || defaultNavEntries;
         if (isHTML(components))
             throw new NavbarEntriesError();
+        else if (!components)
+            return null;
         return <div className={this.className}>{
             components.map((dropDown, idx) => {
                 let {header, link, components} = dropDown;
@@ -127,12 +129,12 @@ class NavbarLayout extends React.Component {
                                        link={link}
                                        components={components} {...this.classes}
                                        // className={this.className}
-                                       // headerClass={this.headerClass}
-                                       // dropperClass={this.dropperClass}
-                                       // linksClass={this.linksClass}
-                                       // hoverClass={this.hoverClass}
-                                       // headerHoverClass={this.headerHoverClass}
-                                       // linksHoverClass={this.linksHoverClass}
+                                       // classHeader={this.classHeader}
+                                       // classDropper={this.classDropper}
+                                       // classLinks={this.classLinks}
+                                       // classHover={this.classHover}
+                                       // classHeaderHover={this.classHeaderHover}
+                                       // classLinksHover={this.classLinksHover}
                 />
             })
         }</div>

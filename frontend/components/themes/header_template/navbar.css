@@ -8,21 +8,20 @@
 /* Links on the navbar (not dropdown buttons) */
 .navbar-link {
     width: 100%;
-    font-size: 1.3vw;
-    line-height: 1.3vw;
+    font-size: 0.80em;
+    line-height: 1.5em;
     word-wrap: break-word;
     color: #222222;
     font-weight: 500;
     text-align: center;
     padding: 1vw 1vw;
     text-decoration: none;
-    border-bottom: 0.5vw solid rgba(141, 141, 141, 0.34);
+    border-bottom: 0.2em solid rgba(141, 141, 141, 0.34);
 }
 
 /* Add a grey background color to links on the navbar (not dropdown buttons) */
 .navbar-link:hover {
-    background-color: #ddd;
-    border-bottom: 0.5vw solid rgba(45, 45, 45, 0.34);
+    border-bottom: 0.2em solid rgba(45, 45, 45, 0.78);
 }
 
 /* Links inside the dropdown */
@@ -95,6 +94,11 @@
 
 /* Show the dropdown menu on hover */
 .navbar-dropdown:hover .dropdown-content {
+    display: block;
+    flex-direction: column;
+}
+
+.dropper-hover {
     display: block;
     flex-direction: column;
 }

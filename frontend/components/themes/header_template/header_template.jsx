@@ -12,6 +12,7 @@ import './navlinks_template.css'
 import SearchBarComponent from "../../user_controls/searchbar/searchbar";
 import GridLayout from "../../user_controls/grid_layout/grid_layout";
 import NavbarLayout from "../../user_controls/navbar/navbar";
+import "./navbar.css"
 
 const mapStateToProps = ({errors}) => ({
     //errors: errors.session, // need to add a ui or user_control errors
@@ -140,7 +141,7 @@ class NavLinksComponent extends React.Component {
             'account': this.account(),
             'cart': this.cart()
         }
-        return <GridLayout areas={navlinkAreas} components={components} classGrid="navlinks-grid" classElements="naglinks-items"/>
+        return <GridLayout areas={navlinkAreas} components={components} className="navlinks-grid" classElements="naglinks-items"/>
     }
 }
 
@@ -157,11 +158,16 @@ class HeaderTemplate extends React.Component {
         "Home & Living", "Wedding & Party", "Toys & Entertainment", "Art & Collectibles",
         "Craft Supplies", "Gifts & Gift Cards"];
 
-        let components = Object.fromEntries(navs.map(title => {
-            return [title, `/products`]
-        }));
+        let components = navs.map(title => {
+            return {header: title, link:`/products`}
+        });
 
-        return <NavbarLayout components={components} />
+        return <NavbarLayout components={components}
+                             className="navbar"
+                             classHeader="navbar-link"
+                             classDropper="navbar-dropdown"
+                             classLinks="navbar-dropdown-link"
+        />
     }
 
     logo(){
