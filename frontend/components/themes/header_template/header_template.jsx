@@ -7,7 +7,6 @@ import {
 } from 'react-router-dom';
 import {connect} from 'react-redux';
 import React from 'react';
-import './header_template.css'
 import './navlinks_template.css'
 import SearchBarComponent from "../../user_controls/searchbar/searchbar";
 import GridLayout from "../../user_controls/grid_layout/grid_layout";
@@ -24,7 +23,7 @@ const mapDispatchToProps = dispatch => ({
     }
 });
 
-class NavLinksComponent extends React.Component {
+class MenuBar extends React.Component {
     constructor(props) {
         super(props);
     }
@@ -134,14 +133,14 @@ class NavLinksComponent extends React.Component {
     }
 
     render() {
-        let navlinkAreas = ['favorites notifications account cart'];
+        let areas = ['favorites notifications account cart'];
         let components = {
             'favorites': this.favorites(),
             'notifications': this.notifications(),
             'account': this.account(),
             'cart': this.cart()
         }
-        return <GridLayout areas={navlinkAreas} components={components} className="navlinks-grid" classElements="naglinks-items"/>
+        return <GridLayout areas={areas} components={components} className="navlinks-grid" classElements="navlinks-items"/>
     }
 }
 
@@ -177,13 +176,13 @@ class HeaderTemplate extends React.Component {
     }
 
     render() {
-        let headerBarAreas = ['logo search search search navlinks'];
+        let headerBarAreas = ['logo search search search navlinks navlinks'];
         let headerBarComponents = {
             'logo': <Link to="/home">{this.logo()}</Link>,
             'search': <SearchBarComponent />,
-            'navlinks': <NavLinksComponent />
+            'navlinks': <MenuBar />
         }
-        let headerBarLayout = <GridLayout areas={headerBarAreas} components={headerBarComponents}/>
+        let headerBarLayout = <GridLayout areas={headerBarAreas} components={headerBarComponents} className="menu-bar-grid" classElements="menu-bar-elements" />
         return <>
             <div className="navlinks">
             {headerBarLayout}

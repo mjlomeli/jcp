@@ -19,7 +19,7 @@ import { AuthRoute, ProtectedRoute } from '../utils/route_util';
 // import CartPage from "./pages/cart_page";
 
 
-import HeaderTemplate from "./themes/header_template/header_template";
+// import HeaderTemplate from "./themes/header_template/header_template";
 // import FooterTemplate from "./themes/footer/footer_template";
 // import ProductsTemplate from "./themes/products_template/products_template";
 // import ProductTemplate from "./themes/product_template/product_template";
@@ -36,7 +36,7 @@ import HeaderTemplate from "./themes/header_template/header_template";
 // import CardThumbnail from "./user_controls/card_thumbnail/card_thumbnail";
 // import CircularThumbnail from "./user_controls/circular_thumbnail/circular_thumbnail";
 // import Rating from "./user_controls/rating/rating";
-// import SearchBar from "./user_controls/searchbar/searchbar";
+import SearchBar from "./user_controls/searchbar/searchbar";
 // import ProductsList from "./user_controls/product_list/products_list";
 // import FlowLayout from "./user_controls/flow_layout/flow_layout";
 // import GridLayout from "./user_controls/grid_layout/grid_layout";
@@ -56,7 +56,7 @@ const App = () => (
             <AuthRoute exact path="/login" component={LogInFormContainer} />
             <AuthRoute exact path="/signup" component={SignUpFormContainer} />
             <AuthRoute exact path="/demo" component={DemoLogInFormContainer} />
-            <Route exact path="/header_template" component={HeaderTemplate} />
+            {/*<Route exact path="/header_template" component={HeaderTemplate} />*/}
             {/*<Route exact path="/dropdown" component={DropdownLayout} />*/}
             {/*<ProtectedRoute exact path="/user/:id" component={ProfileContainer} />*/}
             {/*<Route exact path="/nav_bar" component={NavbarLayout} />*/}
@@ -72,7 +72,7 @@ const App = () => (
             {/*<Route exact path="/circular_thumbnail" component={CircularThumbnail} />*/}
             {/*<Route exact path="/gallery/:id" component={Gallery} />*/}
             {/*<Route exact path="/rating" component={Rating} />*/}
-            {/*<Route exact path="/searchbar" component={SearchBar} />*/}
+            <Route exact path="/searchbar" component={SearchBar} />
             {/*<Route exact path="/footer" component={FooterTemplate} />*/}
             {/*<Route exact path="/products_list" component={ProductsList} />*/}
             {/*<Route exact path="/products_template" component={ProductsTemplate} />*/}

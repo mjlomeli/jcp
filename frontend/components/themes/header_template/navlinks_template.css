@@ -6,6 +6,7 @@
 .navlinks-grid {
     width: 100%;
     display: inline-flex;
+    grid-gap: 2em;
 }
 
 .navlinks-items {
@@ -113,3 +114,12 @@
 
 
 
+.menu-bar-grid {
+    width: 100%;
+    grid-gap: 1em;
+    align-content: center;
+}
+
+.menu-bar-elements {
+
+}
