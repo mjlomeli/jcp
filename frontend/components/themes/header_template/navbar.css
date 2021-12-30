@@ -1,5 +1,6 @@
 /* Navbar container */
 .navbar {
+    width: 100%;
     display: flex;
     background-color: #ffffff;
     font-family: "Graphik Webfont", -apple-system, "Helvetica Neue", "Droid Sans", Arial, sans-serif;
