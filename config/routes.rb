@@ -16,7 +16,10 @@ Rails.application.routes.draw do
 
       resources :images
       resources :shops
+
+      # only for testing
       resources :cart_items, only: [:index]
+      resources :reviews, only: [:index]
     end
 
     # Home page route

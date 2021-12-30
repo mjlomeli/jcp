@@ -10,8 +10,22 @@ class Api::ReviewsController < ApplicationController
       render json: @user.reviews
     elsif @product
       render json: @product.reviews
-    else
+    elsif !@user and !!params[:user_id]
       render json: ["Could not locate user id: #{params[:user_id]}"], status: 400
+    elsif !@product and !!params[:product_id]
+      render json: ["Could not locate user id: #{params[:user_id]}"], status: 400
+    else
+      render json: ["No user id or product id was provided: {user_id: #{params[:user_id]}, product_id: #{params[:product_id]}"], status: 400
+    end
+  end
+
+  def show
+    # GET /api/reviews/review_id
+    @review = review_from_params
+    if @review
+      render json: @review
+    else
+      render json: ["Could not locate review id: #{params[:review_id]}"], status: 400
     end
   end
 
@@ -65,6 +79,7 @@ class Api::ReviewsController < ApplicationController
   end
 
   private
+
   def review_from_params
     review_id = Integer(params[:review_id]) rescue nil #converts to integer on fail set to nil
     return nil unless !!review_id

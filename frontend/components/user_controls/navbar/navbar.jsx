@@ -9,6 +9,7 @@ import {connect} from 'react-redux';
 import React from 'react';
 import './navbar.css'
 import {isHTML} from '../../../utils/component_utils'
+import {DropdownLayout} from "./dropdown";
 import {NavbarEntriesError, NavbarEntriesTitleErrors} from "./navbar_error";
 import CardListing from "../card_listing/card_listing";
 import CardFeatured from "../card_featured/card_featured";
@@ -23,71 +24,117 @@ const mapDispatchToProps = dispatch => ({
     }
 });
 
-class NavbarLayout extends React.Component {
-    static defaultNavEntries = {
-        "Home": "/home",    // no dropdown
-        "Products": {"link 1": <CardFeatured />},
-        "Dropdown": {   // has 3 drop downs
+
+const defaultNavbarStyle = {
+    overflow: "hidden"
+};
+
+const defaultNavEntries = [
+    {header: "Home", link: "/home"},
+    {header: "Clothing & Shoes", link: "#", components: <ul>
+            <li>link 1</li>
+            <li>link 2</li>
+            <li>link 3</li>
+        </ul>
+    },
+    {header: "Home & Living", link: "#", components: {
+            "#": <ul>
+                <li>link 1</li>
+                <li>link 2</li>
+                <li>link 3</li>
+            </ul>
+        }
+    },
+    {header: "Wedding & Part", link: "#", components: {
+            "#": <ul>
+                <li>link 1</li>
+                <li>link 2</li>
+                <li>link 3</li>
+            </ul>
+        }
+    },
+    {header: "Toys & Entertainment", components: {
+            "#": <ul>
+                <li>link 1</li>
+                <li>link 2</li>
+                <li>link 3</li>
+            </ul>
+        }
+    },
+    {header: "Art & Collectibles", components: {
+            "#": <ul>
+                <li>link 1</li>
+                <li>link 2</li>
+                <li>link 3</li>
+            </ul>
+        }
+    },
+    {header: "Craft Supplies", components: {"link 1": <CardFeatured/>}},
+    {header: "Gifts & Gift Cards", components: {
             "link 1": "/nav_bar",
             "link 2": "/nav_bar",
-            "link 3": <CardListing />
+            "#": <CardListing/>
         }
     }
+]
 
+class NavbarLayout extends React.Component {
     constructor(props) {
         super(props);
-        let components = props.components || NavbarLayout.defaultNavEntries;
-        if (isHTML(components))
-            throw new NavbarEntriesError();
-        this.state = {...components}
+        this.state = {headerStyle: {}}
+
+        this.classes = {}
+        this.className = '';
+        this.headerClass = '';
+        this.dropperClass = '';
+        this.linksClass = '';
+
+        this.hoverClass = '';
+        this.headerHoverClass = '';
+        this.linksHoverClass = '';
+
+        this.#assignClassNames(props);
     }
 
-    navDropDown(navTitle, navElement){
-        let dropdowns = Object.entries(navElement).map(
-            (pair, idx) => {
-                let [title, element] = pair;
-                if (isHTML(element))
-                    return <React.Fragment key={idx}>{element}</React.Fragment>;
-                return <Link key={idx} className={`navbar-dropdown-link navbar-dropdown-link-${title}`}
-                          to={`${element}`}>
-                    {`${title}`}
-                </Link>
-            })
+    #assignClassNames(props) {
+        this.className = props.className || '';
+        this.headerClass = props.headerClass || '';
+        this.dropperClass = props.dropperClass || '';
+        this.linksClass = props.linksClass || '';
 
-        return <div className={`navbar-dropdown navbar-dropdown-${navTitle.toLowerCase()}`}>
-                <Link to="/nav_bar" className="dropbtn">{navTitle} <i className="fa fa-caret-down" />
-                </Link>
-                <div className={`dropdown-content dropdown-content-${navTitle.toLowerCase()}`}> {dropdowns}
-                </div>
-            </div>
+        this.hoverClass = props.hoverClass || '';
+        this.headerHoverClass = props.headerHoverClass || '';
+        this.linksHoverClass = props.linksHoverClass || '';
 
-    }
-
-    navLink(navTitle, navElement){
-        if (isHTML(navElement))
-            return navElement;
-        return <Link className={`navbar-link navbar-link-${navTitle.toLowerCase()}`} to={`${navElement}`}>
-            {`${navTitle}`}
-        </Link>
-    }
-
-    generateNavElement(navObject){
-        let [navTitle, navElement] = navObject;
-        if (isHTML(navTitle))
-            throw new NavbarEntriesTitleErrors()
-        else if (typeof navElement === 'string' || navElement instanceof String || isHTML(navElement))
-            return this.navLink(navTitle, navElement);
-        else
-            return this.navDropDown(navTitle, navElement);
+        if (props.className) this.classes.className = props.className;
+        if (props.headerClass) this.classes.headerClass = props.headerClass;
+        if (props.dropperClass) this.classes.dropperClass = props.dropperClass;
+        if (props.linksClass) this.classes.linksClass = props.linksClass;
+        if (props.hoverClass) this.classes.hoverClass = props.hoverClass;
+        if (props.headerHoverClass) this.classes.headerHoverClass = props.headerHoverClass;
+        if (props.linksHoverClass) this.classes.linksHoverClass = props.linksHoverClass;
     }
 
     render() {
-        return <div className="navbar">{
-            Object.entries(this.state).map(
-                (navObject, idx) => <React.Fragment key={idx}>
-                    { this.generateNavElement(navObject) }
-                </React.Fragment>
-            )
+        let components = this.props.components || defaultNavEntries;
+        if (isHTML(components))
+            throw new NavbarEntriesError();
+        return <div className={this.className}>{
+            components.map((dropDown, idx) => {
+                let {header, link, components} = dropDown;
+                return <DropdownLayout key={idx}
+                                       header={header}
+                                       link={link}
+                                       components={components} {...this.classes}
+                                       // className={this.className}
+                                       // headerClass={this.headerClass}
+                                       // dropperClass={this.dropperClass}
+                                       // linksClass={this.linksClass}
+                                       // hoverClass={this.hoverClass}
+                                       // headerHoverClass={this.headerHoverClass}
+                                       // linksHoverClass={this.linksHoverClass}
+                />
+            })
         }</div>
     }
 }

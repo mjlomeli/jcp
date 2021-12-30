@@ -20,13 +20,13 @@ export const fetchProductReviews = (productId) => {
     });
 };
 
-export const fetchReview = (productId, reviewId) => {
-    if (!productId, reviewId){
-        debug.error("A product id and review id must be provided for fetchReview");
+export const fetchReview = (reviewId) => {
+    if (!reviewId){
+        debug.error("A and review id must be provided for fetchReview");
     }
 
     return $.ajax({
-        url: `/api/products/${productId}/reviews/${reviewId}`,
+        url: `/api/reviews/${reviewId}`,
         method: 'GET'
     });
 };

@@ -95,6 +95,6 @@
 
 /* Show the dropdown menu on hover */
 .navbar-dropdown:hover .dropdown-content {
-    display: flex;
+    display: block;
     flex-direction: column;
 }
