@@ -19,7 +19,7 @@ import { AuthRoute, ProtectedRoute } from '../utils/route_util';
 // import CartPage from "./pages/cart_page";
 
 
-// import HeaderTemplate from "./themes/header_template/header_template";
+import HeaderTemplate from "./themes/header_template/header_template";
 // import FooterTemplate from "./themes/footer/footer_template";
 // import ProductsTemplate from "./themes/products_template/products_template";
 // import ProductTemplate from "./themes/product_template/product_template";
@@ -56,7 +56,7 @@ const App = () => (
             <AuthRoute exact path="/login" component={LogInFormContainer} />
             <AuthRoute exact path="/signup" component={SignUpFormContainer} />
             <AuthRoute exact path="/demo" component={DemoLogInFormContainer} />
-            {/*<Route exact path="/header_template" component={HeaderTemplate} />*/}
+            <Route exact path="/header_template" component={HeaderTemplate} />
             {/*<Route exact path="/dropdown" component={DropdownLayout} />*/}
             {/*<ProtectedRoute exact path="/user/:id" component={ProfileContainer} />*/}
             {/*<Route exact path="/nav_bar" component={NavbarLayout} />*/}
