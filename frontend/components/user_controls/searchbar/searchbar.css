@@ -27,6 +27,14 @@
     padding-left: 1.5em;
     padding-top: 0.7em;
     padding-bottom: 1em;
+    border-top-right-radius: 96px;
+    border-bottom-right-radius: 96px;
+    /*border: 2px solid black;*/
+}
+
+.search-button:hover {
+    background-color: black;
+    fill: white;
 }
 
 
