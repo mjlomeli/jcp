@@ -76,6 +76,7 @@
     top: 5%;
     transform: translateY(100%);
     opacity: 0;
+    cursor: pointer;
 }
 
 .card-listing-favorite-image {
@@ -83,6 +84,10 @@
     margin-top: 0.1em;
     width: 90%;
     height: 90%;
+}
+
+.card-listing-favored {
+    fill: #A61A2E;
 }
 
 .card-listing-favorite:hover {

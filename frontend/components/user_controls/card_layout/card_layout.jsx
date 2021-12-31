@@ -31,6 +31,8 @@ class CardLayout extends React.Component {
         this.flip();
     }
 
+
+
     flip() {
         let front = (this.state.frontFlip) ? "" : "flip";
         let back = (this.state.backFlip) ? "" : "flip";

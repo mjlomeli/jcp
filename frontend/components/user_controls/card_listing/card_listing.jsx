@@ -19,7 +19,7 @@ class Price extends React.Component {
         let price = this.props.price || 0;
         let discount = this.props.discount || 0;
         price = price - (price * discount);
-        return <><span className="card-listing-price">${price.toFixed(2)}</span></>;
+        return <span className="card-listing-price">${price.toFixed(2)}</span>;
     }
 
     discountedComponent() {
@@ -88,6 +88,8 @@ let defaultListing = {
 class CardListing extends React.Component {
     constructor(props) {
         super(props);
+        this.favoriteFill = React.createRef();
+        this.onclickfavorite = this.onClickFavorite.bind(this);
     }
 
     resize(title) {
@@ -96,18 +98,24 @@ class CardListing extends React.Component {
         return title;
     }
 
-    favoriteComponent(productId){
-        return <a href="#" className="card-listing-favorite">
-            <svg className="card-listing-favorite-image" version="1.1" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="510px" height="459px" viewBox="51 166.5 510 459" enableBackground="new 51 166.5 510 459">
-                <path d="M306,625.5c-42.101,0-255-160.956-255-306c0-87.235,60.282-153,140.25-153c43.391,2.685,84.259,21.312,114.75,52.301 c30.548-30.907,71.383-49.519,114.75-52.301c79.968,0,140.25,65.765,140.25,153C561,464.544,348.101,625.5,306,625.5z M191.25,217.5 c-51.714,0-89.25,42.917-89.25,102c0,104.754,164.016,237.787,204,255c39.882-16.754,204-148.716,204-255 c0-59.083-37.536-102-89.25-102c-50.465,0-94.35,53.678-94.886,54.238l-20.094,24.812l-19.763-24.99 C285.243,270.617,242.25,217.5,191.25,217.5z"/>
+    onClickFavorite(e){
+        //TODO: save product id to favorites
+        this.favoriteFill.current.classList.toggle("card-listing-favored");
+    }
+
+    favoriteComponent(){
+        return <div className="card-listing-favorite" onClick={this.onclickfavorite}>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="51 166.5 510 459">
+                <path d="M306,625.5c-42.102,0-255-160.956-255-306c0-87.234,60.282-153,140.25-153c43.391,2.685,84.259,21.312,114.75,52.301 c30.548-30.907,71.383-49.519,114.75-52.301c79.968,0,140.25,65.766,140.25,153C561,464.544,348.101,625.5,306,625.5z M191.25,217.5 c-51.714,0-89.25,42.917-89.25,102c0,104.754,164.016,237.787,204,255c39.882-16.754,204-148.716,204-255 c0-59.083-37.536-102-89.25-102c-50.465,0-94.35,53.678-94.886,54.238L305.77,296.55l-19.763-24.989 C285.243,270.617,242.25,217.5,191.25,217.5z"/>
+                <path ref={this.favoriteFill} fill="none" d="M306,625.5c-42.102,0-255-160.956-255-306c0-87.234,60.282-153,140.25-153 c43.391,2.685,84.259,21.312,114.75,52.301c30.548-30.907,71.383-49.519,114.75-52.301c79.968,0,140.25,65.766,140.25,153 C561,464.544,348.101,625.5,306,625.5z"/>
             </svg>
-        </a>
+        </div>
     }
 
     imageComponent(productId, imageUrl){
         return <div>
             <div className="card-listing-image-div">
-                {this.favoriteComponent(productId)}
+                {this.favoriteComponent()}
                 <Link to={`/product/${productId}`} style={{textDecoration: 'none'}}>
                     <img className="card-listing-image" alt="img" aria-hidden="true" src={imageUrl}/>
                 </Link>

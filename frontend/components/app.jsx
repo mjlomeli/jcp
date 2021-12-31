@@ -15,7 +15,7 @@ import { AuthRoute, ProtectedRoute } from '../utils/route_util';
 // import DemoLogInFormContainer from './session_form/demo_form_container';
 
 
-// import HomePage from "./pages/home_page";
+import HomePage from "./pages/home_page";
 // import ProductsPage from "./pages/products_page";
 // import ProductPage from "./pages/product_page";
 // import CartPage from "./pages/cart_page";
@@ -23,13 +23,11 @@ import { AuthRoute, ProtectedRoute } from '../utils/route_util';
 
 // import HeaderTemplate from "./themes/header_template/header_template";
 // import FooterTemplate from "./themes/footer_template/footer_template";
-import HomeBodyTemplate from "./themes/home_body_template/home_body_template";
+// import HomeBodyTemplate from "./themes/home_body_template/home_body_template";
 // import ProductsTemplate from "./themes/products_template/products_template";
 // import ProductTemplate from "./themes/product_template/product_template";
 // import CartTemplate from "./themes/cart_template/cart_template";
 
-// import {DropdownLayout} from "./user_controls/navbar/dropdown";
-// import NavbarLayout from "./user_controls/navbar/navbar";
 // import Gallery from "./user_controls/gallery/gallery";
 // import Products_page from "./pages/products";
 // import Cart_page from "./pages/cart";
@@ -41,8 +39,11 @@ import HomeBodyTemplate from "./themes/home_body_template/home_body_template";
 // import Rating from "./user_controls/rating/rating";
 // import SearchBar from "./user_controls/searchbar/searchbar";
 // import ProductsList from "./user_controls/product_list/products_list";
+
 // import FlowLayout from "./user_controls/flow_layout/flow_layout";
 // import GridLayout from "./user_controls/grid_layout/grid_layout";
+// import {DropdownLayout} from "./user_controls/navbar/dropdown";
+// import NavbarLayout from "./user_controls/navbar/navbar";
 
 /* learn more about grid-auto-flow */
 
@@ -60,30 +61,30 @@ const App = () => (
             {/*<AuthRoute exact path="/signup" component={SignUpFormContainer} />*/}
             {/*<AuthRoute exact path="/demo" component={DemoLogInFormContainer} />*/}
 
-            {/*<Route exact path="/home_page" component={HomePage} />*/}
+            <Route exact path="/home_page" component={HomePage} />
             {/*<Route exact path="/products" component={ProductsPage} />*/}
             {/*<ProtectedRoute exact path="/cart" component={CartPage} />*/}
 
             {/*<Route exact path="/header_template" component={HeaderTemplate} />*/}
             {/*<Route exact path="/footer" component={FooterTemplate} />*/}
-            <Route exact path="/home_body_template" component={HomeBodyTemplate}/>
+            {/*<Route exact path="/home_body_template" component={HomeBodyTemplate}/>*/}
             {/*<Route exact path="/product/:id" component={ProductTemplate} />*/}
             {/*<Route exact path="/products_template" component={ProductsTemplate} />*/}
             {/*<ProtectedRoute exact path="/cart_template" component={CartTemplate} />*/}
 
             {/*<Route exact path="/gallery" component={Gallery} />*/}
-            {/*<Route exact path="/card_featured" component={CardFeatured} />*/}
-            {/*<Route exact path="/card_listing" component={CardListing} />*/}
-            {/*<Route exact path="/card_thumbnail" component={CardThumbnail} />*/}
-            {/*<Route exact path="/circular_thumbnail" component={CircularThumbnail} />*/}
             {/*<Route exact path="/products_list" component={ProductsList} />*/}
-            {/*<Route exact path="/card_listing/:id" component={CardListing} />*/}
             {/*<Route exact path="/cart_item" component={CartItem} />*/}
             {/*<Route exact path="/gallery/:id" component={Gallery} />*/}
             {/*<Route exact path="/rating" component={Rating} />*/}
             {/*<Route exact path="/searchbar" component={SearchBar} />*/}
             {/*<Route exact path="/rating" component={Rating} />*/}
             {/*<ProtectedRoute exact path="/user/:id" component={ProfileContainer} />*/}
+            {/*<Route exact path="/circular_thumbnail" component={CircularThumbnail} />*/}
+            {/*<Route exact path="/card_thumbnail" component={CardThumbnail} />*/}
+            {/*<Route exact path="/card_listing/:id" component={CardListing} />*/}
+            {/*<Route exact path="/card_featured" component={CardFeatured} />*/}
+            {/*<Route exact path="/card_listing" component={CardListing} />*/}
 
             {/*<Route exact path="/flow_layout" component={FlowLayout} />*/}
             {/*<Route exact path="/grid_layout/:id" component={GridLayout} />*/}

@@ -10,6 +10,11 @@
     transition: box-shadow 0.2s ease;
 }
 
+.global-card-thumbnail:hover .card-thumbnail-favorite{
+    transform: translateY(0%) scale(1);
+    opacity: 100%;
+}
+
 .global-card-thumbnail-image {
     width: 100%;
     height: 100%;
@@ -53,4 +58,39 @@
     height: 1vw;
     fill: #222222;
     vertical-align: bottom;
+}
+
+
+.card-thumbnail-favorite {
+    width: 1em;
+    height: 1em;
+    color: #222222;
+    background-color: white;
+    z-index: 10;
+    padding: 0.5em;
+    border-radius: 50%;
+
+    position: absolute;
+    transition: opacity 0.2s linear, transform 0.1s ease-out, opacity 0.1s linear;
+    right: 5%;
+    top: 5%;
+    transform: translateY(100%);
+    opacity: 0;
+    cursor: pointer;
+}
+
+.card-thumbnail-favorite-image {
+    position: relative;
+    margin-top: 0.1em;
+    width: 90%;
+    height: 90%;
+}
+
+.card-thumbnail-favored {
+    fill: #A61A2E;
+}
+
+.card-thumbnail-favorite:hover {
+    box-shadow: 0 0 1em 0 rgba(26, 26, 26, 0.44);
+    transition: transform 0.02s ease, box-shadow 0.2s ease;
 }

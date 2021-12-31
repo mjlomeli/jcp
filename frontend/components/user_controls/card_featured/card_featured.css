@@ -21,8 +21,36 @@
     cursor: inherit;
 }
 
+.card-featured-favorite {
+    width: 1em;
+    height: 1em;
+    color: #222222;
+    background-color: white;
+    z-index: 10;
+    padding: 0.5em;
+    border-radius: 50%;
+
+    position: absolute;
+    transition: opacity 0.2s linear, transform 0.1s ease-out, opacity 0.1s linear;
+    right: 5%;
+    top: 5%;
+    transform: translateY(100%);
+    opacity: 0;
+    cursor: pointer;
+}
+
+.card-featured-image-div:hover .card-featured-favorite{
+    transform: translateY(0%) scale(1);
+    opacity: 100%;
+}
+
+.card-featured-favored {
+    fill: #A61A2E;
+}
+
 
 .card-featured-image-div {
+    position: relative;
     width: 100%;
     height: 100%;
     object-position: center;
