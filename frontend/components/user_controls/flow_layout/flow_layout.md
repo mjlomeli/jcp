@@ -16,7 +16,7 @@ component fills the entire top area.
 let areas = [
     ['header_template header_template header_template header_template header_template header_template'],
     ['menu main main main right right'],
-    ['menu footer footer footer footer footer']
+    ['menu footer_template footer_template footer_template footer_template footer_template']
 ]
 ```
 
@@ -51,7 +51,7 @@ import GridLayout from "../grid_layout/grid_layout";
 let areas = [
     ['header_template header_template header_template header_template header_template header_template'],
     ['menu main main main right right'],
-    ['menu footer footer footer footer footer']
+    ['menu footer_template footer_template footer_template footer_template footer_template']
 ]
 let components = {
     'header': <div>Header</div>,
