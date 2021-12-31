@@ -92,7 +92,6 @@ const App = () => (
             {/*<Route exact path="/nav_bar" component={NavbarLayout} />*/}
         </Switch>
         {/*END OF DON'T REMOVE*/}
-
     </div>
 );
 

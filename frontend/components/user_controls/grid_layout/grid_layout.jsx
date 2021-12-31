@@ -50,7 +50,7 @@ class GridLayout extends React.Component {
      */
     constructor(props) {
         super(props);
-
+        this.refGridLayout = props.refGridLayout;
         this.className = '';
         this.classElements = '';
 
@@ -99,7 +99,7 @@ class GridLayout extends React.Component {
                  onClick={this.onclick}
                  className={this.className}
                  onDrag={this.ondrag}
-                 style={this.#gridStyle}>{
+                 style={this.#gridStyle} ref={this.refGridLayout}>{
                      this.#makeElements(components)
             }</div>
         </>

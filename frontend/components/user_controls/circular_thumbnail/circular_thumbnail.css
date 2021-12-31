@@ -1,62 +1,21 @@
-.global-circular-thumbnail-grid {
-    grid-gap: 1vw;
-    border: 1vw solid transparent;
-    object-fit: scale-down;
+.thumbnail-hover {
+    border-bottom: 0.15em solid black;
 }
 
-.global-circular-thumbnail-items {
+.thumbnail-title {
+    margin-top: 2em;
+}
+
+.thumbnail-elements {
     display: flex;
     justify-content: center;
-    border-bottom: 0.5vw solid transparent;
+    border-bottom: transparent;
+    grid-row-gap: 1em;
 }
 
-.global-circular-thumbnail-grid:hover > .global-circular-thumbnail-items > .global-circular-thumbnail-image-div > .global-circular-thumbnail-image {
+.thumbnail-image-hover {
     transform: scale(1.1);
-    box-shadow: 0em 0em 2vw 0 rgba(26, 26, 26, 0.29);
+    box-shadow: 0 0 2vw 0 rgba(26, 26, 26, 0.29);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     cursor: pointer;
 }
-
-
-.global-circular-thumbnail:hover > .global-circular-thumbnail-items > .global-circular-thumbnail-category {
-    color: #595959;
-    border-bottom: 0.5vw solid #595959;
-    -webkit-font-smoothing: antialiased;
-}
-
-.global-circular-thumbnail-products-grid:hover > .global-circular-thumbnail-items > .global-circular-thumbnail-image-div > .global-circular-thumbnail-image {
-    box-shadow: 0em 0em 2vw 0 rgba(26, 26, 26, 0.29);
-    border-radius: 96px;
-    transition: box-shadow 0.3s ease;
-    cursor: pointer;
-}
-
-
-.global-circular-thumbnail-category {
-    color: #222222;
-    font-weight: 640;
-    font-size: 2vw;
-    line-height: 2vw;
-    position: relative;
-    font-family: -apple-system, BlinkMacSystemFont, "Roboto", "Droid Sans", "Segoe UI", "Helvetica", Arial, sans-serif;
-    word-wrap: break-word;
-    border-bottom: 0.5vw solid transparent;
-    -webkit-font-smoothing: antialiased;
-}
-
-.global-circular-thumbnail-image-div {
-    object-fit: scale-down;
-    object-position: center;
-    width: 80%;
-}
-
-.global-circular-thumbnail-image {
-    display: flex;
-    border-radius: 50%;
-    width: 100%;
-    height: 100%;
-    object-fit: fill;
-    overflow: hidden;
-}
-
-
