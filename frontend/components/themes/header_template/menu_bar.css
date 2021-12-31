@@ -68,7 +68,6 @@
 /* End of Tooltip popup */
 
 /* Nav Link Highlights */
-.nav-link:hover:not(:focus) + [role="tooltip"]{}
 .menu-button:hover{
     background-color: #EEEEEE;
 }
@@ -79,10 +78,9 @@
     width: 100%;
 }
 
-.menu-bar-elements {
+.menu-bar-grid-elements {
     display: flex;
-    justify-content: center;
-    width: 100%;
+    justify-content: space-evenly;
     margin-top: auto;
     margin-bottom: auto;
 }

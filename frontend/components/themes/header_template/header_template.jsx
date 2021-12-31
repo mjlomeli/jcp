@@ -7,7 +7,7 @@ import {
 } from 'react-router-dom';
 import {connect} from 'react-redux';
 import React from 'react';
-import './navlinks_template.css'
+import './menu_bar.css'
 import SearchBarComponent from "../../user_controls/searchbar/searchbar";
 import GridLayout from "../../user_controls/grid_layout/grid_layout";
 import NavbarLayout from "../../user_controls/navbar/navbar";
@@ -26,6 +26,8 @@ const mapDispatchToProps = dispatch => ({
 class MenuBar extends React.Component {
     constructor(props) {
         super(props);
+        this.className = this.props.className || '';
+        this.classElements = this.props.classElements || '';
     }
 
     button(icon, tooltip) {
@@ -83,8 +85,8 @@ class MenuBar extends React.Component {
             'account': this.account(),
             'cart': this.cart()
         }
-        return <GridLayout areas={areas} components={components} className="navlinks-grid"
-                           classElements="navlinks-items"/>
+        return <GridLayout areas={areas} components={components} className={this.className}
+                           classElements={this.classElements}/>
     }
 }
 
@@ -124,10 +126,10 @@ class HeaderTemplate extends React.Component {
         let headerBarComponents = {
             'logo': <Link to="/home">{this.logo()}</Link>,
             's': <SearchBarComponent/>,
-            'navlinks': <MenuBar/>
+            'navlinks': <MenuBar className="menu-bar-grid" classElements="menu-bar-grid-elements"/>
         }
         let headerBarLayout = <GridLayout areas={headerBarAreas} components={headerBarComponents}
-                                          className="menu-bar-grid" classElements="menu-bar-elements"/>
+                                          className="header-grid" classElements="header-grid-elements"/>
         return <>
             <div className="navlinks">
                 {headerBarLayout}
