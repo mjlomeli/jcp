@@ -17,13 +17,54 @@ let defaultThumbnail = {
     link: "/products"
 }
 
+const defaultTitleStyle = {fontWeight: "640", fontSize: "2vw", position: "relative", wordWrap: "break-word", borderBottom: "0.5vw solid transparent"}
+const defaultImageStyle = {}
+const defaultElementsStyle = {display: "flex", justifyContent: "center", borderBottom: "0.5vw solid transparent"}
+const defaultGridStyle = {gridGap: "1vw", border: "1vw solid transparent", objectFit: "scale-down"}
+
 class CircularThumbnail extends React.Component {
+    #titleStyle = {}
+    #imageStyle = {}
+    #elementsStyle = {}
+    #gridStyle = {}
+
+    static CLASS_PROPS = ['className', 'classImage', 'classTitle', 'classGrid', 'classElements'];
+    static DATA_PROPS = ['title', 'image', 'link'];
+    static hasClassProps(props) {
+        return CircularThumbnail.CLASS_PROPS.some(elem => elem in props)
+    }
+    static hasComponentData(props) {
+        return CircularThumbnail.DATA_PROPS.some(elem => elem in props)
+    }
+
     constructor(props) {
         super(props);
         this.state = {}
+        this.usingDefaultClass = !CircularThumbnail.hasClassProps(props);
+        this.usingDefaultData = !CircularThumbnail.hasComponentData(props);
 
-        this.classGrid = `global-circular-thumbnail-grid`;
-        this.classElements = `global-circular-thumbnail-items`;
+        this.className = '';
+        this.classImage = '';
+        this.classTitle = '';
+        this.classGrid = '';
+        this.classElements = '';
+
+        this.#assignClassNames(props);
+    }
+
+    #assignClassNames(props){
+        if (!this.usingDefaultClass) {
+            this.className = props.className || '';
+            this.classImage = props.classImage || '';
+            this.classTitle = props.classTitle || '';
+            this.classGrid = props.classGrid || '';
+            this.classElements = props.classElements || '';
+        } else {
+            this.#titleStyle = {...this.#itemsStyle, ...defaultTitleStyle};
+            this.#imageStyle = {...this.#itemsStyle, ...defaultImageStyle};
+            this.#elementsStyle = {...this.#itemsStyle, ...defaultElementsStyle};
+            this.#gridStyle = {...this.#gridStyle, ...defaultGridStyle};
+        }
     }
 
     componentDidMount() {

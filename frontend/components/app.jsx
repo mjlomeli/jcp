@@ -23,7 +23,7 @@ import { AuthRoute, ProtectedRoute } from '../utils/route_util';
 
 // import HeaderTemplate from "./themes/header_template/header_template";
 // import FooterTemplate from "./themes/footer_template/footer_template";
-import HomeBodyTemplate from "./themes/home_body_template/home_body_template";
+// import HomeBodyTemplate from "./themes/home_body_template/home_body_template";
 // import ProductsTemplate from "./themes/products_template/products_template";
 // import ProductTemplate from "./themes/product_template/product_template";
 // import CartTemplate from "./themes/cart_template/cart_template";
@@ -37,7 +37,7 @@ import HomeBodyTemplate from "./themes/home_body_template/home_body_template";
 // import CardFeatured from "./user_controls/card_featured/card_featured";
 // import CardListing from "./user_controls/card_listing/card_listing";
 // import CardThumbnail from "./user_controls/card_thumbnail/card_thumbnail";
-// import CircularThumbnail from "./user_controls/circular_thumbnail/circular_thumbnail";
+import CircularThumbnail from "./user_controls/circular_thumbnail/circular_thumbnail";
 // import Rating from "./user_controls/rating/rating";
 // import SearchBar from "./user_controls/searchbar/searchbar";
 // import ProductsList from "./user_controls/product_list/products_list";
@@ -66,7 +66,7 @@ const App = () => (
 
             {/*<Route exact path="/header_template" component={HeaderTemplate} />*/}
             {/*<Route exact path="/footer" component={FooterTemplate} />*/}
-            <Route exact path="/home_body_template" component={HomeBodyTemplate}/>
+            {/*<Route exact path="/home_body_template" component={HomeBodyTemplate}/>*/}
             {/*<Route exact path="/product/:id" component={ProductTemplate} />*/}
             {/*<Route exact path="/products_template" component={ProductsTemplate} />*/}
             {/*<ProtectedRoute exact path="/cart_template" component={CartTemplate} />*/}
@@ -75,7 +75,7 @@ const App = () => (
             {/*<Route exact path="/card_featured" component={CardFeatured} />*/}
             {/*<Route exact path="/card_listing" component={CardListing} />*/}
             {/*<Route exact path="/card_thumbnail" component={CardThumbnail} />*/}
-            {/*<Route exact path="/circular_thumbnail" component={CircularThumbnail} />*/}
+            <Route exact path="/circular_thumbnail" component={CircularThumbnail} />
             {/*<Route exact path="/products_list" component={ProductsList} />*/}
             {/*<Route exact path="/card_listing/:id" component={CardListing} />*/}
             {/*<Route exact path="/cart_item" component={CartItem} />*/}
