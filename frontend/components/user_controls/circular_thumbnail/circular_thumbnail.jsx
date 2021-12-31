@@ -7,7 +7,6 @@ import {
 } from 'react-router-dom';
 import {connect} from 'react-redux';
 import React from 'react';
-import './circular_thumbnail.css'
 import GridLayout from "../grid_layout/grid_layout";
 
 
@@ -27,7 +26,7 @@ const defaultTitleStyle = {
 }
 const defaultImageStyle = {width: "200px", height: "200px"}
 
-class CircularThumbnaill extends React.Component {
+class CircularThumbnail extends React.Component {
     #titleStyle = {}
     #imageStyle = {borderRadius: "50%"}
 
@@ -35,18 +34,18 @@ class CircularThumbnaill extends React.Component {
     static DATA_PROPS = ['title', 'image', 'link'];
 
     static hasClassProps(props) {
-        return CircularThumbnaill.CLASS_PROPS.some(elem => elem in props)
+        return CircularThumbnail.CLASS_PROPS.some(elem => elem in props)
     }
 
     static hasComponentData(props) {
-        return CircularThumbnaill.DATA_PROPS.some(elem => elem in props)
+        return CircularThumbnail.DATA_PROPS.some(elem => elem in props)
     }
 
     constructor(props) {
         super(props);
         this.state = {}
-        this.usingDefaultClass = !CircularThumbnaill.hasClassProps(props);
-        this.usingDefaultData = !CircularThumbnaill.hasComponentData(props);
+        this.usingDefaultClass = !CircularThumbnail.hasClassProps(props);
+        this.usingDefaultData = !CircularThumbnail.hasComponentData(props);
 
         this.className = '';
         this.classImage = '';
@@ -148,18 +147,6 @@ class CircularThumbnaill extends React.Component {
                 areas={areas}
                 components={components} refGridLayout={this.thumbnail}/>
         </Link>
-    }
-}
-
-class CircularThumbnail extends React.Component {
-    render() {
-        return <CircularThumbnaill
-            className="thumbnail"
-            classTitle="thumbnail-title"
-            classElements="thumbnail-elements"
-            classHover="thumbnail-hover"
-            classTitleHover="thumbnail-title-hover"
-            classImageHover="thumbnail-image-hover"/>
     }
 }
 

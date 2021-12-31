@@ -1,6 +1,7 @@
 import {connect} from 'react-redux';
 import React from 'react';
 import './home_body_template.css'
+import './circular_thumbnail.css'
 import CardThumbnail from "../../user_controls/card_thumbnail/card_thumbnail";
 import GridLayout from "../../user_controls/grid_layout/grid_layout";
 import CardListing from "../../user_controls/card_listing/card_listing";
@@ -28,7 +29,12 @@ class HomeBodyTemplate extends React.Component {
 
     categories1x6() {
         let layout1x6 = ['one two three four five six'];
-        let thumbnail = <CircularThumbnail/>
+        let thumbnail = <CircularThumbnail className="thumbnail"
+                                           classTitle="thumbnail-title"
+                                           classImage="thumbnail-image"
+                                           classElements="thumbnail-elements"
+                                           classHover="thumbnail-hover"
+                                           classImageHover="thumbnail-image-hover"/>
         let components = {
             'one': thumbnail, 'two': thumbnail, 'three': thumbnail, 'four': thumbnail,
             'five': thumbnail, 'six': thumbnail
@@ -61,7 +67,12 @@ class HomeBodyTemplate extends React.Component {
 
     picksForYou1x6() {
         let layout1x6 = ['one two three four five six'];
-        let thumbnail = <CircularThumbnail/>
+        let thumbnail = <CircularThumbnail className="thumbnail"
+                                           classTitle="thumbnail-title"
+                                           classImage="thumbnail-image"
+                                           classElements="thumbnail-elements"
+                                           classHover="thumbnail-hover"
+                                           classImageHover="thumbnail-image-hover"/>
         let components = {
             'one': thumbnail, 'two': thumbnail, 'three': thumbnail, 'four': thumbnail,
             'five': thumbnail, 'six': thumbnail

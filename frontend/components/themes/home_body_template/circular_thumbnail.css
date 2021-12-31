@@ -1,5 +1,5 @@
-.thumbnail-hover {
-    border-bottom: 0.15em solid black;
+.thumbnail {
+    border-bottom: 0.15em solid transparent;
 }
 
 .thumbnail-title {
@@ -7,10 +7,15 @@
 }
 
 .thumbnail-elements {
+    position: relative;
     display: flex;
     justify-content: center;
     border-bottom: transparent;
     grid-row-gap: 1em;
+}
+
+.thumbnail-hover {
+    border-bottom: 0.15em solid black;
 }
 
 .thumbnail-image-hover {
