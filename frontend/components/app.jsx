@@ -15,7 +15,7 @@ import { AuthRoute, ProtectedRoute } from '../utils/route_util';
 // import DemoLogInFormContainer from './session_form/demo_form_container';
 
 
-import HomePage from "./pages/home_page";
+// import HomePage from "./pages/home_page";
 // import ProductsPage from "./pages/products_page";
 // import ProductPage from "./pages/product_page";
 // import CartPage from "./pages/cart_page";
@@ -23,6 +23,7 @@ import HomePage from "./pages/home_page";
 
 // import HeaderTemplate from "./themes/header_template/header_template";
 // import FooterTemplate from "./themes/footer_template/footer_template";
+import HomeBodyTemplate from "./themes/home_body_template/home_body_template";
 // import ProductsTemplate from "./themes/products_template/products_template";
 // import ProductTemplate from "./themes/product_template/product_template";
 // import CartTemplate from "./themes/cart_template/cart_template";
@@ -64,10 +65,11 @@ const App = () => (
             {/*<ProtectedRoute exact path="/cart" component={CartPage} />*/}
 
             {/*<Route exact path="/header_template" component={HeaderTemplate} />*/}
-            {/*<ProtectedRoute exact path="/cart_template" component={CartTemplate} />*/}
             {/*<Route exact path="/footer" component={FooterTemplate} />*/}
+            <Route exact path="/home_body_template" component={HomeBodyTemplate}/>
             {/*<Route exact path="/product/:id" component={ProductTemplate} />*/}
             {/*<Route exact path="/products_template" component={ProductsTemplate} />*/}
+            {/*<ProtectedRoute exact path="/cart_template" component={CartTemplate} />*/}
 
             {/*<Route exact path="/gallery" component={Gallery} />*/}
             {/*<Route exact path="/card_featured" component={CardFeatured} />*/}

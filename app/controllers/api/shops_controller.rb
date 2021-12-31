@@ -84,7 +84,7 @@ class Api::ShopsController < ApplicationController
 
   def shop_params
     # the .require makes it so that when a controller is using the
-    # shop_params function, if shop_template doesn't exist in the body_template
+    # shop_params function, if shop_template doesn't exist in the home_body_template
     # provided by a form, then the controller will not continue
     params.require(:shop).permit(:shop_name, :title, :user_id, :login_name, :announcement, :currency_code, :is_vacation, :vacation_message, :sale_message, :digital_sale_message, :listing_active_count, :digital_listing_count, :accepts_custom_requests, :custom_shops_state, :policy_welcome, :policy_payment, :policy_shipping, :policy_refunds, :policy_additional, :policy_seller_info, :policy_has_private_receipt_info, :vacation_autoreply, :url, :num_favorers, :languages, :upcoming_local_event_id, :is_using_structured_policies, :has_onboarded_structured_policies, :has_unstructured_policies, :include_dispute_form_link, :is_direct_checkout_onboarded, :policy_privacy, :is_calculated_eligible, :is_opted_in_to_buyer_promise, :is_shop_us_based, :results_per_page, :page_number, :last_updated_tsz, :creation_tsz, :policy_updated_tsz, :image_ids, :icon_ids, :created_at, :updated_at)
   end

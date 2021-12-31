@@ -73,7 +73,7 @@ class Api::ImagesController < ApplicationController
 
   def image_params
     # the .require makes it so that when a controller is using the
-    # image_params function, if image_template doesn't exist in the body_template
+    # image_params function, if image_template doesn't exist in the home_body_template
     # provided by a form, then the controller will not continue
     params.require(:image)
           .permit(:data, :mimetype, :size, :url, :encoding, :name, :group_name,

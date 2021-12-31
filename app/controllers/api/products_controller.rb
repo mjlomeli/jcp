@@ -95,7 +95,7 @@ class Api::ProductsController < ApplicationController
 
   def product_params
     # the .require makes it so that when a controller is using the
-    # product_params function, if product_template doesn't exist in the body_template
+    # product_params function, if product_template doesn't exist in the home_body_template
     # provided by a form, then the controller will not continue
     params.require(:product)
           .permit(:title, :price, :quantity, :views, :num_favorers,
