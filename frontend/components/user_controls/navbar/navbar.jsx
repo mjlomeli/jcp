@@ -37,7 +37,7 @@ const defaultNavEntries = [
             <li>link 3</li>
         </ul>
     },
-    {header: "Home & Living", link: "#", components: {
+    {header: "Home_page & Living", link: "#", components: {
             "#": <ul>
                 <li>link 1</li>
                 <li>link 2</li>

@@ -22,6 +22,6 @@ Rails.application.routes.draw do
       resources :reviews, only: [:index]
     end
 
-    # Home page route
+    # Home_page page route
     root to: 'root#root'
 end

@@ -100,7 +100,7 @@ class HeaderTemplate extends React.Component {
 
     navbar() {
         let navs = ["Cyber Sales Event", "Jewelry & Accessories", "Clothing & Shoes",
-            "Home & Living", "Wedding & Party", "Toys & Entertainment", "Art & Collectibles",
+            "Home_page & Living", "Wedding & Party", "Toys & Entertainment", "Art & Collectibles",
             "Craft Supplies", "Gifts & Gift Cards"];
 
         let components = navs.map(title => {

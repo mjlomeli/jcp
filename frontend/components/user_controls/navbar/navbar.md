@@ -12,7 +12,7 @@ Decide on your parts. Two distinct parts must be filled out.
 This is an example of navbar to dropdown relations.
 ```javascript
 let entries = {
-    "home": "#",    // navbar link titled Home and an href="#"
+    "home": "#",    // navbar link titled Home_page and an href="#"
     "dropdown": {   // navbar link titled Dropdown with no href
         "Link 1": "#", // the Dropdown has a 1 dropdown titled "Link 1" with href="#"
     }
@@ -51,7 +51,7 @@ import NavbarLayout from "./navbar";
 ... // inside a render function
 
 let entries = {
-    "Home": "#",    // no dropdown
+    "Home_page": "#",    // no dropdown
     "News": "#",    // no dropdown
     "Dropdown": {   // has 3 drop downs
         "Link 1": "#",

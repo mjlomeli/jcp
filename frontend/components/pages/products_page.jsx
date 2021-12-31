@@ -1,16 +1,16 @@
 import React from 'react';
 
 import HeaderTemplate from "./../themes/header_template/header_template";
-import ProductTemplate from "../themes/product_template/product_template";
+import ProductsTemplate from "../themes/products_template/products_template";
 import FooterTemplate from "../themes/footer_template/footer_template";
 
 
-const Product = (productId) => (
+const ProductsPage = (products) => (
     <div>
         <HeaderTemplate />
-        <ProductTemplate productId={productId}/>
+        <ProductsTemplate products={products}/>
         <FooterTemplate />
     </div>
 );
 
-export default Product;
+export default ProductsPage;

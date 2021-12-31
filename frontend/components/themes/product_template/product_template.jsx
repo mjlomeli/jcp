@@ -1,5 +1,5 @@
 /**
- * Product
+ * Product_page
  *
  * Creates the product_template show page. It needs a productId
  * to begin.
@@ -174,7 +174,7 @@ class ProductTemplate extends React.Component {
         else if (this.props.productId && this.props.products)
             return this.props.products[this.props.productId];
         else
-            console.warn("Product: unable to find product.")
+            console.warn("Product_page: unable to find product.")
         return null;
     }
 
