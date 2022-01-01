@@ -10,7 +10,7 @@ import React from 'react';
 import './cart_template.css'
 import GridLayout from "../../user_controls/grid_layout/grid_layout";
 import CardFeatured from "../../user_controls/card_featured/card_featured";
-import PaymentType from "../../user_controls/payment_type/payment_type";
+import PaymentSelection from "../../user_controls/payment_selection/payment_selection";
 
 const mapStateToProps = ({errors}) => ({
     //errors: errors.session, // need to add a ui or user_control errors
@@ -32,11 +32,11 @@ class CartTemplate extends React.Component {
         let areas = ['cart_item1 payment_type1', 'cart_item2 payment_type2', 'cart_item3 payment_type3'];
         let components = {
             'cart_item1': <CardFeatured />,
-            'payment_type1': <PaymentType />,
+            'payment_type1': <PaymentSelection />,
             'cart_item2': <CardFeatured />,
-            'payment_type2': <PaymentType />,
+            'payment_type2': <PaymentSelection />,
             'cart_item3': <CardFeatured />,
-            'payment_type3': <PaymentType />
+            'payment_type3': <PaymentSelection />
         }
         return <GridLayout areas={areas} components={components}/>
     }

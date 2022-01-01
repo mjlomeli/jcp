@@ -10,15 +10,15 @@ import {
 
 import GreetingContainer from './greeting/greeting_container';
 import { AuthRoute, ProtectedRoute } from '../utils/route_util';
-// import SignUpFormContainer from './session_form/signup_form_container';
-// import LogInFormContainer from './session_form/login_form_container';
-// import DemoLogInFormContainer from './session_form/demo_form_container';
+import SignUpFormContainer from './session_form/signup_form_container';
+import LogInFormContainer from './session_form/login_form_container';
+import DemoLogInFormContainer from './session_form/demo_form_container';
 
 
-import HomePage from "./pages/home_page";
+// import HomePage from "./pages/home_page";
 // import ProductsPage from "./pages/products_page";
 // import ProductPage from "./pages/product_page";
-// import CartPage from "./pages/cart_page";
+import CartPage from "./pages/cart_page";
 
 
 // import HeaderTemplate from "./themes/header_template/header_template";
@@ -28,17 +28,16 @@ import HomePage from "./pages/home_page";
 // import ProductTemplate from "./themes/product_template/product_template";
 // import CartTemplate from "./themes/cart_template/cart_template";
 
-// import Gallery from "./user_controls/gallery/gallery";
-// import Products_page from "./pages/products";
-// import Cart_page from "./pages/cart";
+// import Rating from "./user_controls/rating/rating";
 // import CartItem from "./user_controls/cart_item/cart_item";
 // import CardFeatured from "./user_controls/card_featured/card_featured";
 // import CardListing from "./user_controls/card_listing/card_listing";
 // import CardThumbnail from "./user_controls/card_thumbnail/card_thumbnail";
 // import CircularThumbnail from "./user_controls/circular_thumbnail/circular_thumbnail";
-// import Rating from "./user_controls/rating/rating";
-// import SearchBar from "./user_controls/searchbar/searchbar";
 // import ProductsList from "./user_controls/product_list/products_list";
+// import Gallery from "./user_controls/gallery/gallery";
+// import SearchBar from "./user_controls/searchbar/searchbar";
+import PaymentSelection from "./user_controls/payment_selection/payment_selection";
 
 // import FlowLayout from "./user_controls/flow_layout/flow_layout";
 // import GridLayout from "./user_controls/grid_layout/grid_layout";
@@ -57,13 +56,14 @@ const App = () => (
             <GreetingContainer />
         </header>
         <Switch>
-            {/*<AuthRoute exact path="/login" component={LogInFormContainer} />*/}
-            {/*<AuthRoute exact path="/signup" component={SignUpFormContainer} />*/}
-            {/*<AuthRoute exact path="/demo" component={DemoLogInFormContainer} />*/}
+            <AuthRoute exact path="/login" component={LogInFormContainer} />
+            <AuthRoute exact path="/signup" component={SignUpFormContainer} />
+            <AuthRoute exact path="/demo" component={DemoLogInFormContainer} />
 
-            <Route exact path="/home_page" component={HomePage} />
-            {/*<Route exact path="/products" component={ProductsPage} />*/}
-            {/*<ProtectedRoute exact path="/cart" component={CartPage} />*/}
+            {/*<Route exact path="/home_page" component={HomePage} />*/}
+            {/*<Route exact path="/products_page" component={ProductsPage} />*/}
+            {/*<Route exact path="/product_page" component={ProductPage} />*/}
+            <ProtectedRoute exact path="/cart" component={CartPage} />
 
             {/*<Route exact path="/header_template" component={HeaderTemplate} />*/}
             {/*<Route exact path="/footer" component={FooterTemplate} />*/}
@@ -74,6 +74,7 @@ const App = () => (
 
             {/*<Route exact path="/gallery" component={Gallery} />*/}
             {/*<Route exact path="/products_list" component={ProductsList} />*/}
+            <Route exact path="/payment_selection" component={PaymentSelection} />
             {/*<Route exact path="/cart_item" component={CartItem} />*/}
             {/*<Route exact path="/gallery/:id" component={Gallery} />*/}
             {/*<Route exact path="/rating" component={Rating} />*/}
