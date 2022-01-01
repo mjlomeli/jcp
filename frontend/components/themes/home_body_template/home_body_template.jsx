@@ -61,9 +61,9 @@ class HomeBodyTemplate extends React.Component {
         }
         return <>
             <p className="home-body-text">Recently viewed & more</p>
-        <GridLayout areas={layout2x5} components={components} className="recently-viewed-grid"
-                           classElements="recently-viewed-items"/>
-            </>
+            <GridLayout areas={layout2x5} components={components} className="recently-viewed-grid"
+                        classElements="recently-viewed-items"/>
+        </>
     }
 
     picksForYou1x6() {
@@ -82,8 +82,8 @@ class HomeBodyTemplate extends React.Component {
         return <>
             <h2 className="home-body-sub-title">Our Picks For You</h2>
             <GridLayout areas={layout1x6} components={components} className="picks-circle-grid"
-                           classElements="picks-circle-items"/>
-            </>
+                        classElements="picks-circle-items"/>
+        </>
     }
 
     picksForYou2x4() {
@@ -94,14 +94,14 @@ class HomeBodyTemplate extends React.Component {
             'five': thumbnail, 'six': thumbnail, 'seven': thumbnail, 'eight': thumbnail
         }
         return <GridLayout areas={layout} components={components} className="picks-square-grid"
-                        classElements="picks-square-items"/>
+                           classElements="picks-square-items"/>
     }
 
     editorsPicks() {
         return <>
             <p className="home-body-text">Editors' Picks</p>
             <h2 className="home-body-thumbnail-titles">Creating change together</h2>
-            </>
+        </>
     }
 
     selections() {
