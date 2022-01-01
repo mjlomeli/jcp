@@ -1,98 +1,7 @@
 import React from "react";
 import GridLayout from "../grid_layout/grid_layout";
 import "./payment_selection.css"
-
-
-class Selection extends React.Component {
-    static container = {
-        display: "block",
-        position: "relative",
-        cursor: "pointer",
-        userSelect: "none",
-        paddingLeft: "35px",
-        marginBottom: "12px",
-        fontSize: "22px"
-    }
-
-    /* Hide the browser's default radio button */
-    static input = {
-        position: "absolute",
-        opacity: "0",
-        cursor: "pointer",
-    }
-
-    /* Create a custom radio button */
-    static checkmark = {
-        position: "absolute",
-        top: "0",
-        left: "0",
-        height: "25px",
-        width: "25px",
-        backgroundColor: "#eee",
-        borderRadius: "50%",
-    }
-
-    constructor(props) {
-        super(props);
-        this.className = props.className || '';
-        this.classInput = props.classInput || '';
-        this.classCheckmark = props.classCheckmark || '';
-
-        this.name = props.name || null;
-        this.value = props.value;
-        this.checked = props.checked || null;
-
-        this.container = React.createRef();
-        this.input = React.createRef();
-        this.checkmark = React.createRef();
-
-        this.onmouseenter = this.onMouseEnter.bind(this);
-        this.onmouseleave = this.onMouseLeave.bind(this);
-        this.onchange = this.onChange.bind(this);
-        this.onclick = this.onClick.bind(this);
-
-        this.has = false;
-    }
-
-    onChange(e){
-        console.log('hi')
-        if (this.input.current.checked)
-            this.checkmark.current.style.backgroundColor = "#2196F3";
-        else
-            this.checkmark.current.style.backgroundColor = "#ccc";
-    }
-
-    onMouseEnter(e) {
-        if (!this.input.current.checked)
-            this.checkmark.current.style.backgroundColor = "#ccc";
-    }
-
-    onMouseLeave(e) {
-        if (!this.input.current.checked)
-            this.checkmark.current.style.backgroundColor = "#eee";
-    }
-
-    onClick(e) {
-        this.input.current.checked = !this.input.current.checked;
-        if (this.input.current.checked)
-            this.checkmark.current.style.backgroundColor = "#2196F3";
-        else
-            this.checkmark.current.style.backgroundColor = "#ccc";
-    }
-
-
-    render() {
-
-        return <div className={this.className} ref={this.container} style={Selection.container}
-                    onMouseEnter={this.onmouseenter} onMouseLeave={this.onmouseleave} onClick={this.onclick}>
-            <input className={this.classInput} ref={this.input} style={Selection.input} type="radio" name={this.name}
-                   value={this.value} checked={this.checked} onChange={this.onchange}
-            />
-            <span className={this.classCheckmark} ref={this.checkmark} style={Selection.checkmark}/>
-            <br/>
-        </div>
-    }
-}
+import Selection from "./radio";
 
 
 class PaymentSelection extends React.Component {
@@ -100,31 +9,26 @@ class PaymentSelection extends React.Component {
         super(props);
         this.state = {
             totalPrice: 116.58, totalDiscount: 4.8, paymentType: "creditcard", creditCardFee: 0.05,
-            onlinePaymentFee: 0.02, installmentFee: 0.01
+            onlinePaymentFee: 0.02, installmentFee: 0.01, shippingPrice: 5.25, subtotalPrice: 99.99,
+            numItems: 5
         }
     }
 
-    radio(value) {
-        return <div>
-            <Selection name="name"/>
-            <Selection name="name"/>
-        </div>
-    }
-
-    paymentChoice(value, text = "", images = {}) {
+    paymentChoice(name, value, text = "", images = {}) {
         let components = Object.fromEntries(Object.entries(images).map(pair => {
             let [name, url] = pair;
             return [name, <img className="payment-selection-image" src={`${url}`} alt={name}/>]
         }))
 
-        return <div className="payment-selection-radio">
-            {this.radio(value)}
-            <GridLayout areas={[Object.keys(images).join(" ")]}
-                        components={components}
-                        className="payment-selection-image-grid"
-                        classElements="payment-selection-image-elements"
-            />
-        </div>
+        components.text = <label className="payment-text">{text}</label>
+        let areas = [Object.keys(images).join(" ") + " text"]
+        let gridComponents = <GridLayout areas={areas}
+                                         components={components}
+                                         className="payment-selection-radio-content-grid"
+                                         classElements="payment-selection-radio-content-elements"/>
+
+        return <Selection name={name} value={value} components={gridComponents}
+                          className="payment-selection-radio"/>
     }
 
 
@@ -136,48 +40,72 @@ class PaymentSelection extends React.Component {
             'discover': "https://brandeps.com/logo-download/D/Discover-Card-logo-vector-01.svg"
         }
 
-        return <div className="payment-types-checkout">
-            {/*{this.paymentChoice("CreditCard", '', imageCreditCards)}*/}
-            {this.radio("hi")}
-            <div className="payment-selection-radio payment-selection-onlinepayment">
-                <input type="radio" value="OnlinePayment" name="paymentType"/>
-                <span className="payment-selection-checkmark"/>
-                <img src="http://logosvg.com/wp-content/uploads/PayPal_logo.svg" alt="onlinePayment"/>
-            </div>
-            <div>
-                <div className="payment-selection-radio payment-selection-klarna">
-                    <input type="radio" value="Installment" name="paymentType"/>
-                    <span className="payment-selection-checkmark"/>
-                    <img src="https://bobatoo.co.uk/wp-content/uploads/2020/01/Klarna-Logo.jpg" alt="installment"/>
-                </div>
-                <label>Pay in 4 installments.</label>
-            </div>
-        </div>
+        let onlinePayment = {'paypal': "http://logosvg.com/wp-content/uploads/PayPal_logo.svg"}
+        let other = {'klarna': "https://bobatoo.co.uk/wp-content/uploads/2020/01/Klarna-Logo.jpg"}
+        let areas = ['creditcards', 'online', 'other'];
+        let components = {
+            'creditcards': this.paymentChoice("payment", "CreditCard", '', imageCreditCards),
+            'online': this.paymentChoice("payment", "OnlinePayment", '', onlinePayment),
+            'other': this.paymentChoice("payment", "Other", 'Pay in 4 installments.', other)
+        }
+
+        return <GridLayout areas={areas} components={components} className="payment-selection-radio-grid"
+                           classElements="payment-selection-radio-elements"/>
     }
 
-    calculation() {
+    rowComponent(name, price) {
+        let areas = ['text price'];
+        let components = {
+            'text': name,
+            'price': price
+        }
+        return <GridLayout areas={areas} components={components} className="payment-selection-price-grid"/>
+    }
+
+    priceCalculations() {
+        let nameTotal = <label className="payment-text-highlight payment-label">Items(s) total</label>
+        let priceTotal = <label className="payment-text payment-price">${this.state.totalPrice}</label>
+
+        let nameDiscount = <label className="payment-text-highlight payment-label">Shop Discount</label>
+        let priceDiscount = <label className="payment-text payment-price">-${this.state.totalPrice}</label>
+
         return <>
-            <div className="payment-checkout-price-item">
-                <label>Items(s) total</label>
-                <label>${this.state.totalPrice}</label>
-            </div>
-            <div className="payment-checkout-price-item">
-                <label>Shop Discount</label>
-                <label>-${this.state.totalPrice}</label>
-            </div>
-            <div className="payment-checkout-price-total">
-                <label>Subtotal</label>
-                <label>${this.state.totalPrice - this.state.totalDiscount}</label>
-            </div>
+            {this.rowComponent(nameTotal, priceTotal)}
+            {this.rowComponent(nameDiscount, priceDiscount)}
+            <p className="payment-line-break"/>
         </>
     }
 
+    feeCalculations() {
+        let nameSubtotal = <label className="payment-text payment-label">Subtotal</label>
+        let priceSubtotal = <label
+            className="payment-text payment-price">${this.state.subtotalPrice - this.state.totalDiscount}</label>
+        let nameShipping = <label className="payment-text payment-label">Shipping</label>
+        let priceShipping = <label className="payment-text payment-price">${this.state.shippingPrice}</label>
+
+        return <>
+            {this.rowComponent(nameSubtotal, priceSubtotal)}
+            {this.rowComponent(nameShipping, priceShipping)}
+            <p className="payment-line-break"/>
+        </>
+    }
+
+    totalCalculation() {
+        let nameTotal = <label className="payment-text-highlight payment-label">Total ({this.state.numItems} items)</label>
+        let priceTotal = <label className="payment-text-highlight payment-price">${this.state.totalPrice}</label>
+        return this.rowComponent(nameTotal, priceTotal);
+    }
+
     render() {
-        return <form className="payment-checkout-form">
-            {this.paymentTypes()}
-            {this.calculation()}
-            <button className="payment-checkout-submit">Proceed to checkout</button>
-        </form>
+        let areas = ['radio', 'price', 'fee', 'total', 'button']
+        let components = {
+            'radio': this.paymentTypes(),
+            'price': this.priceCalculations(),
+            'fee': this.feeCalculations(),
+            'total': this.totalCalculation(),
+            'button': <button className="payment-checkout-submit">Proceed to checkout</button>
+        }
+        return <GridLayout areas={areas} components={components} className="payment-checkout"/>
     }
 }
 

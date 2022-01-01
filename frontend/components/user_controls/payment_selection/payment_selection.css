@@ -2,79 +2,54 @@
     width: 2em;
     height: 2em;
     object-fit: scale-down;
+    border: 1px solid #ccc;
 }
 
-.payment-selection-image-grid {
+.payment-selection-radio-grid {
     display: inline-flex;
-    justify-content: space-evenly;
+    grid-row-gap: 0.2em;
+}
+
+.payment-selection-radio-content-grid {
+    display: flex;
+    grid-column-gap: 0.3em;
+    align-items: center;
+}
+
+.payment-selection-price-grid {
+    display: flex;
     width: 100%;
 }
 
-.payment-selection-image-elements {
-
+.payment-selection-price-grid div:nth-child(2) {
+    align-items: flex-end;
+    justify-items: flex-end;
+    text-align: right;
 }
 
-.payment-checkout-form {
+.payment-line-break {
+    border-bottom: 0.025em solid #ccc;
+}
+
+.payment-text-highlight {
+    font-weight: 600;
+    letter-spacing: 0.03em;
+    font-family: -apple-system, BlinkMacSystemFont, "Roboto", "Droid Sans", "Segoe UI", "Helvetica", Arial, sans-serif;
+}
+
+.payment-text {
+    font-family: -apple-system, BlinkMacSystemFont, "Roboto", "Droid Sans", "Segoe UI", "Helvetica", Arial, sans-serif;
+}
+
+
+.payment-checkout {
+    grid-row-gap: 0.5em;
     background-color: white;
     box-shadow: 0em 0em 1.5em 0 rgba(26, 26, 26, 0.19);
     border-radius: 1em;
     padding: 2em 2em 2em 2em;
 }
 
-.payment-selection-radio {
-    position: relative;
-    cursor: pointer;
-    user-select: none;
-    display: flex;
-    align-items: center;
-    align-content: center;
-}
-
-.payment-selection-radio {
-    background-color: #B00100;
-    color: blue;
-    margin: 1em;
-    width: 2em;
-    height: 2em;
-    appearance: none;
-}
-
-.payment-selection-checkmark {
-    top: 0;
-    left: 0;
-    width: 2em;
-    height: 2em;
-    background-color: #eee;
-    border-radius: 50%;
-    z-index: 10;
-}
-
-.payment-selection-radio:hover ~ .payment-checkmark {
-    background-color: #ccc;
-}
-
-.payment-selection-radio:checked ~ .payment-checkmark {
-    background-color: black;
-}
-
-.payment-checkmark::after {
-    content: "";
-    display: none;
-    position: absolute;
-}
-
-.payment-selection-radio:checked ~ .payment-checkmark:after {
-    display: block;
-}
-
-.payment-selection-radio .payment-checkmark:after {
-    top: 0.7em;
-    left: 0.6em;
-    width: 0.8em;
-    height: 0.8em;
-    border-radius: 50%;
-    background: white;
-}
 
 .payment-selection-creditcards {
     display: flex;
