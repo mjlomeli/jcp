@@ -6,7 +6,7 @@
 }
 
 .global-card-thumbnail:hover > img {
-    box-shadow: 0em 0em 1em 0 rgba(26, 26, 26, 0.44);
+    box-shadow: 0 0 1em 0 rgba(26, 26, 26, 0.44);
     transition: box-shadow 0.2s ease;
 }
 
@@ -16,48 +16,54 @@
 }
 
 .global-card-thumbnail-image {
+    position: relative;
     width: 100%;
     height: 100%;
     object-fit: fill;
     border-radius: 1.5vw;
-    box-shadow: 0em 0em 1vm 0 transparent;
+    box-shadow: 0 0 1vm 0 transparent;
 }
 
-.global-card-thumbnail-price{
+.card-thumbnail-price{
     position: absolute;
     display: flex;
-    width: 8vw;
-    height: 2vw;
     justify-content: space-evenly;
+    width: 6em;
+    max-width: 85%;
+    height: 1.5em;
     align-items: center;
-    border-radius: 1vw;
+    border-radius: 96px;
     background-color: #D4E9D7;
-    border: 0.5vm solid #bdccbe;
+    border: 0.1em solid #bdccbe;
     color: #222222;
-    bottom: 2vw;
-    left: 2vw;
+    bottom: 7%;
+    left: 5%;
 }
 
 
 .global-card-thumbnail-price-label {
-    font-size: 1vw;
+    font-size: 0.8em;
     cursor: inherit;
     font-weight: 600;
     font-family: inherit;
+    -webkit-text-stroke: 0.013em black;
+    -webkit-font-smoothing: antialiased;
 }
 
-.global-card-thumbnail-shipping-div {
-    width: 1.5vw;
-    object-fit: contain;
-    object-position: center;
+.card-thumbnail-shipping-div {
+    height: 1em;
+    width: 1.2em;
 }
+
+
 
 .global-card-thumbnail-shipping-svg {
     object-fit: fill;
     width: 1vw;
     height: 1vw;
     fill: #222222;
-    vertical-align: bottom;
+    vertical-align: center;
+    horiz-align: center;
 }
 
 
@@ -77,6 +83,12 @@
     transform: translateY(100%);
     opacity: 0;
     cursor: pointer;
+}
+
+.card-thumbnail-svg {
+    height: 1em;
+    fill: #222222;
+    vertical-align: text-top;
 }
 
 .card-thumbnail-favorite-image {

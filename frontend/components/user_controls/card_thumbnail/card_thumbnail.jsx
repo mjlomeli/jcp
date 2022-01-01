@@ -8,7 +8,6 @@ import {
 import {connect} from 'react-redux';
 import React from 'react';
 import './card_thumbnail.css'
-import GridLayout from "../grid_layout/grid_layout";
 
 const mapStateToProps = ({entities, session, errors}) => ({
     //errors: errors.session, // need to add a ui or user_control errors
@@ -27,12 +26,13 @@ class Price extends React.Component {
     }
 
     shipping() {
-        let image = <svg version="1.1" viewBox="0 0 21 16.002" id="svg4" width="100%" height="100%"
-                         xmlns="http://www.w3.org/2000/svg">
-            <path
-                d="m 20.868,7.5000019 -4,-6.99999995 A 1,1 0 0 0 16,1.9472977e-6 H 4 A 1,1 0 0 0 3,1.0000019 v 1 H 1 a 1,1 0 0 0 0,2 h 4 a 1,1 0 0 1 0,2 H 2 a 1,1 0 0 0 0,2 H 4 A 1,1 0 0 1 4,10.000002 H 3 v 3 a 1,1 0 0 0 1,1 h 1.05 a 2.5,2.5 0 0 0 4.9,0 h 4.1 a 2.5,2.5 0 0 0 4.9,0 H 20 a 1,1 0 0 0 1,-1 V 8.0000019 a 1,1 0 0 0 -0.132,-0.5 z M 7.5,15.000002 a 1.5,1.5 0 1 1 0,-3 1.5,1.5 0 0 1 0,3 z m 5.488,-8.0000001 v -5 h 1.725 l 2.845,5 z M 16.5,15.000002 a 1.5,1.5 0 1 1 0,-3 1.5,1.5 0 0 1 0,3 z"/>
-        </svg>
-        return (this.state.freeShipping) ? <div className="global-card-thumbnail-shipping-div">{image}</div> : <></>;
+        let image = <div className="card-thumbnail-shipping-div">
+            <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" viewBox="-69.5 742.5 140 100">
+            <path d="M69.62,789.366l-26.667-43.741c-1.193-1.938-3.4-3.129-5.787-3.125h-80c-3.682,0-6.667,2.798-6.667,6.249v6.249h-13.333 c-3.682,0-6.667,2.798-6.667,6.249s2.985,6.249,6.667,6.249h26.667c3.682,0,6.666,2.797,6.666,6.248s-2.984,6.249-6.666,6.249h-20 c-3.682,0-6.667,2.798-6.667,6.249s2.985,6.248,6.667,6.248h13.333c3.682,0,6.667,2.799,6.667,6.25s-2.984,6.248-6.667,6.248H-49.5 v18.747c0,3.451,2.984,6.249,6.667,6.249h7c1.832,8.455,10.629,13.918,19.65,12.2c6.558-1.248,11.684-6.053,13.017-12.2h27.333 c1.832,8.455,10.629,13.918,19.65,12.2c6.559-1.248,11.685-6.053,13.016-12.2h7c3.682,0,6.667-2.798,6.667-6.249V792.49 C70.504,791.395,70.201,790.317,69.62,789.366z M-19.5,836.232c-5.523,0-10-4.196-10-9.373s4.478-9.374,10-9.374s10,4.197,10,9.374 S-13.977,836.232-19.5,836.232z M17.086,786.242v-31.244h11.5l18.966,31.244H17.086z M40.5,836.232 c-5.523,0-10.001-4.196-10.001-9.373s4.478-9.374,10.001-9.374c5.523,0,10,4.197,10,9.374S46.023,836.232,40.5,836.232z"/>
+            </svg>
+        </div>
+
+        return (this.state.freeShipping) ? image : null;
     }
 
     price() {
@@ -43,7 +43,7 @@ class Price extends React.Component {
     }
 
     render() {
-        return <div className="global-card-thumbnail-price">
+        return <div className="card-thumbnail-price">
             {this.shipping()}
             {this.price()}
         </div>
@@ -102,7 +102,7 @@ class CardThumbnail extends React.Component {
     render() {
         return <div className="global-card-thumbnail">
             {this.favoriteComponent()}
-            <Link to={this.state.link}>
+            <Link to={this.state.link} style={{textDecoration: "inherit", color: "inherit"}}>
                 <img className="global-card-thumbnail-image"
                      alt="img" aria-hidden="true" src={this.state.imageUrl}/>
                 <Price price={this.state.price} freeShipping={this.state.freeShipping}/>
