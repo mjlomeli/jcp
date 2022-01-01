@@ -1,4 +1,10 @@
 Rails.application.routes.draw do
+  namespace :api do
+    get 'favorites/create'
+    get 'favorites/delete'
+    get 'favorites/show'
+    get 'favorites/index'
+  end
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 
     # API routes

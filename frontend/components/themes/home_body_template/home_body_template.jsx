@@ -34,6 +34,7 @@ class HomeBodyTemplate extends React.Component {
                                            classImage="thumbnail-image"
                                            classElements="thumbnail-elements"
                                            classHover="thumbnail-hover"
+                                           classTitleHover="thumbnail-title-hover"
                                            classImageHover="thumbnail-image-hover"/>
         let components = {
             'one': thumbnail, 'two': thumbnail, 'three': thumbnail, 'four': thumbnail,
@@ -59,7 +60,7 @@ class HomeBodyTemplate extends React.Component {
             'ten': thumbnail
         }
         return <>
-            <label>Recently viewed & more</label>
+            <p className="home-body-text">Recently viewed & more</p>
         <GridLayout areas={layout2x5} components={components} className="recently-viewed-grid"
                            classElements="recently-viewed-items"/>
             </>
@@ -72,13 +73,14 @@ class HomeBodyTemplate extends React.Component {
                                            classImage="thumbnail-image"
                                            classElements="thumbnail-elements"
                                            classHover="thumbnail-hover"
+                                           classTitleHover="thumbnail-title-hover"
                                            classImageHover="thumbnail-image-hover"/>
         let components = {
             'one': thumbnail, 'two': thumbnail, 'three': thumbnail, 'four': thumbnail,
             'five': thumbnail, 'six': thumbnail
         }
         return <>
-            <h2 className="message-text">Our Picks For You</h2>
+            <h2 className="home-body-sub-title">Our Picks For You</h2>
             <GridLayout areas={layout1x6} components={components} className="picks-circle-grid"
                            classElements="picks-circle-items"/>
             </>
@@ -97,21 +99,21 @@ class HomeBodyTemplate extends React.Component {
 
     editorsPicks() {
         return <>
-            <label>Editors' Picks</label>
-            <h2>Creating change together</h2>
+            <p className="home-body-text">Editors' Picks</p>
+            <h2 className="home-body-thumbnail-titles">Creating change together</h2>
             </>
     }
 
     selections() {
         return <>
-            <h3>Shop our selections</h3>
-            <label>Curated collections hand-picked by Etsy editors</label>
+            <h2 className="home-body-thumbnail-titles">Shop our selections</h2>
+            <label className="home-body-descriptions">Curated collections hand-picked by JCP editors</label>
         </>
     }
 
     blog() {
         return <>
-            <h2>Fresh from the blog</h2>
+            <h2 className="home-body-thumbnail-titles">Fresh from the blog</h2>
         </>
     }
 
@@ -147,7 +149,7 @@ class HomeBodyTemplate extends React.Component {
         }
         return <>
             <div className="background"/>
-            <h1 className="message-text">{this.state.message}</h1>
+            <h1 className="home-body-title">{this.state.message}</h1>
             <GridLayout areas={areas} components={components} className="body-template-grid"/>
         </>
     }

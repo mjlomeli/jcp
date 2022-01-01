@@ -3,7 +3,15 @@
 }
 
 .thumbnail-title {
-    margin-top: 2em;
+    margin-top: 1em;
+    margin-bottom: 1em;
+    color: black;
+    font-size: 0.95em;
+    letter-spacing: 0.055em;
+    word-break: break-word;
+    text-transform: lowercase;
+    font-family: Arial, sans-serif;
+    -webkit-text-stroke: 0.03em black;
 }
 
 .thumbnail-elements {
@@ -15,7 +23,11 @@
 }
 
 .thumbnail-hover {
-    border-bottom: 0.15em solid black;
+    border-bottom: 0.15em solid #595959;
+}
+
+.thumbnail-title-hover {
+    color: #595959;
 }
 
 .thumbnail-image-hover {

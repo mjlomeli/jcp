@@ -22,6 +22,13 @@ class User < ApplicationRecord
            through: :shop,
            source: :products
 
+  has_many :reference_favorites,
+           foreign_key: :user_id,
+           class_name: :Favorite
+
+  has_many :favorites,
+           through: :reference_favorites,
+           source: :Product
 
   def images
     imgs = self.image_ids.map {|image_id| Image.where(group_id: image_id, group_name: 'user')}

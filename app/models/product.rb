@@ -20,6 +20,14 @@ class Product < ApplicationRecord
            through: :carts,
            source: :user
 
+  has_many :reference_favorites,
+           foreign_key: :product_id,
+           class_name: :Favorite
+
+  has_many :favored,
+           through: :reference_favorites,
+           source: :user
+
 
   def images
     imgs = self.image_ids.map {|image_id| Image.where(group_id: image_id, group_name: 'product')}
