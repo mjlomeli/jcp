@@ -38,7 +38,7 @@ class Price extends React.Component {
     price() {
         let price = this.state.price - (this.state.price * this.state.discount);
         return <>
-            <label className="global-card-thumbnail-price-label">${price.toFixed(2)}</label>
+            <label className="card-thumbnail-price-label">${price.toFixed(2)}</label>
         </>
     }
 
@@ -100,10 +100,10 @@ class CardThumbnail extends React.Component {
     }
 
     render() {
-        return <div className="global-card-thumbnail">
+        return <div className="card-thumbnail">
             {this.favoriteComponent()}
             <Link to={this.state.link} style={{textDecoration: "inherit", color: "inherit"}}>
-                <img className="global-card-thumbnail-image"
+                <img className="card-thumbnail-image"
                      alt="img" aria-hidden="true" src={this.state.imageUrl}/>
                 <Price price={this.state.price} freeShipping={this.state.freeShipping}/>
             </Link>

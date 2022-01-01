@@ -1,5 +1,11 @@
 .thumbnail {
+    transform-origin: center;
     border-bottom: 0.15em solid transparent;
+}
+
+.thumbnail-hover {
+    border-bottom: 0.15em solid #595959;
+    transition: border-bottom 0.2s ease-in;
 }
 
 .thumbnail-title {
@@ -12,6 +18,7 @@
     text-transform: lowercase;
     font-family: Arial, sans-serif;
     -webkit-text-stroke: 0.03em black;
+    -webkit-font-smoothing: antialiased;
 }
 
 .thumbnail-elements {
@@ -20,10 +27,6 @@
     justify-content: center;
     border-bottom: transparent;
     grid-row-gap: 1em;
-}
-
-.thumbnail-hover {
-    border-bottom: 0.15em solid #595959;
 }
 
 .thumbnail-title-hover {

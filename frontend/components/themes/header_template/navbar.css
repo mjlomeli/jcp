@@ -20,9 +20,11 @@
     border-bottom: 0.15em solid rgba(141, 141, 141, 0.34);
 }
 
+
 /* Add a grey background color to links on the navbar (not dropdown buttons) */
 .navbar-link:hover {
     border-bottom: 0.15em solid rgba(45, 45, 45, 0.78);
+    transition: border-bottom 0.2s ease;
 }
 
 /* Links inside the dropdown */
