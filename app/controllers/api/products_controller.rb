@@ -89,8 +89,7 @@ class Api::ProductsController < ApplicationController
   SHOP_PRODUCTS = "SHOP_PRODUCTS"
 
   def index_condition
-    set = query_params.keys().to_set.hash
-    case set
+    case @query.keys().to_set.hash
     when Set[:user_id].hash
       condition = USER_PRODUCTS
     when Set[:product_id].hash, Set[:id].hash
@@ -103,7 +102,7 @@ class Api::ProductsController < ApplicationController
       condition = GROUPS_PRODUCTS
     when Set[:shop_id].hash
       condition = SHOP_PRODUCTS
-    when Set[:price_lowest, :price_highest].hash
+    when Set[:price_min, :price_max].hash
       condition = PRICE_RANGE
     when Set[:views_lowest].hash, Set[:views_highest].hash
       condition = VIEWS_RANGE
@@ -119,24 +118,24 @@ class Api::ProductsController < ApplicationController
   def query_params
     query = params.permit(:id, :ids, :product_id, :product_ids, :shop_id, :shop_ids,
                           :user_id, :start, :end, :random, :limit, :tag, :material, :taxonomy_path,
-                          :tags, :materials, :taxonomy_paths)
+                          :tags, :materials, :taxonomy_paths, :price_min, :price_max,
+                          :views_lowest, :views_highest)
     args = []
     query.each do |k, v|
-      if %w[id product_id shop_id user_id].include?(k)
+      if %w[product_id shop_id user_id price_min price_max].include?(k)
         args.push([k.to_sym, ActiveModel::Type::Decimal.new.cast(v)])
       elsif %w[start end random limit].include?(k)
         args.push([k.to_sym, ActiveModel::Type::Integer.new.cast(v)])
       elsif %w[tag taxonomy_path material].include?(k)
         args.push([k.to_sym, v])
-      elsif %w[random].include?(k)
+      elsif %w[random views_lowest views_highest].include?(k)
         args.push([k.to_sym, ActiveModel::Type::Boolean.new.cast(!!v ? v : false)])
-      elsif %w[ids product_ids shop_ids tags materials taxonomy_paths].include?(k)
-        if v.is_a? String
-          arr_items = JSON.parse(v.gsub("'", '"')) rescue nil
-        else
-          arr_items = Array(params[v]) rescue nil #converts to an Array on fail set to nil
-        end
-        args.push([k.to_sym, arr_items])
+      elsif k == 'ids'
+        args.push(['product_ids'.to_sym, to_array(v)])
+      elsif k == 'id'
+        args.push(['product_id'.to_sym, ActiveModel::Type::Decimal.new.cast(v)])
+      elsif %w[product_ids shop_ids tags materials taxonomy_paths].include?(k)
+        args.push([k.to_sym, to_array(v)])
       end
     end
     args.to_h
