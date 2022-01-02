@@ -3,6 +3,7 @@ require 'controller_helper_shops'
 
 class Api::ShopsController < ApplicationController
   def index
+
     @query = query_params
     @condition = index_condition
     case @condition
@@ -18,8 +19,12 @@ class Api::ShopsController < ApplicationController
       fetch_shop_name
     else
       if !@query.empty?
-        @shop = Shop.where(**@query)
-        render json: @shop
+        begin
+          @shop = Shop.where(**@query)
+          render json: @shop
+        rescue => e
+          render json: ["Could not use shop indexing with given params: #{@query}"], status: 400
+        end
       else
         render json: ["Could not use shop indexing with given params: #{@query}"], status: 400
       end
@@ -68,6 +73,7 @@ class Api::ShopsController < ApplicationController
   end
 
   private
+
   SHOP = "SHOP"
   SHOPS = "SHOPS"
   USER_SHOP = "USER_SHOP"

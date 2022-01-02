@@ -44,13 +44,6 @@ export const fetchProductReviews = (productId) => dispatch =>(
     )
 )
 
-export const fetchReviewsRange = (start, end) => dispatch =>(
-    ReviewUtil.fetchReviewsRange(start, end).then(
-        reviews => dispatch(receiveReviews(reviews)),
-        err => dispatch(receiveReviewError(err.responseJSON))
-    )
-)
-
 
 export const fetchReview = (productId, reviewId) => (dispatch) => {
     return ReviewUtil.fetchReview(productId, reviewId).then(
@@ -83,7 +76,6 @@ export const deleteReview = (productId, reviewId) => dispatch =>(
 
 window.ReviewAction = {
     fetchReview,
-    fetchReviewsRange,
     fetchUserReviews,
     fetchProductReviews,
     createReview,

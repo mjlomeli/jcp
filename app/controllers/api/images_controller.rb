@@ -34,8 +34,12 @@ class Api::ImagesController < ApplicationController
       fetch_shops_images_resized
     else
       if !@query.empty?
+        begin
         @images = Image.where(**@query)
         render json: @images
+        rescue => e
+          render json: ["Could not use shop indexing with given params: #{@query}"], status: 400
+        end
       else
         render json: ["Could not use image indexing with given params: #{@query}"], status: 400
       end

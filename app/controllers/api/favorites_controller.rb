@@ -3,7 +3,7 @@ class Api::FavoritesController < ApplicationController
     @user = user_from_params
     if !@user
       render json: ["No valid user id was provided: {user_id: #{params[:user_id]}}"], status: 400
-    elsif @user.id != current_user.id
+    elsif !!current_user and @user.id != current_user.id
       render json: ["Unauthorized user(#{@user.id}) tried to access user(#{params[:user_id]})"], status: 400
     else
       if params[:range]

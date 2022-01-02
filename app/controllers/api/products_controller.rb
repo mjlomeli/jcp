@@ -27,8 +27,12 @@ class Api::ProductsController < ApplicationController
       fetch_shop_products
     else
       if !@query.empty?
+        begin
         @product = Product.where(**@query)
         render json: @product
+        rescue => e
+          render json: ["Could not use product indexing with given params: #{@query}"], status: 400
+        end
       else
         render json: ["Could not use product indexing with given params: #{@query}"], status: 400
       end
