@@ -18,14 +18,14 @@ import DemoLogInFormContainer from './session_form/demo_form_container';
 // import HomePage from "./pages/home_page";
 // import ProductsPage from "./pages/products_page";
 // import ProductPage from "./pages/product_page";
-import CartPage from "./pages/cart_page";
+// import CartPage from "./pages/cart_page";
 
 
 // import HeaderTemplate from "./themes/header_template/header_template";
 // import FooterTemplate from "./themes/footer_template/footer_template";
 // import HomeBodyTemplate from "./themes/home_body_template/home_body_template";
 // import ProductsTemplate from "./themes/products_template/products_template";
-// import ProductTemplate from "./themes/product_template/product_template";
+import ProductTemplate from "./themes/product_template/product_template";
 // import CartTemplate from "./themes/cart_template/cart_template";
 
 // import Rating from "./user_controls/rating/rating";
@@ -37,7 +37,7 @@ import CartPage from "./pages/cart_page";
 // import ProductsList from "./user_controls/product_list/products_list";
 // import Gallery from "./user_controls/gallery/gallery";
 // import SearchBar from "./user_controls/searchbar/searchbar";
-import PaymentSelection from "./user_controls/payment_selection/payment_selection";
+// import PaymentSelection from "./user_controls/payment_selection/payment_selection";
 
 // import FlowLayout from "./user_controls/flow_layout/flow_layout";
 // import GridLayout from "./user_controls/grid_layout/grid_layout";
@@ -63,18 +63,18 @@ const App = () => (
             {/*<Route exact path="/home_page" component={HomePage} />*/}
             {/*<Route exact path="/products_page" component={ProductsPage} />*/}
             {/*<Route exact path="/product_page" component={ProductPage} />*/}
-            <ProtectedRoute exact path="/cart" component={CartPage} />
+            {/*<ProtectedRoute exact path="/cart" component={CartPage} />*/}
 
             {/*<Route exact path="/header_template" component={HeaderTemplate} />*/}
             {/*<Route exact path="/footer" component={FooterTemplate} />*/}
             {/*<Route exact path="/home_body_template" component={HomeBodyTemplate}/>*/}
-            {/*<Route exact path="/product/:id" component={ProductTemplate} />*/}
+            <Route exact path="/product/:id" component={ProductTemplate} />
             {/*<Route exact path="/products_template" component={ProductsTemplate} />*/}
             {/*<ProtectedRoute exact path="/cart_template" component={CartTemplate} />*/}
 
             {/*<Route exact path="/gallery" component={Gallery} />*/}
             {/*<Route exact path="/products_list" component={ProductsList} />*/}
-            <Route exact path="/payment_selection" component={PaymentSelection} />
+            {/*<Route exact path="/payment_selection" component={PaymentSelection} />*/}
             {/*<Route exact path="/cart_item" component={CartItem} />*/}
             {/*<Route exact path="/gallery/:id" component={Gallery} />*/}
             {/*<Route exact path="/rating" component={Rating} />*/}
