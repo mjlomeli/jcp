@@ -1,12 +1,4 @@
 .product-template-grid {
-    display: inline-grid; /* DO NOT REMOVE */
-    /* the original gridlayout-container
-    Nothing here unless something new comes up.
-    This will override every existing gridlayout container.
-    */
-
-    /* remove comment for testing purposes */
-    /*background-color: rgba(33, 150, 243, 0.39);*/
 }
 
 

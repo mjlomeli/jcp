@@ -8,7 +8,8 @@ class User < ApplicationRecord
 
   has_one :shop,
           foreign_key: :user_id,
-          class_name: :Shop
+          class_name: :Shop,
+          dependent: :destroy
 
   has_many :cart_items,
            foreign_key: :user_id,
@@ -31,13 +32,11 @@ class User < ApplicationRecord
            source: :Product
 
   def images
-    imgs = self.image_ids.map {|image_id| Image.where(group_id: image_id, group_name: 'user')}
-    imgs.select {|img| !img.nil?}
+    Image.where(group_id: self.image_ids, group_name: 'user')
   end
 
   def icons
-    imgs = self.icon_ids.map {|icon_id| Image.where(group_id: icon_id, group_name: 'user')}
-    imgs.select {|img| !img.nil?}
+    Image.where(group_id: self.icon_ids, group_name: 'user')
   end
 
   def cart_price

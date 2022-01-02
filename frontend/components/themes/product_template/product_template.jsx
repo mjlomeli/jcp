@@ -62,30 +62,60 @@ let defaultGallery = {
     length: 4
 }
 let defaultProduct = {
-    title: "Personalized Name Puzzle With Pegs, Personalized Name Puzzle With Pegs, New Baby Gift",
-    imageUrl: "https://i.etsystatic.com/17305851/c/1801/1432/177/346/il/4ad87f/3411776815/il_340x270.3411776815_s6oc.jpg",
-    rating: 4.6,
-    ratingCount: 1399,
-    store: "Plexida",
-    price: 25.99,
-    discount: 0.2,
-    freeShipping: true,
-    description: "OTL Headphone Amplifier\n" +
-        "Hello, my name is Andrey.\n" +
-        "Let me present you the Headphone Tube Amplifier. It is designed specifically for high impedance headphones, rated from 250 Ohms and higher (300-600 Ohms).\n" +
-        "Schematically, this is a SRPP cascade on russian 6N3P vacuum tubes. The power supply provides stabilization and slow rise anode voltage that ensures the extension of the tubes life.\n" +
-        "The handcrafted case is designed as a mini tower. Its dimensions: width - 83 mm, depth - 98 mm, height - 170 mm, weight - 1.5 kg. The body is made of MDF and then covered with natural walnut veneer. Wood is protected by two layers of oil wax composition. The amplifier panels are made of aluminum and coated with a protective layer of varnish. A manually wound power transformer is placed at the base of the case.\n" +
-        "The amplifier is projected to be powered from a AC 220-230V and has a standard RCA audio input, a 6.3 mm headphone jack with fixation.\n" +
-        "The set includes: an amplifier, power cord, 6N3P-EV vacuum tubes (EV grade – long life 5000 hrs).\n" +
-        "Originating this appliance I paid much attention to every single production process and each particular detail. This device is assembled of high quality components and has come thorough electronics testing and thermal control.\n" +
-        "This instrument will brings you a pleasurable musical joy and completely involves you into a great high-quality sound.\n" +
-        "If you have any questions, please feel free to contact me.\n" +
-        "Shipping will include tracking. The amp will be carefully packed.",
-    image_urls: [
-        "https://i.etsystatic.com/21035245/r/il/39a4e2/2038971261/il_794xN.2038971261_9zrx.jpg",
-        "https://i.etsystatic.com/21035245/r/il/5fc9a7/2038971731/il_794xN.2038971731_8ffn.jpg",
-        "https://i.etsystatic.com/21035245/r/il/477ace/2038972099/il_794xN.2038972099_8k6b.jpg",
-        "https://i.etsystatic.com/21035245/r/il/22765d/1991411394/il_794xN.1991411394_1nzf.jpg"]
+    id: 0.1132884406e10,
+    title: "Rattan Pen Holder Storage Basket Simple Desktop Decoration Tea Ceremony Storage Tube Household Tea Set Storage Dried Flower Flower Pot",
+    price: 89.0,
+    quantity: 2,
+    description:
+        "Rattan, round, fine workmanship, simple and stylish,It can be used as a pen holder, or as a vase for dried flowers, and it can also be used to store tea sets, which is environmentally friendly and natural, and has many uses",
+    user_id: 0.581707326e9,
+    shop_id: 0.33487777e8,
+    image_ids: [0.3551435618e10, 0.3551435642e10, 0.355143556e10],
+    icon_ids: [],
+    category_id: null,
+    creation_tsz: 0.1640262528e10,
+    ending_tsz: 0.1650713328e10,
+    original_creation_tsz: 0.1640262031e10,
+    last_modified_tsz: 0.1640265521e10,
+    state_tsz: 0.1640262031e10,
+    state: "active",
+    categories: [],
+    currency_code: "USD",
+    sku: [],
+    tags: [],
+    materials: ["Wicker"],
+    shop_section_id: null,
+    featured_rank: null,
+    url: "https://www.etsy.com/listing/1132884406/rattan-pen-holder-storage-basket-simple?utm_source=educationalclone&utm_medium=api&utm_campaign=api",
+    views: 2,
+    num_favorers: 0,
+    shipping_template_id: null,
+    processing_min: 5,
+    processing_max: 7,
+    who_made: "i_did",
+    is_supply: false,
+    when_made: "2020_2021",
+    item_weight: null,
+    item_weight_unit: "oz",
+    item_length: null,
+    item_width: null,
+    item_height: null,
+    item_dimensions_unit: 0.0,
+    is_private: false,
+    style: null,
+    non_taxable: false,
+    is_customizable: false,
+    is_digital: false,
+    file_data: "",
+    should_auto_renew: true,
+    language: "en-US",
+    has_variations: false,
+    taxonomy_id: 0.1166e4,
+    taxonomy_path: ["Home & Living", "Storage & Organization", "Baskets"],
+    used_manufacturer: false,
+    is_vintage: false,
+    results_per_page: 100,
+    page_number: 1
 }
 
 class ProductTemplate extends React.Component {

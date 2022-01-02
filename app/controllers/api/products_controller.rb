@@ -1,16 +1,39 @@
 require 'json'
+require 'controller_helper_functions'
+require 'controller_helper_products'
 
 class Api::ProductsController < ApplicationController
   def index
-    query_args = query_params
-    if !query_args.empty?
-      #TODO: Search by query
-      @product = Product.first
+    @query = query_params
+    puts @query
+    @condition = index_condition
+    case @condition
+    when RANGE
+      fetch_product_range
+    when PRICE_RANGE
+      fetch_price_range
+    when PRODUCT
+      fetch_product
+    when PRODUCTS
+      fetch_products
+    when VIEWS_RANGE
+      fetch_views_range
+    when USER_PRODUCTS
+      fetch_user_products
+    when GROUP_PRODUCTS
+      fetch_group_products
+    when GROUPS_PRODUCTS
+      fetch_groups_products
+    when SHOP_PRODUCTS
+      fetch_shop_products
     else
-      range_args = range_params
-      @product = product_range(**range_args)
+      if !@query.empty?
+        @product = Product.where(**@query)
+        render json: @product
+      else
+        render json: ["Could not use product indexing with given params: #{@query}"], status: 400
+      end
     end
-    render json: @product
   end
 
   def show
@@ -55,39 +78,65 @@ class Api::ProductsController < ApplicationController
   end
 
   private
-  def product_from_params
-    product_id = Integer(params[:product_id]) rescue nil #converts to integer on fail set to nil
-    return nil unless !!product_id
-    Product.find_by(id: params[:product_id])
-  end
+  RANGE = "RANGE"
+  PRICE_RANGE = "PRICE_RANGE"
+  PRODUCT = "PRODUCT"
+  PRODUCTS = "PRODUCTS"
+  VIEWS_RANGE = "VIEWS_RANGE"
+  USER_PRODUCTS = "USER_PRODUCTS"
+  GROUP_PRODUCTS = "GROUP_PRODUCTS"
+  GROUPS_PRODUCTS = "GROUPS_PRODUCTS"
+  SHOP_PRODUCTS = "SHOP_PRODUCTS"
 
-  def range_params
-    args = params.permit(:start, :finish, :random, :limit, :format)
-
-    random = ActiveModel::Type::Boolean.new.cast(!!args[:random] ? args[:random] : false)
-    start = ActiveModel::Type::Integer.new.cast(args[:start])
-    finish = ActiveModel::Type::Integer.new.cast(args[:finish])
-    limit = ActiveModel::Type::Integer.new.cast(args[:limit])
-
-    start = !!start ? start.to_i : 0
-    finish = !!finish ? finish.to_i : Product.count
-    limit = !!limit ? limit.to_i : finish - start
-
-    { start: start, finish: finish, limit: limit, random: random }
+  def index_condition
+    set = query_params.keys().to_set.hash
+    case set
+    when Set[:user_id].hash
+      condition = USER_PRODUCTS
+    when Set[:product_id].hash, Set[:id].hash
+      condition = PRODUCT
+    when Set[:product_ids].hash, Set[:ids].hash
+      condition = PRODUCTS
+    when Set[:tag].hash, Set[:material].hash, Set[:taxonomy_path].hash, Set[:tag, :material].hash, Set[:tag, :material, :taxonomy_path].hash, Set[:tag, :taxonomy_path].hash
+      condition = GROUP_PRODUCTS
+    when Set[:tags].hash, Set[:materials].hash, Set[:taxonomy_paths].hash, Set[:tags, :materials].hash, Set[:tags, :materials, :taxonomy_paths].hash, Set[:tags, :taxonomy_paths].hash
+      condition = GROUPS_PRODUCTS
+    when Set[:shop_id].hash
+      condition = SHOP_PRODUCTS
+    when Set[:price_lowest, :price_highest].hash
+      condition = PRICE_RANGE
+    when Set[:views_lowest].hash, Set[:views_highest].hash
+      condition = VIEWS_RANGE
+    when Set[:start, :end].hash, Set[:limit].hash, Set[:start, :limit].hash, Set[:limit, :random].hash, Set[:end].hash
+      condition = RANGE
+    else
+      puts "Error: #{@query.keys().to_set} doesn't have a matching condition"
+      condition = nil
+    end
+    condition
   end
 
   def query_params
+    query = params.permit(:id, :ids, :product_id, :product_ids, :shop_id, :shop_ids,
+                          :user_id, :start, :end, :random, :limit, :tag, :material, :taxonomy_path,
+                          :tags, :materials, :taxonomy_paths)
     args = []
-    params.permit(:id, :dimension, :group_name, :group_id, :format).each do |k, v|
-      if ['id', 'group_id'].include?(k)
-        args.push([k, ActiveModel::Type::Decimal.new.cast(v)])
-      elsif ['group_name', 'dimension'].include?(k)
-        args.push([k, ActiveModel::Type::String.new.cast(v)])
-      elsif ['query'].include?(k)
-        args.push([k, ActiveModel::Type::String.new.cast(v)])
-      elsif ['tags', 'sku', 'materials', 'taxonomy'].include?(k)
-        string_array = ActiveModel::Type::String.new.cast(v)
-        args.push([k, JSON.parse(string_array)])
+    query.each do |k, v|
+      if %w[id product_id shop_id user_id].include?(k)
+        args.push([k.to_sym, ActiveModel::Type::Decimal.new.cast(v)])
+      elsif %w[start end random limit].include?(k)
+        args.push([k.to_sym, ActiveModel::Type::Integer.new.cast(v)])
+      elsif %w[tag taxonomy_path material].include?(k)
+        args.push([k.to_sym, v])
+      elsif %w[random].include?(k)
+        args.push([k.to_sym, ActiveModel::Type::Boolean.new.cast(!!v ? v : false)])
+      elsif %w[ids product_ids shop_ids tags materials taxonomy_paths].include?(k)
+        if v.is_a? String
+          arr_items = JSON.parse(v.gsub("'", '"')) rescue nil
+        else
+          arr_items = Array(params[v]) rescue nil #converts to an Array on fail set to nil
+        end
+        args.push([k.to_sym, arr_items])
       end
     end
     args.to_h
@@ -101,20 +150,6 @@ class Api::ProductsController < ApplicationController
           .permit(:title, :price, :quantity, :views, :num_favorers,
                   :description, :image_urls, :category, :tags, :user_id,
                   :shop_id, :random, :format)
-  end
-
-  def product_range(start: nil, finish: nil, limit: nil, random: false)
-    products = Product.offset(start).limit(finish - start)
-    if random
-      randoms = []
-      while randoms.length < limit
-        offset = rand(products.count)
-        randoms.append(products.offset(offset).first)
-      end
-      randoms
-    else
-      products.limit(limit)
-    end
   end
 end
 
