@@ -5,7 +5,6 @@ require 'controller_helper_products'
 class Api::ProductsController < ApplicationController
   def index
     @query = query_params
-    puts @query
     @condition = index_condition
     case @condition
     when RANGE
