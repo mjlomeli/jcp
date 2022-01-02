@@ -7,6 +7,8 @@ class Api::ImagesController < ApplicationController
   def index
     @query = query_params
     @condition = index_condition
+    puts @query
+
     case @condition
     when USER_IMAGES
       fetch_user_images
@@ -38,7 +40,8 @@ class Api::ImagesController < ApplicationController
         @images = Image.where(**@query)
         render json: @images
         rescue => e
-          render json: ["Could not use shop indexing with given params: #{@query}"], status: 400
+          render json: ["Could not use image indexing with given params: #{@query}"], status: 400
+          puts e
         end
       else
         render json: ["Could not use image indexing with given params: #{@query}"], status: 400
@@ -135,9 +138,9 @@ class Api::ImagesController < ApplicationController
   end
 
   def query_params
-    query = params.permit(:id, :ids, :image_id, :image_ids, :product_id,
+    query = params.permit(:id, :ids, :image_id, :product_id,
                           :product_ids, :shop_id, :shop_ids, :user_id, :dimension, :group_name,
-                          :group_id, :group_ids)
+                          :group_id, :group_ids, :image_ids)
     args = []
     query.each do |k, v|
       if %w[image_id product_id shop_id user_id group_id].include?(k)

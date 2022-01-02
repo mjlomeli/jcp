@@ -1,9 +1,24 @@
 import {debug} from "./tools";
 
-export const fetchProducts = () => {
+export const fetchProducts = ({id, ids, product_id, product_ids, shop_id, shop_ids,
+    user_id, start, end, random, limit, tag, material, taxonomy_path,
+    tags, materials, taxonomy_paths, price_min, price_max,
+    views_lowest, views_highest}) => {
+
+    if (ids) ids = JSON.stringify(ids)
+    if (product_ids) product_ids = JSON.stringify(product_ids)
+    if (shop_ids) shop_ids = JSON.stringify(shop_ids)
+    if (tags) tags = JSON.stringify(tags)
+    if (materials) materials = JSON.stringify(materials)
+    if (taxonomy_paths) taxonomy_paths = JSON.stringify(taxonomy_paths)
+
     return $.ajax({
         url: '/api/products',
-        method: 'GET'
+        method: 'GET',
+        data: {id, ids, product_id, product_ids, shop_id, shop_ids,
+            user_id, start, end, random, limit, tag, material, taxonomy_path,
+            tags, materials, taxonomy_paths, price_min, price_max,
+            views_lowest, views_highest}
     });
 };
 

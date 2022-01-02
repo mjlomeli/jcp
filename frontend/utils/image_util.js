@@ -1,9 +1,21 @@
 import {debug} from "./tools";
 
-export const fetchImages = () => {
+export const fetchImages = ({id, ids, image_id, image_ids, product_id,
+    product_ids, shop_id, shop_ids, user_id, dimension, group_name,
+    group_id, group_ids}) => {
+
+    if (ids) ids = JSON.stringify(ids);
+    if (image_ids) image_ids = JSON.stringify(image_ids)
+    if (product_ids) product_ids = JSON.stringify(product_ids)
+    if (shop_ids) shop_ids = JSON.stringify(shop_ids)
+    if (group_ids) group_ids = JSON.stringify(group_ids)
+
     return $.ajax({
         url: '/api/images',
-        method: 'GET'
+        method: 'GET',
+        data: {id, ids, image_id, image_ids, product_id,
+            product_ids, shop_id, shop_ids, user_id, dimension, group_name,
+            group_id, group_ids}
     });
 };
 

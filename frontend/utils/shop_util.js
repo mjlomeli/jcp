@@ -1,10 +1,13 @@
 import {debug} from "./tools";
 
-export const fetchShops = ({shop_id, shop_ids, user_id, title, shop_name}) => {
+export const fetchShops = ({id, ids, shop_id, shop_ids, user_id, title, shop_name}) => {
+    if (ids) ids = JSON.stringify(ids)
+    if (shop_ids) shop_ids = JSON.stringify(shop_ids)
+
     return $.ajax({
         url: '/api/shops',
         method: 'GET',
-        data: {shop_id, shop_ids, user_id, title, shop_name}
+        data: {id, ids, shop_id, shop_ids, user_id, title, shop_name}
     });
 };
 
