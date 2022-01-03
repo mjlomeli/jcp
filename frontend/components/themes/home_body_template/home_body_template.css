@@ -1,6 +1,8 @@
 .body-template-grid {
+    width: 95%;
     padding: 0 3% 0 3%;
     grid-row-gap: 2em;
+    justify-content: center;
 }
 
 .background {
@@ -61,17 +63,26 @@
 }
 
 .categories-grid {
+    width: 100%;
     grid-gap: 1em;
 }
 
 .recently-viewed-grid {
+    width: 100%;
     grid-gap: 1em;
 }
 
 .picks-circle-grid {
+    width: 100%;
     grid-gap: 1em;
 }
 
 .picks-square-grid {
+    width: 100%;
     grid-gap: 1em;
+    justify-content: center;
+}
+
+.card-thumbnail {
+    width: 10em;
 }

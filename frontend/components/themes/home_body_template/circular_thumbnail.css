@@ -3,6 +3,10 @@
     border-bottom: 0.15em solid transparent;
 }
 
+.thumbnail-elements div {
+    width: 8em;
+}
+
 .thumbnail-hover {
     border-bottom: 0.15em solid #595959;
     transition: border-bottom 0.2s ease-in;
@@ -34,8 +38,8 @@
 }
 
 .thumbnail-image-hover {
-    transform: scale(1.1);
-    box-shadow: 0 0 2vw 0 rgba(26, 26, 26, 0.29);
+    transform: scale(1.05);
+    box-shadow: 0 0 0.8vw 0.4vw rgba(26, 26, 26, 0.11);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     cursor: pointer;
 }
