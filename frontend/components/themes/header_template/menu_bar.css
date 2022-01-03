@@ -10,12 +10,13 @@
     padding: 0.7em;
     position: relative;
     vertical-align: middle;
-    display: inline-flex;
+    font-family: "Graphik Webfont", -apple-system, "Helvetica Neue", "Droid Sans", Arial, sans-serif;
 }
 
 .menu-icon {
     box-sizing: inherit;
     display: inline-block;
+    vertical-align: middle;
     width: 1.5em;
     height: 1.5em;
 }
@@ -81,6 +82,4 @@
 .menu-bar-grid-elements {
     display: flex;
     justify-content: space-evenly;
-    margin-top: auto;
-    margin-bottom: auto;
 }

@@ -32,7 +32,7 @@ class MenuBar extends React.Component {
 
     button(icon, tooltip) {
         return <>
-            <Link to="#" className="menu-button">
+            <Link to="#" className="menu-button" style={{textDecoration: "inherit", color: "inherit"}}>
                 {icon}
                 <span className="tooltip" role="tooltip">{tooltip}</span>
             </Link>
@@ -40,7 +40,7 @@ class MenuBar extends React.Component {
     }
 
     signIn(){
-        return this.button(<label>Sign In</label>, "Sign In")
+        return this.button(<label className="menu-button">Sign In</label>, "Sign In")
     }
 
     favorites() {
@@ -82,7 +82,7 @@ class MenuBar extends React.Component {
     }
 
     render() {
-        let areas = ['favorites notifications account cart'];
+        let areas = ['favorites notifications account cart signin'];
         let components = {
             'signin': this.signIn(),
             'favorites': this.favorites(),
