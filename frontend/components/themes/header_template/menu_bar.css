@@ -6,10 +6,12 @@
 
 .menu-button {
     cursor: pointer;
+    font-size: 0.85em;
     border-radius: 96px;
     padding: 0.7em;
     position: relative;
     vertical-align: middle;
+    -webkit-text-stroke: 0.015em black;
     font-family: "Graphik Webfont", -apple-system, "Helvetica Neue", "Droid Sans", Arial, sans-serif;
 }
 

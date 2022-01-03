@@ -40,7 +40,7 @@ class MenuBar extends React.Component {
     }
 
     signIn(){
-        return this.button(<label className="menu-button">Sign In</label>, "Sign In")
+        return this.button(<label className="menu-button">Sign in</label>, "Sign In")
     }
 
     favorites() {

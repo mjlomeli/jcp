@@ -108,8 +108,8 @@ class HomeBodyTemplate extends React.Component {
             <h2 className="home-body-thumbnail-titles">Selections →</h2>
             <label className="home-body-descriptions">Based on your activity</label>
             <GridLayout areas={layout} components={components} className="based-activity-grid"
-                           classElements="based-activity-large-items"/>
-            </>
+                        classElements="based-activity-large-items"/>
+        </>
     }
 
     based_activity_small() {
@@ -138,12 +138,12 @@ class HomeBodyTemplate extends React.Component {
             'four': thumbnail, 'five': thumbnail, 'six': thumbnail
         }
         return <GridLayout areas={layout} components={components} className="editors-picks-grid"
-                        classElements="editors-picks-items"/>
+                           classElements="editors-picks-items"/>
     }
 
     selections() {
         let layout = ['text text text', 'one two three', 'four five six'];
-        let thumbnail = <CardListing />
+        let thumbnail = <CardListing/>
         let text = <div>
             <h2 className="home-body-thumbnail-titles">Shop our selections</h2>
             <label className="home-body-descriptions">Curated collections hand-picked by JCP editors</label>
@@ -175,8 +175,29 @@ class HomeBodyTemplate extends React.Component {
                            classElements="product-list-items"/>
     }
 
+    recommendations() {
+        let layout1x6 = ['one two three four five six'];
+        let thumbnail = <CircularThumbnail className="thumbnail"
+                                           classTitle="thumbnail-title"
+                                           classImage="thumbnail-image"
+                                           classElements="thumbnail-elements"
+                                           classHover="thumbnail-hover"
+                                           classTitleHover="thumbnail-title-hover"
+                                           classImageHover="thumbnail-image-hover"/>
+        let components = {
+            'one': thumbnail, 'two': thumbnail, 'three': thumbnail, 'four': thumbnail,
+            'five': thumbnail, 'six': thumbnail
+        }
+        return <>
+            <div className="background-footer"/>
+            <h2 className="home-body-thumbnail-titles">Explore related</h2>
+            <GridLayout areas={layout1x6} components={components} className="recommendations-grid"
+                           classElements="recommendations-items"/>
+            </>
+    }
+
     render() {
-        let areas = ["categories", "viewed", "picks1", "picks2", "editors", "selections", "based_1", "based_2"]
+        let areas = ["categories", "viewed", "picks1", "picks2", "editors", "selections", "based_1", "based_2", "recommendations"]
         let components = {
             "categories": this.categories1x6(),
             "viewed": this.recentlyViewed(),
@@ -185,7 +206,8 @@ class HomeBodyTemplate extends React.Component {
             "editors": this.editorsPicks(),
             "based_1": this.based_activity_large(),
             "based_2": this.based_activity_small(),
-            "selections": this.selections()
+            "selections": this.selections(),
+            "recommendations": this.recommendations()
         }
         return <>
             <div className="background"/>
