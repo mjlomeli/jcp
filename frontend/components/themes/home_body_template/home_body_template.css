@@ -35,7 +35,7 @@
 
 .home-body-thumbnail-titles {
     font-weight: 100;
-    font-size: 2em;
+    font-size: 1.5em;
     text-align: left;
     word-break: break-word;
     font-family: Arial, sans-serif;
@@ -89,13 +89,22 @@
 }
 
 .editors-picks-grid {
-    width: 95%;
+    width: 92%;
     grid-gap: 1em;
     display: flex;
     justify-content: space-evenly;
-    padding: 1em;
+    padding: 2em 1em 2em 1em;
     border-radius: 5px;
     border: 1px solid rgba(0, 0, 0, 0.14);
+}
+
+.shop-selections-grid {
+    width: 100%;
+    grid-gap: 0.5em;
+}
+
+.shop-selections-items:nth-child(n+2) > div {
+    width: 14em;
 }
 
 .based-activity-grid {

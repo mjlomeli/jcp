@@ -142,10 +142,18 @@ class HomeBodyTemplate extends React.Component {
     }
 
     selections() {
-        return <>
+        let layout = ['text text text', 'one two three', 'four five six'];
+        let thumbnail = <CardListing />
+        let text = <div>
             <h2 className="home-body-thumbnail-titles">Shop our selections</h2>
             <label className="home-body-descriptions">Curated collections hand-picked by JCP editors</label>
-        </>
+        </div>
+        let components = {
+            'text': text, 'one': thumbnail, 'two': thumbnail, 'three': thumbnail,
+            'four': thumbnail, 'five': thumbnail, 'six': thumbnail
+        }
+        return <GridLayout areas={layout} components={components} className="shop-selections-grid"
+                           classElements="shop-selections-items"/>
     }
 
     productList() {
