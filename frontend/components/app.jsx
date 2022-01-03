@@ -47,7 +47,7 @@ import HomePage from "./pages/home_page";
 /* learn more about grid-auto-flow */
 
 const App = () => (
-    <div>
+    <div style={{width: "100%"}}>
         {/*DON'T REMOVE*/}
         <header>
             <Link to="/home" className="header-link">

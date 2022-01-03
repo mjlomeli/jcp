@@ -129,8 +129,7 @@ class HeaderTemplate extends React.Component {
                              className="navbar"
                              classHeader="navbar-link"
                              classDropper="navbar-dropdown"
-                             classLinks="navbar-dropdown-link"
-        />
+                             classLinks="navbar-dropdown-link" />
     }
 
     logo() {

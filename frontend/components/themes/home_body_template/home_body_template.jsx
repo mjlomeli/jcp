@@ -189,7 +189,7 @@ class HomeBodyTemplate extends React.Component {
             'five': thumbnail, 'six': thumbnail
         }
         return <>
-            <div className="background-footer"/>
+            <div className="background-footer" />
             <h2 className="home-body-thumbnail-titles">Explore related</h2>
             <GridLayout areas={layout1x6} components={components} className="recommendations-grid"
                            classElements="recommendations-items"/>
