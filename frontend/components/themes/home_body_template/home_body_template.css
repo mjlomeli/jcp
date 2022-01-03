@@ -142,6 +142,7 @@
 
 .background-footer {
     position: absolute;
+    padding: 18em 0 0 0;
     left: 0;
     background-color: #FDEBD2;
     width: 100%;
