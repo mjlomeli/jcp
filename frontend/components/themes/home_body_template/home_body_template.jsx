@@ -97,23 +97,54 @@ class HomeBodyTemplate extends React.Component {
                            classElements="picks-square-items"/>
     }
 
-    editorsPicks() {
+    based_activity_large() {
+        let layout = ['main main one two three four', 'main main five six seven eight'];
+        let thumbnail = <CardThumbnail/>
+        let components = {
+            'main': thumbnail, 'one': thumbnail, 'two': thumbnail, 'three': thumbnail,
+            'four': thumbnail, 'five': thumbnail, 'six': thumbnail, 'seven': thumbnail, 'eight': thumbnail
+        }
         return <>
+            <h2 className="home-body-thumbnail-titles">Selections →</h2>
+            <label className="home-body-descriptions">Based on your activity</label>
+            <GridLayout areas={layout} components={components} className="based-activity-grid"
+                           classElements="based-activity-large-items"/>
+            </>
+    }
+
+    based_activity_small() {
+        let layout = ['one two three four five'];
+        let thumbnail = <CardThumbnail/>
+        let components = {
+            'one': thumbnail, 'two': thumbnail, 'three': thumbnail, 'four': thumbnail, 'five': thumbnail
+        }
+        return <>
+            <h2 className="home-body-thumbnail-titles">Selections →</h2>
+            <label className="home-body-descriptions">Based on your activity</label>
+            <GridLayout areas={layout} components={components} className="based-activity-grid"
+                        classElements="based-activity-small-items"/>
+        </>
+    }
+
+    editorsPicks() {
+        let layout = ['text text one two', 'three four five six'];
+        let thumbnail = <CardThumbnail/>
+        let text = <div>
             <p className="home-body-text">Editors' Picks</p>
             <h2 className="home-body-thumbnail-titles">Creating change together</h2>
-        </>
+        </div>
+        let components = {
+            'text': text, 'one': thumbnail, 'two': thumbnail, 'three': thumbnail,
+            'four': thumbnail, 'five': thumbnail, 'six': thumbnail
+        }
+        return <GridLayout areas={layout} components={components} className="editors-picks-grid"
+                        classElements="editors-picks-items"/>
     }
 
     selections() {
         return <>
             <h2 className="home-body-thumbnail-titles">Shop our selections</h2>
             <label className="home-body-descriptions">Curated collections hand-picked by JCP editors</label>
-        </>
-    }
-
-    blog() {
-        return <>
-            <h2 className="home-body-thumbnail-titles">Fresh from the blog</h2>
         </>
     }
 
@@ -137,15 +168,16 @@ class HomeBodyTemplate extends React.Component {
     }
 
     render() {
-        let areas = ["categories", "viewed", "picks1", "picks2", "editors", "selections", "blog"]
+        let areas = ["categories", "viewed", "picks1", "picks2", "editors", "selections", "based_1", "based_2"]
         let components = {
             "categories": this.categories1x6(),
             "viewed": this.recentlyViewed(),
             "picks1": this.picksForYou1x6(),
             "picks2": this.picksForYou2x4(),
             "editors": this.editorsPicks(),
-            "selections": this.selections(),
-            "blog": this.blog()
+            "based_1": this.based_activity_large(),
+            "based_2": this.based_activity_small(),
+            "selections": this.selections()
         }
         return <>
             <div className="background"/>

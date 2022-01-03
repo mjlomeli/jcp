@@ -33,6 +33,7 @@
 /* Tooltip popup */
 
 .tooltip {
+    white-space: nowrap;
     position: absolute;
     visibility: hidden;
     opacity: 0;
@@ -54,8 +55,8 @@
     content: "";
     transform: rotate(45deg);
     background: inherit;
-    width: 9px;
-    height: 9px;
+    width: 1em;
+    height: 1em;
     top: -3px;
     left: calc(50% - ((6px * 1.5) / 2));
 }

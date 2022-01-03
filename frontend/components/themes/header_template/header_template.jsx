@@ -81,10 +81,9 @@ class MenuBar extends React.Component {
         return this.button(icon, "Cart");
     }
 
-    render() {
-        let areas = ['favorites notifications account cart signin'];
+    signed_in(){
+        let areas = ['favorites notifications account cart'];
         let components = {
-            'signin': this.signIn(),
             'favorites': this.favorites(),
             'notifications': this.notifications(),
             'account': this.account(),
@@ -92,6 +91,20 @@ class MenuBar extends React.Component {
         }
         return <GridLayout areas={areas} components={components} className={this.className}
                            classElements={this.classElements}/>
+    }
+
+    signed_out(){
+        let areas = ['signin cart'];
+        let components = {
+            'signin': this.signIn(),
+            'cart': this.cart()
+        }
+        return <GridLayout areas={areas} components={components} className={this.className}
+                           classElements={this.classElements}/>
+    }
+
+    render() {
+        return (false) ? this.signed_in() : this.signed_out()
     }
 }
 

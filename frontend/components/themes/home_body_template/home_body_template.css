@@ -37,6 +37,7 @@
     font-weight: 100;
     font-size: 2em;
     text-align: left;
+    word-break: break-word;
     font-family: Arial, sans-serif;
     -webkit-text-stroke: 0.02em black;
 }
@@ -47,7 +48,7 @@
     color: black;
     font-size: 0.95em;
     letter-spacing: 0.055em;
-    word-break: break-word;
+    white-space: nowrap;
     font-family: Arial, sans-serif;
     -webkit-text-stroke: 0.03em black;
 }
@@ -80,9 +81,40 @@
 .picks-square-grid {
     width: 100%;
     grid-gap: 1em;
-    justify-content: center;
+    justify-content: space-evenly;
 }
 
 .card-thumbnail {
     width: 10em;
+}
+
+.editors-picks-grid {
+    width: 95%;
+    grid-gap: 1em;
+    display: flex;
+    justify-content: space-evenly;
+    padding: 1em;
+    border-radius: 5px;
+    border: 1px solid rgba(0, 0, 0, 0.14);
+}
+
+.based-activity-grid {
+    width: 100%;
+    grid-gap: 1em;
+    justify-content: flex-start;
+}
+
+.based-activity-large-items:first-child > div {
+    width: 15em;
+    display: flex;
+    align-content: center;
+    justify-content: center;
+}
+
+.based-activity-large-items:nth-child(n+2) > div {
+    width: 7em;
+}
+
+.based-activity-small-items > div {
+    width: 9em;
 }
