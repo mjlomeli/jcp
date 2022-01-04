@@ -8,10 +8,10 @@ import {
 import {connect} from 'react-redux';
 import React from 'react';
 import './menu_bar.css'
+import "./navbar.css"
 import SearchBarComponent from "../../user_controls/searchbar/searchbar";
 import GridLayout from "../../user_controls/grid_layout/grid_layout";
 import NavbarLayout from "../../user_controls/navbar/navbar";
-import "./navbar.css"
 
 const mapStateToProps = ({errors}) => ({
     //errors: errors.session, // need to add a ui or user_control errors
@@ -133,9 +133,10 @@ class HeaderTemplate extends React.Component {
     }
 
     logo() {
-        return <svg className="logo" xmlns="http://www.w3.org/2000/svg" viewBox="197 666.784 63.668 48.396">
-            <text transform="matrix(1 0 0 1 197 701.8945)" fill="#F1641E" fontFamily="'ArialMT'" fontSize="40.9137">Jcp</text>
+        return <svg className="logo" xmlns="http://www.w3.org/2000/svg" viewBox="-10 125.5 612 367">
+            <text transform="matrix(1 0 0 1 -10 411.6875)" fill="#F1641E" fontFamily="'ArialMT'" fontSize="393.2774">Jcp</text>
         </svg>
+
     }
 
     render() {
@@ -145,11 +146,11 @@ class HeaderTemplate extends React.Component {
             's': <SearchBarComponent/>,
             'navlinks': <MenuBar className="menu-bar-grid" classElements="menu-bar-grid-elements"/>
         }
-        let headerBarLayout = <GridLayout areas={headerBarAreas} components={headerBarComponents}
+        let toolbar = <GridLayout areas={headerBarAreas} components={headerBarComponents}
                                           className="header-grid" classElements="header-grid-elements"/>
         return <>
             <div className="navlinks">
-                {headerBarLayout}
+                {toolbar}
                 {this.navbar()}
             </div>
         </>
