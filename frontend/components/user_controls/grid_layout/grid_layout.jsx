@@ -27,9 +27,8 @@ const [defaultArea, defaultComponents] = defaultGrid();
 const defaultGridStyle = {
     display: 'inline-grid',
     backgroundColor: '#2196F3',
-    padding: '1%',
-    width: '98%',
-    height: '100%'
+    width: 'inherit',
+    height: 'inherit'
 };
 
 const defaultElementsStyle = {

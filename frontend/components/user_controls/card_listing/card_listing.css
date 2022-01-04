@@ -7,7 +7,6 @@
         Remove to allow more tightly stretching. */
     grid-template-columns: repeat(auto-fit, minmax(10em, 100%));
     grid-auto-flow: row dense;
-    border: 1vw solid transparent;
     cursor: pointer;
     text-decoration: none;
 
