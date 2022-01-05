@@ -1,4 +1,5 @@
 import * as ReviewUtil from '../utils/review_util'
+import * as AlertAction from './alert_action'
 
 export const RECEIVE_REVIEWS = "RECEIVE_REVIEWS";
 export const RECEIVE_REVIEW = "RECEIVE_REVIEW";
@@ -45,14 +46,20 @@ export const receiveReviewsError = errors =>({
 export const fetchUserReviews = (userId) => dispatch =>(
     ReviewUtil.fetchUserReviews(userId).then(
         reviews => dispatch(receiveReviews(reviews)),
-        err => dispatch(receiveReviewsError(err.responseJSON))
+        err => {
+            dispatch(AlertAction.systemError(err.responseJSON));
+            return dispatch(receiveReviewsError(err.responseJSON))
+        }
     )
 )
 
 export const fetchProductReviews = (productId) => dispatch =>(
     ReviewUtil.fetchProductReviews(productId).then(
         reviews => dispatch(receiveReviews(reviews)),
-        err => dispatch(receiveReviewsError(err.responseJSON))
+        err => {
+            dispatch(AlertAction.systemError(err.responseJSON));
+            return dispatch(receiveReviewsError(err.responseJSON))
+        }
     )
 )
 
@@ -60,28 +67,40 @@ export const fetchProductReviews = (productId) => dispatch =>(
 export const fetchReview = (productId, reviewId) => (dispatch) => {
     return ReviewUtil.fetchReview(productId, reviewId).then(
         review => dispatch(receiveReview(review)),
-        err => dispatch(receiveReviewError(reviewId, err.responseJSON))
+        err => {
+            dispatch(AlertAction.systemError(err.responseJSON));
+            return dispatch(receiveReviewError(reviewId, err.responseJSON))
+        }
     )
 }
 
 export const createReview = (productId, review) => dispatch =>(
     ReviewUtil.createReview(productId, review).then(
         review => dispatch(receiveReview(review)),
-        err => dispatch(receiveReviewError(review.id, err.responseJSON))
+        err => {
+            dispatch(AlertAction.systemError(err.responseJSON));
+            return dispatch(receiveReviewError(review.id, err.responseJSON))
+        }
     )
 )
 
 export const updateReview = (productId, review) => dispatch =>(
     ReviewUtil.updateReview(productId, review).then(
         review => dispatch(receiveReview(review)),
-        err => dispatch(receiveReviewError(review.id, err.responseJSON))
+        err => {
+            dispatch(AlertAction.systemError(err.responseJSON));
+            return dispatch(receiveReviewError(review.id, err.responseJSON))
+        }
     )
 )
 
 export const deleteReview = (productId, reviewId) => dispatch =>(
     ReviewUtil.deleteReview(productId, reviewId).then(
         review => dispatch(removeReview(review.id)),
-        err => dispatch(receiveReviewError(reviewId, err.responseJSON))
+        err => {
+            dispatch(AlertAction.systemError(err.responseJSON));
+            return dispatch(receiveReviewError(reviewId, err.responseJSON))
+        }
     )
 )
 

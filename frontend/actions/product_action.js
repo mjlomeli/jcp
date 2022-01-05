@@ -1,4 +1,5 @@
 import * as ProductUtil from '../utils/product_util'
+import * as AlertAction from './alert_action'
 
 export const RECEIVE_PRODUCTS = "RECEIVE_PRODUCTS";
 export const RECEIVE_PRODUCT = "RECEIVE_PRODUCT";
@@ -56,7 +57,10 @@ export const fetchProducts = ({id, ids, product_id, product_ids, shop_id, shop_i
 export const fetchProductsRange = (start, end) => dispatch =>(
     ProductUtil.fetchProductsRange(start, end).then(
         products => dispatch(receiveProducts(products)),
-        err => dispatch(receiveProductsError(err.responseJSON))
+        err => {
+            dispatch(AlertAction.systemError(err.responseJSON));
+            return dispatch(receiveProductsError(err.responseJSON))
+        }
     )
 )
 
@@ -64,7 +68,10 @@ export const fetchProductsRange = (start, end) => dispatch =>(
 export const fetchRandomProducts = (limit) => dispatch =>(
     ProductUtil.fetchRandomProducts(limit).then(
         products => dispatch(receiveProducts(products)),
-        err => dispatch(receiveProductsError(err.responseJSON))
+        err => {
+            dispatch(AlertAction.systemError(err.responseJSON));
+            return dispatch(receiveProductsError(err.responseJSON))
+        }
     )
 )
 
@@ -72,35 +79,50 @@ export const fetchRandomProducts = (limit) => dispatch =>(
 export const fetchRandomProductsRange = (start, end) => dispatch =>(
     ProductUtil.fetchRandomProductsRange(start, end).then(
         products => dispatch(receiveProducts(products)),
-        err => dispatch(receiveProductsError(err.responseJSON))
+        err => {
+            dispatch(AlertAction.systemError(err.responseJSON));
+            return dispatch(receiveProductsError(err.responseJSON))
+        }
     )
 )
 
 export const fetchProduct = productId => (dispatch) => {
     return ProductUtil.fetchProduct(productId).then(
         product => dispatch(receiveProduct(product)),
-        err => dispatch(receiveProductError(productId, err.responseJSON))
+        err => {
+            dispatch(AlertAction.systemError(err.responseJSON));
+            return dispatch(receiveProductError(productId, err.responseJSON))
+        }
     )
 }
 
 export const createProduct = product => dispatch =>(
     ProductUtil.createProduct(product).then(
         product => dispatch(receiveProduct(product)),
-        err => dispatch(receiveProductError(product.id, err.responseJSON))
+        err => {
+            dispatch(AlertAction.systemError(err.responseJSON));
+            return dispatch(receiveProductError(product.id, err.responseJSON))
+        }
     )
 )
 
 export const updateProduct = product => dispatch =>(
     ProductUtil.updateProduct(product).then(
         product => dispatch(receiveProduct(product)),
-        err => dispatch(receiveProductError(product.id, err.responseJSON))
+        err => {
+            dispatch(AlertAction.systemError(err.responseJSON));
+            return dispatch(receiveProductError(product.id, err.responseJSON))
+        }
     )
 )
 
 export const deleteProduct = productId => dispatch =>(
     ProductUtil.deleteProduct(productId).then(
         product => dispatch(removeProduct(product.id)),
-        err => dispatch(receiveProductError(productId, err.responseJSON))
+        err => {
+            dispatch(AlertAction.systemError(err.responseJSON));
+            return dispatch(receiveProductError(productId, err.responseJSON))
+        }
     )
 )
 

@@ -11,7 +11,17 @@ class Api::SessionsController < ApplicationController
   end
 
   def destroy
+    @user = current_user
     logout!
-    render json: { message: 'Logout successful.' }
+    if !@user
+      render json: { message: 'Logout successful.' }
+    else
+      if @user.email == "demo@email.com"
+        render json: { demo: 'Thank you for demoing my website!' }
+      else
+        name = (@user.first_name or @user.email)
+        render json: { message: "You've successfully logged out #{name}. See you later!"}
+      end
+    end
   end
 end

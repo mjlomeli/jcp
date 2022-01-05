@@ -4,7 +4,6 @@ import "./payment_selection.css"
 import Selection from "./radio";
 import {Product} from "../../../lib/product";
 import {fetchProduct, resetProductError} from "../../../actions/product_action";
-import {fetchImageByProductId} from "../../../actions/image_action";
 import {connect} from "react-redux";
 
 
@@ -17,15 +16,6 @@ function findProductId(ownProps){
     else if (ownProps.match && ownProps.match.params && ownProps.match.params.id)
         return parseInt(ownProps.match.params.id);
     return null;
-}
-
-function findImage(product){
-    if (!product) return null;
-    let images = product.imagesMedium();
-    if (!images || images.length === 0) return null;
-    let image = null;
-    images.forEach(img => { if (!!img) return image = img; })
-    return image;
 }
 
 const mapStateToProps = (state, ownProps) =>{

@@ -1,4 +1,5 @@
 import * as CartItemUtil from '../utils/cart_item_util'
+import * as AlertAction from './alert_action'
 
 export const RECEIVE_CART_ITEMS = "RECEIVE_CART_ITEMS";
 export const RECEIVE_CART_ITEM = "RECEIVE_CART_ITEM";
@@ -43,28 +44,40 @@ export const receiveCartItemsError = errors =>({
 export const fetchCartItems = (user_id) => dispatch => (
     CartItemUtil.fetchCartItems(user_id).then(
         cartItems => dispatch(receiveCartItems(cartItems)),
-        err => dispatch(receiveCartItemsError(err.responseJSON))
+        err => {
+            dispatch(AlertAction.systemError(err.responseJSON));
+            return dispatch(receiveCartItemsError(err.responseJSON))
+        }
     )
 )
 
 export const createCartItem = cartItem => dispatch =>(
     CartItemUtil.createCartItem(cartItem).then(
         cartItem => dispatch(receiveCartItem(cartItem)),
-        err => dispatch(receiveCartItemError(cartItem.id, err.responseJSON))
+        err => {
+            dispatch(AlertAction.systemError(err.responseJSON));
+            return dispatch(receiveCartItemError(cartItem.id, err.responseJSON))
+        }
     )
 )
 
 export const updateCartItem = cartItem => dispatch =>(
     CartItemUtil.updateCartItem(cartItem).then(
         cartItem => dispatch(receiveCartItem(cartItem)),
-        err => dispatch(receiveCartItemError(cartItem.id, err.responseJSON))
+        err => {
+            dispatch(AlertAction.systemError(err.responseJSON));
+            return dispatch(receiveCartItemError(cartItem.id, err.responseJSON))
+        }
     )
 )
 
 export const deleteCartItem = cartItemId => dispatch =>(
     CartItemUtil.deleteCartItem(cartItemId).then(
         cartItem => dispatch(removeCartItem(cartItem.id)),
-        err => dispatch(receiveCartItemError(cartItemId, err.responseJSON))
+        err => {
+            dispatch(AlertAction.systemError(err.responseJSON));
+            return dispatch(receiveCartItemError(cartItemId, err.responseJSON))
+        }
     )
 )
 

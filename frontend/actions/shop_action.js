@@ -1,4 +1,5 @@
 import * as ShopUtil from '../utils/shop_util'
+import * as AlertAction from './alert_action'
 
 export const RECEIVE_SHOPS = "RECEIVE_SHOPS";
 export const RECEIVE_SHOP = "RECEIVE_SHOP";
@@ -41,38 +42,51 @@ export const receiveShopsError = errors =>({
 
 export const fetchShops = () => dispatch =>(
     ShopUtil.fetchShops().then(
-        shops => {
-            return dispatch(receiveShops(shops))
-        },
-        err => dispatch(receiveShopError(err.responseJSON))
+        shops => dispatch(receiveShops(shops)),
+        err => {
+            dispatch(AlertAction.systemError(err.responseJSON));
+            return dispatch(receiveShopError(err.responseJSON))
+        }
     )
 )
 
 export const fetchShop = shopId => (dispatch) => {
     return ShopUtil.fetchShop(shopId).then(
         shop => dispatch(receiveShop(shop)),
-        err => dispatch(receiveShopError(shopId, err.responseJSON))
+        err => {
+            dispatch(AlertAction.systemError(err.responseJSON));
+            return dispatch(receiveShopError(shopId, err.responseJSON))
+        }
     )
 }
 
 export const createShop = shop => dispatch =>(
     ShopUtil.createShop(shop).then(
         shop => dispatch(receiveShop(shop)),
-        err => dispatch(receiveShopError(shop.id, err.responseJSON))
+        err => {
+            dispatch(AlertAction.systemError(err.responseJSON));
+            return dispatch(receiveShopError(shop.id, err.responseJSON))
+        }
     )
 )
 
 export const updateShop = shop => dispatch =>(
     ShopUtil.updateShop(shop).then(
         shop => dispatch(receiveShop(shop)),
-        err => dispatch(receiveShopError(shop.id, err.responseJSON))
+        err => {
+            dispatch(AlertAction.systemError(err.responseJSON));
+            return dispatch(receiveShopError(shop.id, err.responseJSON))
+        }
     )
 )
 
 export const deleteShop = shopId => dispatch =>(
     ShopUtil.deleteShop(shopId).then(
         shop => dispatch(removeShop(shop.id)),
-        err => dispatch(receiveShopError(shopId, err.responseJSON))
+        err => {
+            dispatch(AlertAction.systemError(err.responseJSON));
+            return dispatch(receiveShopError(shopId, err.responseJSON))
+        }
     )
 )
 

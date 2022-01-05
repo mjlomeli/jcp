@@ -1,4 +1,5 @@
 import * as ImageUtil from '../utils/image_util'
+import * as AlertAction from './alert_action'
 
 export const RECEIVE_IMAGES = "RECEIVE_IMAGES";
 export const RECEIVE_IMAGE = "RECEIVE_IMAGE";
@@ -92,49 +93,70 @@ const removeImage = imageId => ({
 export const fetchImages = () => dispatch => (
     ImageUtil.fetchImages().then(
         images => dispatch(receiveImages(images)),
-        err => dispatch(receiveImageError(err.responseJSON))
+        err => {
+            dispatch(AlertAction.systemError(err.responseJSON));
+            return dispatch(receiveImageError(err.responseJSON))
+        }
     )
 )
 
 export const fetchImage = imageId => (dispatch) => {
     return ImageUtil.fetchImage(imageId).then(
         image => dispatch(receiveImage(image)),
-        err => dispatch(receiveImageError(imageId, err.responseJSON))
+        err => {
+            dispatch(AlertAction.systemError(err.responseJSON));
+            return dispatch(receiveImageError(imageId, err.responseJSON))
+        }
     )
 }
 
 export const fetchImageByProductId = productId => (dispatch) => {
     return ImageUtil.fetchImageByProductId(productId).then(
         images => dispatch(receiveProductImages(productId, images)),
-        err => dispatch(receiveProductImagesError(productId, err.responseJSON))
+        err => {
+            dispatch(AlertAction.systemError(err.responseJSON));
+            return dispatch(receiveProductImagesError(productId, err.responseJSON))
+        }
     )
 }
 
 export const fetchImageByUserId = userId => (dispatch) => {
     return ImageUtil.fetchImageByUserId(userId).then(
         images => dispatch(receiveUserImages(userId, images)),
-        err => dispatch(receiveUserImagesError(userId, err.responseJSON))
+        err => {
+            dispatch(AlertAction.systemError(err.responseJSON));
+            return dispatch(receiveUserImagesError(userId, err.responseJSON))
+        }
     )
 }
 
 export const fetchImageByShopId = shopId => (dispatch) => {
     return ImageUtil.fetchImageByShopId(shopId).then(
         images => dispatch(receiveShopImages(shopId, images)),
-        err => dispatch(receiveShopImagesError(shopId, err.responseJSON))
+        err => {
+            dispatch(AlertAction.systemError(err.responseJSON));
+            return dispatch(receiveShopImagesError(shopId, err.responseJSON))
+        }
     )
 }
 
 export const fetchImageByGroupId = groupId => (dispatch) => {
     return ImageUtil.fetchImageByGroupId(groupId).then(
         images => dispatch(receiveGroupImages(groupId, images)),
-        err => dispatch(receiveGroupImagesError(groupId, err.responseJSON))
+        err => {
+            dispatch(AlertAction.systemError(err.responseJSON));
+            return dispatch(receiveGroupImagesError(groupId, err.responseJSON))
+        }
     )
 }
 
 export const createImage = image => dispatch => (
     ImageUtil.createImage(image).then(
         image => dispatch(receiveImage(image)),
-        err => dispatch(receiveImageError(image.id, err.responseJSON))
+        err => {
+            dispatch(AlertAction.systemError(err.responseJSON));
+            return dispatch(receiveImageError(image.id, err.responseJSON))
+        }
     )
 )
 
@@ -142,14 +164,20 @@ export const createImage = image => dispatch => (
 export const updateImage = image => dispatch => (
     ImageUtil.updateImage(image).then(
         image => dispatch(receiveImage(image)),
-        err => dispatch(receiveImageError(image.id, err.responseJSON))
+        err => {
+            dispatch(AlertAction.systemError(err.responseJSON));
+            return dispatch(receiveImageError(image.id, err.responseJSON))
+        }
     )
 )
 
 export const deleteImage = imageId => dispatch => (
     ImageUtil.deleteImage(imageId).then(
         image => dispatch(removeImage(image.id)),
-        err => dispatch(receiveImageError(imageId, err.responseJSON))
+        err => {
+            dispatch(AlertAction.systemError(err.responseJSON));
+            return dispatch(receiveImageError(imageId, err.responseJSON))
+        }
     )
 )
 
