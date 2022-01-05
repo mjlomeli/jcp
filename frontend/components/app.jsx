@@ -31,15 +31,15 @@ import DemoLogInFormContainer from './session_form/demo_form_container';
 // import CartTemplate from "./themes/cart_template/cart_template";
 
 // import Rating from "./user_controls/rating/rating";
-// import CartItem from "./user_controls/cart_item/cart_item";
+import CartItem from "./user_controls/cart_item/cart_item";
 // import CardFeatured from "./user_controls/card_featured/card_featured";
 // import CardListing from "./user_controls/card_listing/card_listing";
 // import CardThumbnail from "./user_controls/card_thumbnail/card_thumbnail";
 // import CircularThumbnail from "./user_controls/circular_thumbnail/circular_thumbnail";
 // import ProductsList from "./user_controls/product_list/products_list";
-import Gallery from "./user_controls/gallery/gallery";
+// import Gallery from "./user_controls/gallery/gallery";
 // import SearchBar from "./user_controls/searchbar/searchbar";
-// import PaymentSelection from "./user_controls/payment_selection/payment_selection";
+import PaymentSelection from "./user_controls/payment_selection/payment_selection";
 
 // import FlowLayout from "./user_controls/flow_layout/flow_layout";
 // import GridLayout from "./user_controls/grid_layout/grid_layout";
@@ -75,10 +75,12 @@ const App = () => (
             {/*<ProtectedRoute exact path="/cart_template" component={CartTemplate} />*/}
 
             {/*<Route exact path="/products_list" component={ProductsList} />*/}
-            {/*<Route exact path="/payment_selection" component={PaymentSelection} />*/}
-            {/*<Route exact path="/cart_item" component={CartItem} />*/}
-            <Route exact path="/gallery" component={Gallery} />
-            <Route exact path="/gallery/:id" component={Gallery} />
+            <Route exact path="/payment_selection" component={PaymentSelection} />
+            <Route exact path="/payment_selection/:id" component={PaymentSelection} />
+            <Route exact path="/cart_item" component={CartItem} />
+            <Route exact path="/cart_item/:id" component={CartItem} />
+            {/*<Route exact path="/gallery" component={Gallery} />*/}
+            {/*<Route exact path="/gallery/:id" component={Gallery} />*/}
             {/*<Route exact path="/rating" component={Rating} />*/}
             {/*<Route exact path="/searchbar" component={SearchBar} />*/}
             {/*<Route exact path="/rating" component={Rating} />*/}

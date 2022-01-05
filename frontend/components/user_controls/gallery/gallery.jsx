@@ -164,7 +164,6 @@ class Gallery extends React.Component {
             areas.push(row.join(" "));
             components[`image${i}`] = this.imageSelections(i);
         }
-
         return <GridLayout areas={areas} components={components} classElements="gallery-elements"/>
     }
 }

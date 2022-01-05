@@ -2,16 +2,57 @@ import React from "react";
 import GridLayout from "../grid_layout/grid_layout";
 import "./payment_selection.css"
 import Selection from "./radio";
+import {Product} from "../../../lib/product";
+import {fetchProduct, resetProductError} from "../../../actions/product_action";
+import {fetchImageByProductId} from "../../../actions/image_action";
+import {connect} from "react-redux";
+
+
+const defaultProductId = 1133353182;
+
+function findProductId(ownProps){
+    if (!ownProps) return null;
+    if (ownProps.productId)
+        return parseInt(ownProps.productId);
+    else if (ownProps.match && ownProps.match.params && ownProps.match.params.id)
+        return parseInt(ownProps.match.params.id);
+    return null;
+}
+
+function findImage(product){
+    if (!product) return null;
+    let images = product.imagesMedium();
+    if (!images || images.length === 0) return null;
+    let image = null;
+    images.forEach(img => { if (!!img) return image = img; })
+    return image;
+}
+
+const mapStateToProps = (state, ownProps) =>{
+    let productId = findProductId(ownProps);
+    let products = state.entities.products;
+    let product = Product.findById(productId);
+
+    return {
+        products: products,
+        productId: productId,
+        product: product
+    }
+};
+
+const mapDispatchToProps = dispatch => ({
+    fetchProduct: (productId) => dispatch(fetchProduct(productId)),
+    resetProductError: productId => dispatch(resetProductError(productId))
+});
 
 
 class PaymentSelection extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {
-            totalPrice: 116.58, totalDiscount: 4.8, paymentType: "creditcard", creditCardFee: 0.05,
-            onlinePaymentFee: 0.02, installmentFee: 0.01, shippingPrice: 5.25, subtotalPrice: 99.99,
-            numItems: 5
-        }
+
+        this.discount = Math.random() / 2;
+        this.quantity = Math.ceil(Math.random() * 10);
+        this.shipping = Math.round((Math.random() * 20 * 100) + Number.EPSILON) / 100
     }
 
     paymentChoice(name, value, text = "", images = {}) {
@@ -63,11 +104,14 @@ class PaymentSelection extends React.Component {
     }
 
     priceCalculations() {
+        let price = this.props.product.price;
+        let total = Math.round((price * this.quantity * 100) + Number.EPSILON) / 100 ;
+        let discount = Math.round(price * this.quantity * this.discount  * 100) / 100;
         let nameTotal = <label className="payment-text-highlight payment-label">Items(s) total</label>
-        let priceTotal = <label className="payment-text payment-price">${this.state.totalPrice}</label>
+        let priceTotal = <label className="payment-text payment-price">${total.toFixed(2)}</label>
 
         let nameDiscount = <label className="payment-text-highlight payment-label">Shop Discount</label>
-        let priceDiscount = <label className="payment-text payment-price">-${this.state.totalPrice}</label>
+        let priceDiscount = <label className="payment-text payment-price">-${discount.toFixed(2)}</label>
 
         return <>
             {this.rowComponent(nameTotal, priceTotal)}
@@ -77,11 +121,15 @@ class PaymentSelection extends React.Component {
     }
 
     feeCalculations() {
+        let price = this.props.product.price;
+        let total = price * this.quantity;
+        let discount = Math.round((price * this.quantity * this.discount  * 100) + Number.EPSILON) / 100;
+        let subtotal = Math.round((total - discount + Number.EPSILON) * 100) / 100;
         let nameSubtotal = <label className="payment-text payment-label">Subtotal</label>
         let priceSubtotal = <label
-            className="payment-text payment-price">${this.state.subtotalPrice - this.state.totalDiscount}</label>
+            className="payment-text payment-price">${subtotal.toFixed(2)}</label>
         let nameShipping = <label className="payment-text payment-label">Shipping</label>
-        let priceShipping = <label className="payment-text payment-price">${this.state.shippingPrice}</label>
+        let priceShipping = <label className="payment-text payment-price">${this.shipping.toFixed(2)}</label>
 
         return <>
             {this.rowComponent(nameSubtotal, priceSubtotal)}
@@ -91,12 +139,43 @@ class PaymentSelection extends React.Component {
     }
 
     totalCalculation() {
-        let nameTotal = <label className="payment-text-highlight payment-label">Total ({this.state.numItems} items)</label>
-        let priceTotal = <label className="payment-text-highlight payment-price">${this.state.totalPrice}</label>
+        let price = this.props.product.price;
+        let total = price * this.quantity;
+        let discount = Math.round(price * this.quantity * this.discount  * 100) / 100;
+        let subtotal = total - discount;
+        let charge = Math.round((subtotal + this.shipping + Number.EPSILON) * 100) / 100
+
+
+        let nameTotal = <label className="payment-text-highlight payment-label">Total ({this.quantity} items)</label>
+        let priceTotal = <label className="payment-text-highlight payment-price">${charge.toFixed(2)}</label>
         return this.rowComponent(nameTotal, priceTotal);
     }
 
+
+    shouldComponentUpdate(nextProps, nextState, nextContext) {
+        let productId = findProductId(this.props);
+        if (Product.hasProductError(productId)) {
+            this.props.history.push(`/payment_selection/${defaultProductId}`);
+            this.props.resetProductError(this.props.productId);
+            return false;
+        }
+        return true;
+    }
+
+    isRenderValid(){
+        return !!this.props.product;
+    }
+
+    resolve(){
+        if (!this.props.product)
+            this.props.fetchProduct(this.props.productId)
+        return null;
+    }
+
     render() {
+        if (!this.isRenderValid())
+            return this.resolve();
+
         let areas = ['radio', 'price', 'fee', 'total', 'button']
         let components = {
             'radio': this.paymentTypes(),
@@ -109,4 +188,4 @@ class PaymentSelection extends React.Component {
     }
 }
 
-export default PaymentSelection;
+export default connect(mapStateToProps, mapDispatchToProps)(PaymentSelection);
