@@ -12,11 +12,13 @@
     width: 80vw;
     height: 80vw;
     border-radius: 1em;
+    user-select: none;
 }
 
 .gallery-elements img:not(.gallery-carousel-image){
     position: relative;
     margin-top: 30%;
+    user-select: none;
 }
 
 .gallery-image-selections {
