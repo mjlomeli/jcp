@@ -118,6 +118,8 @@ window.ProductAction = {
     fetchProductsRange,
     fetchRandomProducts,
     fetchRandomProductsRange,
+    resetProductError,
+    resetProductsError,
     createProduct,
     updateProduct,
     deleteProduct

@@ -17,7 +17,7 @@ import LogInFormContainer from './session_form/login_form_container';
 import DemoLogInFormContainer from './session_form/demo_form_container';
 
 
-import HomePage from "./pages/home_page";
+// import HomePage from "./pages/home_page";
 import ProductsPage from "./pages/products_page";
 // import ProductPage from "./pages/product_page";
 // import CartPage from "./pages/cart_page";
@@ -62,7 +62,7 @@ const App = () => (
             <AuthRoute exact path="/signup" component={SignUpFormContainer} />
             <AuthRoute exact path="/demo" component={DemoLogInFormContainer} />
 
-            <Route exact path="/home_page" component={HomePage} />
+            {/*<Route exact path="/home_page" component={HomePage} />*/}
             <Route exact path="/products_page" component={ProductsPage} />
             {/*<Route exact path="/product_page" component={ProductPage} />*/}
             {/*<ProtectedRoute exact path="/cart" component={CartPage} />*/}

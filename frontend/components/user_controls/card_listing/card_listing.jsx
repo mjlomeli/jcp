@@ -3,15 +3,15 @@ import {
     Redirect,
     Switch,
     Link,
-    HashRouter
+    HashRouter,
+    useHistory
 } from 'react-router-dom';
 import React from 'react';
 import './card_listing.css'
 import GridLayout from "../grid_layout/grid_layout";
 import Rating from "../rating/rating";
-import {debug} from '../../../utils/tools'
-import {fetchProduct, fetchRandomProducts} from "../../../actions/product_action";
-import {fetchImage, fetchImageByProductId} from "../../../actions/image_action";
+import {fetchProduct, fetchRandomProducts, resetProductError} from "../../../actions/product_action";
+import {fetchImageByProductId} from "../../../actions/image_action";
 import {connect} from "react-redux";
 import {Product} from "../../../lib/product";
 import {Image} from "../../../lib/image";
@@ -87,45 +87,45 @@ const defaultImage = new Image({
 })
 
 function findProductId(ownProps){
-    if (!ownProps)
-        return null;
+    if (!ownProps) return null;
     if (ownProps.productId)
         return parseInt(ownProps.productId);
     else if (ownProps.match && ownProps.match.params && ownProps.match.params.id)
         return parseInt(ownProps.match.params.id);
     return null;
 }
-function findImage(productId){
-    let product = Product.findById(productId);
-    if (!product)
-        return null;
+
+function findImage(product){
+    if (!product) return null;
     let images = product.imagesMedium();
-    if (!images || images.length === 0)
-        return null;
+    if (!images || images.length === 0) return null;
     let image = null;
-    images.forEach(img => {
-        if (!!img)
-            return image = img;
-    })
+    images.forEach(img => { if (!!img) return image = img; })
     return image;
 }
 
 const mapStateToProps = (state, ownProps) =>{
-    //let errors = Product.errors();
     let productId = findProductId(ownProps);
-    let product = Product.findById(productId)
-    let image = findImage(productId)
+    let products = state.entities.products;
+    let images = state.entities.groupImages;
+    let errors = Product.productError(productId);
+    let product = !!errors ? defaultProduct : Product.findById(productId);
+    let image = !!errors ? defaultImage : findImage(product);
+
     return {
-        //errors: errors,
+        products: products,
         productId: productId,
         product: product,
-        image: image
+        images: images,
+        image: image,
+        errors: errors
     }
 };
 
 const mapDispatchToProps = dispatch => ({
     fetchProduct: (productId) => dispatch(fetchProduct(productId)),
-    fetchImageByProductId: (productId) => dispatch(fetchImageByProductId(productId))
+    fetchImageByProductId: (productId) => dispatch(fetchImageByProductId(productId)),
+    resetProductError: productId => dispatch(resetProductError(productId))
 });
 
 
@@ -199,14 +199,17 @@ class CardListing extends React.Component {
     }
 
     componentDidMount() {
-        if (!this.props.product && this.props.productId){
-            this.props.fetchProduct(this.props.productId)
-            console.log(`fetching product: ${this.props.productId}`)
+
+    }
+
+    shouldComponentUpdate(nextProps, nextState, nextContext) {
+        let productId = findProductId(this.props);
+        if (Product.hasProductError(productId)) {
+            this.props.history.push(`/card_listing/${defaultProduct.id}`);
+            this.props.resetProductError(this.props.productId);
+            return false;
         }
-        if (!this.props.image && this.props.productId){
-            this.props.fetchImageByProductId(this.props.productId)
-            console.log(`fetching image: ${this.props.productId}`)
-        }
+        return true;
     }
 
     resize(length=65) {
@@ -275,9 +278,23 @@ class CardListing extends React.Component {
         </Link>
     }
 
+    isRenderValid(){
+        return !!this.props.product && !!this.props.image;
+    }
+
+    resolve(){
+        CardListing.LoopCounter += 1;
+        if (!this.props.product)
+            this.props.fetchProduct(this.props.productId)
+        else if (!this.props.image)
+            this.props.fetchImageByProductId(this.props.productId)
+        return null;
+    }
+
     render() {
-        if (!this.props.product || !this.props.image)
-            return null;
+        if (!this.isRenderValid())
+            return this.resolve();
+
         let areas = ['image', 'title', 'rating', 'price', 'tag']
         let components = {
             'image': this.imageComponent(),

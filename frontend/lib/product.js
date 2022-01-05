@@ -14,7 +14,6 @@ export class Product {
         if (state && state.errors && state.errors.product)
             return state.errors.product[productId];
         debug.error("state.errors.product does not exist");
-        return {};
     }
 
     static productsError() {
@@ -22,7 +21,6 @@ export class Product {
         if (state && state.errors && state.errors.products)
             return state.errors.products;
         debug.error("state.errors.products does not exist");
-        return [];
     }
 
     static hasProductError(productId) {
