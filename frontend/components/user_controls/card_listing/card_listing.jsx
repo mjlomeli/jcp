@@ -14,7 +14,6 @@ import {fetchProduct, resetProductError} from "../../../actions/product_action";
 import {fetchImageByProductId} from "../../../actions/image_action";
 import {connect} from "react-redux";
 import {Product} from "../../../lib/product";
-import {Image} from "../../../lib/image";
 
 const defaultProductId = 1133353182;
 
@@ -129,16 +128,6 @@ class CardListing extends React.Component {
         this.onclickfavorite = this.onClickFavorite.bind(this);
     }
 
-    shouldComponentUpdate(nextProps, nextState, nextContext) {
-        let productId = findProductId(this.props);
-        if (Product.hasProductError(productId)) {
-            this.props.history.push(`/card_listing/${defaultProductId}`);
-            this.props.resetProductError(this.props.productId);
-            return false;
-        }
-        return true;
-    }
-
     resize(length=65) {
         let title = this.props.product.title;
         if (title.length > length)
@@ -205,12 +194,21 @@ class CardListing extends React.Component {
         </Link>
     }
 
+    shouldComponentUpdate(nextProps, nextState, nextContext) {
+        let productId = findProductId(this.props);
+        if (Product.hasProductError(productId)) {
+            this.props.history.push(`/card_listing/${defaultProductId}`);
+            this.props.resetProductError(this.props.productId);
+            return false;
+        }
+        return true;
+    }
+
     isRenderValid(){
         return !!this.props.product && !!this.props.image;
     }
 
     resolve(){
-        CardListing.LoopCounter += 1;
         if (!this.props.product)
             this.props.fetchProduct(this.props.productId)
         else if (!this.props.image)

@@ -14,6 +14,9 @@ export const RECEIVE_GROUP_IMAGES_ERROR = "RECEIVE_GROUP_IMAGES_ERROR";
 export const RECEIVE_SHOP_IMAGES_ERROR = "RECEIVE_SHOP_IMAGE_ERROR";
 export const RECEIVE_USER_IMAGES_ERROR = "RECEIVE_USER_IMAGE_ERROR";
 
+export const RESET_IMAGE_ERROR = "RESET_IMAGE_ERROR";
+export const RESET_IMAGES_ERROR = "RESET_IMAGES_ERROR";
+
 export const REMOVE_IMAGE = "REMOVE_IMAGE";
 
 const receiveImages = images => ({
@@ -131,7 +134,7 @@ export const fetchImageByGroupId = groupId => (dispatch) => {
 export const createImage = image => dispatch => (
     ImageUtil.createImage(image).then(
         image => dispatch(receiveImage(image)),
-        err => dispatch(receiveImageError(err.responseJSON))
+        err => dispatch(receiveImageError(image.id, err.responseJSON))
     )
 )
 
@@ -139,15 +142,24 @@ export const createImage = image => dispatch => (
 export const updateImage = image => dispatch => (
     ImageUtil.updateImage(image).then(
         image => dispatch(receiveImage(image)),
-        err => dispatch(receiveImageError(err.responseJSON))
+        err => dispatch(receiveImageError(image.id, err.responseJSON))
     )
 )
 
 export const deleteImage = imageId => dispatch => (
     ImageUtil.deleteImage(imageId).then(
         image => dispatch(removeImage(image.id)),
-        err => dispatch(receiveImageError(err.responseJSON))
+        err => dispatch(receiveImageError(imageId, err.responseJSON))
     )
+)
+
+
+export const resetImageError = imageId => dispatch =>(
+    dispatch({type: RESET_IMAGE_ERROR, imageId: imageId})
+)
+
+export const resetImagesError = () => dispatch =>(
+    dispatch({type: RESET_IMAGES_ERROR})
 )
 
 window.ImageAction = {
@@ -157,6 +169,8 @@ window.ImageAction = {
     fetchImageByUserId,
     fetchImageByProductId,
     fetchImageByGroupId,
+    resetImageError,
+    resetImagesError,
     createImage,
     updateImage,
     deleteImage

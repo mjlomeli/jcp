@@ -18,7 +18,7 @@ import DemoLogInFormContainer from './session_form/demo_form_container';
 
 
 // import HomePage from "./pages/home_page";
-import ProductsPage from "./pages/products_page";
+// import ProductsPage from "./pages/products_page";
 // import ProductPage from "./pages/product_page";
 // import CartPage from "./pages/cart_page";
 
@@ -33,11 +33,11 @@ import ProductsPage from "./pages/products_page";
 // import Rating from "./user_controls/rating/rating";
 // import CartItem from "./user_controls/cart_item/cart_item";
 // import CardFeatured from "./user_controls/card_featured/card_featured";
-import CardListing from "./user_controls/card_listing/card_listing";
+// import CardListing from "./user_controls/card_listing/card_listing";
 // import CardThumbnail from "./user_controls/card_thumbnail/card_thumbnail";
 // import CircularThumbnail from "./user_controls/circular_thumbnail/circular_thumbnail";
 // import ProductsList from "./user_controls/product_list/products_list";
-// import Gallery from "./user_controls/gallery/gallery";
+import Gallery from "./user_controls/gallery/gallery";
 // import SearchBar from "./user_controls/searchbar/searchbar";
 // import PaymentSelection from "./user_controls/payment_selection/payment_selection";
 
@@ -63,7 +63,7 @@ const App = () => (
             <AuthRoute exact path="/demo" component={DemoLogInFormContainer} />
 
             {/*<Route exact path="/home_page" component={HomePage} />*/}
-            <Route exact path="/products_page" component={ProductsPage} />
+            {/*<Route exact path="/products_page" component={ProductsPage} />*/}
             {/*<Route exact path="/product_page" component={ProductPage} />*/}
             {/*<ProtectedRoute exact path="/cart" component={CartPage} />*/}
 
@@ -74,20 +74,23 @@ const App = () => (
             {/*<Route exact path="/products_template" component={ProductsTemplate} />*/}
             {/*<ProtectedRoute exact path="/cart_template" component={CartTemplate} />*/}
 
-            {/*<Route exact path="/gallery" component={Gallery} />*/}
             {/*<Route exact path="/products_list" component={ProductsList} />*/}
             {/*<Route exact path="/payment_selection" component={PaymentSelection} />*/}
             {/*<Route exact path="/cart_item" component={CartItem} />*/}
-            {/*<Route exact path="/gallery/:id" component={Gallery} />*/}
+            <Route exact path="/gallery" component={Gallery} />
+            <Route exact path="/gallery/:id" component={Gallery} />
             {/*<Route exact path="/rating" component={Rating} />*/}
             {/*<Route exact path="/searchbar" component={SearchBar} />*/}
             {/*<Route exact path="/rating" component={Rating} />*/}
             {/*<ProtectedRoute exact path="/user/:id" component={ProfileContainer} />*/}
             {/*<Route exact path="/circular_thumbnail" component={CircularThumbnail} />*/}
+            {/*<Route exact path="/circular_thumbnail/:id" component={CircularThumbnail} />*/}
             {/*<Route exact path="/card_thumbnail" component={CardThumbnail} />*/}
-            <Route exact path="/card_listing/:id" component={CardListing} />
+            {/*<Route exact path="/card_thumbnail/:id" component={CardThumbnail} />*/}
+            {/*<Route exact path="/card_listing/:id" component={CardListing} />*/}
             {/*<Route exact path="/card_featured" component={CardFeatured} />*/}
-            <Route exact path="/card_listing" component={CardListing} />
+            {/*<Route exact path="/card_featured/:id" component={CardFeatured} />*/}
+            {/*<Route exact path="/card_listing" component={CardListing} />*/}
 
             {/*<Route exact path="/flow_layout" component={FlowLayout} />*/}
             {/*<Route exact path="/grid_layout/:id" component={GridLayout} />*/}

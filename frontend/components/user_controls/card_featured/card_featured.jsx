@@ -3,17 +3,52 @@ import React from 'react';
 import './card_featured.css'
 import GridLayout from "../grid_layout/grid_layout";
 import Rating from "../rating/rating";
+import {Product} from "../../../lib/product";
+import {fetchProduct, resetProductError} from "../../../actions/product_action";
+import {fetchImageByProductId} from "../../../actions/image_action";
 
-const mapStateToProps = ({entities, session, errors}) => ({
-    //errors: errors.session, // need to add a ui or user_control errors
-    nameId: "card_featured"
-});
+const defaultProductId = 1133353182;
+
+function findProductId(ownProps){
+    if (!ownProps) return null;
+    if (ownProps.productId)
+        return parseInt(ownProps.productId);
+    else if (ownProps.match && ownProps.match.params && ownProps.match.params.id)
+        return parseInt(ownProps.match.params.id);
+    return null;
+}
+
+function findImage(product){
+    if (!product) return null;
+    let images = product.imagesMedium();
+    if (!images || images.length === 0) return null;
+    let image = null;
+    images.forEach(img => { if (!!img) return image = img; })
+    return image;
+}
+
+const mapStateToProps = (state, ownProps) =>{
+    let productId = findProductId(ownProps);
+    let products = state.entities.products;
+    let product = Product.findById(productId);
+
+    let images = state.entities.groupImages;
+    let image = findImage(product);
+
+    return {
+        products: products,
+        productId: productId,
+        product: product,
+        images: images,
+        image: image
+    }
+};
 
 const mapDispatchToProps = dispatch => ({
-    afunction: () => {
-    }
+    fetchProduct: (productId) => dispatch(fetchProduct(productId)),
+    fetchImageByProductId: (productId) => dispatch(fetchImageByProductId(productId)),
+    resetProductError: productId => dispatch(resetProductError(productId))
 });
-
 
 class Price extends React.Component {
     constructor(props) {
@@ -81,33 +116,9 @@ class Additional extends React.Component {
 }
 
 
-let defaultFeatured = {
-    store: "ClarkandTaft",
-    rating: 3.6,
-    ratingCount: 2,
-    title: "Personalized Name Puzzle With Pegs, Personalized Name Puzzle With Pegs, New Baby Gift",
-    imageUrl: "https://i.etsystatic.com/17305851/c/1801/1432/177/346/il/4ad87f/3411776815/il_340x270.3411776815_s6oc.jpg",
-    discount: 0.5,
-    price: 54.99,
-    freeShipping: true
-}
-
 class CardFeatured extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {
-            title: props.title,
-            imageUrl: props.imageUrl,
-            store: props.store,
-            rating: props.rating || 0,
-            ratingCount: props.ratingCount || 0,
-            discount: props.discount || 0,
-            price: props.price || 0,
-            freeShipping: props.freeShipping || false
-        }
-
-        if (typeof this.state.title === "undefined")
-            this.state = {...defaultFeatured};
 
         this.favoriteFill = React.createRef();
         this.onclickfavorite = this.onClickFavorite.bind(this);
@@ -136,22 +147,49 @@ class CardFeatured extends React.Component {
     }
 
     onClick(e) {
-        e.preventDefault();
-        // TODO: send to product_template page
+        // TODO: send to product page
+        this.props.history.push(`/product/${this.props.productId}`);
+    }
+
+    shouldComponentUpdate(nextProps, nextState, nextContext) {
+        let productId = findProductId(this.props);
+        if (Product.hasProductError(productId)) {
+            this.props.history.push(`/card_featured/${defaultProductId}`);
+            this.props.resetProductError(this.props.productId);
+            return false;
+        }
+        return true;
+    }
+
+    isRenderValid(){
+        return !!this.props.product && !!this.props.image;
+    }
+
+    resolve(){
+        if (!this.props.product)
+            this.props.fetchProduct(this.props.productId)
+        else if (!this.props.image)
+            this.props.fetchImageByProductId(this.props.productId)
+        return null;
     }
 
     render() {
+        if (!this.isRenderValid())
+            return this.resolve();
+
+        let product = this.props.product;
+        let image = this.props.image;
         let infoAreas = ['rating', 'title', 'price', 'button']
         let infoComponents = {
             'rating': <>
-                <label className="card-featured-store">{this.state.store}</label>
-                <Rating rating={this.state.rating} count={this.state.ratingCount}
+                <label className="card-featured-store">{product.shop_id}</label>
+                <Rating rating={Math.random() * 5} count={Math.floor(Math.random() * 100)}
                         disabled={true} classCount="card-featured-rating-count"/>
                 </>,
-            'title': <label className="card-featured-title">{this.resize(this.state.title)}</label>,
+            'title': <label className="card-featured-title">{this.resize(product.title)}</label>,
             'price': <div className="card-featured-grouped-price">
-                <Price price={this.state.price} discount={this.state.discount}/>
-                <Additional freeShipping={this.state.freeShipping}/></div>,
+                <Price price={product.price} discount={Math.random() / 2}/>
+                <Additional freeShipping={"free shipping"}/></div>,
             'button': <button className="card-featured-submit">
                 <label className="card-featured-submit-label">Shop this item</label>
                 </button>
@@ -161,7 +199,7 @@ class CardFeatured extends React.Component {
         let components = {
             'image': <div className="card-featured-image-div">
                 {this.favoriteComponent()}
-                <img className="card-featured-image" alt="img" aria-hidden="true" src={this.state.imageUrl} />
+                <img className="card-featured-image" alt="img" aria-hidden="true" src={image.source()} />
             </div>,
             'info': <GridLayout areas={infoAreas}
                                 components={infoComponents}

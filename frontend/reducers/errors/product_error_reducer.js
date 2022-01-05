@@ -32,9 +32,8 @@ export const errorProducts =  (prevState = [], action) => {
         case RECEIVE_PRODUCTS_ERROR:
             return action.errors;
         case RECEIVE_PRODUCTS:
-            return []; // if product is valid, then errors are empty
         case RESET_PRODUCTS_ERROR:
-            return [];
+            return []; // if product is valid, then errors are empty
         default:
             return prevState;
     }

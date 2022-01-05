@@ -3,20 +3,58 @@ import {
     Redirect,
     Switch,
     Link,
-    HashRouter
+    HashRouter,
+    useHistory
 } from 'react-router-dom';
 import {connect} from 'react-redux';
 import React from 'react';
 import './card_thumbnail.css'
+import {fetchProduct, resetProductError} from "../../../actions/product_action";
+import {fetchImageByProductId} from "../../../actions/image_action";
+import {Product} from "../../../lib/product";
+import {Image} from "../../../lib/image";
 
-const mapStateToProps = ({entities, session, errors}) => ({
-    //errors: errors.session, // need to add a ui or user_control errors
-    nameId: "card_listing"
-});
+let defaultProductId = 1133353182;
+
+function findProductId(ownProps){
+    if (!ownProps) return null;
+    if (ownProps.productId)
+        return parseInt(ownProps.productId);
+    else if (ownProps.match && ownProps.match.params && ownProps.match.params.id)
+        return parseInt(ownProps.match.params.id);
+    return null;
+}
+
+function findImage(product){
+    if (!product) return null;
+    let images = product.imagesSmall();
+    if (!images || images.length === 0) return null;
+    let image = null;
+    images.forEach(img => { if (!!img) return image = img; })
+    return image;
+}
+
+const mapStateToProps = (state, ownProps) => {
+    let productId = findProductId(ownProps);
+    let products = state.entities.products;
+    let product = Product.findById(productId);
+
+    let images = state.entities.groupImages;
+    let image = findImage(product);
+
+    return {
+        products: products,
+        productId: productId,
+        product: product,
+        images: images,
+        image: image
+    }
+};
 
 const mapDispatchToProps = dispatch => ({
-    afunction: () => {
-    }
+    fetchProduct: (productId) => dispatch(fetchProduct(productId)),
+    fetchImageByProductId: (productId) => dispatch(fetchImageByProductId(productId)),
+    resetProductError: productId => dispatch(resetProductError(productId))
 });
 
 class Price extends React.Component {
@@ -50,29 +88,9 @@ class Price extends React.Component {
     }
 }
 
-let defaultCard = {
-    title: "Personalized Name Puzzle With Pegs, Personalized Name Puzzle With Pegs, New Baby Gift",
-    imageUrl: "https://i.etsystatic.com/17305851/c/1801/1432/177/346/il/4ad87f/3411776815/il_340x270.3411776815_s6oc.jpg",
-    price: 33.99,
-    freeShipping: true,
-    discount: 0,
-    link: "/product_template"
-}
-
 class CardThumbnail extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {
-            title: props.title,
-            imageUrl: props.imageUrl,
-            price: props.price || 0,
-            freeShipping: props.freeShipping || false,
-            discount: props.discount || 0,
-            link: props.link
-        }
-
-        if (typeof this.state.title === "undefined")
-            this.state = {...defaultCard};
 
         this.favoriteFill = React.createRef();
         this.onclickfavorite = this.onClickFavorite.bind(this);
@@ -82,6 +100,11 @@ class CardThumbnail extends React.Component {
     onClickFavorite(e) {
         //TODO: save product id to favorites
         this.favoriteFill.current.classList.toggle("card-thumbnail-favored");
+    }
+
+    onClick(e){
+        // TODO: send to product page
+        this.props.history.push(`/product/${this.props.productId}`);
     }
 
     favoriteComponent() {
@@ -95,17 +118,40 @@ class CardThumbnail extends React.Component {
         </div>
     }
 
-    onClick(e) {
-        // TODO: send to product_template page
+    isRenderValid(){
+        return !!this.props.product && !!this.props.image;
+    }
+
+    shouldComponentUpdate(nextProps, nextState, nextContext) {
+        let productId = findProductId(this.props);
+        if (Product.hasProductError(productId)) {
+            this.props.history.push(`/card_thumbnail/${defaultProductId}`);
+            this.props.resetProductError(this.props.productId);
+            return false;
+        }
+        return true;
+    }
+
+    resolve(){
+        if (!this.props.product)
+            this.props.fetchProduct(this.props.productId)
+        else if (!this.props.image)
+            this.props.fetchImageByProductId(this.props.productId)
+        return null;
     }
 
     render() {
+        if (!this.isRenderValid())
+            return this.resolve();
+
+        let price = this.props.product.price;
+        let source = this.props.image.source();
         return <div className="card-thumbnail">
             {this.favoriteComponent()}
-            <Link to={this.state.link} style={{textDecoration: "inherit", color: "inherit"}}>
+            <Link to={`/product/${this.props.product.id}`} style={{textDecoration: "inherit", color: "inherit"}}>
                 <img className="card-thumbnail-image"
-                     alt="img" aria-hidden="true" src={this.state.imageUrl}/>
-                <Price price={this.state.price} freeShipping={this.state.freeShipping}/>
+                     alt="img" aria-hidden="true" src={source}/>
+                <Price price={price} freeShipping={"free shipping"}/>
             </Link>
         </div>
     }

@@ -8,13 +8,54 @@ import {
 import {connect} from 'react-redux';
 import React from 'react';
 import GridLayout from "../grid_layout/grid_layout";
+import {Product} from "../../../lib/product";
+import {fetchProduct, resetProductError} from "../../../actions/product_action";
+import {fetchImageByProductId} from "../../../actions/image_action";
 
 
-let defaultThumbnail = {
-    title: "Baby Puzzles",
-    link: "/products",
-    imageUrl: "https://i.etsystatic.com/17305851/c/1801/1432/177/346/il/4ad87f/3411776815/il_340x270.3411776815_s6oc.jpg",
+const defaultProductId = 1133353182;
+
+function findProductId(ownProps){
+    if (!ownProps) return null;
+    if (ownProps.productId)
+        return parseInt(ownProps.productId);
+    else if (ownProps.match && ownProps.match.params && ownProps.match.params.id)
+        return parseInt(ownProps.match.params.id);
+    return null;
 }
+
+function findImage(product){
+    if (!product) return null;
+    let images = product.imagesMedium();
+    if (!images || images.length === 0) return null;
+    let image = null;
+    images.forEach(img => { if (!!img) return image = img; })
+    return image;
+}
+
+const mapStateToProps = (state, ownProps) =>{
+    let productId = findProductId(ownProps);
+    let products = state.entities.products;
+    let product = Product.findById(productId);
+
+    let images = state.entities.groupImages;
+    let image = findImage(product);
+
+    return {
+        products: products,
+        productId: productId,
+        product: product,
+        images: images,
+        image: image
+    }
+};
+
+const mapDispatchToProps = dispatch => ({
+    fetchProduct: (productId) => dispatch(fetchProduct(productId)),
+    fetchImageByProductId: (productId) => dispatch(fetchImageByProductId(productId)),
+    resetProductError: productId => dispatch(resetProductError(productId))
+});
+
 
 const defaultTitleStyle = {
     position: "relative",
@@ -127,20 +168,43 @@ class CircularThumbnail extends React.Component {
         return title;
     }
 
+    shouldComponentUpdate(nextProps, nextState, nextContext) {
+        let productId = findProductId(this.props);
+        if (Product.hasProductError(productId)) {
+            this.props.history.push(`/circular_thumbnail/${defaultProductId}`);
+            this.props.resetProductError(this.props.productId);
+            return false;
+        }
+        return true;
+    }
+
+    isRenderValid(){
+        return !!this.props.product && !!this.props.image;
+    }
+
+    resolve(){
+        if (!this.props.product)
+            this.props.fetchProduct(this.props.productId)
+        else if (!this.props.image)
+            this.props.fetchImageByProductId(this.props.productId)
+        return null;
+    }
+
     render() {
-        let image = this.usingDefaultData ? defaultThumbnail.imageUrl : this.props.image;
-        let link = this.usingDefaultData ? defaultThumbnail.link : this.props.link;
-        let title = this.usingDefaultData ? defaultThumbnail.title : this.props.title;
+        if (!this.isRenderValid())
+            return this.resolve();
+        let product = this.props.product;
+        let image = this.props.image;
 
         let areas = ['image', 'image', 'image', 'image', 'title']
         let components = {
             'image': <div className={this.classImage} style={this.#imageStyle} ref={this.image}>
-                <img alt="img" src={image}
+                <img alt="img" src={image.source()}
                      style={{borderRadius: "50%", width: "100%", height: "100%", objectFit: "cover"}}/>
             </div>,
-            'title': <label className={this.classTitle} ref={this.title} style={this.#titleStyle}>{this.resize(title)}</label>
+            'title': <label className={this.classTitle} ref={this.title} style={this.#titleStyle}>{this.resize(product.title)}</label>
         }
-        return <Link to={link} onMouseEnter={this.onmouseenter} onMouseLeave={this.onmouseleave} style={{textDecoration: "inherit", color: "inherit"}}>
+        return <Link to={`/product/${product.id}`} onMouseEnter={this.onmouseenter} onMouseLeave={this.onmouseleave} style={{textDecoration: "inherit", color: "inherit"}}>
             <GridLayout
                 className={this.className}
                 classElements={this.classElements}
@@ -150,4 +214,4 @@ class CircularThumbnail extends React.Component {
     }
 }
 
-export default CircularThumbnail
+export default connect(mapStateToProps, mapDispatchToProps)(CircularThumbnail);
