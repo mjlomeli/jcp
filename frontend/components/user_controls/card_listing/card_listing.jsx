@@ -10,7 +10,7 @@ import React from 'react';
 import './card_listing.css'
 import GridLayout from "../grid_layout/grid_layout";
 import Rating from "../rating/rating";
-import {fetchProduct, fetchRandomProducts, resetProductError} from "../../../actions/product_action";
+import {fetchProduct, resetProductError} from "../../../actions/product_action";
 import {fetchImageByProductId} from "../../../actions/image_action";
 import {connect} from "react-redux";
 import {Product} from "../../../lib/product";
@@ -107,18 +107,17 @@ function findImage(product){
 const mapStateToProps = (state, ownProps) =>{
     let productId = findProductId(ownProps);
     let products = state.entities.products;
+    let product = Product.findById(productId);
+
     let images = state.entities.groupImages;
-    let errors = Product.productError(productId);
-    let product = !!errors ? defaultProduct : Product.findById(productId);
-    let image = !!errors ? defaultImage : findImage(product);
+    let image = findImage(product);
 
     return {
         products: products,
         productId: productId,
         product: product,
         images: images,
-        image: image,
-        errors: errors
+        image: image
     }
 };
 
@@ -196,10 +195,6 @@ class CardListing extends React.Component {
         super(props);
         this.favoriteFill = React.createRef();
         this.onclickfavorite = this.onClickFavorite.bind(this);
-    }
-
-    componentDidMount() {
-
     }
 
     shouldComponentUpdate(nextProps, nextState, nextContext) {
