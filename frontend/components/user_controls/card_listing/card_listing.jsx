@@ -16,75 +16,7 @@ import {connect} from "react-redux";
 import {Product} from "../../../lib/product";
 import {Image} from "../../../lib/image";
 
-const defaultProduct = new Product({
-    id: 1133353182,
-    title: "Spacey",
-    price: 58,
-    quantity: 2,
-    description: "This glossy 24”x36” poster is a print of my original painting. Any solar system loving kid (or kid at heart) would love this addition to their room.",
-    user_id: "581950580.0",
-    shop_id: "33496843.0",
-    image_ids: ["3600224003.0", "3552590640.0"],
-    icon_ids: [],
-    category_id: null,
-    creation_tsz: "1640324634.0",
-    ending_tsz: "1650775434.0",
-    original_creation_tsz: "1640324634.0",
-    last_modified_tsz: "1640328623.0",
-    state_tsz: "1640324634.0",
-    state: "active",
-    categories: [],
-    currency_code: "USD",
-    sku: [],
-    tags: ["classroom", "galaxy", "Milky Way", "solar system", "Art Print", "Poster", "Girls Decor", "Boys decor"],
-    materials: ["art print", "high quality color", "museum quality print", "poster", "acrylic"],
-    shop_section_id: null,
-    featured_rank: null,
-    url: "https://www.etsy.com/listing/1133353182/spacey?utm_source=educationalclone&utm_medium=api&utm_campaign=api",
-    views: 2,
-    num_favorers: 0,
-    shipping_template_id: "164148130142",
-    processing_min: 3,
-    processing_max: 5,
-    who_made: "i_did",
-    is_supply: false,
-    when_made: "2020_2021",
-    item_weight: 10,
-    item_weight_unit: "oz",
-    item_length: 22,
-    item_width: 3,
-    item_height: 3,
-    item_dimensions_unit: 0,
-    is_private: false,
-    style: null,
-    non_taxable: false,
-    is_customizable: false,
-    is_digital: false,
-    file_data: "",
-    should_auto_renew: true,
-    language: "en-US",
-    has_variations: false,
-    taxonomy_id: "106.0",
-    taxonomy_path: ["Art & Collectibles", "Painting", "Acrylic"],
-    used_manufacturer: false,
-    is_vintage: false,
-    results_per_page: 100,
-    page_number: 1
-})
-const defaultImage = new Image({
-    id: 4,
-    data: null,
-    mimetype: "image/jpeg",
-    size: 6446,
-    url: "https://i.etsystatic.com/33496843/r/il/d064bb/3600224003/il_170x135.3600224003_7i4l.jpg",
-    encoding: "base64",
-    name: null,
-    group_name: "product",
-    group_id: "3600224003.0",
-    dimension: "image_medium",
-    created_at: "2022-01-02T04:51:57.136Z",
-    updated_at: "2022-01-02T04:51:57.136Z"
-})
+const defaultProductId = 1133353182;
 
 function findProductId(ownProps){
     if (!ownProps) return null;
@@ -200,7 +132,7 @@ class CardListing extends React.Component {
     shouldComponentUpdate(nextProps, nextState, nextContext) {
         let productId = findProductId(this.props);
         if (Product.hasProductError(productId)) {
-            this.props.history.push(`/card_listing/${defaultProduct.id}`);
+            this.props.history.push(`/card_listing/${defaultProductId}`);
             this.props.resetProductError(this.props.productId);
             return false;
         }
