@@ -152,7 +152,10 @@ export const fetchImageByGroupId = groupId => (dispatch) => {
 
 export const createImage = image => dispatch => (
     ImageUtil.createImage(image).then(
-        image => dispatch(receiveImage(image)),
+        image => {
+            dispatch(AlertAction.success("Your image has been uploaded."));
+            dispatch(receiveImage(image))
+        },
         err => {
             dispatch(AlertAction.systemError(err.responseJSON));
             return dispatch(receiveImageError(image.id, err.responseJSON))
@@ -163,7 +166,10 @@ export const createImage = image => dispatch => (
 
 export const updateImage = image => dispatch => (
     ImageUtil.updateImage(image).then(
-        image => dispatch(receiveImage(image)),
+        image => {
+            dispatch(AlertAction.success("Your image has been updated."));
+            dispatch(receiveImage(image))
+        },
         err => {
             dispatch(AlertAction.systemError(err.responseJSON));
             return dispatch(receiveImageError(image.id, err.responseJSON))
@@ -173,7 +179,10 @@ export const updateImage = image => dispatch => (
 
 export const deleteImage = imageId => dispatch => (
     ImageUtil.deleteImage(imageId).then(
-        image => dispatch(removeImage(image.id)),
+        image => {
+            dispatch(AlertAction.notification("Your image has been deleted."));
+            dispatch(removeImage(image.id))
+        },
         err => {
             dispatch(AlertAction.systemError(err.responseJSON));
             return dispatch(receiveImageError(imageId, err.responseJSON))

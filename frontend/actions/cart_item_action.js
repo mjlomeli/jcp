@@ -53,7 +53,10 @@ export const fetchCartItems = (user_id) => dispatch => (
 
 export const createCartItem = cartItem => dispatch =>(
     CartItemUtil.createCartItem(cartItem).then(
-        cartItem => dispatch(receiveCartItem(cartItem)),
+        cartItem => {
+            dispatch(AlertAction.success("Its been placed into your cart."));
+            dispatch(receiveCartItem(cartItem))
+        },
         err => {
             dispatch(AlertAction.systemError(err.responseJSON));
             return dispatch(receiveCartItemError(cartItem.id, err.responseJSON))
@@ -73,7 +76,10 @@ export const updateCartItem = cartItem => dispatch =>(
 
 export const deleteCartItem = cartItemId => dispatch =>(
     CartItemUtil.deleteCartItem(cartItemId).then(
-        cartItem => dispatch(removeCartItem(cartItem.id)),
+        cartItem => {
+            dispatch(AlertAction.caution("The item has been removed from your cart."));
+            dispatch(removeCartItem(cartItem.id))
+        },
         err => {
             dispatch(AlertAction.systemError(err.responseJSON));
             return dispatch(receiveCartItemError(cartItemId, err.responseJSON))

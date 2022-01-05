@@ -98,7 +98,10 @@ export const fetchProduct = productId => (dispatch) => {
 
 export const createProduct = product => dispatch =>(
     ProductUtil.createProduct(product).then(
-        product => dispatch(receiveProduct(product)),
+        product => {
+            dispatch(AlertAction.success("Your product has been created!"));
+            dispatch(receiveProduct(product))
+        },
         err => {
             dispatch(AlertAction.systemError(err.responseJSON));
             return dispatch(receiveProductError(product.id, err.responseJSON))
@@ -108,7 +111,10 @@ export const createProduct = product => dispatch =>(
 
 export const updateProduct = product => dispatch =>(
     ProductUtil.updateProduct(product).then(
-        product => dispatch(receiveProduct(product)),
+        product => {
+            dispatch(AlertAction.success("Changes have been saved."));
+            dispatch(receiveProduct(product))
+        },
         err => {
             dispatch(AlertAction.systemError(err.responseJSON));
             return dispatch(receiveProductError(product.id, err.responseJSON))
@@ -118,7 +124,10 @@ export const updateProduct = product => dispatch =>(
 
 export const deleteProduct = productId => dispatch =>(
     ProductUtil.deleteProduct(productId).then(
-        product => dispatch(removeProduct(product.id)),
+        product => {
+            dispatch(AlertAction.caution("The item has been deleted."));
+            dispatch(removeProduct(product.id))
+        },
         err => {
             dispatch(AlertAction.systemError(err.responseJSON));
             return dispatch(receiveProductError(productId, err.responseJSON))

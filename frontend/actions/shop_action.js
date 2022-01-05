@@ -62,7 +62,10 @@ export const fetchShop = shopId => (dispatch) => {
 
 export const createShop = shop => dispatch =>(
     ShopUtil.createShop(shop).then(
-        shop => dispatch(receiveShop(shop)),
+        shop => {
+            dispatch(AlertAction.success("Your Shop is now public!"));
+            dispatch(receiveShop(shop))
+        },
         err => {
             dispatch(AlertAction.systemError(err.responseJSON));
             return dispatch(receiveShopError(shop.id, err.responseJSON))
@@ -72,7 +75,10 @@ export const createShop = shop => dispatch =>(
 
 export const updateShop = shop => dispatch =>(
     ShopUtil.updateShop(shop).then(
-        shop => dispatch(receiveShop(shop)),
+        shop => {
+            dispatch(AlertAction.success("Changes has been saved."));
+            dispatch(receiveShop(shop))
+        },
         err => {
             dispatch(AlertAction.systemError(err.responseJSON));
             return dispatch(receiveShopError(shop.id, err.responseJSON))
@@ -82,7 +88,10 @@ export const updateShop = shop => dispatch =>(
 
 export const deleteShop = shopId => dispatch =>(
     ShopUtil.deleteShop(shopId).then(
-        shop => dispatch(removeShop(shop.id)),
+        shop => {
+            dispatch(AlertAction.caution("Sorry to see you go! Your shop is deleted."));
+            dispatch(removeShop(shop.id))
+        },
         err => {
             dispatch(AlertAction.systemError(err.responseJSON));
             return dispatch(receiveShopError(shopId, err.responseJSON))

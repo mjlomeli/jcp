@@ -76,7 +76,10 @@ export const fetchReview = (productId, reviewId) => (dispatch) => {
 
 export const createReview = (productId, review) => dispatch =>(
     ReviewUtil.createReview(productId, review).then(
-        review => dispatch(receiveReview(review)),
+        review => {
+            dispatch(AlertAction.caution("Your review has been created."));
+            dispatch(receiveReview(review))
+        },
         err => {
             dispatch(AlertAction.systemError(err.responseJSON));
             return dispatch(receiveReviewError(review.id, err.responseJSON))
@@ -86,7 +89,10 @@ export const createReview = (productId, review) => dispatch =>(
 
 export const updateReview = (productId, review) => dispatch =>(
     ReviewUtil.updateReview(productId, review).then(
-        review => dispatch(receiveReview(review)),
+        review => {
+            dispatch(AlertAction.success("Your review has been saved."));
+            dispatch(receiveReview(review))
+        },
         err => {
             dispatch(AlertAction.systemError(err.responseJSON));
             return dispatch(receiveReviewError(review.id, err.responseJSON))
@@ -96,7 +102,10 @@ export const updateReview = (productId, review) => dispatch =>(
 
 export const deleteReview = (productId, reviewId) => dispatch =>(
     ReviewUtil.deleteReview(productId, reviewId).then(
-        review => dispatch(removeReview(review.id)),
+        review => {
+            dispatch(AlertAction.notification("Your review has been deleted."));
+            dispatch(removeReview(review.id))
+        },
         err => {
             dispatch(AlertAction.systemError(err.responseJSON));
             return dispatch(receiveReviewError(reviewId, err.responseJSON))
