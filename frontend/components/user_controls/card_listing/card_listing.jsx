@@ -9,6 +9,125 @@ import React from 'react';
 import './card_listing.css'
 import GridLayout from "../grid_layout/grid_layout";
 import Rating from "../rating/rating";
+import {debug} from '../../../utils/tools'
+import {fetchProduct, fetchRandomProducts} from "../../../actions/product_action";
+import {fetchImage, fetchImageByProductId} from "../../../actions/image_action";
+import {connect} from "react-redux";
+import {Product} from "../../../lib/product";
+import {Image} from "../../../lib/image";
+
+const defaultProduct = new Product({
+    id: 1133353182,
+    title: "Spacey",
+    price: 58,
+    quantity: 2,
+    description: "This glossy 24”x36” poster is a print of my original painting. Any solar system loving kid (or kid at heart) would love this addition to their room.",
+    user_id: "581950580.0",
+    shop_id: "33496843.0",
+    image_ids: ["3600224003.0", "3552590640.0"],
+    icon_ids: [],
+    category_id: null,
+    creation_tsz: "1640324634.0",
+    ending_tsz: "1650775434.0",
+    original_creation_tsz: "1640324634.0",
+    last_modified_tsz: "1640328623.0",
+    state_tsz: "1640324634.0",
+    state: "active",
+    categories: [],
+    currency_code: "USD",
+    sku: [],
+    tags: ["classroom", "galaxy", "Milky Way", "solar system", "Art Print", "Poster", "Girls Decor", "Boys decor"],
+    materials: ["art print", "high quality color", "museum quality print", "poster", "acrylic"],
+    shop_section_id: null,
+    featured_rank: null,
+    url: "https://www.etsy.com/listing/1133353182/spacey?utm_source=educationalclone&utm_medium=api&utm_campaign=api",
+    views: 2,
+    num_favorers: 0,
+    shipping_template_id: "164148130142",
+    processing_min: 3,
+    processing_max: 5,
+    who_made: "i_did",
+    is_supply: false,
+    when_made: "2020_2021",
+    item_weight: 10,
+    item_weight_unit: "oz",
+    item_length: 22,
+    item_width: 3,
+    item_height: 3,
+    item_dimensions_unit: 0,
+    is_private: false,
+    style: null,
+    non_taxable: false,
+    is_customizable: false,
+    is_digital: false,
+    file_data: "",
+    should_auto_renew: true,
+    language: "en-US",
+    has_variations: false,
+    taxonomy_id: "106.0",
+    taxonomy_path: ["Art & Collectibles", "Painting", "Acrylic"],
+    used_manufacturer: false,
+    is_vintage: false,
+    results_per_page: 100,
+    page_number: 1
+})
+const defaultImage = new Image({
+    id: 4,
+    data: null,
+    mimetype: "image/jpeg",
+    size: 6446,
+    url: "https://i.etsystatic.com/33496843/r/il/d064bb/3600224003/il_170x135.3600224003_7i4l.jpg",
+    encoding: "base64",
+    name: null,
+    group_name: "product",
+    group_id: "3600224003.0",
+    dimension: "image_medium",
+    created_at: "2022-01-02T04:51:57.136Z",
+    updated_at: "2022-01-02T04:51:57.136Z"
+})
+
+function findProductId(ownProps){
+    if (!ownProps)
+        return null;
+    if (ownProps.productId)
+        return parseInt(ownProps.productId);
+    else if (ownProps.match && ownProps.match.params && ownProps.match.params.id)
+        return parseInt(ownProps.match.params.id);
+    return null;
+}
+function findImage(productId){
+    let product = Product.findById(productId);
+    if (!product)
+        return null;
+    let images = product.imagesMedium();
+    if (!images || images.length === 0)
+        return null;
+    let image = null;
+    images.forEach(img => {
+        if (!!img)
+            return image = img;
+    })
+    return image;
+}
+
+const mapStateToProps = (state, ownProps) =>{
+    //let errors = Product.errors();
+    let productId = findProductId(ownProps);
+    let product = Product.findById(productId)
+    let image = findImage(productId)
+    return {
+        //errors: errors,
+        productId: productId,
+        product: product,
+        image: image
+    }
+};
+
+const mapDispatchToProps = dispatch => ({
+    fetchProduct: (productId) => dispatch(fetchProduct(productId)),
+    fetchImageByProductId: (productId) => dispatch(fetchImageByProductId(productId))
+});
+
 
 class Price extends React.Component {
     constructor(props) {
@@ -72,19 +191,6 @@ class Tags extends React.Component {
     }
 }
 
-let defaultListing = {
-    id: 1,
-    title: "Personalized Name Puzzle With Pegs, Personalized Name Puzzle With Pegs, New Baby Gift",
-    imageUrl: "https://i.etsystatic.com/17305851/c/1801/1432/177/346/il/4ad87f/3411776815/il_340x270.3411776815_s6oc.jpg",
-    rating: 4.6,
-    ratingCount: 1399,
-    store: "Plexida",
-    price: 25.99,
-    discount: 0.2,
-    label: ['free shipping'],
-    link: "/product_template"
-}
-
 class CardListing extends React.Component {
     constructor(props) {
         super(props);
@@ -92,7 +198,19 @@ class CardListing extends React.Component {
         this.onclickfavorite = this.onClickFavorite.bind(this);
     }
 
-    resize(title, length=70) {
+    componentDidMount() {
+        if (!this.props.product && this.props.productId){
+            this.props.fetchProduct(this.props.productId)
+            console.log(`fetching product: ${this.props.productId}`)
+        }
+        if (!this.props.image && this.props.productId){
+            this.props.fetchImageByProductId(this.props.productId)
+            console.log(`fetching image: ${this.props.productId}`)
+        }
+    }
+
+    resize(length=65) {
+        let title = this.props.product.title;
         if (title.length > length)
             return `${title.slice(0, length-3)}...`
         return title;
@@ -112,54 +230,61 @@ class CardListing extends React.Component {
         </div>
     }
 
-    imageComponent(productId, imageUrl){
+    imageComponent(){
+        let productId = parseInt(this.props.product.id);
+        let image = this.props.image;
         return <div>
             <div className="card-listing-image-div">
                 {this.favoriteComponent()}
                 <Link to={`/product/${productId}`} style={{textDecoration: 'none'}}>
-                    <img className="card-listing-image" alt="img" aria-hidden="true" src={imageUrl}/>
+                    <img className="card-listing-image" alt="img" aria-hidden="true" src={image.source()}/>
                 </Link>
             </div>
         </div>
     }
 
-    titleComponent(productId, title){
+    titleComponent(){
+        let productId = parseInt(this.props.product.id);
+        let title = this.props.product.title;
         return <Link to={`/product/${productId}`} style={{textDecoration: 'none'}}>
             <label className="card-listing-title">{this.resize(title, this.props.length || 70)}</label>
         </Link>
     }
 
-    ratingComponent(productId, rating, count){
+    ratingComponent(rating=Math.random() * 5, count=Math.floor(Math.random() * 100)){
+        let productId = parseInt(this.props.product.id);
         return <Link to={`/product/${productId}`} style={{textDecoration: 'none'}}>
             <Rating rating={rating} count={count} disabled={true}/>
         </Link>
     }
 
-    priceComponent(productId, price, discount){
+    priceComponent(discount=Math.random() / 2){
+        let productId = parseInt(this.props.product.id);
+        let price = this.props.product.price;
         return <Link to={`/product/${productId}`} style={{textDecoration: 'none'}}>
             <Price price={price} discount={discount}/>
         </Link>
     }
 
-    tagComponent(productId, tag, tags){
-        if (!tag || !tags)
+    tagComponent(tag="free shipping", tags=[]){
+        if (!tag && !tags.length)
             return null;
+        let productId = parseInt(this.props.product.id);
         return <Link to={`/product/${productId}`} style={{textDecoration: 'none'}}>
             <Tags tag={tag} tags={tags} />
         </Link>
     }
 
     render() {
-        let { id, image_urls, imageUrl, price, rating, ratingCount, discount, title } = this.props.listing || defaultListing;
-        imageUrl = (image_urls && image_urls[0]) || imageUrl
-
+        if (!this.props.product || !this.props.image)
+            return null;
         let areas = ['image', 'title', 'rating', 'price', 'tag']
         let components = {
-            'image': this.imageComponent(id, imageUrl),
-            'title': this.titleComponent(id, title),
-            'rating': this.ratingComponent(id, rating, ratingCount),
-            'price': this.priceComponent(id, price, discount),
-            'tag': this.tagComponent(id, "free shipping")
+            'image': this.imageComponent(),
+            'title': this.titleComponent(),
+            'rating': this.ratingComponent(),
+            'price': this.priceComponent(),
+            'tag': this.tagComponent("free shipping")
         }
 
         return <GridLayout areas={areas}
@@ -169,4 +294,5 @@ class CardListing extends React.Component {
     }
 }
 
-export default CardListing
+
+export default connect(mapStateToProps, mapDispatchToProps)(CardListing);

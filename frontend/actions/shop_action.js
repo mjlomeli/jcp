@@ -4,7 +4,9 @@ import {
     fetchProduct,
     fetchProducts,
     fetchProductsRange,
-    fetchRandomProductsRange, updateProduct
+    fetchRandomProducts,
+    fetchRandomProductsRange,
+    updateProduct
 } from "./product_action";
 
 export const RECEIVE_SHOPS = "RECEIVE_SHOPS";

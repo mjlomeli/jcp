@@ -173,12 +173,10 @@
 }
 
 .background-footer {
+    width: 100%;
     position: absolute;
     margin-top: -2em;
     left: 0;
-    width: 100%;
-    background-repeat:no-repeat;
-    background-size: cover;
     z-index: -10;
-    object-fit: fill;
+    object-fit: scale-down;
 }

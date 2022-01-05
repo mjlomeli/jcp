@@ -28,19 +28,20 @@ class Api::ProductsController < ApplicationController
     else
       if !@query.empty?
         begin
-        @product = Product.where(**@query)
-        render json: @product
+          @products = Product.where(**@query)
+          render json: @products
         rescue => e
           render json: ["Could not use product indexing with given params: #{@query}"], status: 400
         end
       else
-        render json: ["Could not use product indexing with given params: #{@query}"], status: 400
+        @products = Product.all
+        render json: @products
       end
     end
   end
 
   def show
-    @product = product_from_params
+    @product = product_from_params(query_params)
     if @product
       render json: @product
     else
@@ -59,7 +60,7 @@ class Api::ProductsController < ApplicationController
 
   def update
     #TODO: Test using web html
-    @product = product_from_params
+    @product = product_from_params(query_params)
     if @product && @product.update_attributes(product_params)
       render :show
     elsif !@product
@@ -70,7 +71,7 @@ class Api::ProductsController < ApplicationController
   end
 
   def destroy
-    @product = product_from_params
+    @product = product_from_params(query_params)
     if @product && @product.destroy
       render :show
     elsif !@product

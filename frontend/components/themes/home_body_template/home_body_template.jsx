@@ -22,7 +22,6 @@ class HomeBodyTemplate extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            message: this.props.header || "Enjoy Cyber Week deals on small business cheer!",
             layout: props.layout
         }
     }

@@ -19,6 +19,22 @@ export const fetchImages = ({id, ids, image_id, image_ids, product_id,
     });
 };
 
+export const fetchImageByProductId = (productId) => {
+    return fetchImages({product_id: productId});
+}
+
+export const fetchImageByShopId = (shopId) => {
+    return fetchImages({shop_id: shopId});
+}
+
+export const fetchImageByUserId = (userId) => {
+    return fetchImages({user_id: userId});
+}
+
+export const fetchImageByGroupId = (groupId) => {
+    return fetchImages({group_id: groupId});
+}
+
 export const fetchImage = (imageId) => {
     if (!imageId) {
         debug.error(`An image id must be provided for fetchImage.`)
@@ -68,6 +84,10 @@ export const deleteImage = (imageId) => {
 window.ImageUtil = {
     fetchImages,
     fetchImage,
+    fetchImageByUserId,
+    fetchImageByShopId,
+    fetchImageByProductId,
+    fetchImageByGroupId,
     createImage,
     updateImage,
     deleteImage

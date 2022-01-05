@@ -10,14 +10,16 @@ export default function CartItemReducer(prevState={}, action){
     switch(action.type){
         case RECEIVE_CART_ITEMS:
             action.cartItems.forEach(cartItem =>{
+                cartItem.id = parseInt(cartItem.id)
                 newState[cartItem.id] = cartItem;
             })
             return newState;
         case RECEIVE_CART_ITEM:
+            action.cartItem.id = parseInt(cartItem.id);
             newState[action.cartItem.id] = action.cartItem;
             return newState;
         case REMOVE_CART_ITEM:
-            delete newState[action.cartItemId]
+            delete newState[parseInt(action.cartItemId)]
             return newState;
         default:
             return newState

@@ -20,6 +20,15 @@ export function isBrowser(){
 }
 
 
+function objectToString(obj){
+    let mapping = Object.entries(obj).map(pair => {
+        let [k, v] = pair;
+        if (typeof v === 'object' && v !== null)
+            v =  objectToString(v);
+        return `${k}: ${v}`;
+    })
+    return `{ ${mapping.join(", ")} }`
+}
 
 export class debug {
     /*
@@ -68,4 +77,27 @@ export class debug {
             console.log(`%c   ERR  ` + `%c ${string}`, "background:red;color:white", "color:red");
     }
 
+    static react_error(action){
+        let {type, errors} = action;
+        if (!errors && !type)
+            throw new Error(`A different error was thrown: ${action}`)
+        errors.forEach(error => {
+            if (isNodeJs())
+                console.log(`\x1b[1;41;1m  ${type}  \x1b[0m \x1b[31m$${error}\x1b[0m`);
+            else if (isBrowser())
+                console.log(`%c  ${type}  ` + `%c ${error}`, "background:red;color:white", "color:red");
+        })
+    }
+
+    static react_data(action){
+        let {type, data} = action;
+        let values = data;
+        if (typeof data === 'object' && data !== null)
+            values = Object.entries(data);
+
+        if (isNodeJs())
+            console.log(`\x1b[37;42;1m  ${type}  \x1b[0m \x1b[32m$${values}\x1b[0m`);
+        else if (isBrowser())
+            console.log(`%c  ${type}  ` + `%c${values}`, "background:green;color:white", "color:BBBBBB");
+    }
 }

@@ -33,6 +33,17 @@ export const fetchProductsRange = (start, end) => {
     });
 };
 
+export const fetchRandomProducts = (limit) => {
+    if (!limit) {
+        debug.error(`A limit be provided for fetchRandomProducts.`)
+    }
+
+    return $.ajax({
+        url: `/api/products?limit=${limit}&random=${true}`,
+        method: 'GET'
+    });
+};
+
 export const fetchRandomProductsRange = (start, end) => {
     if (!start || !end) {
         debug.error(`A start and end must be provided for fetchRandomProductsRange.`)
@@ -43,6 +54,8 @@ export const fetchRandomProductsRange = (start, end) => {
         method: 'GET'
     });
 };
+
+
 
 export const fetchProduct = (productId) => {
     if (!productId) {
@@ -93,6 +106,7 @@ export const deleteProduct = (productId) => {
 window.ProductUtil = {
     fetchProducts,
     fetchProductsRange,
+    fetchRandomProducts,
     fetchRandomProductsRange,
     fetchProduct,
     createProduct,

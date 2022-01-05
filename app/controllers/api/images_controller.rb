@@ -50,7 +50,7 @@ class Api::ImagesController < ApplicationController
   end
 
   def show
-    @image = image_from_params
+    @image = image_from_params(query_params)
     if @image
       render json: @image
     else
@@ -68,7 +68,7 @@ class Api::ImagesController < ApplicationController
   end
 
   def update
-    @image = image_from_params
+    @image = image_from_params(query_params)
     if @image && @image.update_attributes(image_params)
       render :show
     elsif !@image
@@ -79,7 +79,7 @@ class Api::ImagesController < ApplicationController
   end
 
   def destroy
-    @image = image_from_params
+    @image = image_from_params(query_params)
     if @image && @image.destroy
       render :show
     elsif !@image
