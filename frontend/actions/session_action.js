@@ -1,5 +1,6 @@
 import * as SessionAPIUtil from '../utils/session';
 import * as AlertAction from './alert_action'
+import * as ModalAction from './ui_modal_action';
 
 export const RECEIVE_USER = `RECEIVE_USER`;
 export const REMOVE_SESSION = `REMOVE_SESSION`;
@@ -26,6 +27,7 @@ export const receiveErrors = (errors) => ({
 export const createUser = (user) => dispatch => (
     SessionAPIUtil.createUser(user).then(
         user => {
+            dispatch(ModalAction.deleteModal());
             dispatch(AlertAction.success("You have successfully created an account!"));
             dispatch(receiveUser(user))
         },
@@ -39,6 +41,7 @@ export const createUser = (user) => dispatch => (
 export const createSession = (user) => dispatch => (
     SessionAPIUtil.createSession(user).then(
         user => {
+            dispatch(ModalAction.deleteModal());
             if (user.email === "demo@email.com")
                 dispatch(AlertAction.notification("You're logged in as a demo user."));
             else

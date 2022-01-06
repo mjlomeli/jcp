@@ -41,6 +41,7 @@
 /******** Header ***************/
 .register-header {
     display: flex;
+    justify-content: space-between;
     flex-direction: column;
     grid-row-gap: 1em;
 }
@@ -57,6 +58,20 @@
     font-size: 1em;
     color: rgba(34, 34, 34, 0.84);
     margin: auto;
+}
+
+.register-demo-button {
+    position: relative;
+    font-family: -apple-system, BlinkMacSystemFont, "Roboto", "Droid Sans", "Segoe UI", "Helvetica", Arial, sans-serif;
+    color: #FFFFFF;
+    background-color: #2F466C;
+    font-size: 0.8em;
+    font-weight: 600;
+    border-radius: 96px;
+    border: 0.2em solid black;
+    padding: 0.2em 1.5em 0.2em 1.5em;
+    cursor: pointer;
+    height: 3em;
 }
 
 

@@ -8,7 +8,8 @@ import {
 } from 'react-router-dom';
 import "./login_modal.css"
 import GridLayout from "../grid_layout/grid_layout";
-import {createLogin, createRegister, deleteModal} from "../../../actions/ui_modal_action";
+import {createRegister, deleteModal} from "../../../actions/ui_modal_action";
+import {createUser, createSession} from "../../../actions/session_action";
 import {connect} from "react-redux";
 
 
@@ -19,7 +20,8 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps = dispatch => ({
     createRegister: () => dispatch(createRegister()),
-    deleteModal: () => dispatch(deleteModal())
+    deleteModal: () => dispatch(deleteModal()),
+    createSession: (user) => dispatch(createSession(user))
 });
 
 class LoginModal extends React.Component {
@@ -43,6 +45,8 @@ class LoginModal extends React.Component {
         return (e) => {
             switch (type) {
                 case "submit":
+                    const user = {email: this.state.email, password: this.state.password, stay: this.state.staySignedIn};
+                    this.props.createSession(user);
                     break;
                 case "register":
                     this.props.createRegister();
