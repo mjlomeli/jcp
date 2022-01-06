@@ -14,13 +14,10 @@ import {connect} from "react-redux";
 
 const mapStateToProps = (state, ownProps) => {
     return {
-        user: state.session,
-        type: state.ui.modal.type
     }
 };
 
 const mapDispatchToProps = dispatch => ({
-    createLogin: () => dispatch(createLogin()),
     createRegister: () => dispatch(createRegister()),
     deleteModal: () => dispatch(deleteModal())
 });
@@ -37,7 +34,7 @@ class LoginModal extends React.Component {
     }
 
     onClickBackground(e) {
-
+        this.props.deleteModal();
     }
 
     onCheckBoxChange(e){ this.setState({staySignedIn: e.currentTarget.checked}); }
@@ -48,6 +45,7 @@ class LoginModal extends React.Component {
                 case "submit":
                     break;
                 case "register":
+                    this.props.createRegister();
                     break;
                 case "google":
                     break;

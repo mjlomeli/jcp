@@ -12,15 +12,14 @@ import "./navbar.css"
 import SearchBarComponent from "../../user_controls/searchbar/searchbar";
 import GridLayout from "../../user_controls/grid_layout/grid_layout";
 import NavbarLayout from "../../user_controls/navbar/navbar";
-import {createLogin, createRegister} from "../../../actions/ui_modal_action";
+import {createLogin} from "../../../actions/ui_modal_action";
 
 const mapStateToProps = (state, ownProps) => ({
     user: state.session
 });
 
 const mapDispatchToProps = dispatch => ({
-    createLogin: () => dispatch(createLogin()),
-    createRegister: () => dispatch(createRegister())
+    createLogin: () => dispatch(createLogin())
 });
 
 class MenuBarComponent extends React.Component {

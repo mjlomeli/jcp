@@ -14,7 +14,9 @@ import SignUpFormContainer from './session_form/signup_form_container';
 import LogInFormContainer from './session_form/login_form_container';
 import DemoLogInFormContainer from './session_form/demo_form_container';
 import Alert from './../components/user_controls/alert/alert'
-import Modal from "./user_controls/modal/modal";
+import Modal from "./user_controls/modal/modal"
+import RegisterModal from "./user_controls/modal/register_modal"
+import LoginModal from "./user_controls/modal/login_modal"
 
 
 import HomePage from "./pages/home_page";
@@ -40,8 +42,6 @@ import CardFeatured from "./user_controls/card_featured/card_featured";
 // import ProductsList from "./user_controls/product_list/products_list";
 // import Gallery from "./user_controls/gallery/gallery";
 // import SearchBar from "./user_controls/searchbar/searchbar";
-import RegisterModal from "./user_controls/modal/register_modal"
-import LoginModal from "./user_controls/modal/login_modal"
 
 // import FlowLayout from "./user_controls/flow_layout/flow_layout";
 // import GridLayout from "./user_controls/grid_layout/grid_layout";
@@ -89,6 +89,7 @@ class App extends React.Component {
                 <Route exact path="/cart_item/:id" component={CartItem}/>
                 <Route exact path="/register_modal" component={RegisterModal}/>
                 <Route exact path="/login_modal" component={LoginModal}/>
+                <Route exact path="/modal" component={Modal} />
                 {/*<Route exact path="/gallery" component={Gallery} />*/}
                 {/*<Route exact path="/gallery/:id" component={Gallery} />*/}
                 {/*<Route exact path="/rating" component={Rating} />*/}

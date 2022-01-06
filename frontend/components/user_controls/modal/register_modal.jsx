@@ -14,14 +14,10 @@ import {connect} from "react-redux";
 
 const mapStateToProps = (state, ownProps) =>{
     return {
-        user: state.session,
-        type: state.ui.modal.type
     }
 };
 
 const mapDispatchToProps = dispatch => ({
-    createLogin: () => dispatch(createLogin()),
-    createRegister: () => dispatch(createRegister()),
     deleteModal: () => dispatch(deleteModal())
 });
 
@@ -33,11 +29,10 @@ class RegisterModal extends React.Component {
         this.onclicksubmit = this.onClickSubmit.bind(this);
         this.onchangeinput = this.onChangeInput.bind(this);
         this.onkeyupinput = this.onKeyUpInput.bind(this);
-        this.submitButton = React.createRef();
     }
 
     onClickBackground(e) {
-
+        this.props.deleteModal();
     }
 
     onClickSubmit(type) {

@@ -44,7 +44,7 @@ export const deleteModal = () => (dispatch) => {
 };
 
 
-window.LoginAction = {
+window.ModalAction = {
     createRegister,
     createLogin,
     deleteModal
