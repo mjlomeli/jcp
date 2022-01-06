@@ -12,18 +12,18 @@ import "./navbar.css"
 import SearchBarComponent from "../../user_controls/searchbar/searchbar";
 import GridLayout from "../../user_controls/grid_layout/grid_layout";
 import NavbarLayout from "../../user_controls/navbar/navbar";
+import {createLogin, createRegister} from "../../../actions/ui_modal_action";
 
-const mapStateToProps = ({errors}) => ({
-    //errors: errors.session, // need to add a ui or user_control errors
-    nameId: "card_listing"
+const mapStateToProps = (state, ownProps) => ({
+    user: state.session
 });
 
 const mapDispatchToProps = dispatch => ({
-    afunction: () => {
-    }
+    createLogin: () => dispatch(createLogin()),
+    createRegister: () => dispatch(createRegister())
 });
 
-class MenuBar extends React.Component {
+class MenuBarComponent extends React.Component {
     constructor(props) {
         super(props);
         this.className = this.props.className || '';
@@ -40,7 +40,12 @@ class MenuBar extends React.Component {
     }
 
     signIn(){
-        return this.button(<label className="menu-button">Sign in</label>, "Sign In")
+        return <>
+            <Link to="#" className="menu-button" style={{textDecoration: "inherit", color: "inherit"}} onClick={() => this.props.createLogin()}>
+                <label className="menu-button">Sign in</label>
+                <span className="tooltip" role="tooltip">{"Sign in"}</span>
+            </Link>
+        </>
     }
 
     favorites() {
@@ -104,9 +109,11 @@ class MenuBar extends React.Component {
     }
 
     render() {
-        return (false) ? this.signed_in() : this.signed_out()
+        return (!!this.props.user.id) ? this.signed_in() : this.signed_out()
     }
 }
+export const MenuBar = connect(mapStateToProps, mapDispatchToProps)(MenuBarComponent);
+
 
 class HeaderTemplate extends React.Component {
     constructor(props) {
@@ -156,5 +163,4 @@ class HeaderTemplate extends React.Component {
         </>
     }
 }
-
 export default connect(mapStateToProps, mapDispatchToProps)(HeaderTemplate);

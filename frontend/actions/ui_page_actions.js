@@ -1,4 +1,4 @@
-import * as PagesUtil from "../utils/ui_page_utils";
+import * as PagesUtil from "../utils/ui_page_util";
 
 export const RECEIVE_PAGE = "RECEIVE_PAGE";
 export const RECEIVE_PAGE_ERROR = "RECEIVE_PAGE_ERROR";

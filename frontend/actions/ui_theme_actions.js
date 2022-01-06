@@ -1,4 +1,4 @@
-import * as ThemeUtil from "../utils/ui_theme_utils"
+import * as ThemeUtil from "../utils/ui_theme_util"
 
 export const RECEIVE_THEME = "RECEIVE_THEME";
 export const RECEIVE_THEME_ERROR = "RECEIVE_THEME_ERROR";

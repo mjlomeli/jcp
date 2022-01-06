@@ -60,8 +60,8 @@ export const success = (message, timeout=5000) => (dispatch, getState) => {
 
 
 const fetchTimoutId = (getState) => {
-    let alerts = getState().ui.alerts;
-    return !!Object.keys(alerts).length ? alerts.timeoutId : null;
+    let alert = getState().ui.alert;
+    return !!Object.keys(alert).length ? alert.timeoutId : null;
 }
 
 export const createAlert = (type, message, timeout=5000) => (dispatch, getState) => {

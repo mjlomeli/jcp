@@ -2,11 +2,10 @@ import "./alert.css"
 import {createAlert, deleteAlert} from "../../../actions/alert_action";
 import React from "react";
 import {connect} from "react-redux";
-import * as PropTypes from "prop-types";
 
 
 const mapStateToProps = (state, ownProps)=> ({
-    alert: state.ui.alerts
+    alert: state.ui.alert
 })
 
 const mapDispatchToProps = dispatch => ({

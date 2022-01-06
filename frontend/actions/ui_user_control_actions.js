@@ -1,4 +1,4 @@
-import * as UserControlsUtil from "../utils/ui_user_controls_utils";
+import * as UserControlsUtil from "../utils/ui_user_controls_util";
 
 export const RECEIVE_USER_CONTROL = "RECEIVE_USER_CONTROL";
 export const RECEIVE_USER_CONTROL_ERROR = "RECEIVE_USER_CONTROL_ERROR";

@@ -40,7 +40,7 @@ const defaultElementsStyle = {
 
 
 class GridLayout extends React.Component {
-    #gridStyle = {display: 'inline-grid'};
+    #gridStyle = {display: 'grid'};
     #itemsStyle = {};
 
     /** Everything must be direct prop passing to keep event
