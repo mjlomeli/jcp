@@ -179,9 +179,10 @@
 
 
 
+
 /*********** Submit *************/
 
-.login-submit-button {
+.login-submit-button:enabled {
     width: 100%;
     font-family: -apple-system, BlinkMacSystemFont, "Roboto", "Droid Sans", "Segoe UI", "Helvetica", Arial, sans-serif;
     font-size: 1em;
@@ -194,14 +195,25 @@
     color: white;
 }
 
-.login-submit-button:hover {
+.login-submit-button:enabled:hover {
     transform: scale(1.025);
     background-color: #222222;
     box-shadow: 0em 0em 1.5em 0 rgba(26, 26, 26, 0.12);
     transition: transform 0.02s ease, box-shadow 0.3s ease;
 }
 
-
+.login-submit-button:disabled {
+    width: 100%;
+    font-family: -apple-system, BlinkMacSystemFont, "Roboto", "Droid Sans", "Segoe UI", "Helvetica", Arial, sans-serif;
+    font-size: 1em;
+    font-weight: 500;
+    border-radius: 96px;
+    border: 0.15em solid transparent;
+    padding: 1em 5em 1em 5em;
+    background-color: #6b6b6b;
+    color: white;
+    cursor: not-allowed;
+}
 
 /*********** Divider ************/
 

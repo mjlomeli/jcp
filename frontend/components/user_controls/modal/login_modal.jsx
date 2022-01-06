@@ -28,25 +28,48 @@ const mapDispatchToProps = dispatch => ({
 class LoginModal extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {email: "", password: "", staySignedIn: true}
+        this.state = {email: "", password: "", staySignedIn: true, disabled: true}
         this.onclickbackground = this.onClickBackground.bind(this);
-        this.onclickregister = this.onClickRegister.bind(this);
+        this.onchangeinput = this.onChangeInput.bind(this);
+        this.onkeyupinput = this.onKeyUpInput.bind(this);
         this.oncheckboxchange = this.onCheckBoxChange.bind(this);
+        this.onclicksubmit = this.onClickSubmit.bind(this);
     }
 
     onClickBackground(e) {
-        this.setState({type: null})
-        this.current.current.remove();
+
     }
 
     onCheckBoxChange(e){ this.setState({staySignedIn: e.currentTarget.checked}); }
 
-    onSubmit() {
-        this.props.deleteModal();
+    onClickSubmit(type) {
+        return (e) => {
+            switch (type) {
+                case "submit":
+                    break;
+                case "register":
+                    break;
+                case "google":
+                    break;
+                case "apple":
+                    break;
+                default:
+                    break;
+            }
+        }
     }
 
-    onClickRegister(e) {
-        this.props.createRegister();
+    onKeyUpInput(){
+        let disabled = this.state.email.length === 0 ||
+            this.state.password.length === 0;
+        if (disabled !== this.state.disabled)
+            this.setState({disabled: disabled})
+    }
+
+    onChangeInput(type){
+        return (e) => {
+            this.setState({[type]: e.currentTarget.value})
+        }
     }
 
     header() {
@@ -54,7 +77,7 @@ class LoginModal extends React.Component {
         let components = {
             "text": <div className="login-signin-text">Sign in</div>,
             "space": <div className="login-header-space" />,
-            "button": <button className="login-register-button" type="button" onClick={this.onclickregister}>
+            "button": <button className="login-register-button" onClick={this.onclicksubmit("register")} type="button">
                 Register
             </button>
         }
@@ -67,11 +90,11 @@ class LoginModal extends React.Component {
         let components = {
             'email': <>
                 <span className="login-email-text">Email address</span>
-                <input className="login-input-email" type="text"/>
+                <input className="login-input-email" onChange={this.onchangeinput("email")} value={this.state.email} onKeyUp={this.onkeyupinput} type="text"/>
             </>,
             'password': <>
                 <span className="login-password-text">Password</span>
-                <input className="login-input-password" type="password"/>
+                <input className="login-input-password" onChange={this.onchangeinput("password")} value={this.state.password} onKeyUp={this.onkeyupinput} type="password"/>
             </>
         }
 
@@ -107,9 +130,9 @@ class LoginModal extends React.Component {
     alternativeSignIn() {
         let areas = ['google', 'facebook', 'apple'];
         let components = {
-            'google': <button className="login-google" type="button">Continue with Google</button>,
-            'facebook': <button className="login-facebook" type="button">Continue with Facebook</button>,
-            'apple': <button className="login-apple" type="button">Continue with Apple</button>
+            'google': <button className="login-google" onClick={this.onclicksubmit("google")} type="button">Continue with Google</button>,
+            'facebook': <button className="login-facebook" onClick={this.onclicksubmit("facebook")} type="button">Continue with Facebook</button>,
+            'apple': <button className="login-apple" onClick={this.onclicksubmit("apple")} type="button">Continue with Apple</button>
         }
         return <GridLayout areas={areas} components={components} className="login-alternatives"/>
     }
@@ -123,7 +146,7 @@ class LoginModal extends React.Component {
             'header': this.header(),
             'form': this.form(),
             "options": this.options(),
-            "submit": <button className="login-submit-button" type="button">Sign in</button>,
+            "submit": <button className="login-submit-button" onClick={this.onclicksubmit("submit")} disabled={this.state.disabled} type="button">Sign in</button>,
             'divider': this.divider(),
             'alternate': this.alternativeSignIn(),
             "text": <p className="login-terms-conditions">

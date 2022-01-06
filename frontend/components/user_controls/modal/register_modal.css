@@ -1,0 +1,189 @@
+
+.register-background {
+    width: 98%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    min-height: 100vh;
+    min-width: 100vw;
+    z-index: 10;
+    background-color: rgba(34, 34, 34, 0.65);
+}
+
+.register-modal-items {
+    width: 100%;
+    height: 100%;
+}
+
+.register-modal {
+    display: flex;
+    align-content: space-evenly;
+    position: absolute;
+    grid-row-gap: 1em;
+    font-family: "Graphik Webfont",-apple-system,"Helvetica Neue","Droid Sans",Arial,sans-serif;
+    z-index: 50;
+    width: 22em;
+    height: 50em;
+
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 24px;
+    background-color: #FFFFFF;
+    border: 0.025em solid black;
+    padding: 1.5em 2em 1.5em 2em;
+    box-shadow: 0 6px 36px rgb(34 34 34 / 33%);
+    transition: opacity 150ms ease-out,transform 255ms cubic-bezier(0.175, 0.745, 0.425, 1.11);
+}
+
+
+/******** Header ***************/
+.register-header {
+    display: flex;
+    flex-direction: column;
+    grid-row-gap: 1em;
+}
+
+.register-header-title {
+    font-weight: 700;
+    font-size: 1.2em;
+    color: rgba(34, 34, 34, 0.84);
+    margin: auto;
+}
+
+
+.register-header-text {
+    font-size: 1em;
+    color: rgba(34, 34, 34, 0.84);
+    margin: auto;
+}
+
+
+
+/******** Form *****************/
+.register-form {
+    grid-gap: 1em;
+}
+
+.register-email-text, .register-password-text, .register-name-text{
+    font-weight: 400;
+    font-size: 0.8em;
+}
+
+.register-input-email, .register-input-password, .register-input-name {
+    width: 100%;
+    background-color: #FFFFFF;
+    box-shadow: 0 0 1em 0 rgba(0, 0, 0, 0.12) inset;
+    height: 2.5em;
+    font-family: -apple-system, BlinkMacSystemFont, "Roboto", "Droid Sans", "Segoe UI", "Helvetica", Arial, sans-serif;
+    font-size: 1em;
+    font-weight: 500;
+    border-radius: 6px;
+    border: 0.05em solid rgba(34, 34, 34, 0.15);
+}
+
+.register-input-email:hover, .register-input-password:hover {
+    border: 0.05em solid rgba(14, 0, 0, 0.55);
+}
+
+
+/*********** Submit *************/
+
+.register-submit-button:enabled {
+    width: 100%;
+    font-family: -apple-system, BlinkMacSystemFont, "Roboto", "Droid Sans", "Segoe UI", "Helvetica", Arial, sans-serif;
+    font-size: 1em;
+    font-weight: 500;
+    border-radius: 96px;
+    border: 0.15em solid black;
+    padding: 1em 5em 1em 5em;
+    cursor: pointer;
+    background-color: black;
+    color: white;
+}
+
+.register-submit-button:enabled:hover {
+    transform: scale(1.025);
+    background-color: #222222;
+    box-shadow: 0em 0em 1.5em 0 rgba(26, 26, 26, 0.12);
+    transition: transform 0.02s ease, box-shadow 0.3s ease;
+}
+
+.register-submit-button:disabled {
+    width: 100%;
+    font-family: -apple-system, BlinkMacSystemFont, "Roboto", "Droid Sans", "Segoe UI", "Helvetica", Arial, sans-serif;
+    font-size: 1em;
+    font-weight: 500;
+    border-radius: 96px;
+    border: 0.15em solid transparent;
+    padding: 1em 5em 1em 5em;
+    background-color: #6b6b6b;
+    color: white;
+    cursor: not-allowed;
+}
+
+/*********** Divider ************/
+
+.register-divider {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: space-between;
+    justify-items: center;
+}
+
+.register-left-divider, .register-right-divider{
+    width: 9em;
+    height: 0.06em;
+    flex-grow: 100;
+    background-color: rgba(34, 34, 34, 0.15);
+}
+
+.register-divider-text {
+    font-weight: 400;
+    font-size: 1em;
+    line-height: 0;
+    color: rgba(34, 34, 34, 0.7);
+}
+
+/*********** Alternatives *************/
+
+.register-alternatives {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-content: space-evenly;
+    justify-content: center;
+    justify-items: center;
+    row-gap: 1em;
+}
+
+.register-google, .register-facebook, .register-apple {
+    font-family: -apple-system, BlinkMacSystemFont, "Roboto", "Droid Sans", "Segoe UI", "Helvetica", Arial, sans-serif;
+    background: transparent;
+    font-size: 1em;
+    font-weight: 500;
+    border-radius: 96px;
+    border: 0.025em solid black;
+    padding: 1em 3em 1em 3em;
+    cursor: pointer;
+    width: 20em;
+    height: 3.2em;
+}
+
+.register-google:hover, .register-facebook:hover, .register-apple:hover {
+    transform: scale(1.01);
+    box-shadow: 0 0 1.5vw 0 rgba(26, 26, 26, 0.12);
+    transition: transform 0.07s ease, box-shadow 0.3s ease;
+}
+
+/****** Terms and Conditions ***********/
+
+.register-terms-conditions {
+    font-weight: 400;
+    font-size: 0.85em;
+    color: rgba(34, 34, 34, 0.7);
+    line-height: 1.5;
+}
