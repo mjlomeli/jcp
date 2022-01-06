@@ -1,0 +1,269 @@
+
+.login-background {
+    width: 98%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    min-height: 100vh;
+    min-width: 100vw;
+    z-index: 10;
+    background-color: rgba(34, 34, 34, 0.65);
+}
+
+.login-modal-items {
+    width: 100%;
+    height: 100%;
+}
+
+.login-modal {
+    display: flex;
+    align-content: space-evenly;
+    position: absolute;
+    grid-row-gap: 2em;
+    font-family: "Graphik Webfont",-apple-system,"Helvetica Neue","Droid Sans",Arial,sans-serif;
+    z-index: 50;
+    width: 22em;
+    height: 50em;
+
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 24px;
+    background-color: #FFFFFF;
+    border: 0.025em solid black;
+    padding: 1.5em 2em 1.5em 2em;
+    box-shadow: 0 6px 36px rgb(34 34 34 / 33%);
+    transition: opacity 150ms ease-out,transform 255ms cubic-bezier(0.175, 0.745, 0.425, 1.11);
+}
+
+
+/******** Header ***************/
+.login-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.login-register-button {
+    position: relative;
+    font-family: -apple-system, BlinkMacSystemFont, "Roboto", "Droid Sans", "Segoe UI", "Helvetica", Arial, sans-serif;
+    background: transparent;
+    font-size: 0.8em;
+    font-weight: 600;
+    border-radius: 96px;
+    border: 0.2em solid black;
+    padding: 0.2em 1.5em 0.2em 1.5em;
+    cursor: pointer;
+    height: 3em;
+}
+
+.login-signin-text {
+    font-weight: 700;
+    font-size: 1.2em;
+    color: rgba(34, 34, 34, 0.84);
+    margin: auto;
+}
+
+
+
+/******** Form *****************/
+.login-form {
+    grid-gap: 1em;
+}
+
+.login-email-text, .login-password-text {
+    font-weight: 400;
+    font-size: 0.8em;
+}
+
+.login-input-email, .login-input-password {
+    width: 100%;
+    background-color: #FFFFFF;
+    box-shadow: 0 0 1em 0 rgba(0, 0, 0, 0.12) inset;
+    height: 2.5em;
+    font-family: -apple-system, BlinkMacSystemFont, "Roboto", "Droid Sans", "Segoe UI", "Helvetica", Arial, sans-serif;
+    font-size: 1em;
+    font-weight: 500;
+    border-radius: 6px;
+    border: 0.05em solid rgba(34, 34, 34, 0.15);
+}
+
+.login-input-email:hover, .login-input-password:hover {
+    border: 0.05em solid rgba(14, 0, 0, 0.55);
+}
+
+
+/*************** Options ************/
+
+.login-options {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    justify-content: space-between;
+    align-content: center;
+    align-items: center;
+}
+
+.login-options-divider {
+    width: 1em;
+}
+
+.login-forgot-pass {
+    font-weight: 400;
+    font-size: 0.8em;
+    color: #595959;
+    text-decoration: underline;
+}
+
+.login-stay-signed {
+    font-weight: 400;
+    font-size: 1em;
+    color: #595959;
+}
+
+.login-container {
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    --check-width: 2em;
+    --check-heigth: 2em;
+}
+
+.login-container input {
+    position: relative;
+    width: var(--check-width);
+    height: var(--check-heigth);
+    opacity: 0;
+    cursor: pointer;
+}
+
+.login-checkmark {
+    position: absolute;
+    height: var(--check-heigth);
+    width: var(--check-width);
+    background-color: #eee;
+    border: 0.1em solid #818181;
+    border-radius: 6px;
+}
+
+.login-container:hover > input ~ .login-checkmark {
+    background-color: #ccc;
+}
+
+.login-container > input:checked ~ .login-checkmark {
+    background-color: #000000;
+}
+
+.login-checkmark:after {
+    content: "";
+    position: absolute;
+    display: none;
+}
+
+.login-container input:checked ~ .login-checkmark:after {
+    display: block;
+}
+
+.login-container .login-checkmark:after {
+    top: calc(var(--check-heigth) * .125);
+    left: calc(var(--check-width) * 0.35);
+    width: 0.5em;
+    height: 1em;
+    border: solid white;
+    border-width: 0 3px 3px 0;
+    -webkit-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg);
+}
+
+
+
+/*********** Submit *************/
+
+.login-submit-button {
+    width: 100%;
+    font-family: -apple-system, BlinkMacSystemFont, "Roboto", "Droid Sans", "Segoe UI", "Helvetica", Arial, sans-serif;
+    font-size: 1em;
+    font-weight: 500;
+    border-radius: 96px;
+    border: 0.15em solid black;
+    padding: 1em 5em 1em 5em;
+    cursor: pointer;
+    background-color: black;
+    color: white;
+}
+
+.login-submit-button:hover {
+    transform: scale(1.025);
+    background-color: #222222;
+    box-shadow: 0em 0em 1.5em 0 rgba(26, 26, 26, 0.12);
+    transition: transform 0.02s ease, box-shadow 0.3s ease;
+}
+
+
+
+/*********** Divider ************/
+
+.login-divider {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: space-between;
+    justify-items: center;
+}
+
+.login-left-divider, .login-right-divider{
+    width: 9em;
+    height: 0.06em;
+    flex-grow: 100;
+    background-color: rgba(34, 34, 34, 0.15);
+}
+
+.login-divider-text {
+    font-weight: 400;
+    font-size: 1em;
+    line-height: 0;
+    color: rgba(34, 34, 34, 0.7);
+}
+
+/*********** Alternatives *************/
+
+.login-alternatives {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-content: space-evenly;
+    justify-content: center;
+    justify-items: center;
+    row-gap: 1em;
+}
+
+.login-google, .login-facebook, .login-apple {
+    font-family: -apple-system, BlinkMacSystemFont, "Roboto", "Droid Sans", "Segoe UI", "Helvetica", Arial, sans-serif;
+    background: transparent;
+    font-size: 1em;
+    font-weight: 500;
+    border-radius: 96px;
+    border: 0.025em solid black;
+    padding: 1em 3em 1em 3em;
+    cursor: pointer;
+    width: 20em;
+    height: 3.2em;
+}
+
+.login-google:hover, .login-facebook:hover, .login-apple:hover {
+    transform: scale(1.01);
+    box-shadow: 0 0 1.5vw 0 rgba(26, 26, 26, 0.12);
+    transition: transform 0.07s ease, box-shadow 0.3s ease;
+}
+
+/****** Terms and Conditions ***********/
+
+.login-terms-conditions {
+    font-weight: 400;
+    font-size: 0.85em;
+    color: rgba(34, 34, 34, 0.7);
+    line-height: 1.5;
+}

@@ -40,6 +40,8 @@ import CardFeatured from "./user_controls/card_featured/card_featured";
 // import ProductsList from "./user_controls/product_list/products_list";
 // import Gallery from "./user_controls/gallery/gallery";
 // import SearchBar from "./user_controls/searchbar/searchbar";
+import RegisterModal from "./user_controls/modal/register_modal"
+import LoginModal from "./user_controls/modal/login_modal"
 
 // import FlowLayout from "./user_controls/flow_layout/flow_layout";
 // import GridLayout from "./user_controls/grid_layout/grid_layout";
@@ -85,6 +87,8 @@ class App extends React.Component {
                 <Route exact path="/payment_selection/:id" component={PaymentSelection} />
                 <Route exact path="/cart_item" component={CartItem}/>
                 <Route exact path="/cart_item/:id" component={CartItem}/>
+                <Route exact path="/register_modal" component={RegisterModal}/>
+                <Route exact path="/login_modal" component={LoginModal}/>
                 {/*<Route exact path="/gallery" component={Gallery} />*/}
                 {/*<Route exact path="/gallery/:id" component={Gallery} />*/}
                 {/*<Route exact path="/rating" component={Rating} />*/}
