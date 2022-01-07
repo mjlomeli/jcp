@@ -19,6 +19,11 @@ export const deleteSession = () => {
 };
 
 export const createUser = (user) => {
+    user = {
+        email: user.email,
+        password: user.password,
+        first_name: user.firstName
+    }
     if (!user){
         debug.error("A user must be given for createUser");
     }

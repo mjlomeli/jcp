@@ -44,8 +44,7 @@ class RegisterModal extends React.Component {
         return (e) => {
             switch (type) {
                 case "submit":
-                    const user = {email: this.state.email, password: this.state.password, stay: this.state.staySignedIn};
-                    this.props.createUser(user);
+                    this.props.createUser(this.state);
                     break;
                 case "google":
                     this.props.notification("Google login coming soon!");

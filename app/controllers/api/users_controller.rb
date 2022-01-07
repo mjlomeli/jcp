@@ -26,7 +26,7 @@ class Api::UsersController < ApplicationController
 
   def update
     @user = User.find_by(id: params[:id])
-    if @user && @user.update_attributes(user_params)
+    if @user && @user.update_attributes(query_params)
       render :show
     elsif !@user
       render json: ["Could not locate user id: #{params[:id]}"], status: 400
@@ -37,7 +37,11 @@ class Api::UsersController < ApplicationController
 
   private
   def user_params
-    params.require(:user).permit(:email, :password)
+    params.require(:user).permit(:email, :password, :first_name)
+  end
+
+  def query_params
+    params.permit(:email, :password, :first_name, :last_name, :username, :phone, :bio)
   end
 
   def find_in_batches(start, finish, batch_size=25)
