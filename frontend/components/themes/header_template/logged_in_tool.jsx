@@ -13,10 +13,10 @@ import {deleteSession} from "../../../actions/session_action";
 import {DropdownLayout} from "../../user_controls/navbar/dropdown";
 
 const mapStateToProps = (state, ownProps) => ({
-    email: state.session.email,
-    firstName: state.session.first_name,
-    lastName: state.session.last_name,
-    username: state.session.username
+    email: state.entities.user.email,
+    firstName: state.entities.user.first_name,
+    lastName: state.entities.user.last_name,
+    username: state.entities.user.username
 });
 
 const mapDispatchToProps = dispatch => ({

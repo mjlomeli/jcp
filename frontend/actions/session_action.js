@@ -3,12 +3,14 @@ import * as AlertAction from './alert_action'
 import * as ModalAction from './ui_modal_action';
 
 export const RECEIVE_USER = `RECEIVE_USER`;
+export const REMOVE_USER = "REMOVE_USER";
+export const RECEIVE_SESSION = `RECEIVE_SESSION`;
 export const REMOVE_SESSION = `REMOVE_SESSION`;
 export const RECEIVE_SESSION_ERRORS = 'RECEIVE_SESSION_ERRORS';
 
-const receiveUser = (user) => ({
-    type: RECEIVE_USER,
-    user: user
+const receiveSession = (userId) => ({
+    type: RECEIVE_SESSION,
+    userId: userId
 })
 
 const removeSession = () => ({
@@ -20,6 +22,15 @@ export const receiveErrors = (errors) => ({
     errors: errors
 });
 
+const receiveUser = user =>({
+    type: RECEIVE_USER,
+    user: user
+})
+
+const removeUser = () =>({
+    type: REMOVE_USER
+})
+
 
 
 
@@ -29,7 +40,8 @@ export const createUser = (user) => dispatch => (
         user => {
             dispatch(ModalAction.deleteModal());
             dispatch(AlertAction.success("You have successfully created an account!"));
-            dispatch(receiveUser(user))
+            dispatch(receiveUser(user));
+            dispatch(receiveSession(user.id));
         },
         err => {
             dispatch(AlertAction.systemError(err.responseJSON));
@@ -46,6 +58,7 @@ export const createSession = (user) => dispatch => (
                 dispatch(AlertAction.notification("You're logged in as a demo user."));
             else
                 dispatch(AlertAction.success(`Welcome back ${user.firstName || user.email}!`));
+            dispatch(receiveSession(user.id))
             dispatch(receiveUser(user))
         },
         err => {
@@ -63,6 +76,7 @@ export const deleteSession = () => dispatch => (
             else
                 dispatch(AlertAction.notification(user.message));
             dispatch(removeSession())
+            dispatch(removeUser())
         },
         err => {
             dispatch(AlertAction.systemError(err.responseJSON));
