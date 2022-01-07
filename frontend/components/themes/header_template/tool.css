@@ -1,4 +1,6 @@
 .tool-buttons {
+
+    grid-column-gap: 1vw;
     display: flex;
     align-content: flex-end;
     align-items: center;
