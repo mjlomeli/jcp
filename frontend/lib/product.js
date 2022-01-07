@@ -1,7 +1,5 @@
-import * as ProductAction from "../actions/product_action";
 import {Store} from "./store";
-import {debug} from "../utils/tools";
-import {errorProducts} from "../reducers/errors/product_error_reducer";
+import {debug, urlId} from "../utils/tools";
 
 // let results = null;
 // try {results = await ProductAction.fetchProducts({id: -1})(store.dispatch)} catch (e) { results = e}
@@ -9,26 +7,40 @@ import {errorProducts} from "../reducers/errors/product_error_reducer";
 
 
 export class Product {
-    static productError(productId) {
+
+    static DEFAULT_ID = 1;
+    static default(){ return Product.findById(Product.DEFAULT_ID); }
+
+    static findIDFromProps(props){
+        let id = urlId(props) || props.productId;
+        if (id)
+            return parseInt(id);
+        else
+            return null;
+    }
+
+    static error(productId) {
         let state = Store.store.getState();
         if (state && state.errors && state.errors.product)
             return state.errors.product[productId];
         debug.error("state.errors.product does not exist");
     }
 
-    static productsError() {
+    static errors() {
         let state = Store.store.getState();
         if (state && state.errors && state.errors.products)
             return state.errors.products;
         debug.error("state.errors.products does not exist");
     }
 
-    static hasProductError(productId) {
-        return !!Product.productError(productId)
+    static hasError(productId) {
+        if (Array.isArray(productId))
+            return productId.every((id) => !!Product.error(id));
+        return !!Product.error(productId)
     }
 
-    static hasProductsError() {
-        return Product.productsError().length !== 0;
+    static hasErrors() {
+        return Product.errors().length !== 0;
     }
 
     static all() {

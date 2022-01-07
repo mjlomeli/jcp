@@ -13,6 +13,7 @@ import SearchBarComponent from "../../user_controls/searchbar/searchbar";
 import GridLayout from "../../user_controls/grid_layout/grid_layout";
 import NavbarLayout from "../../user_controls/navbar/navbar";
 import {createLogin} from "../../../actions/ui_modal_action";
+import CardListing from "../../user_controls/card_listing/card_listing";
 
 const mapStateToProps = (state, ownProps) => ({
     user: state.session
@@ -30,10 +31,11 @@ class MenuBarComponent extends React.Component {
     }
 
     button(icon, tooltip) {
+
         return <>
             <Link to="#" className="menu-button" style={{textDecoration: "inherit", color: "inherit"}}>
                 {icon}
-                <span className="tooltip" role="tooltip">{tooltip}</span>
+                <span className="tooltip" role="tooltip">{tooltip}</span> <CardListing />
             </Link>
         </>
     }

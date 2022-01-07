@@ -1,8 +1,25 @@
 import {Store} from "./store";
-import {debug} from "../utils/tools";
+import {debug, urlId} from "../utils/tools";
+import {isEmpty, urlParams} from "../utils/tools";
 
 export class Image {
-    static imageError(imageId) {
+    static DEFAULT_ID = 1;
+    static default(){ return Image.findById(Image.DEFAULT_ID); }
+
+    static findIDFromProps(props){
+        let id = urlId(props) || props.imageId;
+        if (id)
+            return parseInt(id);
+        else
+            return null;
+    }
+
+    static exists(id) {
+        let images = Image.all();
+        return !!images[id];
+    }
+
+    static error(imageId) {
         let state = Store.store.getState();
         if (state && state.errors && state.errors.image)
             return state.errors.image[imageId];
@@ -10,7 +27,7 @@ export class Image {
         return {};
     }
 
-    static imagesError() {
+    static errors() {
         let state = Store.store.getState();
         if (state && state.errors && state.errors.images)
             return state.errors.images;
@@ -18,12 +35,14 @@ export class Image {
         return [];
     }
 
-    static hasImageError(imageId) {
-        return !!Image.imageError(imageId)
+    static hasError(imageId) {
+        if (Array.isArray(imageId))
+            return imageId.every((id) => !!Image.error(id));
+        return !!Image.error(imageId)
     }
 
-    static hasImagesError() {
-        return Image.imagesError().length !== 0;
+    static hasErrors() {
+        return Image.errors().length !== 0;
     }
 
     static all() {
@@ -109,14 +128,6 @@ export class Image {
     static findByGroupId(id) {
         return Image.allGroups()[id] || {};
     }
-
-    static exists(id) {
-        let images = Image.all();
-        return !!images[id];
-    }
-
-
-
 
     constructor(props={}) {
         this.id = props.id;

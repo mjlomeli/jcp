@@ -5,7 +5,7 @@ import {
     RESET_IMAGE_ERROR
 } from "../../actions/image_action";
 
-export const errorImage = (prevState = [], action) => {
+export const errorImage = (prevState = {}, action) => {
     Object.freeze(prevState);
     let newState = Object.assign({}, prevState);
     switch (action.type) {

@@ -5,7 +5,7 @@ import {
     RESET_REVIEWS_ERROR
 } from "../../actions/review_action";
 
-export const errorReview = (prevState = [], action) => {
+export const errorReview = (prevState = {}, action) => {
     Object.freeze(prevState);
     let newState = Object.assign({}, prevState);
     switch (action.type) {

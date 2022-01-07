@@ -101,3 +101,32 @@ export class debug {
             console.log(`%c  ${type}  ` + `%c${values}`, "background:green;color:white", "color:BBBBBB");
     }
 }
+
+
+export function isEmpty(obj){
+    if (Array.isArray(obj))
+        return !!obj.length;
+    else if (typeof obj === "object")
+        return !!Object.keys(obj).length;
+    else if (typeof obj === "string" || obj instanceof String)
+        return !!obj.length;
+    throw new Error("isEmpty can only take an iterable object");
+}
+
+
+export function urlParams(props){
+    if (props && props.match)
+        return props.match.params;
+    return null;
+}
+
+export function urlId(props){
+    let params = urlParams(props);
+    return params && params.id;
+}
+
+export function urlPath(props){
+    if (props && props.match)
+        return props.match.path;
+    return null;
+}

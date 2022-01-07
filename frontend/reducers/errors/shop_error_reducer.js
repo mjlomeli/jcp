@@ -5,7 +5,7 @@ import {
     RESET_SHOPS_ERROR
 } from "../../actions/shop_action";
 
-export const errorShop = (prevState = [], action) => {
+export const errorShop = (prevState = {}, action) => {
     Object.freeze(prevState);
     let newState = Object.assign({}, prevState);
     switch (action.type) {
