@@ -17,7 +17,7 @@ export class NavigationBar extends React.Component {
 
     render() {
         let navs = ["Cyber Sales Event", "Jewelry & Accessories", "Clothing & Shoes",
-            "Home_page & Living", "Wedding & Party", "Toys & Entertainment", "Art & Collectibles",
+            "Home & Living", "Wedding & Party", "Toys & Entertainment", "Art & Collectibles",
             "Craft Supplies", "Gifts & Gift Cards"];
 
         let components = navs.map(title => {
