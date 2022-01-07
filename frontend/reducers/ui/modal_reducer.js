@@ -15,7 +15,7 @@ export const modalReducer = (prevState={}, action) => {
         case REMOVE_MODAL:
             return {};
         default:
-            return {}
+            return prevState
     }
 }
 
@@ -29,6 +29,6 @@ export const modalErrorReducer = (prevState=[], action) => {
         case RECEIVE_MODAL_ERROR:
             return action.errors
         default:
-            return []
+            return prevState
     }
 }

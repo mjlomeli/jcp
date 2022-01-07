@@ -28,6 +28,6 @@ export default function UserControlsReducer(prevState=defaultUserControlsReducer
             newState[action.reducer][action.id] = {...newState[action.reducer][action.id], ...action.ui};
             return newState;
         default:
-            return newState
+            return prevState
     }
 }

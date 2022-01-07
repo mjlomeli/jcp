@@ -11,7 +11,7 @@ export default function SessionReducer(prevState=_nullUser, action){
     Object.freeze(prevState);
     switch(action.type){
         case RECEIVE_USER:
-            return { id: action.user.id };
+            return {...prevState, ...action.user};
         case REMOVE_SESSION:
             return _nullUser;
         default:

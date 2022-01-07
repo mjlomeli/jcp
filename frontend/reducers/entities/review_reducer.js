@@ -22,6 +22,6 @@ export default function ReviewReducer(prevState={}, action){
             delete newState[parseInt(action.reviewId)]
             return newState;
         default:
-            return newState
+            return prevState
     }
 }

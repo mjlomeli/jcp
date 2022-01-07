@@ -22,6 +22,6 @@ export default function CartItemReducer(prevState={}, action){
             delete newState[parseInt(action.cartItemId)]
             return newState;
         default:
-            return newState
+            return prevState
     }
 }

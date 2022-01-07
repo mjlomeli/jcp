@@ -22,6 +22,6 @@ export default function FavoriteReducer(prevState={}, action){
             delete newState[parseInt(action.favoriteId)]
             return newState;
         default:
-            return newState
+            return prevState
     }
 }

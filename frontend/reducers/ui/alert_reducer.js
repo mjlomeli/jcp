@@ -13,7 +13,7 @@ export default function AlertReducer(prevState={}, action){
         case REMOVE_ALERT:
             return {};
         default:
-            return newState
+            return prevState
     }
 }
 

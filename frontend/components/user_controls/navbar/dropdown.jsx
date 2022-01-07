@@ -6,7 +6,7 @@ import {
     HashRouter
 } from 'react-router-dom';
 import React from 'react';
-import '../../themes/header_template/navbar.css'
+import '../../themes/header_template/navigation_bar.css'
 import {isHTML} from '../../../utils/component_utils'
 
 
@@ -60,32 +60,39 @@ export class DropdownLayout extends React.Component {
     }
 
     onMouseEnter(e) {
-        if (!this.usingDefaultClass && !this.classHeaderHover) return;
+        if (!this.dropper.current) return;
+        if (!this.usingDefaultClass && !this.classHeaderHover)
+            this.dropper.current.style.display = "block";
 
         if (this.usingDefaultClass) {
             let headerStyle = {...this.state.headerStyle, ...{backgroundColor: "red"}}
             let dropperStyle = {...this.state.dropperStyle, ...{display: "block"}}
             this.setState({headerStyle, dropperStyle})
         } else {
-            this.header.current.classList.toggle(this.classHeaderHover);
+            if (this.classHeaderHover !== '')
+                this.header.current.classList.toggle(this.classHeaderHover);
             this.dropper.current.style.display = "block";
         }
     }
 
     onMouseLeave(e) {
-        if (!this.usingDefaultClass && !this.classHeaderHover) return;
+        if (!this.dropper.current) return;
+        if (!this.usingDefaultClass && !this.classHeaderHover)
+            this.dropper.current.style.display = "none";
 
         if (this.usingDefaultClass) {
             let headerStyle = {...this.state.headerStyle, ...{backgroundColor: ""}}
             let dropperStyle = {...this.state.dropperStyle, ...{display: "none"}}
             this.setState({headerStyle, dropperStyle})
         } else {
-            this.header.current.classList.toggle(this.classHeaderHover);
+            if (this.classHeaderHover !== '')
+                this.header.current.classList.toggle(this.classHeaderHover);
             this.dropper.current.style.display = "none";
         }
     }
 
     onMouseEnterLink(e) {
+        if (!e.currentTarget) return;
         if (!this.usingDefaultClass && !this.classLinksHover) return;
 
         if (this.usingDefaultClass)
@@ -95,6 +102,7 @@ export class DropdownLayout extends React.Component {
     }
 
     onMouseLeaveLink(e) {
+        if (!e.currentTarget) return;
         if (!this.usingDefaultClass && !this.classLinksHover) return;
 
         if (this.usingDefaultClass)
@@ -214,7 +222,6 @@ export class DropdownLayout extends React.Component {
     }
 
     render() {
-
         return <>
             <div className={`${this.className}`} style={this.#style}
                  onMouseEnter={this.onmouseenter}

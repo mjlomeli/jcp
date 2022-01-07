@@ -63,7 +63,7 @@ export function reducerImages(prevState={}, action){
             delete newState[parseInt(action.imageId)]
             return newState;
         default:
-            return newState
+            return prevState
     }
 }
 
@@ -120,7 +120,7 @@ export function reducerGroupImages(prevState={}, action){
             })
             return newState;
         default:
-            return newState
+            return prevState
     }
 }
 

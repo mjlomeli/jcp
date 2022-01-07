@@ -22,6 +22,6 @@ export default function ProductReducer(prevState={}, action){
             delete newState[parseInt(action.productId)]
             return newState;
         default:
-            return newState
+            return prevState
     }
 }

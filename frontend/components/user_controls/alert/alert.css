@@ -19,6 +19,7 @@
     left: 25%;
     bottom:2.5%;
     animation: 1s ease 0s 1 slideUpFromBelow;
+    z-index: 100;
 }
 
 @keyframes slideUpFromBelow {
@@ -50,8 +51,8 @@
 }
 
 .alert-error {
-    background-color: rgba(217, 129, 129, 0.69);
-    border-color: rgba(250, 146, 129, 0.85);
+    background-color: rgba(217, 129, 129, 1);
+    border-color: rgba(250, 146, 129, 1);
     color: #770f01;
 }
 

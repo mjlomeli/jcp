@@ -6,7 +6,6 @@ import {
     Link,
     HashRouter
 } from 'react-router-dom';
-import {createLogin, createRegister, deleteModal} from "../../../actions/ui_modal_action";
 import {connect} from "react-redux";
 import LoginModal from "./login_modal";
 import RegisterModal from "./register_modal";
@@ -20,9 +19,6 @@ const mapStateToProps = (state, ownProps) =>{
 };
 
 const mapDispatchToProps = dispatch => ({
-    createLogin: () => dispatch(createLogin()),
-    createRegister: () => dispatch(createRegister()),
-    deleteModal: () => dispatch(deleteModal())
 });
 
 class Modal extends React.Component {

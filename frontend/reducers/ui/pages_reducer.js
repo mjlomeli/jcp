@@ -15,6 +15,6 @@ export default function PageReducer(prevState=defaultPageReducer, action){
             newState[action.reducer][action.id] = {...newState[action.reducer][action.id], ...action.ui};
             return newState;
         default:
-            return newState
+            return prevState
     }
 }

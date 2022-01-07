@@ -28,7 +28,7 @@ function findImage(product){
 
 
 const mapStateToProps = (state, ownProps) =>{
-    let productId = Product.findIDFromProps(ownProps);
+    let productId = Product.findIDFromProps(ownProps) || 1;
     let products = state.entities.products;
     let product = Product.findById(productId);
     let images = state.entities.groupImages;
@@ -183,9 +183,6 @@ class CardListing extends React.Component {
         return <Link to={`/product/${productId}`} style={{textDecoration: 'none'}}>
             <Tags tag={tag} tags={tags} />
         </Link>
-    }
-
-    componentDidMount() {
     }
 
     shouldComponentUpdate(nextProps, nextState, nextContext) {

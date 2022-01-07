@@ -11,6 +11,7 @@ import GridLayout from "../grid_layout/grid_layout";
 import {deleteModal} from "../../../actions/ui_modal_action";
 import {createUser, createSession} from "../../../actions/session_action";
 import {connect} from "react-redux";
+import {notification} from "../../../actions/alert_action";
 
 
 const mapStateToProps = (state, ownProps) =>{
@@ -19,6 +20,7 @@ const mapStateToProps = (state, ownProps) =>{
 };
 
 const mapDispatchToProps = dispatch => ({
+    notification: (message) => dispatch(notification(message)),
     deleteModal: () => dispatch(deleteModal()),
     createUser: (user) => dispatch(createUser(user)),
     createSession: (user) => dispatch(createSession(user))
@@ -46,8 +48,13 @@ class RegisterModal extends React.Component {
                     this.props.createUser(user);
                     break;
                 case "google":
+                    this.props.notification("Google login coming soon!");
                     break;
                 case "apple":
+                    this.props.notification("Apple login coming soon!");
+                    break;
+                case "facebook":
+                    this.props.notification("Facebook login coming soon!");
                     break;
                 case "demo":
                     this.props.createSession({email: "demo@email.com", password: "password"});

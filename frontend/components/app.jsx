@@ -19,7 +19,7 @@ import RegisterModal from "./user_controls/modal/register_modal"
 import LoginModal from "./user_controls/modal/login_modal"
 
 
-import HomePage from "./pages/home_page";
+// import HomePage from "./pages/home_page";
 // import ProductsPage from "./pages/products_page";
 // import ProductPage from "./pages/product_page";
 // import CartPage from "./pages/cart_page";
@@ -33,15 +33,17 @@ import HeaderTemplate from "./themes/header_template/header_template";
 // import CartTemplate from "./themes/cart_template/cart_template";
 
 // import Rating from "./user_controls/rating/rating";
-import CartItem from "./user_controls/cart_item/cart_item";
-import PaymentSelection from "./user_controls/payment_selection/payment_selection";
-import CardFeatured from "./user_controls/card_featured/card_featured";
-import CardListing from "./user_controls/card_listing/card_listing";
+// import CartItem from "./user_controls/cart_item/cart_item";
+// import PaymentSelection from "./user_controls/payment_selection/payment_selection";
+// import CardFeatured from "./user_controls/card_featured/card_featured";
+// import CardListing from "./user_controls/card_listing/card_listing";
 // import CardThumbnail from "./user_controls/card_thumbnail/card_thumbnail";
 // import CircularThumbnail from "./user_controls/circular_thumbnail/circular_thumbnail";
 // import ProductsList from "./user_controls/product_list/products_list";
 // import Gallery from "./user_controls/gallery/gallery";
 // import SearchBar from "./user_controls/searchbar/searchbar";
+import {NavigationBar} from "./themes/header_template/navigation_bar";
+import ProfileTool from "./themes/header_template/profile_tool"
 
 // import FlowLayout from "./user_controls/flow_layout/flow_layout";
 // import GridLayout from "./user_controls/grid_layout/grid_layout";
@@ -70,7 +72,7 @@ class App extends React.Component {
                 <AuthRoute exact path="/signup" component={SignUpFormContainer}/>
                 <AuthRoute exact path="/demo" component={DemoLogInFormContainer}/>
 
-                <Route exact path="/home_page" component={HomePage} />
+                {/*<Route exact path="/home_page" component={HomePage} />*/}
                 {/*<Route exact path="/products_page" component={ProductsPage} />*/}
                 {/*<Route exact path="/product_page" component={ProductPage} />*/}
                 {/*<ProtectedRoute exact path="/cart" component={CartPage} />*/}
@@ -83,27 +85,29 @@ class App extends React.Component {
                 {/*<ProtectedRoute exact path="/cart_template" component={CartTemplate} />*/}
 
                 {/*<Route exact path="/products_list" component={ProductsList} />*/}
-                <Route exact path="/payment_selection" component={PaymentSelection} />
-                <Route exact path="/payment_selection/:id" component={PaymentSelection} />
-                <Route exact path="/cart_item" component={CartItem}/>
-                <Route exact path="/cart_item/:id" component={CartItem}/>
-                <Route exact path="/register_modal" component={RegisterModal}/>
-                <Route exact path="/login_modal" component={LoginModal}/>
-                <Route exact path="/modal" component={Modal} />
+                {/*<Route exact path="/payment_selection" component={PaymentSelection} />*/}
+                {/*<Route exact path="/payment_selection/:id" component={PaymentSelection} />*/}
+                {/*<Route exact path="/cart_item" component={CartItem}/>*/}
+                {/*<Route exact path="/cart_item/:id" component={CartItem}/>*/}
+                {/*<Route exact path="/register_modal" component={RegisterModal}/>*/}
+                {/*<Route exact path="/login_modal" component={LoginModal}/>*/}
+                {/*<Route exact path="/modal" component={Modal} />*/}
                 {/*<Route exact path="/gallery" component={Gallery} />*/}
                 {/*<Route exact path="/gallery/:id" component={Gallery} />*/}
                 {/*<Route exact path="/rating" component={Rating} />*/}
                 {/*<Route exact path="/searchbar" component={SearchBar} />*/}
+                <Route exact path="/navigation_bar" component={NavigationBar} />
+                <Route exact path="/profile_tool" component={ProfileTool} />
                 {/*<Route exact path="/rating" component={Rating} />*/}
                 {/*<ProtectedRoute exact path="/user/:id" component={ProfileContainer} />*/}
                 {/*<Route exact path="/circular_thumbnail" component={CircularThumbnail} />*/}
                 {/*<Route exact path="/circular_thumbnail/:id" component={CircularThumbnail} />*/}
                 {/*<Route exact path="/card_thumbnail" component={CardThumbnail} />*/}
                 {/*<Route exact path="/card_thumbnail/:id" component={CardThumbnail} />*/}
-                <Route exact path="/card_listing/:id" component={CardListing} />
-                <Route exact path="/card_featured" component={CardFeatured} />
-                <Route exact path="/card_featured/:id" component={CardFeatured} />
-                <Route exact path="/card_listing" component={CardListing} />
+                {/*<Route exact path="/card_listing/:id" component={CardListing} />*/}
+                {/*<Route exact path="/card_featured" component={CardFeatured} />*/}
+                {/*<Route exact path="/card_featured/:id" component={CardFeatured} />*/}
+                {/*<Route exact path="/card_listing" component={CardListing} />*/}
 
                 {/*<Route exact path="/flow_layout" component={FlowLayout} />*/}
                 {/*<Route exact path="/grid_layout/:id" component={GridLayout} />*/}
