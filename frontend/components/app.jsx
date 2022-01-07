@@ -8,15 +8,9 @@ import {
     HashRouter
 } from 'react-router-dom';
 
-import GreetingContainer from './greeting/greeting_container';
 import { AuthRoute, ProtectedRoute } from '../utils/route_util';
-import SignUpFormContainer from './session_form/signup_form_container';
-import LogInFormContainer from './session_form/login_form_container';
-import DemoLogInFormContainer from './session_form/demo_form_container';
 import Alert from './../components/user_controls/alert/alert'
 import Modal from "./user_controls/modal/modal"
-import RegisterModal from "./user_controls/modal/register_modal"
-import LoginModal from "./user_controls/modal/login_modal"
 
 
 // import HomePage from "./pages/home_page";
@@ -62,22 +56,18 @@ class App extends React.Component {
             <Modal />
             {/*DON'T REMOVE*/}
             <header>
-                <Link to="/home" className="header-link">
-                    <h1>JCP</h1>
-                </Link>
-                <GreetingContainer/>
+                <HeaderTemplate />
             </header>
             <Switch>
-                <AuthRoute exact path="/login" component={LogInFormContainer}/>
-                <AuthRoute exact path="/signup" component={SignUpFormContainer}/>
-                <AuthRoute exact path="/demo" component={DemoLogInFormContainer}/>
+                {/*<AuthRoute exact path="/login" component={LogInFormContainer}/>*/}
+                {/*<AuthRoute exact path="/signup" component={SignUpFormContainer}/>*/}
+                {/*<AuthRoute exact path="/demo" component={DemoLogInFormContainer}/>*/}
 
                 {/*<Route exact path="/home_page" component={HomePage} />*/}
                 {/*<Route exact path="/products_page" component={ProductsPage} />*/}
                 {/*<Route exact path="/product_page" component={ProductPage} />*/}
                 {/*<ProtectedRoute exact path="/cart" component={CartPage} />*/}
 
-                <Route exact path="/header_template" component={HeaderTemplate} />
                 {/*<Route exact path="/home_body_template" component={HomeBodyTemplate}/>*/}
                 {/*<Route exact path="/footer" component={FooterTemplate} />*/}
                 {/*<Route exact path="/product/:id" component={ProductTemplate} />*/}

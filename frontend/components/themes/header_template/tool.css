@@ -1,6 +1,13 @@
 .tool-buttons {
     display: flex;
-    align-content: center;
+    align-content: flex-end;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+.tool-button-elements {
+    display: flex;
+    align-content: flex-end;
 }
 
 .tool-button {
@@ -80,13 +87,12 @@
 .tool-bar-grid {
     display: flex;
     align-content: center;
-    justify-content: center;
+    justify-content: space-evenly;
     width: 100%;
 }
 
 .tool-bar-grid-elements {
     display: flex;
-    justify-content: space-evenly;
 }
 
 .tool-account-header {

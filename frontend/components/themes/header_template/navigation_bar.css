@@ -10,7 +10,7 @@
 /* Links on the navbar (not dropdown buttons) */
 .navbar-link {
     width: 100%;
-    font-size: 0.70em;
+    font-size: 0.75em;
     letter-spacing: 0.025em;
     line-height: 1.5em;
     word-wrap: break-word;
@@ -107,16 +107,4 @@
 .dropper-hover {
     display: block;
     flex-direction: column;
-}
-
-.header-grid {
-    padding-top: 2em;
-    width: 100%;
-}
-
-.header-grid-elements {
-    display: flex;
-    justify-content: space-evenly;
-    margin-top: auto;
-    margin-bottom: auto;
 }
