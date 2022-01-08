@@ -13,17 +13,10 @@ import {fetchProduct, resetProductError} from "../../../actions/product_action";
 import {fetchImageByProductId} from "../../../actions/image_action";
 import {Product} from "../../../lib/product";
 import {Image} from "../../../lib/image";
+import {urlPath} from "../../../utils/tools";
 
-let defaultProductId = 1133353182;
+let defaultProductId = 1;
 
-function findProductId(ownProps){
-    if (!ownProps) return null;
-    if (ownProps.productId)
-        return parseInt(ownProps.productId);
-    else if (ownProps.match && ownProps.match.params && ownProps.match.params.id)
-        return parseInt(ownProps.match.params.id);
-    return null;
-}
 
 function findImage(product){
     if (!product) return null;
@@ -35,7 +28,7 @@ function findImage(product){
 }
 
 const mapStateToProps = (state, ownProps) => {
-    let productId = findProductId(ownProps);
+    let productId = Product.findIDFromProps(ownProps);
     let products = state.entities.products;
     let product = Product.findById(productId);
 
@@ -123,19 +116,29 @@ class CardThumbnail extends React.Component {
     }
 
     shouldComponentUpdate(nextProps, nextState, nextContext) {
-        let productId = findProductId(this.props);
-        if (Product.hasProductError(productId)) {
-            this.props.history.push(`/card_thumbnail/${defaultProductId}`);
-            this.props.resetProductError(this.props.productId);
+        let nextProductId = Product.findIDFromProps(nextProps);
+        let prevProductId = Product.findIDFromProps(this.props);
+
+        if (nextProductId !== prevProductId)
+            return true;
+        else if (Product.hasError(nextProductId) && urlPath(this.props) === "/card_thumbnail/:id") {
+            this.props.history.push(`/card_listing/${defaultProductId}`);
+            this.props.resetProductError(nextProductId);
             return false;
         }
-        return true;
+        else if (!nextProductId || !nextProps.product || !nextProps.image)
+            return false;
+        else if (Product.hasError(nextProductId))
+            return false;
+        else if (Image.hasError(nextProps.image.id))
+            return false;
+        return true
     }
 
     resolve(){
         if (!this.props.product)
             this.props.fetchProduct(this.props.productId)
-        else if (!this.props.image)
+        if (!this.props.image)
             this.props.fetchImageByProductId(this.props.productId)
         return null;
     }

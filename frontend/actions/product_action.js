@@ -155,3 +155,10 @@ window.ProductAction = {
     updateProduct,
     deleteProduct
 }
+
+window.ProductReceivers = {
+    receiveProducts,
+    receiveProduct,
+    receiveProductsError,
+    receiveProductError
+}

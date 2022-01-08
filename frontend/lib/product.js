@@ -9,14 +9,21 @@ import {debug, urlId} from "../utils/tools";
 export class Product {
 
     static DEFAULT_ID = 1;
-    static default(){ return Product.findById(Product.DEFAULT_ID); }
 
-    static findIDFromProps(props){
-        let id = urlId(props) || props.productId;
-        if (id)
-            return parseInt(id);
+    static default() {
+        let product = Product.findById(Product.DEFAULT_ID);
+        if (product)
+            return product;
+        Store.store.dispatch(ProductAction.fetchProduct(Product.DEFAULT_ID));
+        return null;
+    }
+
+    static findIDFromProps(props) {
+        let id = parseInt(urlId(props) || props.productId);
+        if (Product.hasError(id))
+            return Product.DEFAULT_ID;
         else
-            return null;
+            return id || null;
     }
 
     static error(productId) {
@@ -136,7 +143,7 @@ export class Product {
         return images;
     }
 
-    imagesMedium(){
+    imagesMedium() {
         let images = [];
         this.image_ids.forEach(id => {
             let groupId = parseInt(id);
@@ -150,7 +157,7 @@ export class Product {
         return images;
     }
 
-    imagesLarge(){
+    imagesLarge() {
         let images = [];
         this.image_ids.forEach(id => {
             Object.entries(Image.findByGroupId(parseInt(id))).forEach(pair => {
@@ -162,7 +169,7 @@ export class Product {
         return images;
     }
 
-    imagesFull(){
+    imagesFull() {
         let images = [];
         this.image_ids.forEach(id => {
             Object.entries(Image.findByGroupId(parseInt(id))).forEach(pair => {
@@ -174,7 +181,7 @@ export class Product {
         return images;
     }
 
-    toString(){
+    toString() {
         return `<Product(title: ${this.title}, price: ${this.price}, image_ids: ${this.image_ids})>`
     }
 

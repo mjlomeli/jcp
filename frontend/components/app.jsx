@@ -29,10 +29,10 @@ import HeaderTemplate from "./themes/header_template/header_template";
 // import Rating from "./user_controls/rating/rating";
 // import CartItem from "./user_controls/cart_item/cart_item";
 // import PaymentSelection from "./user_controls/payment_selection/payment_selection";
-// import CardFeatured from "./user_controls/card_featured/card_featured";
-// import CardListing from "./user_controls/card_listing/card_listing";
-// import CardThumbnail from "./user_controls/card_thumbnail/card_thumbnail";
-// import CircularThumbnail from "./user_controls/circular_thumbnail/circular_thumbnail";
+import CardFeatured from "./user_controls/card_featured/card_featured";
+import CardListing from "./user_controls/card_listing/card_listing";
+import CardThumbnail from "./user_controls/card_thumbnail/card_thumbnail";
+import CircularThumbnail from "./user_controls/circular_thumbnail/circular_thumbnail";
 // import ProductsList from "./user_controls/product_list/products_list";
 // import Gallery from "./user_controls/gallery/gallery";
 // import SearchBar from "./user_controls/searchbar/searchbar";
@@ -90,14 +90,14 @@ class App extends React.Component {
                 <Route exact path="/profile_tool" component={ProfileTool} />
                 {/*<Route exact path="/rating" component={Rating} />*/}
                 {/*<ProtectedRoute exact path="/user/:id" component={ProfileContainer} />*/}
-                {/*<Route exact path="/circular_thumbnail" component={CircularThumbnail} />*/}
-                {/*<Route exact path="/circular_thumbnail/:id" component={CircularThumbnail} />*/}
-                {/*<Route exact path="/card_thumbnail" component={CardThumbnail} />*/}
-                {/*<Route exact path="/card_thumbnail/:id" component={CardThumbnail} />*/}
-                {/*<Route exact path="/card_listing/:id" component={CardListing} />*/}
-                {/*<Route exact path="/card_featured" component={CardFeatured} />*/}
-                {/*<Route exact path="/card_featured/:id" component={CardFeatured} />*/}
-                {/*<Route exact path="/card_listing" component={CardListing} />*/}
+                <Route exact path="/circular_thumbnail" component={CircularThumbnail} />
+                <Route exact path="/circular_thumbnail/:id" component={CircularThumbnail} />
+                <Route exact path="/card_thumbnail" component={CardThumbnail} />
+                <Route exact path="/card_thumbnail/:id" component={CardThumbnail} />
+                <Route exact path="/card_listing/:id" component={CardListing} />
+                <Route exact path="/card_listing" component={CardListing} />
+                <Route exact path="/card_featured" component={CardFeatured} />
+                <Route exact path="/card_featured/:id" component={CardFeatured} />
 
                 {/*<Route exact path="/flow_layout" component={FlowLayout} />*/}
                 {/*<Route exact path="/grid_layout/:id" component={GridLayout} />*/}

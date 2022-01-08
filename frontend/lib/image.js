@@ -3,15 +3,27 @@ import {debug, urlId} from "../utils/tools";
 import {isEmpty, urlParams} from "../utils/tools";
 
 export class Image {
-    static DEFAULT_ID = 1;
-    static default(){ return Image.findById(Image.DEFAULT_ID); }
+    static DEFAULT = 1;
+    static defaultProduct(){
+        let product = Product.findById(Product.DEFAULT_ID);
+        if (!!product && !!product.imagesFull().length)
+            return product.imagesFull();
+        Promise.resolve()
+                .then(() => {if (!product) throw new Error("Need to fetch product instead")})
+                .catch(() => Store.store.dispatch(ProductAction.fetchProduct(Product.DEFAULT_ID)))
+                .then(() => {
+                    product = Product.findById(Product.DEFAULT_ID);
+                    if (!!product.imagesFull()) throw new Error("Need to fetch images")
+                }).catch(() => Store.store.dispatch(ImageAction.fetchImageByProductId(Product.DEFAULT_ID)))
+        return null;
+    }
 
     static findIDFromProps(props){
-        let id = urlId(props) || props.imageId;
-        if (id)
-            return parseInt(id);
+        let id = parseInt(urlId(props) || props.imageId);
+        if (Image.hasError(id))
+            return Image.DEFAULT;
         else
-            return null;
+            return id || null;
     }
 
     static exists(id) {

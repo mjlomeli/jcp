@@ -6,17 +6,9 @@ import Rating from "../rating/rating";
 import {Product} from "../../../lib/product";
 import {fetchProduct, resetProductError} from "../../../actions/product_action";
 import {fetchImageByProductId} from "../../../actions/image_action";
+import {urlPath} from "../../../utils/tools";
+import {Image} from "../../../lib/image";
 
-const defaultProductId = 1133353182;
-
-function findProductId(ownProps){
-    if (!ownProps) return null;
-    if (ownProps.productId)
-        return parseInt(ownProps.productId);
-    else if (ownProps.match && ownProps.match.params && ownProps.match.params.id)
-        return parseInt(ownProps.match.params.id);
-    return null;
-}
 
 function findImage(product){
     if (!product) return null;
@@ -27,8 +19,10 @@ function findImage(product){
     return image;
 }
 
+const defaultProductId = 1;
+
 const mapStateToProps = (state, ownProps) =>{
-    let productId = findProductId(ownProps);
+    let productId = Product.findIDFromProps(ownProps) || defaultProductId;
     let products = state.entities.products;
     let product = Product.findById(productId);
 
@@ -152,12 +146,22 @@ class CardFeatured extends React.Component {
     }
 
     shouldComponentUpdate(nextProps, nextState, nextContext) {
-        let productId = findProductId(this.props);
-        if (Product.hasProductError(productId)) {
-            this.props.history.push(`/card_featured/${defaultProductId}`);
-            this.props.resetProductError(this.props.productId);
+        let nextProductId = Product.findIDFromProps(nextProps);
+        let prevProductId = Product.findIDFromProps(this.props);
+
+        if (nextProductId !== prevProductId)
+            return true;
+        else if (Product.hasError(nextProductId) && urlPath(this.props) === "/card_featured/:id") {
+            this.props.history.push(`/card_listing/1`);
+            this.props.resetProductError(nextProductId);
             return false;
         }
+        else if (!nextProductId || !nextProps.product || !nextProps.image)
+            return false;
+        else if (Product.hasError(nextProductId))
+            return false;
+        else if (Image.hasError(nextProps.image.id))
+            return false;
         return true;
     }
 
@@ -168,7 +172,7 @@ class CardFeatured extends React.Component {
     resolve(){
         if (!this.props.product)
             this.props.fetchProduct(this.props.productId)
-        else if (!this.props.image)
+        if (!this.props.image)
             this.props.fetchImageByProductId(this.props.productId)
         return null;
     }

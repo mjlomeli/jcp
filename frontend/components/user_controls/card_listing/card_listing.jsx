@@ -15,24 +15,31 @@ import {fetchImageByProductId} from "../../../actions/image_action";
 import {connect} from "react-redux";
 import {Product} from "../../../lib/product";
 import {Image} from "../../../lib/image";
-import {isEmpty, urlId, urlPath} from "../../../utils/tools";
+import {urlPath} from "../../../utils/tools";
 
-function findImage(product){
+function findImage(product) {
     if (!product) return null;
     let images = product.imagesMedium();
     if (!images || images.length === 0) return null;
     let image = null;
-    images.forEach(img => { if (!!img) return image = img; })
+    images.forEach(img => {
+        if (!!img) return image = img;
+    })
     return image;
+
 }
 
 
-const mapStateToProps = (state, ownProps) =>{
-    let productId = Product.findIDFromProps(ownProps) || 1;
+const mapStateToProps = (state, ownProps) => {
+    let productId = Product.findIDFromProps(ownProps);
     let products = state.entities.products;
     let product = Product.findById(productId);
     let images = state.entities.groupImages;
     let image = findImage(product);
+
+    console.log(`[mapStateToProps]: productId = ${productId}`);
+    console.log(`[mapStateToProps]: product = ${product && product.toString() || null}`);
+    console.log(`[mapStateToProps]: image = ${image && image.toString() || null}`);
 
     return {
         products: products,
@@ -91,7 +98,7 @@ class Tags extends React.Component {
         super(props);
     }
 
-    tagComponent(label, bgcolor, key){
+    tagComponent(label, bgcolor, key) {
         return <div className="card-listing-tags" style={{backgroundColor: bgcolor}} key={key}>
             <label className="card-listing-tags-label">{label}</label>
         </div>
@@ -119,28 +126,30 @@ class CardListing extends React.Component {
         this.onclickfavorite = this.onClickFavorite.bind(this);
     }
 
-    resize(length=65) {
+    resize(length = 65) {
         let title = this.props.product.title;
         if (title.length > length)
-            return `${title.slice(0, length-3)}...`
+            return `${title.slice(0, length - 3)}...`
         return title;
     }
 
-    onClickFavorite(e){
+    onClickFavorite(e) {
         //TODO: save product id to favorites
         this.favoriteFill.current.classList.toggle("card-listing-favored");
     }
 
-    favoriteComponent(){
+    favoriteComponent() {
         return <div className="card-listing-favorite" onClick={this.onclickfavorite}>
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="51 166.5 510 459">
-                <path d="M306,625.5c-42.102,0-255-160.956-255-306c0-87.234,60.282-153,140.25-153c43.391,2.685,84.259,21.312,114.75,52.301 c30.548-30.907,71.383-49.519,114.75-52.301c79.968,0,140.25,65.766,140.25,153C561,464.544,348.101,625.5,306,625.5z M191.25,217.5 c-51.714,0-89.25,42.917-89.25,102c0,104.754,164.016,237.787,204,255c39.882-16.754,204-148.716,204-255 c0-59.083-37.536-102-89.25-102c-50.465,0-94.35,53.678-94.886,54.238L305.77,296.55l-19.763-24.989 C285.243,270.617,242.25,217.5,191.25,217.5z"/>
-                <path ref={this.favoriteFill} fill="none" d="M306,625.5c-42.102,0-255-160.956-255-306c0-87.234,60.282-153,140.25-153 c43.391,2.685,84.259,21.312,114.75,52.301c30.548-30.907,71.383-49.519,114.75-52.301c79.968,0,140.25,65.766,140.25,153 C561,464.544,348.101,625.5,306,625.5z"/>
+                <path
+                    d="M306,625.5c-42.102,0-255-160.956-255-306c0-87.234,60.282-153,140.25-153c43.391,2.685,84.259,21.312,114.75,52.301 c30.548-30.907,71.383-49.519,114.75-52.301c79.968,0,140.25,65.766,140.25,153C561,464.544,348.101,625.5,306,625.5z M191.25,217.5 c-51.714,0-89.25,42.917-89.25,102c0,104.754,164.016,237.787,204,255c39.882-16.754,204-148.716,204-255 c0-59.083-37.536-102-89.25-102c-50.465,0-94.35,53.678-94.886,54.238L305.77,296.55l-19.763-24.989 C285.243,270.617,242.25,217.5,191.25,217.5z"/>
+                <path ref={this.favoriteFill} fill="none"
+                      d="M306,625.5c-42.102,0-255-160.956-255-306c0-87.234,60.282-153,140.25-153 c43.391,2.685,84.259,21.312,114.75,52.301c30.548-30.907,71.383-49.519,114.75-52.301c79.968,0,140.25,65.766,140.25,153 C561,464.544,348.101,625.5,306,625.5z"/>
             </svg>
         </div>
     }
 
-    imageComponent(){
+    imageComponent() {
         let productId = parseInt(this.props.product.id);
         let image = this.props.image;
         return <div>
@@ -153,7 +162,7 @@ class CardListing extends React.Component {
         </div>
     }
 
-    titleComponent(){
+    titleComponent() {
         let productId = parseInt(this.props.product.id);
         let title = this.props.product.title;
         return <Link to={`/product/${productId}`} style={{textDecoration: 'none'}}>
@@ -161,14 +170,14 @@ class CardListing extends React.Component {
         </Link>
     }
 
-    ratingComponent(rating=Math.random() * 5, count=Math.floor(Math.random() * 100)){
+    ratingComponent(rating = Math.random() * 5, count = Math.floor(Math.random() * 100)) {
         let productId = parseInt(this.props.product.id);
         return <Link to={`/product/${productId}`} style={{textDecoration: 'none'}}>
             <Rating rating={rating} count={count} disabled={true}/>
         </Link>
     }
 
-    priceComponent(discount=Math.random() / 2){
+    priceComponent(discount = Math.random() / 2) {
         let productId = parseInt(this.props.product.id);
         let price = this.props.product.price;
         return <Link to={`/product/${productId}`} style={{textDecoration: 'none'}}>
@@ -176,12 +185,12 @@ class CardListing extends React.Component {
         </Link>
     }
 
-    tagComponent(tag="free shipping", tags=[]){
+    tagComponent(tag = "free shipping", tags = []) {
         if (!tag && !tags.length)
             return null;
         let productId = parseInt(this.props.product.id);
         return <Link to={`/product/${productId}`} style={{textDecoration: 'none'}}>
-            <Tags tag={tag} tags={tags} />
+            <Tags tag={tag} tags={tags}/>
         </Link>
     }
 
@@ -189,15 +198,20 @@ class CardListing extends React.Component {
         let nextProductId = Product.findIDFromProps(nextProps);
         let prevProductId = Product.findIDFromProps(this.props);
 
-        if (nextProductId !== prevProductId)
-            return true;
+        console.log(`[shouldUpdate]: prevProductId = ${prevProductId}`);
+        console.log(`[shouldUpdate]: nextProductId = ${nextProductId}`);
+        console.log(`[shouldUpdate]: hasError(prev) = ${Product.hasError(prevProductId)}`);
+        console.log(`[shouldUpdate]: hasError(next) = ${Product.hasError(nextProductId)}`);
+        console.log(`[shouldUpdate]: !!prevProduct = ${!!this.props.product}`);
+        console.log(`[shouldUpdate]: !!nextProduct = ${!!nextProps.product}`);
 
-        if (Product.hasError(nextProductId) && urlPath(this.props) === "/card_listing/:id") {
-            this.props.history.push(`/card_listing/1`);
-            this.props.resetProductError(nextProductId);
+        console.log(`[shouldUpdate]: ===> ${((!nextProductId || !nextProps.product 
+            || !nextProps.image) || Product.hasError(nextProductId) || Image.hasError(nextProps.image.id) ||
+        nextProductId === prevProductId) && "false" || "true"}`);
+
+        if (nextProductId === prevProductId)
             return false;
-        }
-        if (!nextProductId || !nextProps.product || !nextProps.image)
+        else if (!nextProductId || !nextProps.product || !nextProps.image)
             return false;
         else if (Product.hasError(nextProductId))
             return false;
@@ -206,16 +220,60 @@ class CardListing extends React.Component {
         return true
     }
 
-    isRenderValid(){
+    isRenderValid() {
         return !!this.props.product && !!this.props.image;
     }
 
-    resolve(){
+    resolveProduct(productId) {
+        this.props.fetchProduct(productId).then(() => {}, e => {
+            console.log("[resolveProduct] productId:", productId)
+            //The data flat out fails and
+            if (urlPath(this.props) === "/card_listing/:id") {
+                console.log("\tRedirecting...")
+                // redirects to the default path if the current path is of card_listing/:id
+                //this.props.history.push(`/card_listing/1`);
+                this.props.resetProductError(productId);
+            }
+            // its not from a path so its a raw component. So
+            // doesn't reset the ProductError => this.props.resetProductError(productId);
+            // Product error existing means I'll be using a default value.
+
+            // Additionally, check that the default already exists in memory, else fetch it.
+            if (!Product.default()) {
+                console.log("\tNeed to fetch default product...")
+                this.props.fetchProduct(Product.DEFAULT_ID);
+            }
+        })
+    }
+
+    resolveImage(productId) {
+        this.props.fetchImageByProductId(productId).then(() => {}, e => {
+            console.log("[resolveImage] productId:", productId)
+            //No image was found. Must use a default Image.
+            //Doesn't reset the error => this.props.resetImageError(imageId); TODO: not sure if correct resetImageError
+            //So it can be used as an indicator to swap for a "default" image.
+
+            //Additionally, check that the default already exists in memory, else fetch it.
+            if (!Image.defaultProduct()){
+                console.log("\tNeed to fetch default image...")
+                this.props.fetchImageByProductId(Product.DEFAULT_ID);
+            }
+
+
+        })
+    }
+
+    resolve() {
         let productId = Product.findIDFromProps(this.props);
+
+        if (!productId && urlPath(this.props) === "/card_listing/:id") {
+            console.log("Have to redirect you.")
+            //this.props.history.push(`/card_listing/1`);
+        }
         if (!this.props.product)
-            this.props.fetchProduct(productId)
+            this.resolveProduct(productId);
         if (!this.props.image)
-            this.props.fetchImageByProductId(productId)
+            this.resolveImage(productId);
         return null;
     }
 
@@ -233,9 +291,9 @@ class CardListing extends React.Component {
         }
 
         return <GridLayout areas={areas}
-                        components={components}
-                        className="global-card-listing-grid"
-                        classElements="global-card-listing-items"/>
+                           components={components}
+                           className="global-card-listing-grid"
+                           classElements="global-card-listing-items"/>
     }
 }
 
