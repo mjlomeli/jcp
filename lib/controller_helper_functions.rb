@@ -1,49 +1,36 @@
 def users_from_params(query)
-  user_id = query[:user_id]
-  user_ids = user_id && [user_id] || query[:user_ids] || []
-  return nil if !user_ids or user_ids.empty?
+  user_ids = query[:user_ids] || []
   User.where(id: user_ids)
 end
 
 def shops_from_params(query)
-  shop_id = query[:shop_id]
-  shop_ids = shop_id && [shop_id] || query[:shop_ids] || []
-  return nil if !shop_ids or shop_ids.empty?
+  shop_ids = query[:shop_ids] || []
   Shop.where(id: shop_ids)
 end
 
 def products_from_params(query)
-  product_id = query[:product_id]
-  product_ids = product_id && [product_id] || query[:product_ids] || []
-  return nil if !product_ids or product_ids.empty?
+  product_ids = query[:product_ids] || []
   Product.where(id: product_ids)
 end
 
 def images_from_params(query)
-  image_id = query[:image_id]
-  image_ids = image_id && [image_id] || query[:image_ids] || []
-  return nil if !image_ids or image_ids.empty?
+  image_ids = query[:image_ids] || []
   Image.where(id: image_ids)
 end
 
 def reviews_from_params(query)
-  review_id = query[:review_id]
-  review_ids = review_id && [review_id] || query[:review_ids] || []
-  return nil if !review_ids or review_ids.empty?
+  review_ids = query[:review_ids] || []
   Review.where(id: review_ids)
 end
 
-def cart_item_from_params(query)
-  cart_item_id = query[:cart_item_id]
-  cart_item_ids = cart_item_id && [cart_item_id] || query[:cart_item_ids] || []
-  return nil if !cart_item_ids or cart_item_ids.empty?
+def cart_items_from_params(query)
+  cart_item_ids = query[:cart_item_ids] || []
   CartItem.where(id: cart_item_ids)
 end
 
-def cart_from_params(query, current_user)
-  user_id = query[:user_id]
-  return nil unless !!user_id and !!current_user and user_id == current_user.id
-  CartItem.where(user_id: user_id)
+def carts_from_params(query)
+  user_ids = query[:user_ids] || []
+  CartItem.where(user_id: user_ids)
 end
 
 def to_array(value)
@@ -78,7 +65,7 @@ end
 def range_from_params(query, model)
   count = model.count
   start = validate_range(query[:start], count)
-  finish = validate_range(query[:finish], count)
+  finish = validate_range(query[:end], count)
   limit = validate_range(query[:limit], count)
 
   start = start || finish && limit && [finish - limit, 0].max || 0

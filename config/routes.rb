@@ -5,12 +5,12 @@ Rails.application.routes.draw do
     namespace :api, defaults: { format: :json } do
       resource :session, only: [:create, :destroy]
 
-      resources :users, only: [:index, :create, :show, :update] do
+      resources :users, only: [:index] do
         resources :reviews, only: [:index]
         resources :cart_items, only: [:index, :create, :destroy, :update]
       end
 
-      resources :products, only: [:index, :create, :show, :update, :destroy] do
+      resources :products, only: [:index] do
         resources :reviews, only: [:index, :create, :update, :destroy]
       end
 
@@ -20,6 +20,25 @@ Rails.application.routes.draw do
       # only for testing
       resources :cart_items, only: [:index]
       resources :reviews, only: [:index]
+
+
+
+      get 'product/:id', to: 'products#show'
+      post 'product', to: 'products#create'
+      patch 'product/:id', to: 'products#update'
+      delete 'product/:id', to: 'products#destroy'
+
+      get 'products/users', to: 'products#from_users'
+      get 'products/users/:id', to: 'products#from_users'
+      get 'products/shops', to: 'products#from_shops'
+      get 'products/shops/:id', to: 'products#from_shops'
+      get 'products/groups', to: 'products#from_groups'
+
+      get 'products/query', to: 'products#query'
+      get 'products/pages', to: 'products#pages'
+      get 'products/listings', to: 'products#listings'
+      get 'products/price_range', to: 'products#price_range'
+      get 'products/popular', to: 'products#popular'
 
       delete 'products', to: 'products#destroys'
     end
