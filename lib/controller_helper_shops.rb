@@ -28,8 +28,6 @@ def fetch_user_shop
 end
 
 def fetch_shop_title
-  puts "query => #{@query}"
-  puts "where => shops.title = '#{@query[:title]}'"
   @shop = Shop.where("shops.title ILIKE ?", "%#{@query[:title]}%")
   if @shop and !@shop.empty?
     render json: @shop

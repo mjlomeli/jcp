@@ -14,7 +14,6 @@ Rails.application.routes.draw do
         resources :reviews, only: [:index, :create, :update, :destroy]
       end
 
-      resources :images
       resources :shops
 
       # only for testing
@@ -22,7 +21,8 @@ Rails.application.routes.draw do
       resources :reviews, only: [:index]
 
 
-
+      ########################################
+      # Products
       get 'product/:id', to: 'products#show'
       post 'product', to: 'products#create'
       patch 'product/:id', to: 'products#update'
@@ -41,6 +41,31 @@ Rails.application.routes.draw do
       get 'products/popular', to: 'products#popular'
 
       delete 'products', to: 'products#destroys'
+
+      #######################################
+      # Images
+      get 'image/:id', to: 'images#show'
+      post 'image', to: 'images#create'
+      patch 'image/:id', to: 'images#update'
+      delete 'image/:id', to: 'images#destroy'
+
+      get 'images/products', to: 'images#from_products'
+      get 'images/users', to: 'images#from_users'
+      get 'images/shops', to: 'images#from_shops'
+      get 'images/groups', to: 'images#from_groups'
+      get 'images/product/:id', to: 'images#from_product'
+      get 'images/shop/:id', to: 'images#from_shop'
+      get 'images/user/:id', to: 'images#from_user'
+
+      get 'images/query', to: 'images#query'
+      get 'images/pages', to: 'images#pages'
+      get 'images/listings', to: 'images#listings'
+      get 'images/price_range', to: 'images#price_range'
+      get 'images/popular', to: 'images#popular'
+
+      delete 'images', to: 'images#destroys'
+
+
     end
 
     # Home_page page route

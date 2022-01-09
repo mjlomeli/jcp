@@ -3,55 +3,49 @@ require 'controller_helper_functions'
 require 'controller_helper_products'
 
 class Api::ProductsController < ApplicationController
-  def index
-    render json: ["idk"]
-  end
-
   def show
-    @query = query_params
-    @products = products_from_params(@query)
-    if @products.empty?
+    @query = {product_ids: [params[:id]]}
+    @product = Product.find_by(id: params[:id])
+    if !@product
       render json: product_locate_error(**@query)
     else
-      render json: to_products_json(products: @products)
+      render json: to_products_json(products: [@product])
     end
   end
 
   def create
-    @query = query_params
-    @product = Product.new(@query)
+    @product = Product.create(product_params)
     if @product.save
       render json: to_products_json(products: [@product])
     else
-      render json: product_error(product: @product)
+      render json: @product.errors.full_messages
     end
   end
 
   def update
-    #TODO: Test using web html
-    @query = query_params
-    products = products_from_params(@query)
-    if products.empty?
+    @query = {product_ids: [params[:id]]}
+    @product = Product.find_by(id: params[:id])
+    if !@product
       render json: product_locate_error(**@query)
     else
-      if products.first.update_attributes(product_params)
-        render json: to_products_json(products: products)
+      if @product.update_attributes(product_params)
+        render json: to_products_json(products: [@product])
       else
-        render json: product_error(products: products)
+        render json: product_error(product: @product)
       end
     end
   end
 
   def destroy
-    @query = query_params
-    products = products_from_params(@query)
-    if products.empty?
+    @query = {product_ids: [params[:id]]}
+    @product = Product.find_by(id: params[:id])
+    if !@product
       render json: product_locate_error(**@query)
     else
-      if products.first.destroy
-        render json: to_products_json(products: products)
+      if @products.destroy
+        render json: to_products_json(products: [@product])
       else
-        render json: product_error(products: products)
+        render json: product_error(product: @product)
       end
     end
   end
@@ -70,7 +64,6 @@ class Api::ProductsController < ApplicationController
           render json: to_products_json(products: @products.where(**@search))
         end
       rescue => e
-        puts e.to_s
         render json: { @query.keys.to_s => ["Could not use product indexing with given params: #{@query.to_s}"] }, status: 400
       end
     end
@@ -187,8 +180,8 @@ class Api::ProductsController < ApplicationController
 
   private
 
-  def query_params
-    query = params.reject { |k, v| %w[format controller action].include?(k) }
+  def query_params(body_params: params)
+    query = body_params.reject { |k, v| %w[format controller action].include?(k) }
     args = []
     query.each do |k, v|
       if %w[start end random limit views num_favorers].include?(k)
@@ -199,6 +192,8 @@ class Api::ProductsController < ApplicationController
         args.push([k.to_sym, ActiveModel::Type::Boolean.new.cast(!!v ? v : false)])
       elsif %w[tags materials taxonomy_paths].include?(k)
         args.push([k.to_sym, to_array(v)])
+
+
       elsif %w[product_ids shop_ids user_ids].include?(k)
         ids = to_array(v).map { |value| ActiveModel::Type::Integer.new.cast(value) }
         args.push([k.to_sym, ids])
@@ -221,9 +216,8 @@ class Api::ProductsController < ApplicationController
     # product_params function, if product_template doesn't exist in the home_body_template
     # provided by a form, then the controller will not continue
     params.require(:product)
-          .permit(:title, :price, :quantity, :views, :num_favorers,
-                  :description, :image_urls, :category, :tags, :user_id,
-                  :shop_id, :random, :format)
+          .permit(:user_id, :shop_id, :title, :price, :quantity, :views, :num_favorers,
+                  :description, :image_urls, :category, :tags, :materials, :taxonomy_path)
   end
 
 end

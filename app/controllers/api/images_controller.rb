@@ -2,12 +2,127 @@ require 'json'
 require 'set'
 require 'controller_helper_functions'
 require 'controller_helper_images'
+require 'controller_helper_products'
 
 class Api::ImagesController < ApplicationController
+  def show
+    @query = { image_ids: [params[:id]] }
+    @image = Image.find_by(id: params[:id])
+    if !@image
+      render json: image_locate_error(**@query)
+    else
+      render json: to_images_json(images: [@image])
+    end
+  end
+
+  def create
+    @image = Image.new(image_params)
+    if @image.save
+      render json: to_images_json(images: [@image])
+    else
+      render json: image_error(image: @image)
+    end
+  end
+
+  def update
+    @query = { image_ids: [params[:id]] }
+    @image = Image.find_by(id: params[:id])
+    if !@image
+      render json: image_locate_error(**query)
+    else
+      if @image.update_attributes(image_params)
+        render json: to_images_json(images: [@image])
+      else
+        render json: image_error(image: @image)
+      end
+    end
+  end
+
+  def destroy
+    @query = { image_ids: [params[:id]] }
+    @image = Image.find_by(id: params[:id])
+    if !@image
+      render json: image_locate_error(**@query)
+    else
+      if @image.destroy
+        render json: to_images_json(images: [@image])
+      else
+        render json: image_error(image: @image)
+      end
+    end
+  end
+
+  def query
+    @query = query_params
+    ids = [:image_ids, :group_ids]
+    @search = @query.reject { |k, v| ids.include?(k) }.to_h
+    @images = ids.any?{|k| @query.key?(k)} ? images_from_params(@query) : Image.all
+    if @images.empty?
+      render json: image_locate_error(**@query)
+    else
+      begin
+        if @search.empty?
+          render json: to_images_json(images: @images)
+        else
+          render json: to_images_json(images: @images.where(**@search))
+        end
+      rescue => e
+        render json: { @query.keys.to_s => ["Could not use image indexing with given params: #{@query.to_s}"] }, status: 400
+      end
+    end
+  end
+
+  def from_product
+    @query = query_params(extract_product_ids(params))
+    @product = Product.find_by(id: @query[:product_ids])
+    if !@products
+      render product_locate_error(product_ids: @query[:product_ids])
+    else
+      @images = @products.images
+      puts @images.to_json
+      if @images.empty?
+        render json: image_locate_error(image_ids: @product.image_ids)
+      else
+        render json: to_images_json(images: @images)
+      end
+    end
+  end
+
+  def from_products
+    @query = { product_ids: [params[:id]] }
+    @product = Product.find_by(id: params[:id])
+    image_ids = products.reduce([]){|arr, product| arr + product.image_ids}
+    if !@product
+      render json: ["Could not find images with product_ids: #{@query[:product_ids]}"], status: 400
+    else
+      render json: to_images_json(images: [@image])
+    end
+  end
+
+  def from_user
+
+  end
+
+  def from_users
+
+  end
+
+  def from_shop
+
+  end
+
+  def from_shops
+
+  end
+
+  def from_groups
+
+  end
+
+
   def index
     @query = query_params
     @condition = index_condition
-    puts @query
 
     case @condition
     when USER_IMAGES
@@ -37,11 +152,10 @@ class Api::ImagesController < ApplicationController
     else
       if !@query.empty?
         begin
-        @images = Image.where(**@query)
-        render json: @images
+          @images = Image.where(**@query)
+          render json: @images
         rescue => e
           render json: ["Could not use image indexing with given params: #{@query}"], status: 400
-          puts e
         end
       else
         render json: ["Could not use image indexing with given params: #{@query}"], status: 400
@@ -49,47 +163,8 @@ class Api::ImagesController < ApplicationController
     end
   end
 
-  def show
-    @image = image_from_params(query_params)
-    if @image
-      render json: @image
-    else
-      render json: ["Could not locate image id: #{params[:id]}"], status: 400
-    end
-  end
-
-  def create
-    @image = Image.new(image_params)
-    if @image.save
-      render :show
-    else
-      render json: @image.errors.full_messages, status: 401
-    end
-  end
-
-  def update
-    @image = image_from_params(query_params)
-    if @image && @image.update_attributes(image_params)
-      render :show
-    elsif !@image
-      render json: ["Could not locate image id: #{params[:id]}"], status: 400
-    else
-      render json: @image.errors.full_messages, status: 401
-    end
-  end
-
-  def destroy
-    @image = image_from_params(query_params)
-    if @image && @image.destroy
-      render :show
-    elsif !@image
-      render json: ["Could not locate image id: #{params[:id]}"], status: 400
-    else
-      render json: @image.errors.full_messages, status: 401
-    end
-  end
-
   private
+
   IMAGE = "IMAGE"
   IMAGES = "IMAGES"
   USER_IMAGES = "USER_IMAGES"
@@ -137,22 +212,24 @@ class Api::ImagesController < ApplicationController
     condition
   end
 
-  def query_params
-    query = params.permit(:id, :ids, :image_id, :product_id,
-                          :product_ids, :shop_id, :shop_ids, :user_id, :dimension, :group_name,
-                          :group_id, :group_ids, :image_ids)
+  def query_params(new_params=nil)
+    query = (new_params || params).reject { |k, v| %w[format controller action].include?(k) }
     args = []
     query.each do |k, v|
-      if %w[image_id product_id shop_id user_id group_id].include?(k)
-        args.push([k.to_sym, ActiveModel::Type::Decimal.new.cast(v)])
-      elsif %w[dimension group_name].include?(k)
+      if %w[dimension group_name].include?(k)
         args.push([k.to_sym, ActiveModel::Type::String.new.cast(v)])
-      elsif k == 'id'
-        args.push(['image_id'.to_sym, ActiveModel::Type::Decimal.new.cast(v)])
-      elsif %w[image_ids product_ids shop_ids group_ids].include?(k)
-        args.push([k.to_sym, to_array(v)])
+      elsif %w[image_ids group_ids shop_ids user_ids].include?(k)
+        ids = to_array(v).map { |value| ActiveModel::Type::Integer.new.cast(value) }
+        args.push([k.to_sym, ids])
+      elsif %w[image_id group_id shop_id user_id].include?(k)
+        args.push(["#{k}s".to_sym, [ActiveModel::Type::Integer.new.cast(v)]])
+      elsif %w[id].include?(k)
+        args.push(['image_ids'.to_sym, [ActiveModel::Type::Integer.new.cast(v)]])
       elsif k == 'ids'
-        args.push(['image_ids'.to_sym, to_array(v)])
+        ids = to_array(v).map { |value| ActiveModel::Type::Integer.new.cast(value) }
+        args.push(['image_ids'.to_sym, ids])
+      else
+        args.push([k.to_sym, v])
       end
     end
     args.to_h

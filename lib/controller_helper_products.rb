@@ -1,5 +1,4 @@
-def product_locate_error(**query)
-  product_ids = query[:product_ids] || []
+def product_locate_error(product_ids: [])
   if product_ids.empty?
     { query.keys.to_s => ["Could not locate product with given params: #{query.to_s}"] }
   else
@@ -7,9 +6,8 @@ def product_locate_error(**query)
   end
 end
 
-def product_error(**query)
-  product = query[:product]
-  products = product && [product] || query[:products] || []
+def product_error(product: nil, products: [])
+  products = [product] unless product.nil?
   return {} if products.empty?
   products.map { |prod| [prod.id, prod.errors.full_messages] }.to_h
 end
@@ -36,19 +34,10 @@ def to_products_json(products: [], images: [], error_products: [], error_ids: []
   listing
 end
 
-def fetch_products_with_images
-
-end
-
-def groups_from_params(query)
-  tags = query[:tags] ? query[:tags].to_set : []
-  materials = query[:materials] ? query[:materials].to_set : []
-  taxonomy_paths = query[:taxonomy_paths] ? query[:taxonomy_paths].to_set : []
-
+def groups_from_params(tags: [], materials: [], taxonomy_paths: [])
   queries = []
-  queries.concat(tags.map { |t| "'#{t}' = any (products.tags)" }) unless tags.empty?
-  queries.concat(materials.map { |m| "'#{m}' = any (products.materials)" }) unless materials.empty?
-  queries.concat(taxonomy_paths.map { |t| "'#{t}' = any (products.taxonomy_path)" }) unless taxonomy_paths.empty?
-
+  queries.concat(tags.to_set.map { |t| "'#{t}' = any (products.tags)" }) unless tags.empty?
+  queries.concat(materials.to_set.map { |m| "'#{m}' = any (products.materials)" }) unless materials.empty?
+  queries.concat(taxonomy_paths.to_set.map { |t| "'#{t}' = any (products.taxonomy_path)" }) unless taxonomy_paths.empty?
   Product.where(queries.join(" or "))
 end

@@ -1,5 +1,82 @@
+def image_locate_error(**query)
+  image_ids = query[:image_ids] || []
+  group_ids = query[:group_ids] || []
+
+  if !image_ids.empty? && !group_ids.empty?
+    image_ids.map { |id| [id, ["Could not locate image with {id: #{id}, group_id = any (#{group_ids})}"]] }.to_h
+  elsif !image_ids.empty?
+    image_ids.map { |id| [id, ["Could not locate image id: #{id}"]] }.to_h
+  elsif !group_ids.empty?
+    group_ids.map { |id| [id, ["Could not locate image group_id: #{id}"]] }.to_h
+  else
+    { query.keys.to_s => ["Could not locate image with given params: #{query.to_s}"] }
+  end
+end
+
+def image_error(**query)
+  image = query[:image]
+  images = image && [image] || query[:images] || []
+  return {} if images.empty?
+  images.map { |prod| [prod.id, prod.errors.full_messages] }.to_h
+end
+
+def to_images_json(images: [], error_images: [], error_ids: [])
+  listing = {}
+
+  listing[:images] = {} unless images.empty?
+  images.each do |image|
+    if listing[:images].key?(image.group_id)
+      listing[:images][image.group_id][image.dimension] = image
+    else
+      listing[:images][image.group_id] = { image.dimension => image }
+    end
+  end
+
+  listing[:errors] = {} unless error_images.empty? and error_ids.empty?
+  listing[:errors].merge!(image_error(images: error_images)) unless error_images.empty?
+  listing[:errors].merge!(image_locate_error(image_ids: error_ids)) unless error_ids.empty?
+
+  listing
+end
+
+def extract_product_ids(query)
+  query.permit!.to_h.map do |k, v|
+    if %w[id product_id].include?(k)
+      [:product_ids, [v]]
+    elsif %w[ids]
+      [:product_ids, v]
+    else
+      [k, v]
+    end
+  end.to_h
+end
+
+def extract_shop_ids(query)
+  query.permit!.to_h.map do |k, v|
+    if %w[id shop_id].include?(k)
+      [:shop_ids, [v]]
+    elsif %w[ids]
+      [:shop_ids, v]
+    else
+      [k, v]
+    end
+  end.to_h
+end
+
+def extract_user_ids(query)
+  query.permit!.to_h.map do |k, v|
+    if %w[id user_id].include?(k)
+      [:user_ids, [v]]
+    elsif %w[ids]
+      [:user_ids, v]
+    else
+      [k, v]
+    end
+  end.to_h
+end
+
 def fetch_image
-  @image = image_from_params(@query)
+  @image = images_from_params(@query)
   render json: @image
 end
 
@@ -52,7 +129,7 @@ def fetch_products_images
 
   if products
     @images = {}
-    products.each {|product| @images[product.id] = product.images }
+    products.each { |product| @images[product.id] = product.images }
     render json: @images
   else
     render json: ["Could not find shop id: #{params[:shop_id]} or use dimension: #{params[:dimension]}"], status: 400
@@ -68,7 +145,7 @@ def fetch_products_images_resized
 
   if products
     @images = {}
-    products.each {|product| @images[product.id] = product.images_resized(params[:dimension]) }
+    products.each { |product| @images[product.id] = product.images_resized(params[:dimension]) }
     render json: @images
   else
     render json: ["Could not find shop id: #{params[:shop_id]} or use dimension: #{params[:dimension]}"], status: 400

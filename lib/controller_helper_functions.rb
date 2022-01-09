@@ -1,35 +1,33 @@
-def users_from_params(query)
-  user_ids = query[:user_ids] || []
+def users_from_params(user_ids: [])
   User.where(id: user_ids)
 end
 
-def shops_from_params(query)
-  shop_ids = query[:shop_ids] || []
+def shops_from_params(shop_ids: [])
   Shop.where(id: shop_ids)
 end
 
-def products_from_params(query)
-  product_ids = query[:product_ids] || []
+def products_from_params(product_ids: [])
   Product.where(id: product_ids)
 end
 
-def images_from_params(query)
-  image_ids = query[:image_ids] || []
-  Image.where(id: image_ids)
+def images_from_params(image_ids: [], group_ids: [], dimension: nil, group_name: nil)
+  search = {}
+  search[:id] = image_ids unless image_ids.empty?
+  search[:group_id] = group_ids unless group_ids.empty?
+  search[:dimension] = dimension if valid_dimension?(dimension: dimension)
+  search[:group_name] = group_name if valid_group_name?(group_name:group_name)
+  search.empty? ? [] : Image.where(**search)
 end
 
-def reviews_from_params(query)
-  review_ids = query[:review_ids] || []
+def reviews_from_params(review_ids: [])
   Review.where(id: review_ids)
 end
 
-def cart_items_from_params(query)
-  cart_item_ids = query[:cart_item_ids] || []
+def cart_items_from_params(cart_item_ids: [])
   CartItem.where(id: cart_item_ids)
 end
 
-def carts_from_params(query)
-  user_ids = query[:user_ids] || []
+def carts_from_params(user_ids: [])
   CartItem.where(user_id: user_ids)
 end
 
@@ -41,18 +39,22 @@ def to_array(value)
   end
 end
 
-def valid_dimension?(query)
-  return false unless query.key?(:dimension)
-  dimension = query[:dimension]
+def valid_dimension?(dimension: nil)
+  return false unless dimension
   image = %w[image_small image_medium image_large image_full].include?(dimension)
   icon = %w[icon_small icon_medium icon_large icon_full].include?(dimension)
   image or icon
 end
 
-def valid_group_name?(query)
-  return false unless query.key?(:group_name)
-  group_name = query[:group_name]
+def valid_group_name?(group_name: nil)
+  return false unless group_name
   %w[product user shop].include?(group_name)
+end
+
+def valid_image_params?(group_name: nil, dimension: nil)
+  valid_name = group_name.nil? || valid_group_name?(group_name: group_name)
+  valid_dimension = dimension.nil? || valid_dimension?(dimension: dimension)
+  valid_name and valid_dimension
 end
 
 def validate_range(index, count)
@@ -62,15 +64,18 @@ def validate_range(index, count)
   index
 end
 
-def range_from_params(query, model)
-  count = model.count
-  start = validate_range(query[:start], count)
-  finish = validate_range(query[:end], count)
-  limit = validate_range(query[:limit], count)
+def range_from_params(start: nil, finish: nil, limit: nil, random: false, count: 0)
+  start = validate_range(start, count)
+  finish = validate_range(finish, count)
+  limit = validate_range(limit, count)
 
   start = start || finish && limit && [finish - limit, 0].max || 0
   finish = finish && [finish, start].max || !limit && count || [start+limit, count].min
   limit = limit && [finish - start, limit].min || finish - start
 
-  { start: start, end: finish, limit: limit, random: query[:random] }
+  { start: start, end: finish, limit: limit, random: random }
+end
+
+def paginate(active_record, start: nil, finish: nil, limit: nil, random: false)
+
 end

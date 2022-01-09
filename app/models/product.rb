@@ -38,6 +38,10 @@ class Product < ApplicationRecord
            through: :reference_favorites,
            source: :user
 
+  def queried_images(query)
+    Image.where(group_id: self.image_ids, **query)
+  end
+
   def images_resized(dimension='all')
     if dimension == 'all'
       Image.where(group_id: self.image_ids, group_name: 'product')
