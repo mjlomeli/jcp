@@ -15,6 +15,10 @@ class Api::ProductsController < ApplicationController
       fetch_product
     when PRODUCTS
       fetch_products
+    when PRODUCT_LISTING
+      fetch_product_listing
+    when PRODUCTS_LISTING
+      fetch_products_listings
     when VIEWS_RANGE
       fetch_views_range
     when USER_PRODUCTS
@@ -31,53 +35,77 @@ class Api::ProductsController < ApplicationController
           @products = Product.where(**@query)
           render json: @products
         rescue => e
-          render json: ["Could not use product indexing with given params: #{@query}"], status: 400
+          render json: {@query.keys.to_s => ["Could not use product indexing with given params: #{@query.to_s}"]}, status: 400
         end
       else
-        @products = Product.all
-        render json: @products
+        puts params.keys
+        pairs = params.reject{|k, v| %w[format controller action].include?(k)}
+        render json: {pairs.keys.to_s => ["Could not use product indexing with given params: #{pairs.to_s}"]}, status: 400
       end
     end
   end
 
   def show
-    @product = product_from_params(query_params)
+    @query = query_params
+    @product = product_from_params(@query)
     if @product
-      render json: @product
+      render json: {products: {@product.id => @product}}
     else
-      render json: ["Could not locate product id: #{params[:id]}"], status: 400
+      render_product_locate_error
     end
   end
 
   def create
-    @product = Product.new(product_params)
+    @query = query_params
+    @product = Product.new(@query)
     if @product.save
-      render json: @product
+      render json: {products: {@product.id => @product}}
     else
-      render json: @product.errors.full_messages, status: 401
+      render_product_error
     end
   end
 
   def update
     #TODO: Test using web html
-    @product = product_from_params(query_params)
+    @query = query_params
+    @product = product_from_params(@query)
     if @product && @product.update_attributes(product_params)
-      render :show
+      render json: {products: {@product.id => @product}}
     elsif !@product
-      render json: ["Could not locate product id: #{params[:id]}"], status: 400
+      render_product_locate_error
     else
-      render json: @product.errors.full_messages, status: 401
+      render_product_error
     end
   end
 
   def destroy
-    @product = product_from_params(query_params)
+    @query = query_params
+    @product = product_from_params(@query)
     if @product && @product.destroy
-      render :show
+      render json: {products: {@product.id => @product}}
     elsif !@product
-      render json: ["Could not locate product id: #{params[:id]}"], status: 400
+      render json: product_locate_error(**@query)
     else
-      render json: @product.errors.full_messages, status: 401
+      render json: product_error(product: @product)
+    end
+  end
+
+  def destroys
+    @query = query_params
+    @products = products_from_params(@query)
+    if !@products or @products.empty?
+      render json: product_locate_error(**@query)
+    else
+      success_ids = []
+      err_products = []
+      @products.each { |prod| prod.destroy ? success_ids << prod.id : err_products << prod }
+      err_ids = @query[:product_ids].reject{|query_prod_id| success_ids.include?(query_prod_id)}
+      locate_errors = product_locate_error(product_ids: err_ids)
+      delete_errors = product_error(products: err_products)
+      render json: {
+        product_ids: success_ids,
+        errors: locate_errors.merge(delete_errors)
+      }
     end
   end
 
@@ -86,6 +114,8 @@ class Api::ProductsController < ApplicationController
   PRICE_RANGE = "PRICE_RANGE"
   PRODUCT = "PRODUCT"
   PRODUCTS = "PRODUCTS"
+  PRODUCT_LISTING = "PRODUCT_LISTING"
+  PRODUCTS_LISTING = "PRODUCTS_LISTING"
   VIEWS_RANGE = "VIEWS_RANGE"
   USER_PRODUCTS = "USER_PRODUCTS"
   GROUP_PRODUCTS = "GROUP_PRODUCTS"
@@ -96,10 +126,14 @@ class Api::ProductsController < ApplicationController
     case @query.keys().to_set.hash
     when Set[:user_id].hash
       condition = USER_PRODUCTS
-    when Set[:product_id].hash, Set[:id].hash
+    when Set[:product_id].hash
       condition = PRODUCT
-    when Set[:product_ids].hash, Set[:ids].hash
+    when Set[:product_ids].hash
       condition = PRODUCTS
+    when Set[:product_id, :dimension].hash
+      condition = PRODUCT_LISTING
+    when Set[:product_ids, :dimension].hash
+      condition = PRODUCTS_LISTING
     when Set[:tag].hash, Set[:material].hash, Set[:taxonomy_path].hash, Set[:tag, :material].hash, Set[:tag, :material, :taxonomy_path].hash, Set[:tag, :taxonomy_path].hash
       condition = GROUP_PRODUCTS
     when Set[:tags].hash, Set[:materials].hash, Set[:taxonomy_paths].hash, Set[:tags, :materials].hash, Set[:tags, :materials, :taxonomy_paths].hash, Set[:tags, :taxonomy_paths].hash
@@ -122,7 +156,7 @@ class Api::ProductsController < ApplicationController
   def query_params
     query = params.permit(:id, :ids, :product_id, :product_ids, :shop_id, :shop_ids,
                           :user_id, :start, :end, :random, :limit, :tag, :material, :taxonomy_path,
-                          :tags, :materials, :taxonomy_paths, :price_min, :price_max,
+                          :tags, :materials, :taxonomy_paths, :price_min, :price_max, :dimension,
                           :views_lowest, :views_highest)
     args = []
     query.each do |k, v|
@@ -130,7 +164,7 @@ class Api::ProductsController < ApplicationController
         args.push([k.to_sym, ActiveModel::Type::Decimal.new.cast(v)])
       elsif %w[start end random limit].include?(k)
         args.push([k.to_sym, ActiveModel::Type::Integer.new.cast(v)])
-      elsif %w[tag taxonomy_path material].include?(k)
+      elsif %w[tag taxonomy_path material dimension].include?(k)
         args.push([k.to_sym, v])
       elsif %w[random views_lowest views_highest].include?(k)
         args.push([k.to_sym, ActiveModel::Type::Boolean.new.cast(!!v ? v : false)])

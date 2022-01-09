@@ -3,7 +3,7 @@ import React from 'react';
 import './gallery.css'
 import GridLayout from "../../user_controls/grid_layout/grid_layout";
 import {Product} from "../../../lib/product";
-import {fetchProduct, resetProductError} from "../../../actions/product_action";
+import {fetchProduct, resetProductErrors} from "../../../actions/product_action";
 import {fetchImageByProductId} from "../../../actions/image_action";
 
 
@@ -45,7 +45,7 @@ const mapStateToProps = (state, ownProps) => {
 const mapDispatchToProps = dispatch => ({
     fetchProduct: (productId) => dispatch(fetchProduct(productId)),
     fetchImageByProductId: (productId) => dispatch(fetchImageByProductId(productId)),
-    resetProductError: productId => dispatch(resetProductError(productId))
+    resetProductError: productId => dispatch(resetProductErrors(productId))
 });
 
 class Gallery extends React.Component {

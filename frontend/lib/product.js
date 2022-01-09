@@ -20,7 +20,7 @@ export class Product {
 
     static findIDFromProps(props) {
         let id = parseInt(urlId(props) || props.productId);
-        if (Product.hasError(id))
+        if (!id || Product.hasError(id))
             return Product.DEFAULT_ID;
         else
             return id || null;

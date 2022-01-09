@@ -1,146 +1,134 @@
 import * as ProductUtil from '../utils/product_util'
 import * as AlertAction from './alert_action'
+import {idSystemError} from "./alert_action";
 
 export const RECEIVE_PRODUCTS = "RECEIVE_PRODUCTS";
-export const RECEIVE_PRODUCT = "RECEIVE_PRODUCT";
-export const RECEIVE_PRODUCT_ERROR = "RECEIVE_PRODUCT_ERROR";
-export const RECEIVE_PRODUCTS_ERROR = "RECEIVE_PRODUCTS_ERROR";
-export const RESET_PRODUCT_ERROR = "RESET_PRODUCT_ERROR";
-export const RESET_PRODUCTS_ERROR = "RESET_PRODUCTS_ERROR";
-export const REMOVE_PRODUCT = "REMOVE_PRODUCT";
+export const REMOVE_PRODUCTS = "REMOVE_PRODUCTS";
+
+export const RECEIVE_PRODUCTS_ERRORS = "RECEIVE_PRODUCT_ERROR";
+export const RECEIVE_PRODUCTS_GENERAL_ERRORS = "RECEIVE_PRODUCTS_GENERAL_ERRORS";
+
+export const RESET_PRODUCTS_ERRORS = "RESET_PRODUCT_ERROR";
+export const RESET_ALL_PRODUCTS_ERRORS = "RESET_ALL_PRODUCTS_ERRORS";
 
 
-export const receiveProducts = products =>({
+export const receiveProducts = listing => ({
     type: RECEIVE_PRODUCTS,
-    products: products
+    listing: listing
 })
 
-export const receiveProduct = product =>({
-    type: RECEIVE_PRODUCT,
-    product: product
+export const removeProducts = productIds => ({
+    type: REMOVE_PRODUCTS,
+    productIds: productIds
 })
 
-export const removeProduct = productId =>({
-    type: REMOVE_PRODUCT,
-    productId: productId
-})
+export const receiveProductsErrors = (dispatch, errors) => {
+    dispatch(AlertAction.systemError(errors));
+    return {
+        type: RECEIVE_PRODUCTS_ERRORS,
+        errors: errors
+    }
+}
 
-export const receiveProductError = (productId, errors) =>({
-    type: RECEIVE_PRODUCT_ERROR,
-    productId: productId,
-    errors: errors
-})
-
-export const receiveProductsError = errors =>({
-    type: RECEIVE_PRODUCTS_ERROR,
-    errors: errors
-})
+export const receiveProductsGeneralErrors = (dispatch, errors) => {
+    dispatch(AlertAction.systemError(errors));
+    return {
+        type: RECEIVE_PRODUCTS_GENERAL_ERRORS,
+        errors: errors
+    }
+}
 
 
 /*    Separation      */
 
 
-export const fetchProducts = ({id, ids, product_id, product_ids, shop_id, shop_ids,
-                                  user_id, start, end, random, limit, tag, material, taxonomy_path,
-                                  tags, materials, taxonomy_paths, price_min, price_max,
-                                  views_lowest, views_highest}) => dispatch =>(
-    ProductUtil.fetchProducts({id, ids, product_id, product_ids, shop_id, shop_ids,
-        user_id, start, end, random, limit, tag, material, taxonomy_path,
-        tags, materials, taxonomy_paths, price_min, price_max,
-        views_lowest, views_highest}).then(
-        products => dispatch(receiveProducts(products)),
-        err => dispatch(receiveProductsError(err.responseJSON))
+export const fetchProducts = (query) => dispatch => (
+    ProductUtil.fetchProducts(query).then(
+        listing => dispatch(receiveProducts(listing)),
+        err => {
+            let keys = query && Object.keys(query) || [];
+            let hasIds = id => ['id', 'ids', 'product_id', 'product_ids'].includes(id);
+            if (keys.some(hasIds))
+                return dispatch(receiveProductsErrors(dispatch, err.responseJSON))
+            else
+                return dispatch(receiveProductsGeneralErrors(err.responseJSON))
+        }
     )
 )
 
 
-export const fetchProductsRange = (start, end) => dispatch =>(
+export const fetchProductsRange = (start, end) => dispatch => (
     ProductUtil.fetchProductsRange(start, end).then(
-        products => dispatch(receiveProducts(products)),
-        err => {
-            dispatch(AlertAction.systemError(err.responseJSON));
-            return dispatch(receiveProductsError(err.responseJSON))
-        }
-    )
+        listing => dispatch(receiveProducts(listing)),
+        err => dispatch(receiveProductsGeneralErrors(dispatch, err.responseJSON)))
 )
 
 
-export const fetchRandomProducts = (limit) => dispatch =>(
+export const fetchRandomProducts = (limit) => dispatch => (
     ProductUtil.fetchRandomProducts(limit).then(
-        products => dispatch(receiveProducts(products)),
-        err => {
-            dispatch(AlertAction.systemError(err.responseJSON));
-            return dispatch(receiveProductsError(err.responseJSON))
-        }
-    )
+        listing => dispatch(receiveProducts(listing)),
+        err => dispatch(receiveProductsErrors(dispatch, err.responseJSON)))
 )
 
 
-export const fetchRandomProductsRange = (start, end) => dispatch =>(
+export const fetchRandomProductsRange = (start, end) => dispatch => (
     ProductUtil.fetchRandomProductsRange(start, end).then(
-        products => dispatch(receiveProducts(products)),
-        err => {
-            dispatch(AlertAction.systemError(err.responseJSON));
-            return dispatch(receiveProductsError(err.responseJSON))
-        }
-    )
+        listing => dispatch(receiveProducts(listing)),
+        err => dispatch(receiveProductsErrors(dispatch, err.responseJSON)))
 )
 
 export const fetchProduct = productId => (dispatch) => {
     return ProductUtil.fetchProduct(productId).then(
-        product => dispatch(receiveProduct(product)),
-        err => {
-            dispatch(AlertAction.systemError(err.responseJSON));
-            return dispatch(receiveProductError(productId, err.responseJSON))
-        }
-    )
+        listing => dispatch(receiveProducts(listing)),
+        err => dispatch(receiveProductsErrors(dispatch, err.responseJSON)))
 }
 
-export const createProduct = product => dispatch =>(
+export const createProduct = product => dispatch => (
     ProductUtil.createProduct(product).then(
-        product => {
+        listing => {
             dispatch(AlertAction.success("Your product has been created!"));
-            dispatch(receiveProduct(product))
+            dispatch(receiveProducts(listing))
         },
-        err => {
-            dispatch(AlertAction.systemError(err.responseJSON));
-            return dispatch(receiveProductError(product.id, err.responseJSON))
-        }
-    )
+        err => dispatch(receiveProductsErrors(dispatch, err.responseJSON)))
 )
 
-export const updateProduct = product => dispatch =>(
+export const updateProduct = product => dispatch => (
     ProductUtil.updateProduct(product).then(
-        product => {
+        listing => {
             dispatch(AlertAction.success("Changes have been saved."));
-            dispatch(receiveProduct(product))
+            dispatch(receiveProducts(listing))
         },
-        err => {
-            dispatch(AlertAction.systemError(err.responseJSON));
-            return dispatch(receiveProductError(product.id, err.responseJSON))
-        }
-    )
+        err => dispatch(receiveProductsErrors(dispatch, err.responseJSON)))
 )
 
-export const deleteProduct = productId => dispatch =>(
+export const deleteProduct = productId => dispatch => (
     ProductUtil.deleteProduct(productId).then(
-        product => {
+        productIds => {
             dispatch(AlertAction.caution("The item has been deleted."));
-            dispatch(removeProduct(product.id))
+            dispatch(removeProducts(productIds))
         },
-        err => {
-            dispatch(AlertAction.systemError(err.responseJSON));
-            return dispatch(receiveProductError(productId, err.responseJSON))
-        }
-    )
+        err => dispatch(receiveProductsErrors(dispatch, err.responseJSON)))
 )
 
-export const resetProductError = productId => dispatch =>(
-    dispatch({type: RESET_PRODUCT_ERROR, productId: productId})
+export const deleteProducts = productIds => dispatch => (
+    ProductUtil.deleteProduct(productIds).then(
+        productIds => {
+            dispatch(AlertAction.caution("The item has been deleted."));
+            dispatch(removeProducts(productIds))
+        },
+        err => dispatch(receiveProductsErrors(dispatch, err.responseJSON)))
 )
 
-export const resetProductsError = () => dispatch =>(
-    dispatch({type: RESET_PRODUCTS_ERROR})
+export const resetProductErrors = productId => dispatch => (
+    dispatch({type: RESET_PRODUCTS_ERRORS, productIds: [productId]})
+)
+
+export const resetProductsErrors = productIds => dispatch => (
+    dispatch({type: RESET_PRODUCTS_ERRORS, productIds: productIds})
+)
+
+export const resetAllProductsError = () => dispatch => (
+    dispatch({type: RESET_ALL_PRODUCTS_ERRORS})
 )
 
 window.ProductAction = {
@@ -149,16 +137,18 @@ window.ProductAction = {
     fetchProductsRange,
     fetchRandomProducts,
     fetchRandomProductsRange,
-    resetProductError,
-    resetProductsError,
+    resetProductErrors,
+    resetProductsErrors,
+    resetAllProductsError,
     createProduct,
     updateProduct,
-    deleteProduct
+    deleteProduct,
+    deleteProducts
 }
 
-window.ProductReceivers = {
+window.ProductDispatchers = {
     receiveProducts,
-    receiveProduct,
-    receiveProductsError,
-    receiveProductError
+    receiveProductsErrors,
+    receiveProductsGeneralErrors,
+    removeProducts
 }

@@ -1,31 +1,25 @@
 import {debug} from "./tools";
 
-export const fetchProducts = ({id, ids, product_id, product_ids, shop_id, shop_ids,
-    user_id, start, end, random, limit, tag, material, taxonomy_path,
-    tags, materials, taxonomy_paths, price_min, price_max,
-    views_lowest, views_highest}) => {
-
-    if (ids) ids = JSON.stringify(ids)
-    if (product_ids) product_ids = JSON.stringify(product_ids)
-    if (shop_ids) shop_ids = JSON.stringify(shop_ids)
-    if (tags) tags = JSON.stringify(tags)
-    if (materials) materials = JSON.stringify(materials)
-    if (taxonomy_paths) taxonomy_paths = JSON.stringify(taxonomy_paths)
+export const fetchProducts = (query) => {
+    if (query === null || typeof query !== 'object')
+        return debug.errorPromise("ProductUtil.fetchProducts must be passed an object");
+    if ('ids' in query) query.ids = JSON.stringify(query.ids)
+    if ('product_ids' in query) query.product_ids = JSON.stringify(query.product_ids)
+    if ('shop_ids' in query) query.shop_ids = JSON.stringify(query.shop_ids)
+    if ('tags' in query) query.tags = JSON.stringify(query.tags)
+    if ('materials' in query) query.materials = JSON.stringify(query.materials)
+    if ('taxonomy_paths' in query) query.taxonomy_paths = JSON.stringify(query.taxonomy_paths)
 
     return $.ajax({
         url: '/api/products',
         method: 'GET',
-        data: {id, ids, product_id, product_ids, shop_id, shop_ids,
-            user_id, start, end, random, limit, tag, material, taxonomy_path,
-            tags, materials, taxonomy_paths, price_min, price_max,
-            views_lowest, views_highest}
+        data: query
     });
 };
 
 export const fetchProductsRange = (start, end) => {
-    if (!start || !end) {
-        debug.error(`A start and end must be provided for fetchProductsRange.`)
-    }
+    if (!start || !end)
+        return debug.errorPromise(`A start and end must be provided for ProductUtil.fetchProductsRange.`);
 
     return $.ajax({
         url: `/api/products?start=${start}&end=${end}`,
@@ -34,9 +28,8 @@ export const fetchProductsRange = (start, end) => {
 };
 
 export const fetchRandomProducts = (limit) => {
-    if (!limit) {
-        debug.error(`A limit be provided for fetchRandomProducts.`)
-    }
+    if (!limit)
+        return debug.errorPromise(`A limit be provided for ProductUtil.fetchRandomProducts.`)
 
     return $.ajax({
         url: `/api/products?limit=${limit}&random=${true}`,
@@ -45,9 +38,8 @@ export const fetchRandomProducts = (limit) => {
 };
 
 export const fetchRandomProductsRange = (start, end) => {
-    if (!start || !end) {
-        debug.error(`A start and end must be provided for fetchRandomProductsRange.`)
-    }
+    if (!start || !end)
+        return debug.errorPromise(`A start and end must be provided for ProductUtil.fetchRandomProductsRange.`)
 
     return $.ajax({
         url: `/api/products?start=${start}&end=${end}&random=${true}`,
@@ -58,9 +50,8 @@ export const fetchRandomProductsRange = (start, end) => {
 
 
 export const fetchProduct = (productId) => {
-    if (!productId) {
-        debug.error(`A product id must be provided for fetchProduct.`)
-    }
+    if (!productId)
+        return debug.errorPromise(`A product id must be provided for ProductUtil.fetchProduct.`)
 
     return $.ajax({
         url: `/api/products/${productId}`,
@@ -69,9 +60,8 @@ export const fetchProduct = (productId) => {
 };
 
 export const createProduct = (product) => {
-    if (!product) {
-        debug.error(`A product object must be provided for createProduct.`)
-    }
+    if (!product)
+        return debug.errorPromise(`A product object must be provided for ProductUtil.createProduct.`)
 
     return $.ajax({
         url: '/api/products',
@@ -81,9 +71,8 @@ export const createProduct = (product) => {
 };
 
 export const updateProduct = (product) => {
-    if (!product) {
-        debug.error(`A product object be provided for updateProduct.`)
-    }
+    if (!product)
+        return debug.errorPromise(`A product object be provided for ProductUtil.updateProduct.`)
 
     return $.ajax({
         url: `/api/products/${product.id}`,
@@ -93,9 +82,8 @@ export const updateProduct = (product) => {
 };
 
 export const deleteProduct = (productId) => {
-    if (!productId) {
-        debug.error(`A product id must be provided for deleteProduct.`)
-    }
+    if (!productId)
+        return debug.errorPromise(`A product id must be provided for ProductUtil.deleteProduct.`)
 
     return $.ajax({
         url: `/api/products/${productId}`,

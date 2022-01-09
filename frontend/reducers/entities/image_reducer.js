@@ -1,11 +1,10 @@
 import {
-    RECEIVE_IMAGE,
+    RECEIVE_IMAGES,
     RECEIVE_PRODUCT_IMAGES,
     RECEIVE_GROUP_IMAGES,
     RECEIVE_USER_IMAGES,
     RECEIVE_SHOP_IMAGES,
-    REMOVE_IMAGE,
-    RECEIVE_IMAGES
+    REMOVE_IMAGES
 } from "../../actions/image_action";
 
 export function reducerImages(prevState={}, action){
@@ -49,7 +48,7 @@ export function reducerImages(prevState={}, action){
     }
 
     switch(action.type){
-        case RECEIVE_IMAGE:
+        case RECEIVE_IMAGES:
             action.image.id = parseInt(action.image.id);
             newState[action.image.id] = action.image;
             return newState;
@@ -59,7 +58,7 @@ export function reducerImages(prevState={}, action){
                 newState[image.id] = image;
             })
             return newState;
-        case REMOVE_IMAGE:
+        case REMOVE_IMAGES:
             delete newState[parseInt(action.imageId)]
             return newState;
         default:
@@ -73,7 +72,7 @@ export function reducerGroupImages(prevState={}, action){
     let groupId = null;
     let groupImages = null;
     switch(action.type){
-        case RECEIVE_IMAGE:
+        case RECEIVE_IMAGES:
             groupId = parseInt(action.image.group_id);
             action.image.id = parseInt(action.image.id);
 
@@ -109,7 +108,7 @@ export function reducerGroupImages(prevState={}, action){
                 newState[groupId] = groupImages;
             })
             return newState;
-        case REMOVE_IMAGE:
+        case REMOVE_IMAGES:
             Object.entries(prevState).forEach(groupPair =>{
                 let [groupId, groupImages] = groupPair;
                 Object.entries(groupImages || {}).forEach(imagePair => {
@@ -138,7 +137,7 @@ export function reducerProductImages(prevState={}, action){
             })
             newState[productId] = {...newState[productId], ...productImages};
             return newState;
-        case REMOVE_IMAGE:
+        case REMOVE_IMAGES:
             Object.entries(prevState).forEach(productPair =>{
                 let [productId, productImages] = productPair;
                 Object.entries(productImages || {}).forEach(imagePair => {
@@ -167,7 +166,7 @@ export function reducerUserImages(prevState={}, action) {
             })
             newState[userId] = {...newState[userId], ...userImages};
             return newState;
-        case REMOVE_IMAGE:
+        case REMOVE_IMAGES:
             Object.entries(prevState).forEach(userPair => {
                 let [userId, userImages] = userPair;
                 Object.entries(userImages || {}).forEach(imagePair => {
@@ -204,7 +203,7 @@ export function reducerShopImages(prevState={}, action) {
             let shopId = parseInt(action.shopId);
             newState[action.shopId] = {...newState[shopId], ...{shop, products}};
             return newState;
-        case REMOVE_IMAGE:
+        case REMOVE_IMAGES:
             Object.entries(prevState).forEach(shopData => {
                 let [shopId, group] = shopData;
                 Object.entries(group || {}).forEach(groupPair => {

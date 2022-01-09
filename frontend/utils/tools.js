@@ -100,6 +100,19 @@ export class debug {
         else if (isBrowser())
             console.log(`%c  ${type}  ` + `%c${values}`, "background:green;color:white", "color:BBBBBB");
     }
+
+    static errorPromise(errors){
+        let messages = ["undefined error"];
+        if (typeof errors === "object")
+            messages = Object.entries(errors).map(pair => {
+                let [id, error] = pair;
+                return `${id}: ${error}`;
+            });
+        else if (typeof errors === "string" || errors instanceof String)
+            messages = [errors];
+        debug.error(messages.join("\n"));
+        return Promise.resolve().then(()=>{throw {responseJSON: [messages]}})
+    }
 }
 
 

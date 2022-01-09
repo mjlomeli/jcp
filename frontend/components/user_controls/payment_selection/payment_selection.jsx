@@ -3,7 +3,7 @@ import GridLayout from "../grid_layout/grid_layout";
 import "./payment_selection.css"
 import Selection from "./radio";
 import {Product} from "../../../lib/product";
-import {fetchProduct, resetProductError} from "../../../actions/product_action";
+import {fetchProduct, resetProductErrors} from "../../../actions/product_action";
 import {connect} from "react-redux";
 
 
@@ -32,7 +32,7 @@ const mapStateToProps = (state, ownProps) =>{
 
 const mapDispatchToProps = dispatch => ({
     fetchProduct: (productId) => dispatch(fetchProduct(productId)),
-    resetProductError: productId => dispatch(resetProductError(productId))
+    resetProductError: productId => dispatch(resetProductErrors(productId))
 });
 
 

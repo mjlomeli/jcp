@@ -4,7 +4,7 @@ import './card_featured.css'
 import GridLayout from "../grid_layout/grid_layout";
 import Rating from "../rating/rating";
 import {Product} from "../../../lib/product";
-import {fetchProduct, resetProductError} from "../../../actions/product_action";
+import {fetchProduct, resetProductErrors} from "../../../actions/product_action";
 import {fetchImageByProductId} from "../../../actions/image_action";
 import {urlPath} from "../../../utils/tools";
 import {Image} from "../../../lib/image";
@@ -41,7 +41,7 @@ const mapStateToProps = (state, ownProps) =>{
 const mapDispatchToProps = dispatch => ({
     fetchProduct: (productId) => dispatch(fetchProduct(productId)),
     fetchImageByProductId: (productId) => dispatch(fetchImageByProductId(productId)),
-    resetProductError: productId => dispatch(resetProductError(productId))
+    resetProductError: productId => dispatch(resetProductErrors(productId))
 });
 
 class Price extends React.Component {

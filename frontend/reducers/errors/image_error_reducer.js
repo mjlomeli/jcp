@@ -1,21 +1,21 @@
 import {
-    RECEIVE_IMAGE,
-    RECEIVE_IMAGE_ERROR,
-    RESET_IMAGES_ERROR,
-    RESET_IMAGE_ERROR
+    RECEIVE_IMAGES,
+    RECEIVE_IMAGES_ERRORS,
+    RESET_ALL_IMAGES_ERRORS,
+    RESET_IMAGES_ERRORS
 } from "../../actions/image_action";
 
 export const errorImage = (prevState = {}, action) => {
     Object.freeze(prevState);
     let newState = Object.assign({}, prevState);
     switch (action.type) {
-        case RECEIVE_IMAGE_ERROR:
+        case RECEIVE_IMAGES_ERRORS:
             newState[action.imageId] = action.errors;
             return newState;
-        case RECEIVE_IMAGE:
+        case RECEIVE_IMAGES:
             delete newState[action.image.id];
             return newState;
-        case RESET_IMAGE_ERROR:
+        case RESET_IMAGES_ERRORS:
             delete newState[action.imageId];
             return newState;
         default:
@@ -27,10 +27,10 @@ export const errorImage = (prevState = {}, action) => {
 export const errorImages = (prevState = [], action) => {
     Object.freeze(prevState);
     switch (action.type) {
-        case RECEIVE_IMAGE_ERROR:
+        case RECEIVE_IMAGES_ERRORS:
             return action.errors;
-        case RECEIVE_IMAGE:
-        case RESET_IMAGES_ERROR:
+        case RECEIVE_IMAGES:
+        case RESET_ALL_IMAGES_ERRORS:
             return [];
         default:
             return prevState;

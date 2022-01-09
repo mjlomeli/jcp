@@ -38,12 +38,20 @@ class Product < ApplicationRecord
            through: :reference_favorites,
            source: :user
 
-  def images_resized(dimension='image_full')
-    Image.where(group_id: self.image_ids, group_name: 'product', dimension: dimension)
+  def images_resized(dimension='all')
+    if dimension == 'all'
+      Image.where(group_id: self.image_ids, group_name: 'product')
+    else
+      Image.where(group_id: self.image_ids, group_name: 'product', dimension: dimension)
+    end
   end
 
-  def icons_resized(dimension='icon_full')
-    Image.where(group_id: self.icon_ids, group_name: 'product', dimension: dimension)
+  def icons_resized(dimension='all')
+    if dimension == 'all'
+      Image.where(group_id: self.icon_ids, group_name: 'product')
+    else
+      Image.where(group_id: self.icon_ids, group_name: 'product', dimension: dimension)
+    end
   end
 
   def images

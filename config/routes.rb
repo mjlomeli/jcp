@@ -1,10 +1,4 @@
 Rails.application.routes.draw do
-  namespace :api do
-    get 'favorites/create'
-    get 'favorites/delete'
-    get 'favorites/show'
-    get 'favorites/index'
-  end
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 
     # API routes
@@ -26,6 +20,8 @@ Rails.application.routes.draw do
       # only for testing
       resources :cart_items, only: [:index]
       resources :reviews, only: [:index]
+
+      delete 'products', to: 'products#destroys'
     end
 
     # Home_page page route

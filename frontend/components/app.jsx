@@ -58,6 +58,9 @@ class App extends React.Component {
             <header>
                 <HeaderTemplate />
             </header>
+            {/*<CardListing />*/}
+            {/*<CardListing productId={1147271903} />*/}
+            {/*<CardListing productId={1133338986} />*/}
             <Switch>
                 {/*<AuthRoute exact path="/login" component={LogInFormContainer}/>*/}
                 {/*<AuthRoute exact path="/signup" component={SignUpFormContainer}/>*/}

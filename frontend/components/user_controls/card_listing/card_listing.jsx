@@ -10,7 +10,7 @@ import React from 'react';
 import './card_listing.css'
 import GridLayout from "../grid_layout/grid_layout";
 import Rating from "../rating/rating";
-import {fetchProduct, resetProductError} from "../../../actions/product_action";
+import {fetchProduct, resetProductErrors} from "../../../actions/product_action";
 import {fetchImageByProductId} from "../../../actions/image_action";
 import {connect} from "react-redux";
 import {Product} from "../../../lib/product";
@@ -39,7 +39,7 @@ const mapStateToProps = (state, ownProps) => {
 
     console.log(`[mapStateToProps]: productId = ${productId}`);
     console.log(`[mapStateToProps]: product = ${product && product.toString() || null}`);
-    console.log(`[mapStateToProps]: image = ${image && image.toString() || null}`);
+    console.log(`[mapStateToProps]: image = ${image && image.toString() || null}\n\n`);
 
     return {
         products: products,
@@ -53,7 +53,7 @@ const mapStateToProps = (state, ownProps) => {
 const mapDispatchToProps = dispatch => ({
     fetchProduct: (productId) => dispatch(fetchProduct(productId)),
     fetchImageByProductId: (productId) => dispatch(fetchImageByProductId(productId)),
-    resetProductError: productId => dispatch(resetProductError(productId))
+    resetProductError: productId => dispatch(resetProductErrors(productId))
 });
 
 
@@ -207,7 +207,7 @@ class CardListing extends React.Component {
 
         console.log(`[shouldUpdate]: ===> ${((!nextProductId || !nextProps.product 
             || !nextProps.image) || Product.hasError(nextProductId) || Image.hasError(nextProps.image.id) ||
-        nextProductId === prevProductId) && "false" || "true"}`);
+        nextProductId === prevProductId) && "false" || "true"}\n\n`);
 
         if (nextProductId === prevProductId)
             return false;

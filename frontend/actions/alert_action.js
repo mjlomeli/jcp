@@ -15,8 +15,19 @@ const removeAlert = () => ({
 })
 
 
-export const systemError = (message, timeout=5000) => (dispatch, getState) => {
-    return AlertUtil.createAlert("error", message.join("\n")).then(
+export const systemError = (errors, timeout=5000) => (dispatch, getState) => {
+    let message = "undefined error";
+    if (Array.isArray(errors))
+        message = errors.join("\n");
+    else if (typeof errors === "object")
+        message = Object.entries(errors).map(pair => {
+            let [id, error] = pair;
+            return `${id}: ${error}`;
+        }).join("\n");
+    else if (typeof errors === "string" || errors instanceof String)
+        message = errors;
+
+    return AlertUtil.createAlert("error", message).then(
         alert => {
             let prevTimeout = fetchTimoutId(getState);
             clearTimeout(prevTimeout)

@@ -20,7 +20,7 @@ export class Image {
 
     static findIDFromProps(props){
         let id = parseInt(urlId(props) || props.imageId);
-        if (Image.hasError(id))
+        if (!id || Image.hasError(id))
             return Image.DEFAULT;
         else
             return id || null;

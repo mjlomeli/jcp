@@ -1,62 +1,43 @@
-
-def user_from_params(query)
+def users_from_params(query)
   user_id = query[:user_id]
-  return nil unless !!user_id
-  User.find_by(id: user_id)
-end
-
-def shop_from_params(query)
-  shop_id = query[:shop_id]
-  return nil unless !!shop_id
-  Shop.find_by(id: shop_id)
+  user_ids = user_id && [user_id] || query[:user_ids] || []
+  return nil if !user_ids or user_ids.empty?
+  User.where(id: user_ids)
 end
 
 def shops_from_params(query)
-  shop_ids = query[:shop_ids]
-  return nil unless !!shop_ids
+  shop_id = query[:shop_id]
+  shop_ids = shop_id && [shop_id] || query[:shop_ids] || []
+  return nil if !shop_ids or shop_ids.empty?
   Shop.where(id: shop_ids)
 end
 
-def product_from_params(query)
-  product_id = query[:product_id]
-  return nil unless !!product_id
-  Product.find_by(id: product_id)
-end
-
 def products_from_params(query)
-  product_ids = query[:product_ids]
-  return nil unless !!product_ids
+  product_id = query[:product_id]
+  product_ids = product_id && [product_id] || query[:product_ids] || []
+  return nil if !product_ids or product_ids.empty?
   Product.where(id: product_ids)
 end
 
-def image_from_params(query)
-  image_id = query[:image_id]
-  return nil unless !!image_id
-  Image.find_by(id: image_id)
-end
-
 def images_from_params(query)
-  image_ids = query[:image_ids]
-  return nil unless !!image_ids
+  image_id = query[:image_id]
+  image_ids = image_id && [image_id] || query[:image_ids] || []
+  return nil if !image_ids or image_ids.empty?
   Image.where(id: image_ids)
 end
 
-def review_from_params(query)
-  review_id = query[:review_id]
-  return nil unless !!review_id
-  Review.find_by(id: review_id)
-end
-
 def reviews_from_params(query)
-  review_ids = query[:review_ids]
-  return nil unless !!review_ids
-  Product.where(id: review_ids)
+  review_id = query[:review_id]
+  review_ids = review_id && [review_id] || query[:review_ids] || []
+  return nil if !review_ids or review_ids.empty?
+  Review.where(id: review_ids)
 end
 
 def cart_item_from_params(query)
   cart_item_id = query[:cart_item_id]
-  return nil unless !!cart_item_id
-  CartItem.find_by(id: cart_item_id)
+  cart_item_ids = cart_item_id && [cart_item_id] || query[:cart_item_ids] || []
+  return nil if !cart_item_ids or cart_item_ids.empty?
+  CartItem.where(id: cart_item_ids)
 end
 
 def cart_from_params(query, current_user)
@@ -87,50 +68,22 @@ def valid_group_name?(query)
   %w[product user shop].include?(group_name)
 end
 
+def validate_range(index, count)
+  return index if !index or (0 <= index and index < count)
+  return 0 if index < 0
+  return count if index >= count
+  index
+end
+
 def range_from_params(query, model)
   count = model.count
-  start, finish, limit, random = query.values_at(:start, :end, :limit, :random)
-  if start
-    if start < 0
-      start = 0
-    elsif start >= count
-      start = count
-      finish = count
-      limit = 0
-    end
-  end
+  start = validate_range(query[:start], count)
+  finish = validate_range(query[:finish], count)
+  limit = validate_range(query[:limit], count)
 
-  if finish
-    if finish < 0
-      finish = start
-    elsif finish > count
-      finish = count
-    end
+  start = start || finish && limit && [finish - limit, 0].max || 0
+  finish = finish && [finish, start].max || !limit && count || [start+limit, count].min
+  limit = limit && [finish - start, limit].min || finish - start
 
-    if !!start and start > finish
-      finish = start
-    end
-  end
-
-  if limit
-    if limit < 0
-      limit = [finish.to_i - start.to_i, finish.to_i].max
-    elsif limit > count
-      limit = count
-    end
-  end
-
-  if (!!start and !!finish) == !!limit
-    if !finish
-      start, finish = [start.to_i, count, count]
-    else
-      start, finish = [start.to_i, finish]
-    end
-  elsif limit
-    finish = (finish or start.to_i >= count ? count : [count, start.to_i + limit].min)
-    start = (start or limit >= finish.to_i ? 0 : finish.to_i - limit)
-  end
-  limit = finish - start
-
-  { start: start, end: finish, limit: limit, random: random }
+  { start: start, end: finish, limit: limit, random: query[:random] }
 end

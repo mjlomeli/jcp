@@ -1,33 +1,34 @@
 import * as ImageUtil from '../utils/image_util'
 import * as AlertAction from './alert_action'
+import {
+    RECEIVE_PRODUCTS_GENERAL_ERRORS,
+    receiveProducts,
+    receiveProductsErrors,
+    receiveProductsGeneralErrors, removeProducts
+} from "./product_action";
 
 export const RECEIVE_IMAGES = "RECEIVE_IMAGES";
-export const RECEIVE_IMAGE = "RECEIVE_IMAGE";
 export const RECEIVE_PRODUCT_IMAGES = "RECEIVE_PRODUCT_IMAGES";
 export const RECEIVE_GROUP_IMAGES = "RECEIVE_GROUP_IMAGES";
 export const RECEIVE_SHOP_IMAGES = "RECEIVE_SHOP_IMAGES";
 export const RECEIVE_USER_IMAGES = "RECEIVE_USER_IMAGES";
 
-export const RECEIVE_IMAGE_ERROR = "RECEIVE_IMAGE_ERROR";
-export const RECEIVE_IMAGES_ERROR = "RECEIVE_IMAGES_ERROR";
-export const RECEIVE_PRODUCT_IMAGES_ERROR = "RECEIVE_PRODUCT_IMAGES_ERROR";
-export const RECEIVE_GROUP_IMAGES_ERROR = "RECEIVE_GROUP_IMAGES_ERROR";
-export const RECEIVE_SHOP_IMAGES_ERROR = "RECEIVE_SHOP_IMAGE_ERROR";
-export const RECEIVE_USER_IMAGES_ERROR = "RECEIVE_USER_IMAGE_ERROR";
+export const REMOVE_IMAGES = "REMOVE_IMAGES";
 
-export const RESET_IMAGE_ERROR = "RESET_IMAGE_ERROR";
-export const RESET_IMAGES_ERROR = "RESET_IMAGES_ERROR";
+export const RECEIVE_IMAGES_ERRORS = "RECEIVE_IMAGES_ERRORS";
+export const RECEIVE_PRODUCT_IMAGES_ERRORS = "RECEIVE_PRODUCT_IMAGES_ERRORS";
+export const RECEIVE_GROUP_IMAGES_ERRORS = "RECEIVE_GROUP_IMAGES_ERRORS";
+export const RECEIVE_SHOP_IMAGES_ERRORS = "RECEIVE_SHOP_IMAGES_ERRORS";
+export const RECEIVE_USER_IMAGES_ERRORS = "RECEIVE_USER_IMAGES_ERRORS";
+export const RECEIVE_IMAGES_GENERAL_ERRORS = "RECEIVE_IMAGES_GENERAL_ERRORS";
 
-export const REMOVE_IMAGE = "REMOVE_IMAGE";
+export const RESET_IMAGES_ERRORS = "RESET_IMAGES_ERRORS";
+export const RESET_ALL_IMAGES_ERRORS = "RESET_ALL_IMAGES_ERRORS";
+
 
 const receiveImages = images => ({
     type: RECEIVE_IMAGES,
     images: images
-})
-
-const receiveImage = image => ({
-    type: RECEIVE_IMAGE,
-    image: image
 })
 
 const receiveProductImages = (productId, images) => ({
@@ -51,116 +52,114 @@ const receiveGroupImages = (groupId, images) => ({
     groupId: parseInt(groupId)
 })
 
-const receiveImageError = (imageId, errors) => ({
-    type: RECEIVE_IMAGE_ERROR,
-    imageId: parseInt(imageId),
-    errors: errors
-})
-const receiveImagesError = errors => ({
-    type: RECEIVE_IMAGES_ERROR,
-    errors: errors
-})
-const receiveProductImagesError = (productId, error) => ({
-    type: RECEIVE_PRODUCT_IMAGES_ERROR,
-    error: error,
-    productId: parseInt(productId)
-})
-const receiveShopImagesError = (shopId, error) => ({
-    type: RECEIVE_SHOP_IMAGES_ERROR,
-    error: error,
-    shopId: parseInt(shopId)
-})
-const receiveUserImagesError = (userId, error) => ({
-    type: RECEIVE_USER_IMAGES_ERROR,
-    error: error,
-    userId: parseInt(userId)
-})
-const receiveGroupImagesError = (groupId, error) => ({
-    type: RECEIVE_GROUP_IMAGES_ERROR,
-    error: error,
-    groupId: groupId
+
+const removeImages = imageIds => ({
+    type: REMOVE_IMAGES,
+    imageIds: imageIds
 })
 
-const removeImage = imageId => ({
-    type: REMOVE_IMAGE,
-    imageId: imageId
-})
+
+const receiveImagesErrors = (dispatch, errors) => {
+    dispatch(AlertAction.systemError(errors));
+    return {
+        type: RECEIVE_IMAGES_ERRORS,
+        errors: errors
+    }
+}
+
+const receiveProductImagesErrors = (dispatch, errors) => {
+    dispatch(AlertAction.systemError(errors));
+    return {
+        type: RECEIVE_PRODUCT_IMAGES_ERRORS,
+        errors: errors
+    }
+}
+
+const receiveShopImagesErrors = (dispatch, errors) => {
+    dispatch(AlertAction.systemError(errors));
+    return {
+        type: RECEIVE_SHOP_IMAGES_ERRORS,
+        errors: errors
+    }
+}
+
+const receiveUserImagesErrors = (dispatch, errors) => {
+    dispatch(AlertAction.systemError(errors));
+    return {
+        type: RECEIVE_USER_IMAGES_ERRORS,
+        errors: errors
+    }
+}
+const receiveGroupImagesErrors = (dispatch, errors) => {
+    dispatch(AlertAction.systemError(errors));
+    return {
+        type: RECEIVE_GROUP_IMAGES_ERRORS,
+        errors: errors
+    }
+}
+
+export const receiveImagesGeneralErrors = (dispatch, errors) => {
+    dispatch(AlertAction.systemError(errors));
+    return {
+        type: RECEIVE_IMAGES_GENERAL_ERRORS,
+        errors: errors
+    }
+}
 
 
 /*    Separation      */
 
 
-export const fetchImages = () => dispatch => (
-    ImageUtil.fetchImages().then(
+export const fetchImages = (query) => dispatch => {
+    return ImageUtil.fetchImages(query).then(
         images => dispatch(receiveImages(images)),
         err => {
-            dispatch(AlertAction.systemError(err.responseJSON));
-            return dispatch(receiveImageError(err.responseJSON))
-        }
-    )
-)
+            let keys = query && Object.keys(query) || [];
+            let hasIds = id => ['id', 'ids', 'group_id', 'group_ids'].includes(id);
+            if (keys.some(hasIds))
+                return dispatch(receiveImagesErrors(dispatch, err.responseJSON))
+            else
+                return dispatch(receiveImagesGeneralErrors(dispatch, err.responseJSON))
+        })
+}
 
 export const fetchImage = imageId => (dispatch) => {
     return ImageUtil.fetchImage(imageId).then(
-        image => dispatch(receiveImage(image)),
-        err => {
-            dispatch(AlertAction.systemError(err.responseJSON));
-            return dispatch(receiveImageError(imageId, err.responseJSON))
-        }
-    )
+        images => dispatch(receiveImages(images)),
+        err => dispatch(receiveImagesErrors(err.responseJSON)))
 }
 
 export const fetchImageByProductId = productId => (dispatch) => {
     return ImageUtil.fetchImageByProductId(productId).then(
         images => dispatch(receiveProductImages(productId, images)),
-        err => {
-            dispatch(AlertAction.systemError(err.responseJSON));
-            return dispatch(receiveProductImagesError(productId, err.responseJSON))
-        }
-    )
+        err => dispatch(receiveProductImagesErrors(err.responseJSON)))
 }
 
 export const fetchImageByUserId = userId => (dispatch) => {
     return ImageUtil.fetchImageByUserId(userId).then(
         images => dispatch(receiveUserImages(userId, images)),
-        err => {
-            dispatch(AlertAction.systemError(err.responseJSON));
-            return dispatch(receiveUserImagesError(userId, err.responseJSON))
-        }
-    )
+        err => dispatch(receiveUserImagesErrors(err.responseJSON)))
 }
 
 export const fetchImageByShopId = shopId => (dispatch) => {
     return ImageUtil.fetchImageByShopId(shopId).then(
         images => dispatch(receiveShopImages(shopId, images)),
-        err => {
-            dispatch(AlertAction.systemError(err.responseJSON));
-            return dispatch(receiveShopImagesError(shopId, err.responseJSON))
-        }
-    )
+        err => dispatch(receiveShopImagesErrors(err.responseJSON)))
 }
 
 export const fetchImageByGroupId = groupId => (dispatch) => {
     return ImageUtil.fetchImageByGroupId(groupId).then(
         images => dispatch(receiveGroupImages(groupId, images)),
-        err => {
-            dispatch(AlertAction.systemError(err.responseJSON));
-            return dispatch(receiveGroupImagesError(groupId, err.responseJSON))
-        }
-    )
+        err => dispatch(receiveGroupImagesErrors(err.responseJSON)))
 }
 
 export const createImage = image => dispatch => (
     ImageUtil.createImage(image).then(
         image => {
             dispatch(AlertAction.success("Your image has been uploaded."));
-            dispatch(receiveImage(image))
+            dispatch(receiveImages(image))
         },
-        err => {
-            dispatch(AlertAction.systemError(err.responseJSON));
-            return dispatch(receiveImageError(image.id, err.responseJSON))
-        }
-    )
+        err => dispatch(receiveImagesErrors(dispatch, err.responseJSON)))
 )
 
 
@@ -168,35 +167,27 @@ export const updateImage = image => dispatch => (
     ImageUtil.updateImage(image).then(
         image => {
             dispatch(AlertAction.success("Your image has been updated."));
-            dispatch(receiveImage(image))
+            dispatch(receiveImages(image))
         },
-        err => {
-            dispatch(AlertAction.systemError(err.responseJSON));
-            return dispatch(receiveImageError(image.id, err.responseJSON))
-        }
-    )
+        err => dispatch(receiveImagesErrors(dispatch, err.responseJSON)))
 )
 
-export const deleteImage = imageId => dispatch => (
+export const deleteImages = imageId => dispatch => (
     ImageUtil.deleteImage(imageId).then(
         image => {
             dispatch(AlertAction.notification("Your image has been deleted."));
-            dispatch(removeImage(image.id))
+            dispatch(removeImages(image.id))
         },
-        err => {
-            dispatch(AlertAction.systemError(err.responseJSON));
-            return dispatch(receiveImageError(imageId, err.responseJSON))
-        }
-    )
+        err => dispatch(receiveImagesErrors(dispatch, err.responseJSON)))
 )
 
 
-export const resetImageError = imageId => dispatch =>(
-    dispatch({type: RESET_IMAGE_ERROR, imageId: imageId})
+export const resetImageError = imageId => dispatch => (
+    dispatch({type: RESET_IMAGES_ERRORS, imageId: imageId})
 )
 
-export const resetImagesError = () => dispatch =>(
-    dispatch({type: RESET_IMAGES_ERROR})
+export const resetImagesErrors = () => dispatch => (
+    dispatch({type: RESET_ALL_IMAGES_ERRORS})
 )
 
 window.ImageAction = {
@@ -207,8 +198,15 @@ window.ImageAction = {
     fetchImageByProductId,
     fetchImageByGroupId,
     resetImageError,
-    resetImagesError,
+    resetImagesErrors,
     createImage,
     updateImage,
-    deleteImage
+    deleteImages
+}
+
+window.ImageDispatchers = {
+    receiveImages,
+    removeImages,
+    receiveImagesErrors,
+    receiveImagesGeneralErrors
 }

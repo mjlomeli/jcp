@@ -1,24 +1,35 @@
 import {
-    RECEIVE_PRODUCT,
     RECEIVE_PRODUCTS,
-    RECEIVE_PRODUCTS_ERROR,
-    RECEIVE_PRODUCT_ERROR,
-    RESET_PRODUCT_ERROR,
-    RESET_PRODUCTS_ERROR
+    REMOVE_PRODUCT,
+    RECEIVE_PRODUCTS_ERRORS,
+    RESET_PRODUCTS_ERRORS,
+    RESET_ALL_PRODUCTS_ERRORS,
+    RECEIVE_PRODUCTS_GENERAL_ERRORS,
 } from "../../actions/product_action";
 
-export const errorProduct =  (prevState = {}, action) => {
+export const productsError =  (prevState = {}, action) => {
     Object.freeze(prevState);
     let newState = Object.assign({}, prevState);
     switch (action.type) {
-        case RECEIVE_PRODUCT_ERROR:
-            newState[action.productId] = action.errors;
+        case RECEIVE_PRODUCTS_ERRORS:
+            Object.entries(action.errors).forEach(pair =>{
+                let [productId, errors] = pair;
+                newState[productId] = errors;
+            })
             return newState;
-        case RECEIVE_PRODUCT:
-            delete newState[action.product.id];
+        case RESET_PRODUCTS_ERRORS:
+            action.productIds.forEach(productId => delete newState[productId])
             return newState;
-        case RESET_PRODUCT_ERROR:
+        case RESET_ALL_PRODUCTS_ERRORS:
+            return {};
+        case REMOVE_PRODUCT:
             delete newState[action.productId];
+            return newState;
+        case RECEIVE_PRODUCTS:
+            Object.entries(action.listing).forEach(pair =>{
+                let [productId, product] = pair;
+                delete newState[productId];
+            })
             return newState;
         default:
             return prevState;
@@ -26,14 +37,20 @@ export const errorProduct =  (prevState = {}, action) => {
 };
 
 
-export const errorProducts =  (prevState = [], action) => {
+export const productsGeneralErrors =  (prevState = [], action) => {
     Object.freeze(prevState);
+    let newState = [...prevState];
     switch (action.type) {
-        case RECEIVE_PRODUCTS_ERROR:
-            return action.errors;
-        case RECEIVE_PRODUCTS:
-        case RESET_PRODUCTS_ERROR:
-            return []; // if product is valid, then errors are empty
+        case RECEIVE_PRODUCTS_ERRORS:
+            Object.entries(action.errors).forEach(pair =>{
+                let [productId, errors] = pair;
+                newState.push(`[${productId}]: ${errors.join(", ")}`);
+            })
+            return newState;
+        case RECEIVE_PRODUCTS_GENERAL_ERRORS:
+            return [...newState, ...action.errors];
+        case RESET_PRODUCTS_ERRORS:
+            return [];
         default:
             return prevState;
     }

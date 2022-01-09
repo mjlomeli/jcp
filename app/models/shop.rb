@@ -9,7 +9,8 @@ class Shop < ApplicationRecord
 
   belongs_to :user,
              foreign_key: :user_id,
-             class_name: :User
+             class_name: :User,
+             dependent: :destroy
 
   has_many :products,
            foreign_key: :shop_id,

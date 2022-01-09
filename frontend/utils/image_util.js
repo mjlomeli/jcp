@@ -1,21 +1,19 @@
 import {debug} from "./tools";
 
-export const fetchImages = ({id, ids, image_id, image_ids, product_id,
-    product_ids, shop_id, shop_ids, user_id, dimension, group_name,
-    group_id, group_ids}) => {
+export const fetchImages = (query) => {
+    if (query === null || typeof query !== 'object')
+        return debug.errorPromise("ImageUtil.fetchImages must be passed an object");
 
-    if (ids) ids = JSON.stringify(ids);
-    if (image_ids) image_ids = JSON.stringify(image_ids)
-    if (product_ids) product_ids = JSON.stringify(product_ids)
-    if (shop_ids) shop_ids = JSON.stringify(shop_ids)
-    if (group_ids) group_ids = JSON.stringify(group_ids)
+    if ('ids' in query) query.ids = JSON.stringify(query.ids);
+    if ('image_ids' in query) query.image_ids = JSON.stringify(query.image_ids)
+    if ('product_ids' in query) query.product_ids = JSON.stringify(query.product_ids)
+    if ('shop_ids' in query) query.shop_ids = JSON.stringify(query.shop_ids)
+    if ('group_ids' in query) query.group_ids = JSON.stringify(query.group_ids)
 
     return $.ajax({
         url: '/api/images',
         method: 'GET',
-        data: {id, ids, image_id, image_ids, product_id,
-            product_ids, shop_id, shop_ids, user_id, dimension, group_name,
-            group_id, group_ids}
+        data: query
     });
 };
 
@@ -36,9 +34,8 @@ export const fetchImageByGroupId = (groupId) => {
 }
 
 export const fetchImage = (imageId) => {
-    if (!imageId) {
-        debug.error(`An image id must be provided for fetchImage.`)
-    }
+    if (!imageId)
+        return debug.errorPromise(`An image id must be provided for ImageUtil.fetchImage.`)
 
     return $.ajax({
         url: `/api/images/${imageId}`,
@@ -47,9 +44,8 @@ export const fetchImage = (imageId) => {
 };
 
 export const createImage = (image) => {
-    if (!image) {
-        debug.error(`An image object must be provided for createImage.`)
-    }
+    if (!image)
+        return debug.errorPromise(`An image object must be provided for ImageUtil.createImage.`)
 
     return $.ajax({
         url: '/api/images',
@@ -59,9 +55,8 @@ export const createImage = (image) => {
 };
 
 export const updateImage = (image) => {
-    if (!image) {
-        debug.error(`An image object be provided for updateImage.`)
-    }
+    if (!image)
+        return debug.errorPromise(`An image object be provided for ImageUtil.updateImage.`)
 
     return $.ajax({
         url: `/api/images/${image.id}`,
@@ -71,9 +66,8 @@ export const updateImage = (image) => {
 };
 
 export const deleteImage = (imageId) => {
-    if (!imageId) {
-        debug.error(`An image id must be provided for deleteImage.`)
-    }
+    if (!imageId)
+        return debug.errorPromise(`An image id must be provided for ImageUtil.deleteImage.`)
 
     return $.ajax({
         url: `/api/images/${imageId}`,
@@ -83,7 +77,7 @@ export const deleteImage = (imageId) => {
 
 window.ImageUtil = {
     fetchImages,
-    fetchImage,
+    fetchImage: fetchImages,
     fetchImageByUserId,
     fetchImageByShopId,
     fetchImageByProductId,
