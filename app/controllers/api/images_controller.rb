@@ -16,7 +16,7 @@ class Api::ImagesController < ApplicationController
   end
 
   def create
-    @image = Image.new(image_params)
+    @image = Image.create(image_params)
     if @image.save
       render json: to_images_json(images: [@image])
     else

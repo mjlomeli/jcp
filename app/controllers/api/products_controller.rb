@@ -19,7 +19,7 @@ class Api::ProductsController < ApplicationController
     if @product.save
       render json: to_products_json(products: [@product])
     else
-      render json: @product.errors.full_messages
+      render json: product_error(product: @product)
     end
   end
 
