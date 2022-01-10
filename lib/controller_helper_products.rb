@@ -39,6 +39,5 @@ def groups_from_params(tags: [], materials: [], taxonomy_paths: [], **kwargs)
   queries.concat(tags.to_set.map { |t| "'#{t}' = any (products.tags)" }) unless tags.empty?
   queries.concat(materials.to_set.map { |m| "'#{m}' = any (products.materials)" }) unless materials.empty?
   queries.concat(taxonomy_paths.to_set.map { |t| "'#{t}' = any (products.taxonomy_path)" }) unless taxonomy_paths.empty?
-  return Product.none if queries.empty?
-  Product.where(queries.join(" or ")).paginate(kwargs)
+  queries.join(" or ")
 end

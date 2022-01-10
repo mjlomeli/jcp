@@ -38,8 +38,9 @@ class Product < ApplicationRecord
            through: :reference_favorites,
            source: :user
 
-  def queried_images(query)
-    Image.where(group_id: self.image_ids, **query)
+  def filtered_images(filter: {}, **kwargs)
+    return Image.where(group_id: self.image_ids, group_name: 'product') if filter.empty?
+    Image.where(group_id: self.image_ids, group_name: 'product' **filter)
   end
 
   def images_resized(dimension='all')

@@ -17,7 +17,7 @@ def image_error(image: nil, images: [], **kwargs)
   images.map { |prod| [prod.id, prod.errors.full_messages] }.to_h
 end
 
-def to_images_json(images: [], error_images: [], error_ids: [], **kwargs)
+def to_images_json(images: [], error_images: [], error_ids: [], group_ids: [] **kwargs)
   listing = {}
 
   listing[:images] = {} unless images.empty?
@@ -32,6 +32,7 @@ def to_images_json(images: [], error_images: [], error_ids: [], **kwargs)
   listing[:errors] = {} unless error_images.empty? and error_ids.empty?
   listing[:errors].merge!(image_error(images: error_images)) unless error_images.empty?
   listing[:errors].merge!(image_locate_error(image_ids: error_ids)) unless error_ids.empty?
+  listing[:errors].merge!(image_locate_error(group_ids: group_ids)) unless group_ids.empty?
 
   listing
 end

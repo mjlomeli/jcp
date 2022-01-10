@@ -52,16 +52,9 @@ Rails.application.routes.draw do
       get 'images/products', to: 'images#from_products'
       get 'images/users', to: 'images#from_users'
       get 'images/shops', to: 'images#from_shops'
-      get 'images/groups', to: 'images#from_groups'
-      get 'images/product/:id', to: 'images#from_product'
-      get 'images/shop/:id', to: 'images#from_shop'
-      get 'images/user/:id', to: 'images#from_user'
 
       get 'images/query', to: 'images#query'
-      get 'images/pages', to: 'images#pages'
       get 'images/listings', to: 'images#listings'
-      get 'images/price_range', to: 'images#price_range'
-      get 'images/popular', to: 'images#popular'
 
       delete 'images', to: 'images#destroys'
 

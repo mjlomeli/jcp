@@ -31,6 +31,11 @@ class User < ApplicationRecord
            through: :reference_favorites,
            source: :Product
 
+  def filtered_images(filter: {}, **kwargs)
+    return Image.where(group_id: self.image_ids, group_name: 'user') if filter.empty?
+    Image.where(group_id: self.image_ids, group_name: 'user', **filter)
+  end
+
   def images
     Image.where(group_id: self.image_ids, group_name: 'user')
   end

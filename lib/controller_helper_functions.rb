@@ -1,13 +1,13 @@
 def users_from_params(user_ids: [], **kwargs)
-  User.where(id: user_ids).paginate(kwargs)
+  User.where(id: user_ids)
 end
 
 def shops_from_params(shop_ids: [], **kwargs)
-  Shop.where(id: shop_ids).paginate(kwargs)
+  Shop.where(id: shop_ids)
 end
 
 def products_from_params(product_ids: [], **kwargs)
-  Product.where(id: product_ids).paginate(kwargs)
+  Product.where(id: product_ids)
 end
 
 def images_from_params(image_ids: [], group_ids: [], dimension: nil, group_name: nil, **kwargs)

@@ -25,6 +25,11 @@ class Shop < ApplicationRecord
            through: :products,
            source: :carters
 
+  def filtered_images(filter: {}, **kwargs)
+    return Image.where(group_id: self.icon_ids, group_name: 'shop') if filter.empty?
+    Image.where(group_id: self.icon_ids, group_name: 'shop', **filter)
+  end
+
   def shop_images
     Image.where(group_id: self.image_ids, group_name: 'shop')
   end
