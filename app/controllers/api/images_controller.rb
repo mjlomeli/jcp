@@ -9,7 +9,7 @@ class Api::ImagesController < ApplicationController
     @query = { image_ids: [params[:id]] }
     @image = Image.find_by(id: params[:id])
     if !@image
-      render json: image_locate_error(**@query)
+      render json: image_locate_error(@query)
     else
       render json: to_images_json(images: [@image])
     end
@@ -28,7 +28,7 @@ class Api::ImagesController < ApplicationController
     @query = { image_ids: [params[:id]] }
     @image = Image.find_by(id: params[:id])
     if !@image
-      render json: image_locate_error(**query)
+      render json: image_locate_error(query)
     else
       if @image.update_attributes(image_params)
         render json: to_images_json(images: [@image])
@@ -42,7 +42,7 @@ class Api::ImagesController < ApplicationController
     @query = { image_ids: [params[:id]] }
     @image = Image.find_by(id: params[:id])
     if !@image
-      render json: image_locate_error(**@query)
+      render json: image_locate_error(@query)
     else
       if @image.destroy
         render json: to_images_json(images: [@image])
@@ -64,7 +64,7 @@ class Api::ImagesController < ApplicationController
         if @search.empty?
           render json: to_images_json(images: @images)
         else
-          render json: to_images_json(images: @images.where(**@search))
+          render json: to_images_json(images: @images.where(@search))
         end
       rescue => e
         render json: { @query.keys.to_s => ["Could not use image indexing with given params: #{@query.to_s}"] }, status: 400
@@ -75,11 +75,10 @@ class Api::ImagesController < ApplicationController
   def from_product
     @query = query_params(extract_product_ids(params))
     @product = Product.find_by(id: @query[:product_ids])
-    if !@products
+    if !@product
       render product_locate_error(product_ids: @query[:product_ids])
     else
-      @images = @products.images
-      puts @images.to_json
+      image_ids = @products.images.ids
       if @images.empty?
         render json: image_locate_error(image_ids: @product.image_ids)
       else
@@ -91,7 +90,6 @@ class Api::ImagesController < ApplicationController
   def from_products
     @query = { product_ids: [params[:id]] }
     @product = Product.find_by(id: params[:id])
-    image_ids = products.reduce([]){|arr, product| arr + product.image_ids}
     if !@product
       render json: ["Could not find images with product_ids: #{@query[:product_ids]}"], status: 400
     else
@@ -212,8 +210,8 @@ class Api::ImagesController < ApplicationController
     condition
   end
 
-  def query_params(new_params=nil)
-    query = (new_params || params).reject { |k, v| %w[format controller action].include?(k) }
+  def query_params(new_params=params, **kwargs)
+    query = new_params.reject { |k, v| %w[format controller action].include?(k) }
     args = []
     query.each do |k, v|
       if %w[dimension group_name].include?(k)
@@ -235,12 +233,20 @@ class Api::ImagesController < ApplicationController
     args.to_h
   end
 
-  def image_params
+  # def image_params
+  #   # the .require makes it so that when a controller is using the
+  #   # image_params function, if image_template doesn't exist in the home_body_template
+  #   # provided by a form, then the controller will not continue
+  #   params.require(:image)
+  #         .permit(:data, :mimetype, :size, :url, :encoding, :name, :group_name,
+  #                 :group_id, :dimension, :created_at, :updated_at)
+  # end
+
+  def image_params(new_params=params)
     # the .require makes it so that when a controller is using the
     # image_params function, if image_template doesn't exist in the home_body_template
     # provided by a form, then the controller will not continue
-    params.require(:image)
-          .permit(:data, :mimetype, :size, :url, :encoding, :name, :group_name,
+    new_params.permit(:data, :mimetype, :size, :url, :encoding, :name, :group_name,
                   :group_id, :dimension, :created_at, :updated_at)
   end
 

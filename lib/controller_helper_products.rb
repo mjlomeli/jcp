@@ -1,4 +1,4 @@
-def product_locate_error(product_ids: [])
+def product_locate_error(product_ids: [], **kwargs)
   if product_ids.empty?
     { query.keys.to_s => ["Could not locate product with given params: #{query.to_s}"] }
   else
@@ -6,13 +6,13 @@ def product_locate_error(product_ids: [])
   end
 end
 
-def product_error(product: nil, products: [])
+def product_error(product: nil, products: [], **kwargs)
   products = [product] unless product.nil?
   return {} if products.empty?
   products.map { |prod| [prod.id, prod.errors.full_messages] }.to_h
 end
 
-def to_products_json(products: [], images: [], error_products: [], error_ids: [])
+def to_products_json(products: [], images: [], error_products: [], error_ids: [], **kwargs)
   listing = {}
 
   listing[:products] = {} unless products.empty?
@@ -34,10 +34,11 @@ def to_products_json(products: [], images: [], error_products: [], error_ids: []
   listing
 end
 
-def groups_from_params(tags: [], materials: [], taxonomy_paths: [])
+def groups_from_params(tags: [], materials: [], taxonomy_paths: [], **kwargs)
   queries = []
   queries.concat(tags.to_set.map { |t| "'#{t}' = any (products.tags)" }) unless tags.empty?
   queries.concat(materials.to_set.map { |m| "'#{m}' = any (products.materials)" }) unless materials.empty?
   queries.concat(taxonomy_paths.to_set.map { |t| "'#{t}' = any (products.taxonomy_path)" }) unless taxonomy_paths.empty?
-  Product.where(queries.join(" or "))
+  return Product.none if queries.empty?
+  Product.where(queries.join(" or ")).paginate(kwargs)
 end

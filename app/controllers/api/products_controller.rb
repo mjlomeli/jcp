@@ -3,6 +3,7 @@ require 'controller_helper_functions'
 require 'controller_helper_products'
 
 class Api::ProductsController < ApplicationController
+
   def show
     @query = {product_ids: [params[:id]]}
     @product = Product.find_by(id: params[:id])
@@ -52,30 +53,30 @@ class Api::ProductsController < ApplicationController
 
   def query
     @query = query_params
-    @search = @query.reject { |k, v| k == :product_ids }.to_h
-    @products = @query.key?(:product_ids) ? products_from_params(@query) : Product.all
-    if @products.empty?
-      render json: product_locate_error(**@query)
-    else
-      begin
-        if @search.empty?
-          render json: to_products_json(products: @products)
-        else
-          render json: to_products_json(products: @products.where(**@search))
-        end
-      rescue => e
-        render json: { @query.keys.to_s => ["Could not use product indexing with given params: #{@query.to_s}"] }, status: 400
-      end
-    end
-  end
 
-  def pages
-    @query = query_params
-    ranges = range_from_params(@query, Product)
-    start, finish, limit, random = ranges.values_at(:start, :end, :limit, :random)
-    @products = Product.offset(start).limit(finish - start)
-    @products = random ? @products.sample(limit) : @products.limit(limit)
-    render json: to_products_json(products: @products)
+    @group = {}
+
+    @filter = query_params(product_params)
+    @filter[:id] = @query[:product_ids] if @query.key?(:product_ids)
+    [:tags, :materials, :taxonomy_paths].each{|v| @group[v] = @filter.delete(v)}
+
+    begin
+      @products = []
+      if !@group.empty? && !@filter.empty?
+        @products = groups_from_params(@query).where(**@filter).paginate(**@query)
+      elsif @group.empty?
+        @products = Product.where(**@filter).paginate(**@query)
+      else
+        @products = groups_from_params(@query) if @filter.empty?
+      end
+      if @products.empty?
+        render json: ["Could not find products with filters: #{@filter} nor with the query: #{@query}"], status: 400
+      else
+        render json: to_products_json(products: @products)
+      end
+    rescue => e
+      render json: { @query.keys.to_s => ["Could not use product indexing with given filters: #{@filter} nor with the query: #{@query}"] }, status: 400
+    end
   end
 
   def price_range
@@ -85,7 +86,7 @@ class Api::ProductsController < ApplicationController
     search = []
     search << "products.price >= #{price_min}" if price_min
     search << "products.price <= #{price_max}" if price_max
-    @products = Product.where(search.join(" and "))
+    @products = Product.where(search.join(" and ")).paginate(**@query)
     render json: to_products_json(products: @products)
   end
 
@@ -112,10 +113,10 @@ class Api::ProductsController < ApplicationController
   end
 
   def popular
-    query = params.permit(:views, :num_favorers, :price)
+    @query = query_params
     default = { views: :desc, num_favorers: :desc, price: :desc }
     gradient = {}
-    query.each do |k, v|
+    @query.each do |k, v|
       case v
       when "false"
         gradient[k.to_sym] = :asc
@@ -123,14 +124,14 @@ class Api::ProductsController < ApplicationController
         gradient[k.to_sym] = :desc
       end
     end
-    @products = gradient.empty? ? Product.order(**default) : Product.order(**gradient)
+    @products = gradient.empty? ? Product.order(**default).paginate(**@query) : Product.order(**gradient).paginate(**@query)
     render json: to_products_json(products: @products)
   end
 
   def from_users
     @query = query_params
     users = users_from_params(@query)
-    @products = Product.where(user_id: users)
+    @products = Product.where(user_id: users).paginate(**@query)
     if @products.empty?
       render json: ["Could not find products with user_ids: #{@query[:user_ids]}"], status: 400
     else
@@ -151,7 +152,7 @@ class Api::ProductsController < ApplicationController
   def from_shops
     @query = query_params
     shops = shops_from_params(@query)
-    @products = Product.where(shop_id: shops)
+    @products = Product.where(shop_id: shops).paginate(**@query)
     if shops.empty?
       render json: ["Could not find products with shop_ids: #{@query[:shop_ids]}"], status: 400
     else
@@ -180,11 +181,11 @@ class Api::ProductsController < ApplicationController
 
   private
 
-  def query_params(body_params: params)
+  def query_params(body_params=params, **kwargs)
     query = body_params.reject { |k, v| %w[format controller action].include?(k) }
     args = []
     query.each do |k, v|
-      if %w[start end random limit views num_favorers].include?(k)
+      if %w[start end random limit views num_favorers page_number results_per_page].include?(k)
         args.push([k.to_sym, ActiveModel::Type::Integer.new.cast(v)])
       elsif %w[price_min price_max].include?(k)
         args.push([k.to_sym, ActiveModel::Type::Decimal.new.cast(v)])
@@ -211,12 +212,11 @@ class Api::ProductsController < ApplicationController
     args.to_h
   end
 
-  def product_params
+  def product_params(new_params=params, **kwargs)
     # the .require makes it so that when a controller is using the
     # product_params function, if product_template doesn't exist in the home_body_template
     # provided by a form, then the controller will not continue
-    params.require(:product)
-          .permit(:user_id, :shop_id, :title, :price, :quantity, :views, :num_favorers,
+    new_params.permit(:user_id, :shop_id, :title, :price, :quantity, :views, :num_favorers,
                   :description, :image_urls, :category, :tags, :materials, :taxonomy_path)
   end
 

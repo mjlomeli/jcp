@@ -1,6 +1,4 @@
-def image_locate_error(**query)
-  image_ids = query[:image_ids] || []
-  group_ids = query[:group_ids] || []
+def image_locate_error(image_ids: [], group_ids: [], **kwargs)
 
   if !image_ids.empty? && !group_ids.empty?
     image_ids.map { |id| [id, ["Could not locate image with {id: #{id}, group_id = any (#{group_ids})}"]] }.to_h
@@ -13,14 +11,13 @@ def image_locate_error(**query)
   end
 end
 
-def image_error(**query)
-  image = query[:image]
-  images = image && [image] || query[:images] || []
+def image_error(image: nil, images: [], **kwargs)
+  images = image && [image] || images
   return {} if images.empty?
   images.map { |prod| [prod.id, prod.errors.full_messages] }.to_h
 end
 
-def to_images_json(images: [], error_images: [], error_ids: [])
+def to_images_json(images: [], error_images: [], error_ids: [], **kwargs)
   listing = {}
 
   listing[:images] = {} unless images.empty?
@@ -206,7 +203,7 @@ def fetch_shop_images_resized
     return
   end
 
-  shop = shop_from_params(@query)
+  shop = shops_from_params(@query)
   if shop
     @images = {
       shop_icons: shop.shop_icons,
