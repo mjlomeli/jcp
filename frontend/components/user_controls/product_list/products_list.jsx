@@ -46,7 +46,6 @@ class ProductsList extends React.Component {
 
         let components = Object.entries(this.props.products).map(pair => {
             let [productId, product] = pair;
-            console.log(pair)
             return <CardListing listing={product}/>
         });
         return <FlowLayout components={components || defaultComponents}

@@ -8,7 +8,7 @@ class Api::ImagesController < ApplicationController
     @query = { image_ids: [params[:id]] }
     @image = Image.find_by(id: params[:id])
     if !@image
-      render json: image_locate_error(@query)
+      render json: image_locate_error(@query), status: 400
     else
       render json: to_images_json(images: [@image])
     end
@@ -19,7 +19,7 @@ class Api::ImagesController < ApplicationController
     if @image.save
       render json: to_images_json(images: [@image])
     else
-      render json: image_error(image: @image)
+      render json: image_error(image: @image), status: 400
     end
   end
 
@@ -27,12 +27,12 @@ class Api::ImagesController < ApplicationController
     @query = { image_ids: [params[:id]] }
     @image = Image.find_by(id: params[:id])
     if !@image
-      render json: image_locate_error(@query)
+      render json: image_locate_error(@query), status: 400
     else
       if @image.update_attributes(image_params)
         render json: to_images_json(images: [@image])
       else
-        render json: image_error(image: @image)
+        render json: image_error(image: @image), status: 401
       end
     end
   end
@@ -41,12 +41,12 @@ class Api::ImagesController < ApplicationController
     @query = { image_ids: [params[:id]] }
     @image = Image.find_by(id: params[:id])
     if !@image
-      render json: image_locate_error(@query)
+      render json: image_locate_error(@query), status: 400
     else
       if @image.destroy
         render json: to_images_json(images: [@image])
       else
-        render json: image_error(image: @image)
+        render json: image_error(image: @image), status: 401
       end
     end
   end
@@ -56,7 +56,7 @@ class Api::ImagesController < ApplicationController
     @query = query_params
     @filter = image_filters
     begin
-      @images = Image.where(@filter).paginate(**@query)
+      @images = Image.where(@filter).custom_query(**@query)
       if @images.empty?
         render json: ["No search results with filters: #{@filter} nor with the query: #{@query}"], status: 400
       else
@@ -70,7 +70,7 @@ class Api::ImagesController < ApplicationController
 
   def from_products
     @query = query_params
-    @products = products_from_params(@query).paginate(**@query)
+    @products = products_from_params(@query).custom_query(**@query)
     if !@products || @products.empty?
       render json: ["Could not find images with product_ids: #{@query[:product_ids]}"], status: 400
     else
@@ -82,7 +82,7 @@ class Api::ImagesController < ApplicationController
 
   def from_users
     @query = query_params
-    @users = users_from_params(@query).paginate(**@query)
+    @users = users_from_params(@query).custom_query(**@query)
     if !@users || @users.empty?
       render json: ["Could not find images with user_ids: #{@query[:users_ids]}"], status: 400
     else
@@ -94,7 +94,7 @@ class Api::ImagesController < ApplicationController
 
   def from_shops
     @query = query_params
-    @shops = shops_from_params(@query).paginate(@query)
+    @shops = shops_from_params(@query).custom_query(@query)
     if !@shops || @shops.empty?
       render json: ["Could not find images with shop_ids: #{@query[:shop_ids]}"], status: 400
     else
@@ -107,9 +107,9 @@ class Api::ImagesController < ApplicationController
   def listings
     @query = query_params
     @filter = image_filters
-    @images = Image.where(group_name: 'product', **@filter).paginate(**@query)
+    @images = Image.where(group_name: 'product', **@filter).custom_query(**@query)
     if !@images || @images.empty?
-      render json: image_locate_error(**@query)
+      render json: image_locate_error(**@query), status: 400
     else
       group_ids = @query[:group_ids].map(&:to_i).to_set
       success_ids = @images.reduce([]){|arr, img| arr << img.group_id}.to_set
@@ -126,7 +126,7 @@ class Api::ImagesController < ApplicationController
     query.each do |k, v|
       if %w[dimension group_name].include?(k)
         args.push([k.to_sym, ActiveModel::Type::String.new.cast(v)])
-      elsif %w[results_per_page page_number].include?(k)
+      elsif %w[results_per_page page_number start finish limit].include?(k)
         args.push([k.to_sym, ActiveModel::Type::Integer.new.cast(v)])
       elsif %w[image_ids group_ids shop_ids user_ids product_ids].include?(k)
         ids = to_array(v).map { |value| ActiveModel::Type::Integer.new.cast(value) }

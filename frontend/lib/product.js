@@ -7,7 +7,6 @@ import {debug, urlId} from "../utils/tools";
 
 
 export class Product {
-
     static DEFAULT_ID = 1;
 
     static default() {
@@ -28,8 +27,8 @@ export class Product {
 
     static error(productId) {
         let state = Store.store.getState();
-        if (state && state.errors && state.errors.product)
-            return state.errors.product[productId];
+        if (state && state.errors && state.errors.products)
+            return state.errors.products[productId];
         debug.error("state.errors.product does not exist");
     }
 

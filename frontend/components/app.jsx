@@ -13,15 +13,15 @@ import Alert from './../components/user_controls/alert/alert'
 import Modal from "./user_controls/modal/modal"
 
 
-// import HomePage from "./pages/home_page";
+import HomePage from "./pages/home_page";
 // import ProductsPage from "./pages/products_page";
 // import ProductPage from "./pages/product_page";
 // import CartPage from "./pages/cart_page";
 
 
 import HeaderTemplate from "./themes/header_template/header_template";
-// import FooterTemplate from "./themes/footer_template/footer_template";
-// import HomeBodyTemplate from "./themes/home_body_template/home_body_template";
+import FooterTemplate from "./themes/footer_template/footer_template";
+import HomeBodyTemplate from "./themes/home_body_template/home_body_template";
 // import ProductsTemplate from "./themes/products_template/products_template";
 // import ProductTemplate from "./themes/product_template/product_template";
 // import CartTemplate from "./themes/cart_template/cart_template";
@@ -66,7 +66,7 @@ class App extends React.Component {
                 {/*<AuthRoute exact path="/signup" component={SignUpFormContainer}/>*/}
                 {/*<AuthRoute exact path="/demo" component={DemoLogInFormContainer}/>*/}
 
-                {/*<Route exact path="/home_page" component={HomePage} />*/}
+                <Route exact path="/home_page" component={HomePage} />
                 {/*<Route exact path="/products_page" component={ProductsPage} />*/}
                 {/*<Route exact path="/product_page" component={ProductPage} />*/}
                 {/*<ProtectedRoute exact path="/cart" component={CartPage} />*/}
@@ -108,6 +108,8 @@ class App extends React.Component {
                 {/*<Route exact path="/dropdown" component={DropdownLayout} />*/}
                 {/*<Route exact path="/nav_bar" component={NavbarLayout} />*/}
             </Switch>
+
+            <FooterTemplate />
             {/*END OF DON'T REMOVE*/}
             <Alert />
         </div>

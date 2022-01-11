@@ -9,13 +9,11 @@ class Shop < ApplicationRecord
 
   belongs_to :user,
              foreign_key: :user_id,
-             class_name: :User,
-             dependent: :destroy
+             class_name: :User
 
   has_many :products,
            foreign_key: :shop_id,
-           class_name: :Product,
-           dependent: :destroy
+           class_name: :Product
 
   has_many :reviews,
            through: :products,
@@ -25,17 +23,12 @@ class Shop < ApplicationRecord
            through: :products,
            source: :carters
 
-  def filtered_images(filter: {}, **kwargs)
-    return Image.where(group_id: self.icon_ids, group_name: 'shop') if filter.empty?
-    Image.where(group_id: self.icon_ids, group_name: 'shop', **filter)
+  def images(query={}, filter: {}, dimension: 'image_small', **kwargs)
+    Image.where(group_id: self.image_ids, group_name: 'shop', dimension: dimension, **filter)
   end
 
-  def shop_images
-    Image.where(group_id: self.image_ids, group_name: 'shop')
-  end
-
-  def shop_icons
-    Image.where(group_id: self.icon_ids, group_name: 'shop')
+  def icons(query={}, filter: {}, dimension: 'image_small', **kwargs)
+    Image.where(group_id: self.image_ids, group_name: 'shop', dimension: dimension, **filter)
   end
 
   def product_images
@@ -62,7 +55,7 @@ class Shop < ApplicationRecord
     Image.where(group_id: Array(image_ids), group_name: 'product', dimension: dimension)
   end
 
-  def product_images_resized_alternative(dimension='image_full')
+  def images_resized_alternative(dimension='image_full')
     # The same as this call
     #Image.joins("JOIN products ON images.group_id = any (products.image_ids) JOIN shops ON shops.id = products.shop_id and images.group_name = 'product' and images.dimension = #{dimension}")
     Image.left_join_products.joins("JOIN shops ON shops.id = products.shop_id and images.group_name = 'product' and images.dimension = '#{dimension}'")
@@ -83,11 +76,5 @@ class Shop < ApplicationRecord
     end
     return 0 unless reviews.length > 0
     total.to_f / reviews.length.to_f
-  end
-
-
-  def idk
-    a = Api::ImagesController.new
-    a.index
   end
 end

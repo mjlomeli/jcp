@@ -9,44 +9,25 @@ import {
 import {connect} from 'react-redux';
 import React from 'react';
 import './card_thumbnail.css'
-import {fetchProduct, resetProductErrors} from "../../../actions/product_action";
-import {fetchImageByProductId} from "../../../actions/image_action";
+import {fetchProductListing, resetProductErrors} from "../../../actions/product_action";
 import {Product} from "../../../lib/product";
 import {Image} from "../../../lib/image";
-import {urlPath} from "../../../utils/tools";
-
-let defaultProductId = 1;
-
-
-function findImage(product){
-    if (!product) return null;
-    let images = product.imagesSmall();
-    if (!images || images.length === 0) return null;
-    let image = null;
-    images.forEach(img => { if (!!img) return image = img; })
-    return image;
-}
+import {urlId} from "../../../utils/tools";
 
 const mapStateToProps = (state, ownProps) => {
     let productId = Product.findIDFromProps(ownProps);
-    let products = state.entities.products;
     let product = Product.findById(productId);
-
-    let images = state.entities.groupImages;
-    let image = findImage(product);
+    let images = product && product.imagesSmall() || null;
 
     return {
-        products: products,
         productId: productId,
         product: product,
-        images: images,
-        image: image
+        images: images
     }
 };
 
 const mapDispatchToProps = dispatch => ({
-    fetchProduct: (productId) => dispatch(fetchProduct(productId)),
-    fetchImageByProductId: (productId) => dispatch(fetchImageByProductId(productId)),
+    fetchProduct: (productId) => dispatch(fetchProductListing(productId)),
     resetProductError: productId => dispatch(resetProductErrors(productId))
 });
 
@@ -111,44 +92,35 @@ class CardThumbnail extends React.Component {
         </div>
     }
 
-    isRenderValid(){
-        return !!this.props.product && !!this.props.image;
-    }
-
     shouldComponentUpdate(nextProps, nextState, nextContext) {
-        let nextProductId = Product.findIDFromProps(nextProps);
-        let prevProductId = Product.findIDFromProps(this.props);
+        let productId = Product.findIDFromProps(this.props);
 
-        if (nextProductId !== prevProductId)
-            return true;
-        else if (Product.hasError(nextProductId) && urlPath(this.props) === "/card_thumbnail/:id") {
-            this.props.history.push(`/card_listing/${defaultProductId}`);
-            this.props.resetProductError(nextProductId);
+        if (Product.hasError(productId)) {
+            if (urlId(this.props) === productId) {
+                this.props.history.push(`/card_thumbnail/${Product.DEFAULT_ID}`);
+                this.props.resetProductError(this.props.productId);
+            } else {
+                this.props.fetchProduct(Product.DEFAULT_ID);
+            }
             return false;
         }
-        else if (!nextProductId || !nextProps.product || !nextProps.image)
-            return false;
-        else if (Product.hasError(nextProductId))
-            return false;
-        else if (Image.hasError(nextProps.image.id))
-            return false;
-        return true
+        return true;
     }
 
-    resolve(){
+    isRenderValid() {
+        return !!this.props.product && !!this.props.images;
+    }
+
+    resolve() {
         if (!this.props.product)
             this.props.fetchProduct(this.props.productId)
-        if (!this.props.image)
-            this.props.fetchImageByProductId(this.props.productId)
         return null;
     }
-
     render() {
         if (!this.isRenderValid())
             return this.resolve();
-
         let price = this.props.product.price;
-        let source = this.props.image.source();
+        let source = this.props.images[0].source();
         return <div className="card-thumbnail">
             {this.favoriteComponent()}
             <Link to={`/product/${this.props.product.id}`} style={{textDecoration: "inherit", color: "inherit"}}>

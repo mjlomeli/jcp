@@ -1,6 +1,5 @@
 import {Store} from "./store";
 import {debug, urlId} from "../utils/tools";
-import {isEmpty, urlParams} from "../utils/tools";
 
 export class Image {
     static DEFAULT = 1;
@@ -104,7 +103,8 @@ export class Image {
     }
 
     static findByProductId(id) {
-        return Image.allProducts()[id] || {};
+        let product_images = Image.allProducts()[id] || {}
+        return Object.values(product_images).map(img => new Image(img))
     }
 
     static findByShopId(id){

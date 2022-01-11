@@ -8,8 +8,7 @@ class User < ApplicationRecord
 
   has_one :shop,
           foreign_key: :user_id,
-          class_name: :Shop,
-          dependent: :destroy
+          class_name: :Shop
 
   has_many :cart_items,
            foreign_key: :user_id,
@@ -23,13 +22,13 @@ class User < ApplicationRecord
            through: :shop,
            source: :products
 
-  has_many :reference_favorites,
+  has_many :favorites,
            foreign_key: :user_id,
            class_name: :Favorite
 
-  has_many :favorites,
-           through: :reference_favorites,
-           source: :Product
+  has_many :favorite_products,
+           through: :favorites,
+           source: :product
 
   def filtered_images(filter: {}, **kwargs)
     return Image.where(group_id: self.image_ids, group_name: 'user') if filter.empty?

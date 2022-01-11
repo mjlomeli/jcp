@@ -6,6 +6,7 @@ Rails.application.routes.draw do
       resource :session, only: [:create, :destroy]
 
       resources :users, only: [:index] do
+        resources :favorites, only: [:index, :create]
         resources :reviews, only: [:index]
         resources :cart_items, only: [:index, :create, :destroy, :update]
       end
@@ -58,7 +59,15 @@ Rails.application.routes.draw do
 
       delete 'images', to: 'images#destroys'
 
+      #######################################
+      # Favorite
+      get 'favorite', to: 'favorites#index'
+      post 'favorite', to: 'favorites#create'
+      delete 'favorite', to: 'favorites#delete'
 
+      #######################################
+      # Favorite
+      get 'shop/listings', to: 'shops#listing'
     end
 
     # Home_page page route

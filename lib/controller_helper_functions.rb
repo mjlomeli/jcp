@@ -56,22 +56,3 @@ def valid_image_params?(group_name: nil, dimension: nil, **kwargs)
   valid_dimension = dimension.nil? || valid_dimension?(dimension: dimension)
   valid_name and valid_dimension
 end
-
-def validate_range(index, count)
-  return index if !index or (0 <= index and index < count)
-  return 0 if index < 0
-  return count if index >= count
-  index
-end
-
-def range_from_params(start: nil, finish: nil, limit: nil, random: false, count: 0)
-  start = validate_range(start, count)
-  finish = validate_range(finish, count)
-  limit = validate_range(limit, count)
-
-  start = start || finish && limit && [finish - limit, 0].max || 0
-  finish = finish && [finish, start].max || !limit && count || [start+limit, count].min
-  limit = limit && [finish - start, limit].min || finish - start
-
-  { start: start, end: finish, limit: limit, random: random }
-end

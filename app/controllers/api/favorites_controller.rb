@@ -1,68 +1,50 @@
 class Api::FavoritesController < ApplicationController
   def index
+    #http://localhost:3000/api/favorite?user_id=2
     @user = user_from_params
     if !@user
       render json: ["No valid user id was provided: {user_id: #{params[:user_id]}}"], status: 400
     elsif !!current_user and @user.id != current_user.id
       render json: ["Unauthorized user(#{@user.id}) tried to access user(#{params[:user_id]})"], status: 400
     else
-      if params[:range]
-        render json: favorite_range(params[:range])
-      else
-        render json: @user.favorites;
-      end
-    end
-  end
-
-  def show
-    @user = user_from_params
-    if !@user
-      render json: ["No valid user id was provided: {user_id: #{params[:user_id]}}"], status: 400
-    elsif @user.id != current_user.id
-      render json: ["Unauthorized user(#{@user.id}) tried to access user(#{params[:user_id]})"], status: 400
-    else
-      @favorite = Favorite.find_by(user_id: @user.id, product_id: params[:product_id])
-      if @favorite
-        render json: @favorite
-      else
-        render json: @favorite.errors.full_messages, status: 401
-      end
+      render json: Favorite.where(user_id: @user.id).select(:product_id).map{|fav| fav.product_id}
     end
   end
 
   def create
+    #http://localhost:3000/api/favorite?product_id=0.1133353182e10&user_id=2
     @user = user_from_params
-    if !@user
-      render json: ["No valid user id was provided: {user_id: #{params[:user_id]}}"], status: 400
-    elsif @user.id != current_user.id
-      render json: ["Unauthorized user(#{@user.id}) tried to access user(#{params[:user_id]})"], status: 400
-    else
-      @favorite = Favorite(user_id: @user.id, product_id: params[:product_id])
+    # if !@user
+    #   render json: ["No valid user id was provided: {user_id: #{params[:user_id]}}"], status: 400
+    # elsif @user.id != current_user.id
+    #   render json: ["Unauthorized user(#{@user.id}) tried to access user(#{params[:user_id]})"], status: 400
+    # else
+      @favorite = Favorite.create({user_id: @user.id, product_id: params[:product_id]})
       if @favorite.save
         render json: @favorite
       else
         render json: @favorite.errors.full_messages, status: 401
       end
-    end
+    # end
   end
 
   def delete
-    # DELETE /api/favorites/:product_id
+    #http://localhost:3000/api/favorite?product_id=0.1133353182e10&user_id=2
     @user = user_from_params
-    if !@user
-      render json: ["No valid user id was provided: {user_id: #{params[:user_id]}}"], status: 400
-    elsif @user.id != current_user.id
-      render json: ["Unauthorized user(#{@user.id}) tried to access user(#{params[:user_id]})"], status: 400
-    else
-      @review = Review.find_by(product_id: params[:product_id])
-      if @review.destroy
-        render json: @review
-      elsif !@review
+    # if !@user
+    #   render json: ["No valid user id was provided: {user_id: #{params[:user_id]}}"], status: 400
+    # elsif @user.id != current_user.id
+    #   render json: ["Unauthorized user(#{@user.id}) tried to access user(#{params[:user_id]})"], status: 400
+    # else
+      @favorite = Favorite.find_by({user_id: @user.id, product_id: params[:product_id]})
+      if @favorite.destroy
+        render json: @favorite
+      elsif !@favorite
         render json: ["Could not locate product id: #{params[:product_id]}"], status: 400
       else
-        render json: @review.errors.full_messages, status: 401
+        render json: @favorite.errors.full_messages, status: 401
       end
-    end
+    # end
   end
 
   private
@@ -74,9 +56,5 @@ class Api::FavoritesController < ApplicationController
 
   def favorite_params
     params.require(:favorite).permit(:product_id)
-  end
-
-  def favorite_range(favorite_ids)
-    Favorite.where(user_id: current_user.id, id: favorite_ids)
   end
 end

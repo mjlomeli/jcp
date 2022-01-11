@@ -13,10 +13,10 @@ export const errorImage = (prevState = {}, action) => {
             newState[action.imageId] = action.errors;
             return newState;
         case RECEIVE_IMAGES:
-            delete newState[action.image.id];
+            let images = Object.values(action.listings.images)
+            images.forEach(image => delete newState[image.id])
             return newState;
         case RESET_IMAGES_ERRORS:
-            delete newState[action.imageId];
             return newState;
         default:
             return prevState;

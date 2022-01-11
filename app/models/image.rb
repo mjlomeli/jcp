@@ -11,12 +11,9 @@ class Image < ApplicationRecord
   scope :right_join_products, -> { Product.joins("INNER JOIN images ON images.group_id = any (products.image_ids)") }
   scope :right_join_shops, -> { Shop.joins("INNER JOIN products ON shops.id = products.shop_id INNER JOIN images ON images.group_id = any (products.image_ids)") }
 
+
   def source
-    if self.data.nil?
-      self.url
-    else
-      "data:#{self.mimetype};base64,#{self.data}"
-    end
+    self.data.nil? ? self.url : "data:#{self.mimetype};base64,#{self.data}"
   end
 end
 

@@ -9,50 +9,24 @@ import {connect} from 'react-redux';
 import React from 'react';
 import GridLayout from "../grid_layout/grid_layout";
 import {Product} from "../../../lib/product";
-import {fetchProduct, resetProductErrors} from "../../../actions/product_action";
+import {fetchProduct, fetchProductListing, resetProductErrors} from "../../../actions/product_action";
 import {fetchImageByProductId} from "../../../actions/image_action";
+import {urlId} from "../../../utils/tools";
 
-
-const defaultProductId = 1133353182;
-
-function findProductId(ownProps){
-    if (!ownProps) return null;
-    if (ownProps.productId)
-        return parseInt(ownProps.productId);
-    else if (ownProps.match && ownProps.match.params && ownProps.match.params.id)
-        return parseInt(ownProps.match.params.id);
-    return null;
-}
-
-function findImage(product){
-    if (!product) return null;
-    let images = product.imagesMedium();
-    if (!images || images.length === 0) return null;
-    let image = null;
-    images.forEach(img => { if (!!img) return image = img; })
-    return image;
-}
-
-const mapStateToProps = (state, ownProps) =>{
-    let productId = findProductId(ownProps);
-    let products = state.entities.products;
+const mapStateToProps = (state, ownProps) => {
+    let productId = Product.findIDFromProps(ownProps);
     let product = Product.findById(productId);
-
-    let images = state.entities.groupImages;
-    let image = findImage(product);
+    let images = product && product.imagesSmall();
 
     return {
-        products: products,
         productId: productId,
         product: product,
-        images: images,
-        image: image
+        images: images
     }
 };
 
 const mapDispatchToProps = dispatch => ({
-    fetchProduct: (productId) => dispatch(fetchProduct(productId)),
-    fetchImageByProductId: (productId) => dispatch(fetchImageByProductId(productId)),
+    fetchProduct: (productId) => dispatch(fetchProductListing(productId)),
     resetProductError: productId => dispatch(resetProductErrors(productId))
 });
 
@@ -169,24 +143,27 @@ class CircularThumbnail extends React.Component {
     }
 
     shouldComponentUpdate(nextProps, nextState, nextContext) {
-        let productId = findProductId(this.props);
-        if (Product.hasProductError(productId)) {
-            this.props.history.push(`/circular_thumbnail/${defaultProductId}`);
-            this.props.resetProductError(this.props.productId);
+        let productId = Product.findIDFromProps(this.props);
+
+        if (Product.hasError(productId)) {
+            if (urlId(this.props) === productId) {
+                this.props.history.push(`/circular_thumbnail/${Product.DEFAULT_ID}`);
+                this.props.resetProductError(this.props.productId);
+            } else {
+                this.props.fetchProduct(Product.DEFAULT_ID);
+            }
             return false;
         }
         return true;
     }
 
-    isRenderValid(){
-        return !!this.props.product && !!this.props.image;
+    isRenderValid() {
+        return !!this.props.product && !!this.props.images;
     }
 
-    resolve(){
+    resolve() {
         if (!this.props.product)
             this.props.fetchProduct(this.props.productId)
-        else if (!this.props.image)
-            this.props.fetchImageByProductId(this.props.productId)
         return null;
     }
 
@@ -194,17 +171,19 @@ class CircularThumbnail extends React.Component {
         if (!this.isRenderValid())
             return this.resolve();
         let product = this.props.product;
-        let image = this.props.image;
+        let source = this.props.images[0].source();
 
         let areas = ['image', 'image', 'image', 'image', 'title']
         let components = {
             'image': <div className={this.classImage} style={this.#imageStyle} ref={this.image}>
-                <img alt="img" src={image.source()}
+                <img alt="img" src={source}
                      style={{borderRadius: "50%", width: "100%", height: "100%", objectFit: "cover"}}/>
             </div>,
-            'title': <label className={this.classTitle} ref={this.title} style={this.#titleStyle}>{this.resize(product.title)}</label>
+            'title': <label className={this.classTitle} ref={this.title}
+                            style={this.#titleStyle}>{this.resize(product.title)}</label>
         }
-        return <Link to={`/product/${product.id}`} onMouseEnter={this.onmouseenter} onMouseLeave={this.onmouseleave} style={{textDecoration: "inherit", color: "inherit"}}>
+        return <Link to={`/product/${product.id}`} onMouseEnter={this.onmouseenter} onMouseLeave={this.onmouseleave}
+                     style={{textDecoration: "inherit", color: "inherit"}}>
             <GridLayout
                 className={this.className}
                 classElements={this.classElements}

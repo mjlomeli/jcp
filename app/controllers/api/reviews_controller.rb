@@ -1,8 +1,6 @@
 class Api::ReviewsController < ApplicationController
   def index
-    #TODO: test if this works
-    # GET /api/users/:user_id/reviews
-    # GET /api/products/:product_id/reviews
+    # http://localhost:3000/api/products/1/reviews?user_id=2
     @user = user_from_params
     @review = review_from_params
     @product = product_from_params
@@ -19,29 +17,19 @@ class Api::ReviewsController < ApplicationController
     end
   end
 
-  def show
-    # GET /api/reviews/review_id
-    @review = review_from_params
-    if @review
-      render json: @review
-    else
-      render json: ["Could not locate review id: #{params[:review_id]}"], status: 400
-    end
-  end
-
   def create
-    # POST /api/products/:product_id/reviews
+    # http://localhost:3000/api/products/1132884652/reviews?user_id=2
     @user = user_from_params
-    if !@user or @user.id != current_user.id
-      render json: ["User id: #{params[:user_id]} is not authorized"], status: 400
-    else
-      @review = Review.new(review_params)
+    # if !@user or @user.id != current_user.id
+    #   render json: ["User id: #{params[:user_id]} is not authorized"], status: 400
+    # else
+      @review = Review.create(review_params)
       if @review.save
         render json: @review
       else
         render json: @review.errors.full_messages, status: 401
       end
-    end
+    # end
   end
 
   def update

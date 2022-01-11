@@ -1,6 +1,6 @@
 import {debug} from "./tools";
 
-export const fetchProducts = (query) => {
+export const fetchProducts = (query={}) => {
     if (query === null || typeof query !== 'object')
         return debug.errorPromise("ProductUtil.fetchProducts must be passed an object");
     if ('ids' in query) query.ids = JSON.stringify(query.ids)
@@ -11,7 +11,7 @@ export const fetchProducts = (query) => {
     if ('taxonomy_paths' in query) query.taxonomy_paths = JSON.stringify(query.taxonomy_paths)
 
     return $.ajax({
-        url: '/api/products',
+        url: '/api/products/query',
         method: 'GET',
         data: query
     });
@@ -22,8 +22,9 @@ export const fetchProductsRange = (start, end) => {
         return debug.errorPromise(`A start and end must be provided for ProductUtil.fetchProductsRange.`);
 
     return $.ajax({
-        url: `/api/products?start=${start}&end=${end}`,
-        method: 'GET'
+        url: `/api/products/query`,
+        method: 'GET',
+        data: {start: start, end: end}
     });
 };
 
@@ -32,30 +33,30 @@ export const fetchRandomProducts = (limit) => {
         return debug.errorPromise(`A limit be provided for ProductUtil.fetchRandomProducts.`)
 
     return $.ajax({
-        url: `/api/products?limit=${limit}&random=${true}`,
-        method: 'GET'
+        url: `/api/products/query`,
+        method: 'GET',
+        data: {limit: limit, random: true}
     });
 };
-
-export const fetchRandomProductsRange = (start, end) => {
-    if (!start || !end)
-        return debug.errorPromise(`A start and end must be provided for ProductUtil.fetchRandomProductsRange.`)
-
-    return $.ajax({
-        url: `/api/products?start=${start}&end=${end}&random=${true}`,
-        method: 'GET'
-    });
-};
-
-
 
 export const fetchProduct = (productId) => {
     if (!productId)
         return debug.errorPromise(`A product id must be provided for ProductUtil.fetchProduct.`)
 
     return $.ajax({
-        url: `/api/products/${productId}`,
+        url: `/api/product/${productId}`,
         method: 'GET'
+    });
+};
+
+export const fetchProductListing = (productId, dimension='all') => {
+    if (!productId)
+        return debug.errorPromise(`A product id must be provided for ProductUtil.fetchProduct.`)
+
+    return $.ajax({
+        url: `/api/products/listings`,
+        method: 'GET',
+        data: {product_id: productId}
     });
 };
 
@@ -64,7 +65,7 @@ export const createProduct = (product) => {
         return debug.errorPromise(`A product object must be provided for ProductUtil.createProduct.`)
 
     return $.ajax({
-        url: '/api/products',
+        url: '/api/product',
         method: 'POST',
         data: {product: product}
     });
@@ -75,7 +76,7 @@ export const updateProduct = (product) => {
         return debug.errorPromise(`A product object be provided for ProductUtil.updateProduct.`)
 
     return $.ajax({
-        url: `/api/products/${product.id}`,
+        url: `/api/product/${product.id}`,
         method: 'PATCH',
         data: {product: product}
     });
@@ -86,7 +87,7 @@ export const deleteProduct = (productId) => {
         return debug.errorPromise(`A product id must be provided for ProductUtil.deleteProduct.`)
 
     return $.ajax({
-        url: `/api/products/${productId}`,
+        url: `/api/product/${productId}`,
         method: 'DELETE'
     });
 };
@@ -95,8 +96,8 @@ window.ProductUtil = {
     fetchProducts,
     fetchProductsRange,
     fetchRandomProducts,
-    fetchRandomProductsRange,
     fetchProduct,
+    fetchProductListing,
     createProduct,
     updateProduct,
     deleteProduct

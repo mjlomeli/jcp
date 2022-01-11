@@ -1,6 +1,7 @@
 import * as ProductUtil from '../utils/product_util'
 import * as AlertAction from './alert_action'
-import {idSystemError} from "./alert_action";
+import {ENTITY} from "../reducers/constants";
+import {parse_int_listings} from "../utils/tools";
 
 export const RECEIVE_PRODUCTS = "RECEIVE_PRODUCTS";
 export const REMOVE_PRODUCTS = "REMOVE_PRODUCTS";
@@ -12,17 +13,22 @@ export const RESET_PRODUCTS_ERRORS = "RESET_PRODUCT_ERROR";
 export const RESET_ALL_PRODUCTS_ERRORS = "RESET_ALL_PRODUCTS_ERRORS";
 
 
-export const receiveProducts = listing => ({
+export const receiveProducts = (listings={}) => ({
     type: RECEIVE_PRODUCTS,
-    listing: listing
+    listings: parse_int_listings(listings)
 })
 
-export const removeProducts = productIds => ({
+export const receiveProductsListings = (listings={}) => ({
+    type: ENTITY,
+    listings: parse_int_listings(listings)
+})
+
+export const removeProducts = (productIds=[]) => ({
     type: REMOVE_PRODUCTS,
     productIds: productIds
 })
 
-export const receiveProductsErrors = (dispatch, errors) => {
+export const receiveProductsErrors = (dispatch, errors=[]) => {
     dispatch(AlertAction.systemError(errors));
     return {
         type: RECEIVE_PRODUCTS_ERRORS,
@@ -56,6 +62,12 @@ export const fetchProducts = (query) => dispatch => (
     )
 )
 
+export const fetchProductListing = (productId) => dispatch => (
+    ProductUtil.fetchProductListing(productId).then(
+        listing => dispatch(receiveProductsListings(listing)),
+        err => dispatch(receiveProductsErrors(dispatch, err.responseJSON)))
+)
+
 
 export const fetchProductsRange = (start, end) => dispatch => (
     ProductUtil.fetchProductsRange(start, end).then(
@@ -66,13 +78,6 @@ export const fetchProductsRange = (start, end) => dispatch => (
 
 export const fetchRandomProducts = (limit) => dispatch => (
     ProductUtil.fetchRandomProducts(limit).then(
-        listing => dispatch(receiveProducts(listing)),
-        err => dispatch(receiveProductsErrors(dispatch, err.responseJSON)))
-)
-
-
-export const fetchRandomProductsRange = (start, end) => dispatch => (
-    ProductUtil.fetchRandomProductsRange(start, end).then(
         listing => dispatch(receiveProducts(listing)),
         err => dispatch(receiveProductsErrors(dispatch, err.responseJSON)))
 )
@@ -136,7 +141,7 @@ window.ProductAction = {
     fetchProducts,
     fetchProductsRange,
     fetchRandomProducts,
-    fetchRandomProductsRange,
+    fetchProductListing,
     resetProductErrors,
     resetProductsErrors,
     resetAllProductsError,

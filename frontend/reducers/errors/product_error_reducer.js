@@ -1,6 +1,5 @@
 import {
     RECEIVE_PRODUCTS,
-    REMOVE_PRODUCT,
     RECEIVE_PRODUCTS_ERRORS,
     RESET_PRODUCTS_ERRORS,
     RESET_ALL_PRODUCTS_ERRORS,
@@ -22,11 +21,8 @@ export const productsError =  (prevState = {}, action) => {
             return newState;
         case RESET_ALL_PRODUCTS_ERRORS:
             return {};
-        case REMOVE_PRODUCT:
-            delete newState[action.productId];
-            return newState;
         case RECEIVE_PRODUCTS:
-            Object.entries(action.listing).forEach(pair =>{
+            Object.entries(action.listings.products).forEach(pair =>{
                 let [productId, product] = pair;
                 delete newState[productId];
             })

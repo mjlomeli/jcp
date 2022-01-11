@@ -8,7 +8,7 @@ class Api::ProductsController < ApplicationController
     @query = {product_ids: [params[:id]]}
     @product = Product.find_by(id: params[:id])
     if !@product
-      render json: product_locate_error(@query)
+      render json: product_locate_error(@query), status: 400
     else
       render json: to_products_json(products: [@product])
     end
@@ -19,7 +19,7 @@ class Api::ProductsController < ApplicationController
     if @product.save
       render json: to_products_json(products: [@product])
     else
-      render json: product_error(product: @product)
+      render json: product_error(product: @product), status: 401
     end
   end
 
@@ -27,12 +27,12 @@ class Api::ProductsController < ApplicationController
     @query = {product_ids: [params[:id]]}
     @product = Product.find_by(id: params[:id])
     if !@product
-      render json: product_locate_error(@query)
+      render json: product_locate_error(@query), status: 400
     else
       if @product.update_attributes(product_params)
         render json: to_products_json(products: [@product])
       else
-        render json: product_error(product: @product)
+        render json: product_error(product: @product), status: 401
       end
     end
   end
@@ -41,12 +41,12 @@ class Api::ProductsController < ApplicationController
     @query = {product_ids: [params[:id]]}
     @product = Product.find_by(id: params[:id])
     if !@product
-      render json: product_locate_error(@query)
+      render json: product_locate_error(@query), status: 400
     else
       if @products.destroy
         render json: to_products_json(products: [@product])
       else
-        render json: product_error(product: @product)
+        render json: product_error(product: @product), status: 401
       end
     end
   end
@@ -55,7 +55,7 @@ class Api::ProductsController < ApplicationController
     @query = query_params
     @filter = product_filters
     begin
-      @products = Product.where(groups_from_params(@query)).where(@filter).paginate(**@query)
+      @products = Product.where(groups_from_params(@query)).where(@filter).custom_query(**@query)
       if @products.empty?
         render json: ["No search results with filters: #{@filter} nor with the query: #{@query}"], status: 400
       else
@@ -74,7 +74,7 @@ class Api::ProductsController < ApplicationController
     search = []
     search << "products.price >= #{price_min}" if price_min
     search << "products.price <= #{price_max}" if price_max
-    @products = Product.where(search.join(" and ")).paginate(**@query)
+    @products = Product.where(search.join(" and ")).custom_query(**@query)
     render json: to_products_json(products: @products)
   end
 
@@ -85,9 +85,9 @@ class Api::ProductsController < ApplicationController
     if @query[:product_ids] and !valid_dimension?(@query) and dimension != nil and dimension != "all"
       render json: product_ids.map { |id| [id, ["Could not find products with dimension: #{dimension}"]] }.to_h
     else
-      @products = products_from_params(@query).paginate(**@query)
+      @products = products_from_params(@query).custom_query(**@query)
       if @products.empty?
-        render json: product_locate_error(**@query)
+        render json: product_locate_error(**@query), status: 400
       else
         error_ids = product_ids.to_set.clone
         images = []
@@ -112,14 +112,14 @@ class Api::ProductsController < ApplicationController
         gradient[k.to_sym] = :desc
       end
     end
-    @products = gradient.empty? ? Product.order(**default).paginate(**@query) : Product.order(**gradient).paginate(**@query)
+    @products = gradient.empty? ? Product.order(**default).custom_query(**@query) : Product.order(**gradient).custom_query(**@query)
     render json: to_products_json(products: @products)
   end
 
   def from_users
     @query = query_params
     users = users_from_params(@query)
-    @products = Product.where(user_id: users).paginate(**@query)
+    @products = Product.where(user_id: users).custom_query(**@query)
     if @products.empty?
       render json: ["Could not find products with user_ids: #{@query[:user_ids]}"], status: 400
     else
@@ -140,7 +140,7 @@ class Api::ProductsController < ApplicationController
   def from_shops
     @query = query_params
     shops = shops_from_params(@query)
-    @products = Product.where(shop_id: shops).paginate(**@query)
+    @products = Product.where(shop_id: shops).custom_query(**@query)
     if shops.empty?
       render json: ["Could not find products with shop_ids: #{@query[:shop_ids]}"], status: 400
     else
@@ -152,7 +152,7 @@ class Api::ProductsController < ApplicationController
     @query = query_params
     @products = products_from_params(@query)
     if !@products or @products.empty?
-      render json: product_locate_error(**@query)
+      render json: product_locate_error(**@query), status: 400
     else
       success_ids = []
       err_products = []
@@ -173,7 +173,7 @@ class Api::ProductsController < ApplicationController
     query = body_params.reject { |k, v| %w[format controller action].include?(k) }
     args = []
     query.each do |k, v|
-      if %w[start end random limit views num_favorers page_number results_per_page].include?(k)
+      if %w[start finish random limit views num_favorers page_number results_per_page].include?(k)
         args.push([k.to_sym, ActiveModel::Type::Integer.new.cast(v)])
       elsif %w[price_min price_max].include?(k)
         args.push([k.to_sym, ActiveModel::Type::Decimal.new.cast(v)])
@@ -216,15 +216,3 @@ class Api::ProductsController < ApplicationController
     filter
   end
 end
-
-
-# [:tags, :materials, :taxonomy_paths].each{|v| @group[v] = @filter.delete(v) if @filter.key?(v)}
-#
-#   @products = []
-#   if !@group.empty? && !@filter.empty?
-#     @products = groups_from_params(@query).where(**@filter).paginate(**@query)
-#   elsif @group.empty?
-#     @products = Product.where(**@filter).paginate(**@query)
-#   else
-#     @products = groups_from_params(@query) if @filter.empty?
-#   end

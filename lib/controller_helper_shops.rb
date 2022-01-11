@@ -1,46 +1,35 @@
-
-def fetch_shop
-  @shop = shop_from_params(@query)
-  if @shop
-    render json: @shop
+def shop_locate_error(query={}, shop_ids: [], **kwargs)
+  if shop_ids.empty?
+    { query.keys.to_s => ["Could not locate shop with given params: #{query.to_s}"] }
   else
-    render json: ["Could not find shop id: #{@query[:shop_id]}"], status: 400
+    shop_ids.map { |id| [id, ["Could not locate shop id: #{id}"]] }.to_h
   end
 end
 
-def fetch_shops
-  @shops = shops_from_params(@query)
-  if @shops and !@shops.empty?
-    render json: @shops
-  else
-    render json: ["Could not find shop ids: #{@query[:shop_ids]}"], status: 400
-  end
+def shop_error(shop: nil, shops: [], **kwargs)
+  shops = [shop] unless shop.nil?
+  return {} if shops.empty?
+  shops.map { |s| [s.id, s.errors.full_messages] }.to_h
 end
 
-def fetch_user_shop
-  user = user_from_params(@query)
-  if user
-    @shops = user.shop
-    render json: @shops
-  else
-    render json: ["Could not find user id: #{@query[:user_id]}"], status: 400
-  end
-end
+def to_shops_json(shops: [], images: [], error_shops: [], error_ids: [], **kwargs)
+  listing = {}
 
-def fetch_shop_title
-  @shop = Shop.where("shops.title ILIKE ?", "%#{@query[:title]}%")
-  if @shop and !@shop.empty?
-    render json: @shop
-  else
-    render json: ["Could not find shop with title: #{@query[:title]}"], status: 400
-  end
-end
+  listing[:shops] = {} unless shops.empty?
+  shops.each { |shop| listing[:shops][shop.id] = shop }
 
-def fetch_shop_name
-  @shop = Shop.where("shops.shop_name ILIKE ?", "%#{@query[:shop_name]}%")
-  if @shop and !@shop.empty?
-    render json: @shop
-  else
-    render json: ["Could not find shop with name: #{@query[:shop_name]}"], status: 400
+  listing[:images] = {} unless images.empty?
+  images.each do |image|
+    if listing[:images].key?(image.group_id)
+      listing[:images][image.group_id][image.dimension] = image
+    else
+      listing[:images][image.group_id] = { image.dimension => image }
+    end
   end
+
+  listing[:errors] = {} unless error_shops.empty? and error_ids.empty?
+  listing[:errors].merge!(shop_error(shops: error_shops)) unless error_shops.empty?
+  listing[:errors].merge!(shop_locate_error(shop_ids: error_ids)) unless error_ids.empty?
+
+  listing
 end

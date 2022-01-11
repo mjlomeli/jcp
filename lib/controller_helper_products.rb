@@ -1,4 +1,4 @@
-def product_locate_error(product_ids: [], **kwargs)
+def product_locate_error(query={}, product_ids: [], **kwargs)
   if product_ids.empty?
     { query.keys.to_s => ["Could not locate product with given params: #{query.to_s}"] }
   else

@@ -1,4 +1,4 @@
-def image_locate_error(image_ids: [], group_ids: [], **kwargs)
+def image_locate_error(query={}, image_ids: [], group_ids: [], **kwargs)
 
   if !image_ids.empty? && !group_ids.empty?
     image_ids.map { |id| [id, ["Could not locate image with {id: #{id}, group_id = any (#{group_ids})}"]] }.to_h
@@ -17,7 +17,7 @@ def image_error(image: nil, images: [], **kwargs)
   images.map { |prod| [prod.id, prod.errors.full_messages] }.to_h
 end
 
-def to_images_json(images: [], error_images: [], error_ids: [], group_ids: [] **kwargs)
+def to_images_json(images: [], error_images: [], error_ids: [], group_ids: [], **kwargs)
   listing = {}
 
   listing[:images] = {} unless images.empty?

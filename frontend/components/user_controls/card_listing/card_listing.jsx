@@ -10,12 +10,11 @@ import React from 'react';
 import './card_listing.css'
 import GridLayout from "../grid_layout/grid_layout";
 import Rating from "../rating/rating";
-import {fetchProduct, resetProductErrors} from "../../../actions/product_action";
-import {fetchImageByProductId} from "../../../actions/image_action";
 import {connect} from "react-redux";
 import {Product} from "../../../lib/product";
 import {Image} from "../../../lib/image";
-import {urlPath} from "../../../utils/tools";
+import {urlId, urlPath} from "../../../utils/tools";
+import {fetchProductListing, resetProductErrors} from "../../../actions/product_action";
 
 function findImage(product) {
     if (!product) return null;
@@ -32,27 +31,18 @@ function findImage(product) {
 
 const mapStateToProps = (state, ownProps) => {
     let productId = Product.findIDFromProps(ownProps);
-    let products = state.entities.products;
     let product = Product.findById(productId);
-    let images = state.entities.groupImages;
-    let image = findImage(product);
-
-    console.log(`[mapStateToProps]: productId = ${productId}`);
-    console.log(`[mapStateToProps]: product = ${product && product.toString() || null}`);
-    console.log(`[mapStateToProps]: image = ${image && image.toString() || null}\n\n`);
+    let images = product && product.imagesSmall();
 
     return {
-        products: products,
         productId: productId,
         product: product,
-        images: images,
-        image: image
+        images: images
     }
 };
 
 const mapDispatchToProps = dispatch => ({
-    fetchProduct: (productId) => dispatch(fetchProduct(productId)),
-    fetchImageByProductId: (productId) => dispatch(fetchImageByProductId(productId)),
+    fetchProduct: (productId) => dispatch(fetchProductListing(productId)),
     resetProductError: productId => dispatch(resetProductErrors(productId))
 });
 
@@ -151,12 +141,12 @@ class CardListing extends React.Component {
 
     imageComponent() {
         let productId = parseInt(this.props.product.id);
-        let image = this.props.image;
+        let source = this.props.images[0].source();
         return <div>
             <div className="card-listing-image-div">
                 {this.favoriteComponent()}
                 <Link to={`/product/${productId}`} style={{textDecoration: 'none'}}>
-                    <img className="card-listing-image" alt="img" aria-hidden="true" src={image.source()}/>
+                    <img className="card-listing-image" alt="img" aria-hidden="true" src={source}/>
                 </Link>
             </div>
         </div>
@@ -195,85 +185,27 @@ class CardListing extends React.Component {
     }
 
     shouldComponentUpdate(nextProps, nextState, nextContext) {
-        let nextProductId = Product.findIDFromProps(nextProps);
-        let prevProductId = Product.findIDFromProps(this.props);
+        let productId = Product.findIDFromProps(this.props);
 
-        console.log(`[shouldUpdate]: prevProductId = ${prevProductId}`);
-        console.log(`[shouldUpdate]: nextProductId = ${nextProductId}`);
-        console.log(`[shouldUpdate]: hasError(prev) = ${Product.hasError(prevProductId)}`);
-        console.log(`[shouldUpdate]: hasError(next) = ${Product.hasError(nextProductId)}`);
-        console.log(`[shouldUpdate]: !!prevProduct = ${!!this.props.product}`);
-        console.log(`[shouldUpdate]: !!nextProduct = ${!!nextProps.product}`);
-
-        console.log(`[shouldUpdate]: ===> ${((!nextProductId || !nextProps.product 
-            || !nextProps.image) || Product.hasError(nextProductId) || Image.hasError(nextProps.image.id) ||
-        nextProductId === prevProductId) && "false" || "true"}\n\n`);
-
-        if (nextProductId === prevProductId)
+        if (Product.hasError(productId)) {
+            if (urlId(this.props) === productId) {
+                this.props.history.push(`/card_listing/${Product.DEFAULT_ID}`);
+                this.props.resetProductError(this.props.productId);
+            } else {
+                this.props.fetchProduct(Product.DEFAULT_ID);
+            }
             return false;
-        else if (!nextProductId || !nextProps.product || !nextProps.image)
-            return false;
-        else if (Product.hasError(nextProductId))
-            return false;
-        else if (Image.hasError(nextProps.image.id))
-            return false;
-        return true
+        }
+        return true;
     }
 
     isRenderValid() {
-        return !!this.props.product && !!this.props.image;
-    }
-
-    resolveProduct(productId) {
-        this.props.fetchProduct(productId).then(() => {}, e => {
-            console.log("[resolveProduct] productId:", productId)
-            //The data flat out fails and
-            if (urlPath(this.props) === "/card_listing/:id") {
-                console.log("\tRedirecting...")
-                // redirects to the default path if the current path is of card_listing/:id
-                //this.props.history.push(`/card_listing/1`);
-                this.props.resetProductError(productId);
-            }
-            // its not from a path so its a raw component. So
-            // doesn't reset the ProductError => this.props.resetProductError(productId);
-            // Product error existing means I'll be using a default value.
-
-            // Additionally, check that the default already exists in memory, else fetch it.
-            if (!Product.default()) {
-                console.log("\tNeed to fetch default product...")
-                this.props.fetchProduct(Product.DEFAULT_ID);
-            }
-        })
-    }
-
-    resolveImage(productId) {
-        this.props.fetchImageByProductId(productId).then(() => {}, e => {
-            console.log("[resolveImage] productId:", productId)
-            //No image was found. Must use a default Image.
-            //Doesn't reset the error => this.props.resetImageError(imageId); TODO: not sure if correct resetImageError
-            //So it can be used as an indicator to swap for a "default" image.
-
-            //Additionally, check that the default already exists in memory, else fetch it.
-            if (!Image.defaultProduct()){
-                console.log("\tNeed to fetch default image...")
-                this.props.fetchImageByProductId(Product.DEFAULT_ID);
-            }
-
-
-        })
+        return !!this.props.product && !!this.props.images;
     }
 
     resolve() {
-        let productId = Product.findIDFromProps(this.props);
-
-        if (!productId && urlPath(this.props) === "/card_listing/:id") {
-            console.log("Have to redirect you.")
-            //this.props.history.push(`/card_listing/1`);
-        }
         if (!this.props.product)
-            this.resolveProduct(productId);
-        if (!this.props.image)
-            this.resolveImage(productId);
+            this.props.fetchProduct(this.props.productId)
         return null;
     }
 
