@@ -1,11 +1,103 @@
 import React from 'react';
 
-import BodyTemplate from "../themes/home_body_template/home_body_template";
+import './home_page.css'
+import {fetchRandomProducts} from "../../actions/product_action";
+import SelectionsCircular from "../themes/selections_circular/selections_circular";
+import SelectionsFull from "../themes/selections_full/selections_full";
+import SelectionsThumbnails from "../themes/selections_thumbnails/selections_thumbnails";
+import {connect} from "react-redux";
+import SelectionsLarge from "../themes/selections_large/selections_large";
+import SelectionsSmall from "../themes/selections_small/selections_small";
+import SelectionsBordered from "../themes/selections_bordered/selections_bordered";
+import GridLayout from "../user_controls/grid_layout/grid_layout";
 
-const HomePage = () => (
-    <div style={{width: "100%"}}>
-        <BodyTemplate />
-    </div>
-);
 
-export default HomePage;
+const mapStateToProps = ({entities, errors}, ownProps) => {
+    let productIds = Object.keys(entities.products);
+    return {
+        productIds: productIds,
+        categories: productIds.slice(0, 6),
+        popular: productIds.slice(0, 5),
+        recent: productIds.slice(0, 10),
+        firstPicks: productIds.slice(0, 6),
+        secondPicks: productIds.slice(0, 10),
+        firstActivity: productIds.slice(0, 9),
+        secondActivity: productIds.slice(0, 6),
+        editors: productIds.slice(0, 6),
+        selections: productIds.slice(0, 8),
+        productsList: productIds.slice(0, 16 * 4),
+        recommendations: productIds.slice(0, 6)
+    }
+};
+
+const mapDispatchToProps = dispatch => ({
+    fetchRandomProducts: (n) => dispatch(fetchRandomProducts(n)),
+});
+
+
+class HomePage extends React.Component {
+    constructor(props) {
+        super(props);
+    }
+
+    isRenderValid() {
+        return this.props.productIds && this.props.productIds.length;
+    }
+
+    resolve() {
+        if (!this.props.productIds || this.props.productIds.length === 0)
+            this.props.fetchRandomProducts(10);
+        return null;
+    }
+
+    render() {
+        if (!this.isRenderValid())
+            return this.resolve();
+        let areas = ["categories", "popular", "viewed", "picks1", "picks2", "editors", "selections", "based_1", "based_2", "recommendations"]
+        let components = {
+            "categories": <SelectionsCircular productIds={this.props.categories}/>,
+
+            "popular": <SelectionsFull productIds={this.props.popular} numRows={1} title={"Popular gifts right now"}/>,
+
+            "viewed": <SelectionsThumbnails productIds={this.props.recent} numRows={2} title={"Recently viewed & more"}/>,
+
+            "picks1": <><h2 className="home-page-sub-title">Our Picks For You</h2>
+                <SelectionsCircular productIds={this.props.firstPicks} />
+            </>,
+
+            "picks2":  <SelectionsThumbnails productIds={this.props.productIds} numRows={2} />,
+
+            "editors": <SelectionsLarge
+                mainId={this.props.firstActivity[0]}
+                productIds={this.props.firstActivity.slice(1)}
+                title={"Selections →"}
+                description={"Based on your activity"}/>,
+
+            "based_1": <SelectionsSmall productIds={this.props.secondActivity} title={"Selections →"} description={"Based on your activity"} />,
+
+            "based_2": <SelectionsBordered title={"Editors' Picks"} description={"Creating change together"}
+                                productIds={this.props.editors}/>,
+
+            "selections": <SelectionsFull productIds={this.props.selections}
+                            numRows={2}
+                            title={"Shop our selections"}
+                            description={"Curated collections hand-picked by JCP editors"}/>,
+
+            "recommendations": <div className="recommendation-footer">
+                <svg className="background-footer" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16174.827 5113.078">
+                    <path fill="#FDEBD2"
+                          d="M16174.824,2095.349l0.002-2071.026l-279.715,121.615l-279.715,48.646l-72.969-12.162l-109.455,12.162 l-60.808,24.323l-291.876,97.292h-133.777l-218.906-60.808l-133.776-12.162l-121.615-12.161h-85.131l-97.292,36.485l-97.293,12.161 l-170.262-48.646v12.162l-36.484,12.162l-109.453-60.808l-36.484-12.162l-206.746,24.323l-121.615-12.162L13402,182.421 l-97.293,12.162l-85.131,12.162l-24.321,12.161h-158.101l-24.324-12.161l-158.1-24.323h-243.23l-133.775,24.323l-170.262,36.484 h-218.908l-121.615,12.162l-36.483-12.162l-24.324-12.162l-48.646-12.162h-48.646l-194.585,12.162h-24.323l-85.131-12.162h-72.969 l-97.292,12.162l-72.97-24.323l-60.808-12.162l-24.323,12.162l-243.23-12.162l-121.615,24.323h-72.969l-133.775-12.161 l-109.455-12.162h-48.646l-36.483,12.162l-231.068,12.161h-231.069l-36.483-12.161l-133.776,12.161h-24.323l-85.131,36.485h-279.715 l-36.484,12.162h-231.068l-194.584-12.162l-206.75,12.163h-97.292l-24.323-12.162l-243.23-24.323l-48.646,12.162l-48.646-12.162 h-24.322l-145.938,12.162l-24.323,12.162h-158.1l-109.454,12.161h-48.646l-72.969-12.162l-121.615,12.162l-109.454-12.162H7260.43 l-109.453,24.323l-145.938-24.323L6859.1,231.067l-36.483,24.323l-60.808,24.323l-133.777-36.484l-72.969,12.162h-72.969 l-340.522,12.162l-60.808,24.323h-401.332l-36.483,12.162l-48.646,24.323h-206.746l-60.809,12.161l-48.646-12.161l-85.131-12.162 h-60.808l-48.646,12.162l-158.1,36.484l-24.323-24.323l-24.323-12.161h-182.423L4426.794,316.2h-24.323l-133.775,12.162h-60.809 l-24.323-12.162h-231.069l-109.453,12.162l-72.97-12.162h-24.323l-109.453,24.323l-182.424,24.323h-48.646l-145.938,12.162H2955.25 l-145.938,12.162l-85.131,12.161h-48.646l-48.646,12.162h-48.646l-48.646,12.162h-243.229l-36.484-12.162h-85.131l-12.162-12.162 v-48.646l-12.162,12.162h-24.323l-109.453,12.162l-24.323,24.323l-72.969,24.323l-85.131,12.162l-60.808,24.323h-24.323 l-36.484-24.323l-97.293-12.162h-48.646l-133.776,36.484h-12.162l-36.484-24.323l-133.777-36.485l-243.229-72.969l-109.454-36.484 h-36.484L741.852,316.2h-60.808l-133.776-48.646l-158.1-36.485L255.391,48.646L-0.001,0L0,5113.077h16174.826L16174.824,2095.349z"/>
+                </svg>
+                <SelectionsCircular productIds={this.props.recommendations} title="Explore related"/>
+            </div>
+        }
+        return <><div className="background-header"/>
+            <div style={{width: "100%"}}>
+            <h1 className="home-page-title">{"Enjoy Cyber Week deals on small"}</h1>
+            <h1 className="home-page-title">{"business cheer!"}</h1>
+            <GridLayout areas={areas} components={components} className="home-page-grid"/>
+        </div></>
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(HomePage);

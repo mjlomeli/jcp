@@ -1,0 +1,43 @@
+
+.selections-full-grid {
+    width: 100%;
+    display: flex;
+    align-content: center;
+    justify-content: flex-start;
+    grid-gap: 1em;
+}
+
+.selections-full-items:nth-child(n+2) > div {
+    width: 13em;
+}
+
+.selections-full-thumbnail-titles {
+    font-weight: 100;
+    font-size: 1.5em;
+    text-align: left;
+    word-break: break-word;
+    font-family: Arial, sans-serif;
+    -webkit-text-stroke: 0.02em black;
+}
+
+.selections-full-text {
+    margin-top: 1em;
+    margin-bottom: 1em;
+    color: black;
+    font-size: 0.95em;
+    letter-spacing: 0.055em;
+    white-space: nowrap;
+    font-family: Arial, sans-serif;
+    -webkit-text-stroke: 0.03em black;
+}
+
+.selections-full-descriptions {
+    margin-top: 1em;
+    margin-bottom: 1em;
+    color: black;
+    font-size: 0.95em;
+    letter-spacing: 0.055em;
+    word-break: break-word;
+    font-family: Arial, sans-serif;
+}
+

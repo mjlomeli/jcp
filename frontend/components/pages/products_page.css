@@ -1,0 +1,18 @@
+.products-page-grid {
+    grid-gap: 2em;
+    padding: 1em 2em 1em 2em;
+    display: flex;
+}
+
+.products-page-items:first-child {
+
+}
+
+.products-page-items:nth-child(2) > div {
+    justify-content: space-evenly;
+}
+
+.products-page-items:nth-child(3) {
+    display: flex;
+    justify-content: center;
+}

@@ -7,10 +7,9 @@ import {fetchProducts, fetchProduct, fetchProductsRange, fetchRandomProducts} fr
 import {debug} from "../../../utils/tools";
 
 const mapStateToProps = (state, ownProps) =>{
-    let products = state.entities.products
+    let productIds = ownProps.productIds || null;
     return {
-        //errors: errors.session, // need to add a ui or user_control errors
-        products: state.entities.products
+        productIds: productIds
     }
 };
 
@@ -35,18 +34,25 @@ class ProductsList extends React.Component {
         this.classElements = `global-products-list-items ${props.className || props.classElements || ""}`;
     }
 
-    componentDidMount() {
+    isRenderValid() {
+        return this.props.productIds && this.props.productIds.length;
+    }
 
+    resolve() {
+        if (!this.props.productIds || this.props.productIds.length === 0)
+            this.props.fetchRandomProducts(10);
+        return null;
     }
 
     render() {
-        if (!this.props.productId)
-        if (!this.props.products)
-            return null;
+        if (!this.isRenderValid())
+            return this.resolve();
 
-        let components = Object.entries(this.props.products).map(pair => {
-            let [productId, product] = pair;
-            return <CardListing listing={product}/>
+
+        let components = this.props.productIds.map(productId => {
+            let product = Product.findById(productId);
+            let images = product.imagesSmall();
+            return <CardListing productId={productId} product={product} images={images}/>
         });
         return <FlowLayout components={components || defaultComponents}
                            maxColumns={this.props.maxColumns || 4}

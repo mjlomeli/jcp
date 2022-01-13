@@ -1,0 +1,39 @@
+.selections-small-grid {
+    width: 100%;
+    grid-gap: 1em;
+    justify-content: flex-start;
+}
+
+.selections-small-items > div {
+    width: 9em;
+}
+
+.selections-small-titles {
+    font-weight: 100;
+    font-size: 1.5em;
+    text-align: left;
+    word-break: break-word;
+    font-family: Arial, sans-serif;
+    -webkit-text-stroke: 0.02em black;
+}
+
+.selections-small-text {
+    margin-top: 1em;
+    margin-bottom: 1em;
+    color: black;
+    font-size: 0.95em;
+    letter-spacing: 0.055em;
+    white-space: nowrap;
+    font-family: Arial, sans-serif;
+    -webkit-text-stroke: 0.03em black;
+}
+
+.selections-small-descriptions {
+    margin-top: 1em;
+    margin-bottom: 1em;
+    color: black;
+    font-size: 0.95em;
+    letter-spacing: 0.055em;
+    word-break: break-word;
+    font-family: Arial, sans-serif;
+}

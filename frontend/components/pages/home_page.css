@@ -1,0 +1,71 @@
+.home-page-grid {
+    width: 100%;
+    grid-row-gap: 2em;
+    justify-content: center;
+}
+
+.background-header {
+    position: absolute;
+    width: 100%;
+    left: 0;
+    background-color: #FDEBD2;
+    height: 15em;
+    z-index: -1;
+}
+
+.home-page-title {
+    font-weight: 100;
+    font-size: 3em;
+    white-space: nowrap;
+    line-height: 1em;
+    text-align: center;
+    font-family: "Guardian-EgypTT",Charter,"Charter Bitstream",Cambria,"Noto Serif Light","Droid Serif",Georgia,serif;
+    -webkit-text-stroke: 0.01em #FDEBD2;
+}
+
+.home-page-sub-title {
+    font-weight: 100;
+    font-size: 3em;
+    text-align: center;
+    font-family: "Guardian-EgypTT",Charter,"Charter Bitstream",Cambria,"Noto Serif Light","Droid Serif",Georgia,serif;
+    -webkit-text-stroke: 0.01em white;
+}
+
+.home-page-thumbnail-titles {
+    font-weight: 100;
+    font-size: 1.5em;
+    text-align: left;
+    word-break: break-word;
+    font-family: Arial, sans-serif;
+    -webkit-text-stroke: 0.02em black;
+}
+
+.home-page-text {
+    margin-top: 1em;
+    margin-bottom: 1em;
+    color: black;
+    font-size: 0.95em;
+    letter-spacing: 0.055em;
+    white-space: nowrap;
+    font-family: Arial, sans-serif;
+    -webkit-text-stroke: 0.03em black;
+}
+
+.home-page-descriptions {
+    margin-top: 1em;
+    margin-bottom: 1em;
+    color: black;
+    font-size: 0.95em;
+    letter-spacing: 0.055em;
+    word-break: break-word;
+    font-family: Arial, sans-serif;
+}
+
+.background-footer {
+    width: 100%;
+    position: absolute;
+    margin-top: -2em;
+    left: 0;
+    z-index: -10;
+    object-fit: scale-down;
+}

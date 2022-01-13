@@ -4,8 +4,6 @@ import './card_featured.css'
 import GridLayout from "../grid_layout/grid_layout";
 import Rating from "../rating/rating";
 import {Product} from "../../../lib/product";
-import {fetchProduct, resetProductErrors} from "../../../actions/product_action";
-import {fetchImageByProductId} from "../../../actions/image_action";
 import {urlPath} from "../../../utils/tools";
 import {Image} from "../../../lib/image";
 
@@ -32,24 +30,25 @@ class Price extends React.Component {
     }
 
     calculatedPrice(){
-        if (this.state.discount){
-            let price = this.state.price - (this.state.price * this.state.discount);
+        if (this.props.discount){
+            let price = this.props.price - (this.props.price * this.props.discount);
             return <><label className="card-featured-calculated-price">${price.toFixed(2)}</label></>;
         }
     }
 
     discounted(){
-        let percentage = (this.state.discount) ? this.state.discount * 100 >> 0 : 0
+        let percentage = (this.props.discount) ? this.props.discount * 100 >> 0 : 0
         if (percentage)
             return <><label className="card-featured-discount-price">({percentage}% off)</label></>
         return <></>
     }
 
     originalPrice(){
-        return <label className="card-featured-original-price">${this.state.price}</label>
+        return <label className="card-featured-original-price">${this.props.price}</label>
     }
 
     render() {
+
         return <>
             <div className="card-featured-price-container">
                 {this.calculatedPrice()}
@@ -69,7 +68,7 @@ class Additional extends React.Component {
     }
 
     shipping(){
-        return (this.state.freeShipping) ?
+        return (this.props.freeShipping) ?
             <div className="card-featured-additional">
                 <label className="card-featured-additional-label">FREE shipping</label>
             </div> :
@@ -169,14 +168,14 @@ class CardFeatured extends React.Component {
                 </>,
             'title': <label className="card-featured-title">{this.resize(product.title)}</label>,
             'price': <div className="card-featured-grouped-price">
-                <Price price={product.price} discount={0.5}/>
+                <Price price={product.price} discount={0.05}/>
                 <Additional freeShipping={"free shipping"}/></div>,
             'button': <button className="card-featured-submit">
                 <label className="card-featured-submit-label">Shop this item</label>
                 </button>
         }
 
-        let areas = ['image image info']
+        let areas = ['image info']
         let components = {
             'image': <div className="card-featured-image-div">
                 {this.favoriteComponent()}
@@ -184,14 +183,14 @@ class CardFeatured extends React.Component {
             </div>,
             'info': <GridLayout areas={infoAreas}
                                 components={infoComponents}
-                                classGrid="card-featured-info-grid"
+                                className="card-featured-info-grid"
                                 classElements="card-featured-info-items"
             />
         }
 
         return <GridLayout areas={areas}
                            components={components}
-                           classGrid="card-featured-grid"
+                           className="card-featured-grid"
                            classElements="card-featured-items"
         />
     }

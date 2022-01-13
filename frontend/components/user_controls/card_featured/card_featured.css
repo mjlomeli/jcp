@@ -1,18 +1,26 @@
 .card-featured-grid {
+    justify-content: start;
     cursor: pointer;
-    grid-row-end: 2;
-    grid-row-gap: 0.2vw;
-    grid-column-gap: 1vw;
+    grid-column-gap: 1em;
 }
 
 .card-featured-items {
+    justify-content: flex-start;
     cursor: inherit;
 }
 
-.card-featured-info-grid {
-    cursor: pointer;
+.card-featured-items:first-child {
+}
 
+.card-featured-items:nth-child(2) {
+    width: 100%;
+}
+
+.card-featured-info-grid {
+    height: 100%;
+    cursor: pointer;
     display: flex;
+    grid-row-gap: 0.5em;
     flex-direction: column;
     align-content: space-around;
 }
@@ -51,8 +59,8 @@
 
 .card-featured-image-div {
     position: relative;
-    width: 100%;
-    height: 100%;
+    width: 15em;
+    height: 15em;
     object-position: center;
     object-fit: scale-down;
     cursor: inherit;
@@ -64,7 +72,7 @@
     height: 100%;
     object-fit: fill;
     box-sizing: inherit;
-    border-radius: 0.25vw;
+    border-radius: 0.25em;
     cursor: inherit;
 }
 
@@ -76,8 +84,7 @@
     display: inline-block;
     color: #222;
     font-weight: 600;
-    font-size: 2vw;
-    line-height: 2vw;
+    font-size: 1.5em;
     position: relative;
     font-family: -apple-system, BlinkMacSystemFont, "Roboto", "Droid Sans", "Segoe UI", "Helvetica", Arial, sans-serif;
     word-wrap: break-word;
@@ -92,8 +99,7 @@
 
 .card-featured-calculated-price {
     color: #222;
-    font-size: 2vw;
-    line-height: 2vw;
+    font-size: 1.5em;
     font-weight: 575;
     font-family: -apple-system, BlinkMacSystemFont, "Roboto", "Droid Sans", "Segoe UI", "Helvetica", Arial, sans-serif;
     word-wrap: break-word;
@@ -110,20 +116,18 @@
     color: #258635;
     text-decoration: line-through;
     font-family: -apple-system, BlinkMacSystemFont, "Roboto", "Droid Sans", "Segoe UI", "Helvetica", Arial, sans-serif;
-    font-size: 1.5vw;
-    line-height: 1.5vw;
+    font-size: 1em;
     word-wrap: break-word;
     -webkit-font-smoothing: antialiased;
     cursor: inherit;
 
-    margin-left: 0.3vw;
-    margin-right: 0.3vw;
+    margin-left: 0.3em;
+    margin-right: 0.3em;
 }
 
 .card-featured-discount-price {
     color: #258635;
-    font-size: 1.5vw;
-    line-height: 1.5vw;
+    font-size: 1em;
     font-family: -apple-system, BlinkMacSystemFont, "Roboto", "Droid Sans", "Segoe UI", "Helvetica", Arial, sans-serif;
     word-wrap: break-word;
     -webkit-font-smoothing: antialiased;
@@ -133,8 +137,7 @@
 
 .card-featured-additional-label {
     color: #222;
-    font-size: 1.5vw;
-    line-height: 1.5vw;
+    font-size: 1em;
     font-weight: 600;
     font-family: -apple-system, BlinkMacSystemFont, "Roboto", "Droid Sans", "Segoe UI", "Helvetica", Arial, sans-serif;
     word-wrap: break-word;
@@ -146,17 +149,16 @@
 
 .card-featured-additional {
     background-color: #D4E9D7;
-    border-radius: 1vw;
+    border-radius: 1em;
     overflow: hidden;
     display: inline-flex;
     cursor: inherit;
-    padding: 0.5% 1% 0.5% 1%;
+    padding: 0.3em 1em 0.3em 1em;
 }
 
 .card-featured-additional-label {
     color: #222;
-    font-size: 1.2vw;
-    line-height: 1.2vw;
+    font-size: 0.7em;
     font-weight: 600;
     font-family: -apple-system, BlinkMacSystemFont, "Roboto", "Droid Sans", "Segoe UI", "Helvetica", Arial, sans-serif;
     word-wrap: break-word;
@@ -170,17 +172,21 @@
 .card-featured-submit {
     font-family: -apple-system, BlinkMacSystemFont, "Roboto", "Droid Sans", "Segoe UI", "Helvetica", Arial, sans-serif;
     background: transparent;
-    font-size: 1.5vw;
+    font-size: 1em;
     font-weight: 500;
-    border-radius: 5vw;
-    border: 0.25vw solid black;
-    padding: 1vw 4vw 1.5vw 4vw;
+    border-radius: 5em;
+    border: 0.15em solid black;
+    padding: 0.5em 4em 0.7em 4em;
+    cursor: pointer;
+}
+
+.card-featured-submit-label {
     cursor: pointer;
 }
 
 
 .card-featured-submit:hover {
     transform: scale(1.01);
-    box-shadow: 0em 0em 1.5vw 0 rgba(26, 26, 26, 0.12);
+    box-shadow: 0 0 1.5em 0 rgba(26, 26, 26, 0.12);
     transition: transform 0.07s ease, box-shadow 0.3s ease;
 }

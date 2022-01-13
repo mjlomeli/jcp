@@ -7,9 +7,7 @@ import FooterTemplate from "../themes/footer_template/footer_template";
 
 const ProductPage = (productId) => (
     <div>
-        <HeaderTemplate />
         <ProductTemplate productId={productId}/>
-        <FooterTemplate />
     </div>
 );
 
