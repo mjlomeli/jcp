@@ -22,6 +22,7 @@ const mapDispatchToProps = dispatch => ({
 });
 
 class ProductsPage extends React.Component {
+
     constructor(props) {
         super(props);
     }
@@ -46,10 +47,11 @@ class ProductsPage extends React.Component {
             'recommended': <SelectionsCircular productIds={this.props.recommendationIds} />
         }
         let areas = ['featured', 'products', 'recommended']
-        return <GridLayout areas={areas} components={components}
+        return <div className="products-page-div">
+            <GridLayout areas={areas} components={components}
                            className="products-page-grid"
                            classElements="products-page-items"
-        />
+        /></div>
     }
 
 }
