@@ -110,9 +110,10 @@ ActiveRecord::Schema.define(version: 2021_12_31_230242) do
   end
 
   create_table "reviews", id: :serial, force: :cascade do |t|
+    t.string "first_name", null: false
     t.decimal "product_id", null: false
     t.decimal "user_id", null: false
-    t.integer "rating", null: false
+    t.decimal "rating", null: false
     t.string "comment"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

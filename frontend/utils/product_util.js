@@ -60,6 +60,17 @@ export const fetchProductListing = (productId, dimension='all') => {
     });
 };
 
+export const fetchProductsListings = (productIds=[], dimension='all') => {
+    if (!productIds || productIds.length === 0)
+        return debug.errorPromise(`A product id must be provided for ProductUtil.fetchProduct.`)
+
+    return $.ajax({
+        url: `/api/products/listings`,
+        method: 'GET',
+        data: {product_ids: productIds}
+    });
+};
+
 export const createProduct = (product) => {
     if (!product)
         return debug.errorPromise(`A product object must be provided for ProductUtil.createProduct.`)

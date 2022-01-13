@@ -16,27 +16,28 @@ const receiveReviews = reviews =>({
     reviews: reviews
 })
 
-const receiveReview = review =>({
-    type: RECEIVE_REVIEW,
-    review: review
-})
-
 const removeReview = reviewId =>({
     type: REMOVE_REVIEW,
     reviewId: reviewId
 })
 
-const receiveReviewError = (reviewId, errors) =>({
-    type: RECEIVE_REVIEW_ERROR,
-    reviewId: reviewId,
-    errors: errors
-})
+const receiveReviewError = (dispatch, reviewId, errors) =>{
+    dispatch(AlertAction.systemError(errors));
+    return {
+        type: RECEIVE_REVIEW_ERROR,
+        reviewId: reviewId,
+        errors: errors
+    }
+}
 
 
-export const receiveReviewsError = errors =>({
-    type: RECEIVE_REVIEWS_ERROR,
-    errors: errors
-})
+export const receiveReviewsError = (dispatch, errors) =>{
+    dispatch(AlertAction.systemError(errors));
+    return {
+        type: RECEIVE_REVIEWS_ERROR,
+        errors: errors
+    }
+}
 
 
 
@@ -46,57 +47,42 @@ export const receiveReviewsError = errors =>({
 export const fetchUserReviews = (userId) => dispatch =>(
     ReviewUtil.fetchUserReviews(userId).then(
         reviews => dispatch(receiveReviews(reviews)),
-        err => {
-            dispatch(AlertAction.systemError(err.responseJSON));
-            return dispatch(receiveReviewsError(err.responseJSON))
-        }
+        err => dispatch(receiveReviewsError(dispatch, err.responseJSON))
     )
 )
 
 export const fetchProductReviews = (productId) => dispatch =>(
     ReviewUtil.fetchProductReviews(productId).then(
         reviews => dispatch(receiveReviews(reviews)),
-        err => {
-            dispatch(AlertAction.systemError(err.responseJSON));
-            return dispatch(receiveReviewsError(err.responseJSON))
-        }
+        err => dispatch(receiveReviewsError(dispatch, err.responseJSON))
     )
 )
 
 
 export const fetchReview = (productId, reviewId) => (dispatch) => {
     return ReviewUtil.fetchReview(productId, reviewId).then(
-        review => dispatch(receiveReview(review)),
-        err => {
-            dispatch(AlertAction.systemError(err.responseJSON));
-            return dispatch(receiveReviewError(reviewId, err.responseJSON))
-        }
+        reviews => dispatch(receiveReviews(reviews)),
+        err => dispatch(receiveReviewError(reviewId, err.responseJSON))
     )
 }
 
 export const createReview = (productId, review) => dispatch =>(
     ReviewUtil.createReview(productId, review).then(
-        review => {
+        reviews => {
             dispatch(AlertAction.caution("Your review has been created."));
-            dispatch(receiveReview(review))
+            dispatch(receiveReviews(review))
         },
-        err => {
-            dispatch(AlertAction.systemError(err.responseJSON));
-            return dispatch(receiveReviewError(review.id, err.responseJSON))
-        }
+        err => dispatch(receiveReviewError(dispatch, review.id, err.responseJSON))
     )
 )
 
 export const updateReview = (productId, review) => dispatch =>(
     ReviewUtil.updateReview(productId, review).then(
-        review => {
+        reviews => {
             dispatch(AlertAction.success("Your review has been saved."));
-            dispatch(receiveReview(review))
+            dispatch(receiveReviews(reviews))
         },
-        err => {
-            dispatch(AlertAction.systemError(err.responseJSON));
-            return dispatch(receiveReviewError(review.id, err.responseJSON))
-        }
+        err => dispatch(receiveReviewError(dispatch, review.id, err.responseJSON))
     )
 )
 
@@ -104,12 +90,9 @@ export const deleteReview = (productId, reviewId) => dispatch =>(
     ReviewUtil.deleteReview(productId, reviewId).then(
         review => {
             dispatch(AlertAction.notification("Your review has been deleted."));
-            dispatch(removeReview(review.id))
+            dispatch(removeReview(productId, reviewId))
         },
-        err => {
-            dispatch(AlertAction.systemError(err.responseJSON));
-            return dispatch(receiveReviewError(reviewId, err.responseJSON))
-        }
+        err => dispatch(receiveReviewError(dispatch, reviewId, err.responseJSON))
     )
 )
 

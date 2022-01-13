@@ -1,25 +1,15 @@
 .product-template-grid {
+    justify-content: start;
 }
 
 
 .product-template-items {
-
+    display: flex;
 }
 
-
-.product-template-items-gallery {
-
+.product-template-items > div {
+    justify-content: flex-start;
 }
-
-.product-template-items-options {
-
-
-}
-
-.product-template-items-description {
-    
-}
-
 
 
 .product-template-items-options-submit {
@@ -36,6 +26,6 @@
 
 .product-template-items-options-submit:hover {
     transform: scale(1.01);
-    box-shadow: 0em 0em 1.5em 0 rgba(26, 26, 26, 0.12);
+    box-shadow: 0 0 1.5em 0 rgba(26, 26, 26, 0.12);
     transition: transform 0.07s ease, box-shadow 0.3s ease;
 }

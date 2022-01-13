@@ -68,6 +68,12 @@ export const fetchProductListing = (productId) => dispatch => (
         err => dispatch(receiveProductsErrors(dispatch, err.responseJSON)))
 )
 
+export const fetchProductsListings = (productIds) => dispatch => (
+    ProductUtil.fetchProductsListings(productIds).then(
+        listings => dispatch(receiveProductsListings(listings)),
+        err => dispatch(receiveProductsErrors(dispatch, err.responseJSON)))
+)
+
 
 export const fetchProductsRange = (start, end) => dispatch => (
     ProductUtil.fetchProductsRange(start, end).then(
@@ -142,6 +148,7 @@ window.ProductAction = {
     fetchProductsRange,
     fetchRandomProducts,
     fetchProductListing,
+    fetchProductsListings,
     resetProductErrors,
     resetProductsErrors,
     resetAllProductsError,

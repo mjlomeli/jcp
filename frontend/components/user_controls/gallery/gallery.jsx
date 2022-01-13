@@ -3,49 +3,25 @@ import React from 'react';
 import './gallery.css'
 import GridLayout from "../../user_controls/grid_layout/grid_layout";
 import {Product} from "../../../lib/product";
-import {fetchProduct, resetProductErrors} from "../../../actions/product_action";
-import {fetchImageByProductId} from "../../../actions/image_action";
+import {fetchProductListing, resetProductErrors} from "../../../actions/product_action";
+import {urlId} from "../../../utils/tools";
 
 
-const defaultProductId = 1133353182;
-
-function findProductId(ownProps) {
-    if (!ownProps) return null;
-    if (ownProps.productId)
-        return parseInt(ownProps.productId);
-    else if (ownProps.match && ownProps.match.params && ownProps.match.params.id)
-        return parseInt(ownProps.match.params.id);
-    return null;
-}
-
-function findImages(product) {
-    if (!product) return null;
-    let images = product.imagesMedium();
-    if (!images || images.length === 0) return null;
-    return images;
-}
 
 const mapStateToProps = (state, ownProps) => {
-    let productId = findProductId(ownProps);
-    let products = state.entities.products;
+    let productId = Product.findIDFromProps(ownProps);
     let product = Product.findById(productId);
-
-    let images = state.entities.groupImages;
-    let imagesMedium = findImages(product);
+    let images = product && product.imagesFull();
 
     return {
-        products: products,
         productId: productId,
         product: product,
         images: images,
-        imagesMedium: imagesMedium
     }
 };
 
 const mapDispatchToProps = dispatch => ({
-    fetchProduct: (productId) => dispatch(fetchProduct(productId)),
-    fetchImageByProductId: (productId) => dispatch(fetchImageByProductId(productId)),
-    resetProductError: productId => dispatch(resetProductErrors(productId))
+    fetchProduct: productId => dispatch(fetchProductListing(productId))
 });
 
 class Gallery extends React.Component {
@@ -66,22 +42,19 @@ class Gallery extends React.Component {
     }
 
     leftClick() {
-        let images = this.props.imagesMedium;
         let index = this.state.index;
-        index <= 0 ? index = images.length - 1 : index--;
+        index <= 0 ? index = this.props.images.length - 1 : index--;
         this.setState({index: index});
     }
 
     rightClick() {
-        let images = this.props.imagesMedium;
         let index = this.state.index;
-        index >= images.length-1 ? index -= images.length-1 : index++
+        index >= this.props.images.length-1 ? index -= this.props.images.length-1 : index++
         this.setState({index: index});
     }
 
     imageSelections(index) {
-        let images = this.props.imagesMedium;
-        return <img className="gallery-image-selections" onClick={this.onClick.bind(this)} src={images[index].source()}
+        return <img className="gallery-image-selections" onClick={this.onClick.bind(this)} src={this.props.images[index].source()}
                     alt="img" data-index={index}/>
     }
 
@@ -110,8 +83,9 @@ class Gallery extends React.Component {
     }
 
     carousel() {
-        let images = this.props.imagesMedium;
-        let carousel = images[this.state.index]
+        if (!this.props.images || !this.props.images.length)
+            return null;
+        let carousel = this.props.images[this.state.index]
 
         return <div className="gallery-carousel">
             {this.leftButtonComponent()}
@@ -130,25 +104,27 @@ class Gallery extends React.Component {
     }
 
     shouldComponentUpdate(nextProps, nextState, nextContext) {
-        let productId = findProductId(this.props);
-        if (Product.hasProductError(productId)) {
-            this.props.history.push(`/gallery/${defaultProductId}`);
-            this.props.resetProductError(this.props.productId);
+        let productId = Product.findIDFromProps(this.props);
+
+        if (Product.hasError(productId)) {
+            if (urlId(this.props) === productId) {
+                this.props.history.push(`/card_listing/${Product.DEFAULT_ID}`);
+                this.props.resetProductError(this.props.productId);
+            } else {
+                this.props.fetchProduct(Product.DEFAULT_ID);
+            }
             return false;
         }
         return true;
     }
 
     isRenderValid() {
-        return !!this.props.product && !!this.props.imagesMedium;
+        return !!this.props.product && !!this.props.images;
     }
 
     resolve() {
-        if (!this.props.product)
+        if (!Product.hasError(this.props.productId))
             this.props.fetchProduct(this.props.productId)
-        else if (!this.props.imagesMedium) {
-            this.props.fetchImageByProductId(this.props.productId)
-        }
         return null;
     }
 
@@ -156,7 +132,7 @@ class Gallery extends React.Component {
         if (!this.isRenderValid())
             return this.resolve();
 
-        let images = this.props.imagesMedium;
+        let images = this.props.images;
         let areas = [];
         let components = {'carousel': this.carousel()}
         for (let i = 0; i < images.length; i++) {
@@ -164,7 +140,7 @@ class Gallery extends React.Component {
             areas.push(row.join(" "));
             components[`image${i}`] = this.imageSelections(i);
         }
-        return <GridLayout areas={areas} components={components} classElements="gallery-elements"/>
+        return <GridLayout areas={areas} components={components} className="gallery-grid" classElements="gallery-elements"/>
     }
 }
 

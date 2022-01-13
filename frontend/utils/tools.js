@@ -53,6 +53,24 @@ export const parse_int_user_ids = (users_listings) => {
     return users;
 }
 
+export const parse_int_review_ids = (reviews_listings) => {
+    let reviews = {};
+    Object.entries(reviews_listings).forEach(product_pair => {
+        let [product_id, user_review] = product_pair;
+        let product_review = {}
+        Object.entries(user_review).forEach(user_pair =>{
+            let [user_id, review] = user_pair;
+            review.id = parseInt(review.id);
+            review.user_id = parseInt(review.user_id);
+            review.product_id = parseInt(review.product_id);
+            review.rating = parseFloat(review.rating);
+            product_review[parseInt(user_id)] = review;
+        })
+        reviews[parseInt(product_id)] = product_review;
+    })
+    return reviews;
+}
+
 export const parse_int_listings = (listings) => {
     let parsed = listings;
     if ('products' in listings)
@@ -63,6 +81,8 @@ export const parse_int_listings = (listings) => {
         parsed.shops = parse_int_shop_ids(listings.shops);
     if ('users' in listings)
         parsed.users = parse_int_user_ids(listings.users);
+    if ('reviews' in listings)
+        parsed.reviews = parse_int_review_ids(listings.reviews);
 
     return parsed;
 }

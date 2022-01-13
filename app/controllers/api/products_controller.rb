@@ -91,11 +91,14 @@ class Api::ProductsController < ApplicationController
       else
         error_ids = product_ids.to_set.clone
         images = []
+        reviews = {}
         @products.each do |product|
           images.concat(product.images_resized(dimension || "all"))
+          prod_reviews = product.reviews
+          reviews[product.id] = prod_reviews.map{|review| [review.user_id, review]}.to_h unless prod_reviews.empty?
           error_ids.delete(product.id.to_i)
         end
-        render json: to_products_json(products: @products, images: images, error_ids: error_ids)
+        render json: to_products_json(products: @products, images: images, reviews: reviews, error_ids: error_ids)
       end
     end
   end

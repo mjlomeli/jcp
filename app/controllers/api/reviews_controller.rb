@@ -5,9 +5,9 @@ class Api::ReviewsController < ApplicationController
     @review = review_from_params
     @product = product_from_params
     if @user
-      render json: @user.reviews
+      render json: @user.reviews.map{|review| [review.product_id, review]}.to_h.to_json
     elsif @product
-      render json: @product.reviews
+      render json: @product.reviews.map{|review| [review.user_id, review]}.to_h.to_json
     elsif !@user and !!params[:user_id]
       render json: ["Could not locate user id: #{params[:user_id]}"], status: 400
     elsif !@product and !!params[:product_id]

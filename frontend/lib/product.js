@@ -180,6 +180,7 @@ export class Product {
         return images;
     }
 
+
     toString() {
         return `<Product(title: ${this.title}, price: ${this.price}, image_ids: ${this.image_ids})>`
     }
