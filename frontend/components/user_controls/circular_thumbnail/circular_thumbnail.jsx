@@ -26,8 +26,6 @@ const mapStateToProps = (state, ownProps) => {
 };
 
 const mapDispatchToProps = dispatch => ({
-    fetchProduct: (productId) => dispatch(fetchProductListing(productId)),
-    resetProductError: productId => dispatch(resetProductErrors(productId))
 });
 
 
@@ -162,8 +160,6 @@ class CircularThumbnail extends React.Component {
     }
 
     resolve() {
-        if (!this.props.product)
-            this.props.fetchProduct(this.props.productId)
         return null;
     }
 

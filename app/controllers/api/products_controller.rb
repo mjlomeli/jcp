@@ -81,11 +81,11 @@ class Api::ProductsController < ApplicationController
   def listings
     @query = query_params
     dimension = @query[:dimension]
-    product_ids = @query[:product_ids]
+    product_ids = @query[:product_ids] || []
     if @query[:product_ids] and !valid_dimension?(@query) and dimension != nil and dimension != "all"
       render json: product_ids.map { |id| [id, ["Could not find products with dimension: #{dimension}"]] }.to_h
     else
-      @products = products_from_params(@query).custom_query(**@query)
+      @products = product_ids.empty? ? Product.custom_query(**@query) : products_from_params(@query).custom_query(**@query)
       if @products.empty?
         render json: product_locate_error(**@query), status: 400
       else
@@ -173,7 +173,7 @@ class Api::ProductsController < ApplicationController
     query = body_params.reject { |k, v| %w[format controller action].include?(k) }
     args = []
     query.each do |k, v|
-      if %w[start finish random limit views num_favorers page_number results_per_page].include?(k)
+      if %w[start finish limit views num_favorers page_number results_per_page].include?(k)
         args.push([k.to_sym, ActiveModel::Type::Integer.new.cast(v)])
       elsif %w[price_min price_max].include?(k)
         args.push([k.to_sym, ActiveModel::Type::Decimal.new.cast(v)])

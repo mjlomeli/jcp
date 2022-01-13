@@ -33,7 +33,7 @@ export const fetchRandomProducts = (limit) => {
         return debug.errorPromise(`A limit be provided for ProductUtil.fetchRandomProducts.`)
 
     return $.ajax({
-        url: `/api/products/query`,
+        url: `/api/products/listings`,
         method: 'GET',
         data: {limit: limit, random: true}
     });

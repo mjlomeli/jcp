@@ -78,7 +78,7 @@ export const fetchProductsRange = (start, end) => dispatch => (
 
 export const fetchRandomProducts = (limit) => dispatch => (
     ProductUtil.fetchRandomProducts(limit).then(
-        listing => dispatch(receiveProducts(listing)),
+        listing => dispatch(receiveProductsListings(listing)),
         err => dispatch(receiveProductsErrors(dispatch, err.responseJSON)))
 )
 

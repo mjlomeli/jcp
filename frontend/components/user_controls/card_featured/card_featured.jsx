@@ -10,38 +10,19 @@ import {urlPath} from "../../../utils/tools";
 import {Image} from "../../../lib/image";
 
 
-function findImage(product){
-    if (!product) return null;
-    let images = product.imagesMedium();
-    if (!images || images.length === 0) return null;
-    let image = null;
-    images.forEach(img => { if (!!img) return image = img; })
-    return image;
-}
-
-const defaultProductId = 1;
-
 const mapStateToProps = (state, ownProps) =>{
-    let productId = Product.findIDFromProps(ownProps) || defaultProductId;
-    let products = state.entities.products;
+    let productId = Product.findIDFromProps(ownProps);
     let product = Product.findById(productId);
-
-    let images = state.entities.groupImages;
-    let image = findImage(product);
+    let images = product && product.imagesSmall();
 
     return {
-        products: products,
         productId: productId,
         product: product,
-        images: images,
-        image: image
+        images: images
     }
 };
 
 const mapDispatchToProps = dispatch => ({
-    fetchProduct: (productId) => dispatch(fetchProduct(productId)),
-    fetchImageByProductId: (productId) => dispatch(fetchImageByProductId(productId)),
-    resetProductError: productId => dispatch(resetProductErrors(productId))
 });
 
 class Price extends React.Component {
@@ -166,14 +147,10 @@ class CardFeatured extends React.Component {
     }
 
     isRenderValid(){
-        return !!this.props.product && !!this.props.image;
+        return !!this.props.product && !!this.props.images;
     }
 
     resolve(){
-        if (!this.props.product)
-            this.props.fetchProduct(this.props.productId)
-        if (!this.props.image)
-            this.props.fetchImageByProductId(this.props.productId)
         return null;
     }
 
@@ -182,17 +159,17 @@ class CardFeatured extends React.Component {
             return this.resolve();
 
         let product = this.props.product;
-        let image = this.props.image;
+        let image = this.props.images[0];
         let infoAreas = ['rating', 'title', 'price', 'button']
         let infoComponents = {
             'rating': <>
                 <label className="card-featured-store">{product.shop_id}</label>
-                <Rating rating={Math.random() * 5} count={Math.floor(Math.random() * 100)}
+                <Rating rating={4.3} count={235}
                         disabled={true} classCount="card-featured-rating-count"/>
                 </>,
             'title': <label className="card-featured-title">{this.resize(product.title)}</label>,
             'price': <div className="card-featured-grouped-price">
-                <Price price={product.price} discount={Math.random() / 2}/>
+                <Price price={product.price} discount={0.5}/>
                 <Additional freeShipping={"free shipping"}/></div>,
             'button': <button className="card-featured-submit">
                 <label className="card-featured-submit-label">Shop this item</label>

@@ -12,21 +12,8 @@ import GridLayout from "../grid_layout/grid_layout";
 import Rating from "../rating/rating";
 import {connect} from "react-redux";
 import {Product} from "../../../lib/product";
-import {Image} from "../../../lib/image";
 import {urlId, urlPath} from "../../../utils/tools";
 import {fetchProductListing, resetProductErrors} from "../../../actions/product_action";
-
-function findImage(product) {
-    if (!product) return null;
-    let images = product.imagesMedium();
-    if (!images || images.length === 0) return null;
-    let image = null;
-    images.forEach(img => {
-        if (!!img) return image = img;
-    })
-    return image;
-
-}
 
 
 const mapStateToProps = (state, ownProps) => {
@@ -37,13 +24,11 @@ const mapStateToProps = (state, ownProps) => {
     return {
         productId: productId,
         product: product,
-        images: images
+        images: images,
     }
 };
 
 const mapDispatchToProps = dispatch => ({
-    fetchProduct: (productId) => dispatch(fetchProductListing(productId)),
-    resetProductError: productId => dispatch(resetProductErrors(productId))
 });
 
 
@@ -160,14 +145,14 @@ class CardListing extends React.Component {
         </Link>
     }
 
-    ratingComponent(rating = Math.random() * 5, count = Math.floor(Math.random() * 100)) {
+    ratingComponent(rating = 4.3, count = 235) {
         let productId = parseInt(this.props.product.id);
         return <Link to={`/product/${productId}`} style={{textDecoration: 'none'}}>
             <Rating rating={rating} count={count} disabled={true}/>
         </Link>
     }
 
-    priceComponent(discount = Math.random() / 2) {
+    priceComponent(discount = 0.05) {
         let productId = parseInt(this.props.product.id);
         let price = this.props.product.price;
         return <Link to={`/product/${productId}`} style={{textDecoration: 'none'}}>
@@ -204,8 +189,6 @@ class CardListing extends React.Component {
     }
 
     resolve() {
-        if (!this.props.product)
-            this.props.fetchProduct(this.props.productId)
         return null;
     }
 

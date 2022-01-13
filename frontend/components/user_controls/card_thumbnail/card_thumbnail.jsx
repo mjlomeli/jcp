@@ -11,7 +11,6 @@ import React from 'react';
 import './card_thumbnail.css'
 import {fetchProductListing, resetProductErrors} from "../../../actions/product_action";
 import {Product} from "../../../lib/product";
-import {Image} from "../../../lib/image";
 import {urlId} from "../../../utils/tools";
 
 const mapStateToProps = (state, ownProps) => {
@@ -27,8 +26,6 @@ const mapStateToProps = (state, ownProps) => {
 };
 
 const mapDispatchToProps = dispatch => ({
-    fetchProduct: (productId) => dispatch(fetchProductListing(productId)),
-    resetProductError: productId => dispatch(resetProductErrors(productId))
 });
 
 class Price extends React.Component {
@@ -112,8 +109,6 @@ class CardThumbnail extends React.Component {
     }
 
     resolve() {
-        if (!this.props.product)
-            this.props.fetchProduct(this.props.productId)
         return null;
     }
     render() {

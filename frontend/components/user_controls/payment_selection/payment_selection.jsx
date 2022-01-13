@@ -40,9 +40,9 @@ class PaymentSelection extends React.Component {
     constructor(props) {
         super(props);
 
-        this.discount = Math.random() / 2;
-        this.quantity = Math.ceil(Math.random() * 10);
-        this.shipping = Math.round((Math.random() * 20 * 100) + Number.EPSILON) / 100
+        this.discount = 0.05;
+        this.quantity = 3;
+        this.shipping = 6
     }
 
     paymentChoice(name, value, text = "", images = {}) {

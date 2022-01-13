@@ -143,6 +143,7 @@
 
 .based-activity-large-items:first-child > div {
     width: 15em;
+    height: 15em;
     display: flex;
     align-content: center;
     justify-content: center;
