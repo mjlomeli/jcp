@@ -101,8 +101,7 @@ class CardListing extends React.Component {
         this.onclickfavorite = this.onClickFavorite.bind(this);
     }
 
-    resize(length = 65) {
-        let title = this.props.product.title;
+    resize(title, length = 65) {
         if (title.length > length)
             return `${title.slice(0, length - 3)}...`
         return title;
@@ -141,7 +140,7 @@ class CardListing extends React.Component {
         let productId = parseInt(this.props.product.id);
         let title = this.props.product.title;
         return <Link to={`/product/${productId}`} style={{textDecoration: 'none'}}>
-            <label className="card-listing-title">{this.resize(title, this.props.length || 70)}</label>
+            <label className="card-listing-title">{this.resize(title, this.props.length)}</label>
         </Link>
     }
 

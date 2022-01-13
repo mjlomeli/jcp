@@ -10,14 +10,14 @@
     font-weight: 500;
     font-size: 0.75em;
     line-height: 0.75em;
-    margin-left: 1vw;
+    margin-left: 0em;
     word-wrap: break-word;
     -webkit-font-smoothing: antialiased;
     cursor: inherit;
 }
 
 .global-rating-icon {
-    width: 1.5vw;
+    width: 1.5em;
 }
 
 

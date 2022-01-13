@@ -24,10 +24,11 @@ class FooterTemplate extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            shop: this.props.shop || {"link1": null, "link2": null},
-            sell: this.props.sell || {"link1": null, "link2": null},
-            about: this.props.about || {"link1": null, "link2": null},
-            help: this.props.help || {"link1": null, "link2": null},
+            shop: this.props.shop || {
+                "Art & Collectibles": "http://localhost:3000/#/products?tag=Art & Collectibles",
+                "Home & Living": "http://localhost:3000/#/products?tag=Home & Living"},
+            about: this.props.about || {"Wiki": "https://github.com/mjlomeli/jcp/wiki", "Purpose": "https://github.com/mjlomeli/jcp/wiki#purpose"},
+            help: this.props.help || {"Issues": "https://github.com/mjlomeli/jcp/issues", "Repo": "https://github.com/mjlomeli/jcp"},
             follow: this.props.follow || [{link: null, svg: "hello"}]
         }
     }
@@ -50,6 +51,8 @@ class FooterTemplate extends React.Component {
                 <li className="footer-list">
                     {Object.entries(links).map((pair, idx) => {
                         let [name, link] = pair;
+                        if (['Wiki', 'Purpose', 'Issues', 'Repo'].includes(name))
+                            return <a key={idx} href={link}>{name}</a>
                         return <Link key={idx} to={link || "#"}>{name}</Link>
                     })}
                 </li>
@@ -75,7 +78,6 @@ class FooterTemplate extends React.Component {
         let areas = ["shop sell about help follow"];
         let components = {
             shop: this.links("Shop", this.state.shop),
-            sell: this.links("Sell", this.state.sell),
             about: this.links("About", this.state.about),
             help: this.links("Help", this.state.help),
             follow: this.follow("Follow", this.state.follow)

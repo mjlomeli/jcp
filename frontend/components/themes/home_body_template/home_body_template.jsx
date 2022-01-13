@@ -72,7 +72,7 @@ class HomeBodyTemplate extends React.Component {
         }
         this.props.popular.forEach((productId, idx) => {
             indices.push(`comp_${idx}`)
-            components[`comp_${idx}`] = <CardListing length={40}
+            components[`comp_${idx}`] = <CardListing length={20}
                                                      productId={productId}
                                                      product={Product.findById(productId)}
                                                      images={Image.findByProductId(productId)}/>

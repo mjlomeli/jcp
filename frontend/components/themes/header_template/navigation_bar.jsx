@@ -16,12 +16,11 @@ export class NavigationBar extends React.Component {
     }
 
     render() {
-        let navs = ["Cyber Sales Event", "Jewelry & Accessories", "Clothing & Shoes",
-            "Home & Living", "Wedding & Party", "Toys & Entertainment", "Art & Collectibles",
-            "Craft Supplies", "Gifts & Gift Cards"];
+        let navs = ["Art & Collectibles", "Craft Supplies & Tools", "Books, Movies & Music", "Home & Living", "Home Decor", "Jewelry", "Toys & Games",
+            "Kitchen & Dining", "Drink & Barware"];
 
         let components = navs.map(title => {
-            return {header: title, link: `/products`}
+            return {header: title, link: `/products?tag=${title}`}
         });
 
         return <NavbarLayout components={components}
