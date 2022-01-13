@@ -32,23 +32,23 @@ export const fetchReview = (reviewId) => {
 };
 
 
-export const createReview = (productId, review) => {
-    if (!productId || !review || Object.keys(review).length === 0){
+export const createReview = (review) => {
+    if (!review || Object.keys(review).length === 0){
         debug.error("A product id and review object must be provided for createReview");
     }
     return $.ajax({
-        url: `/api/products/${productId}/reviews`,
+        url: `/api/products/${review.product_id}/reviews`,
         method: 'POST',
         data: {review: review}
     });
 };
 
-export const updateReview = (productId, review) => {
-    if (!productId || !review || Object.keys(review).length === 0){
+export const updateReview = (review) => {
+    if (!review || Object.keys(review).length === 0){
         debug.error("A product id and review object must be provided for updateReview");
     }
     return $.ajax({
-        url: `/api/products/${productId}/reviews/${review.id}`,
+        url: `/api/products/${review.product_id}/reviews/${review.id}`,
         method: 'PATCH',
         data: {review: review}
     });

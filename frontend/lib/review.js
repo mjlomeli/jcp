@@ -28,7 +28,7 @@ export class Review {
                 })
                 return review === null;
             })
-            return review === null ? null : new Review(review);
+            return !review ? null : new Review(review);
         }
         return null;
     }
@@ -43,7 +43,16 @@ export class Review {
 
     static findByProductId(productId){
         let reviews = Review.all()[productId] || {};
-        return Object.values(reviews).map(rev => new Review(rev));
+        console.log(reviews)
+        return Object.values(reviews).map(rev => rev && new Review(rev));
+    }
+
+    static findByProductIdUserId(productId, userId){
+        let reviews = Review.all()[productId] || {};
+        if (!reviews)
+            return null;
+        let review = reviews[userId]
+        return !review ? null : new Review(review);
     }
 
     static error(reviewId) {

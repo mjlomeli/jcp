@@ -66,8 +66,8 @@ export const fetchReview = (productId, reviewId) => (dispatch) => {
     )
 }
 
-export const createReview = (productId, review) => dispatch =>(
-    ReviewUtil.createReview(productId, review).then(
+export const createReview = (review) => dispatch =>(
+    ReviewUtil.createReview(review).then(
         reviews => {
             dispatch(AlertAction.caution("Your review has been created."));
             dispatch(receiveReviews(review))
@@ -76,8 +76,8 @@ export const createReview = (productId, review) => dispatch =>(
     )
 )
 
-export const updateReview = (productId, review) => dispatch =>(
-    ReviewUtil.updateReview(productId, review).then(
+export const updateReview = (review) => dispatch =>(
+    ReviewUtil.updateReview(review).then(
         reviews => {
             dispatch(AlertAction.success("Your review has been saved."));
             dispatch(receiveReviews(reviews))

@@ -4,7 +4,7 @@ import './reviews.css'
 import GridLayout from "../../user_controls/grid_layout/grid_layout";
 import {Product} from "../../../lib/product";
 import {Review} from "../../../lib/review";
-import {fetchProductReviews, fetchReview} from "../../../actions/review_action";
+import {createReview, fetchProductReviews, fetchReview} from "../../../actions/review_action";
 import Rating from "../../user_controls/rating/rating";
 import {fetchProductListing} from "../../../actions/product_action";
 
@@ -13,16 +13,21 @@ const mapStateToProps = (state, ownProps) => {
     let productId = Product.findIDFromProps(ownProps);
     let userId = state.session.id;
     let reviews = Review.findByProductId(productId);
+    let userReview = Review.findByProductIdUserId(productId);
+    let firstName = state.entities.user.first_name;
     return {
         productId: productId,
         userId: userId,
-        reviews: reviews
+        firstName: firstName,
+        reviews: reviews,
+        userReview: userReview
     }
 };
 
 const mapDispatchToProps = dispatch => ({
     fetchReview: productId => dispatch(fetchProductReviews(productId)),
-    fetchProductListing: productId => dispatch(fetchProductListing(productId))
+    fetchProductListing: productId => dispatch(fetchProductListing(productId)),
+    createReview: review => dispatch(createReview(review))
 });
 
 
@@ -57,14 +62,19 @@ class Reviews extends React.Component {
     }
 
     onClickSubmit(){
-
+        this.props.createReview({
+            user_id: this.props.userId,
+            product_id: this.props.productId,
+            comment: this.state.comment,
+            rating: this.state.rating
+        });
     }
 
     reviewForm(){
         return !this.props.userId ? null : <>
             <span className="reviews-form-rating-label">Rating</span>
             <div className="reviews-form-input-rating"><Rating rating={this.state.rating}/></div>
-            <span className="reviews-form-comment-label">Password</span>
+            <span className="reviews-form-comment-label">Comment</span>
             <input className="reviews-form-input-comment" onChange={this.onchangeinput} value={this.state.comment} onKeyUp={this.onkeyupinput} type="text"/>
             <button className="reviews-submit-button" onClick={this.onclicksubmit} disabled={this.state.disabled} type="button">Submit</button>
         </>
