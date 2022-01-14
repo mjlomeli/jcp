@@ -55,6 +55,7 @@ export const parse_int_user_ids = (users_listings) => {
 
 export const parse_int_review_ids = (reviews_listings) => {
     let reviews = {};
+    console.log(reviews_listings);
     Object.entries(reviews_listings).forEach(product_pair => {
         let [product_id, user_review] = product_pair;
         let product_review = {}
@@ -67,6 +68,19 @@ export const parse_int_review_ids = (reviews_listings) => {
             product_review[parseInt(user_id)] = review;
         })
         reviews[parseInt(product_id)] = product_review;
+    })
+    return reviews;
+}
+
+export const parse_int_user_review_ids = (reviews_listings) => {
+    let reviews = {};
+    Object.entries(reviews_listings).forEach(product_pair => {
+        let [product_id, review] = product_pair;
+        review.id = parseInt(review.id);
+        review.user_id = parseInt(review.user_id);
+        review.product_id = parseInt(review.product_id);
+        review.rating = parseFloat(review.rating);
+        reviews[parseInt(product_id)] = review;
     })
     return reviews;
 }

@@ -194,6 +194,8 @@ class IconsRating extends React.Component {
         this.setState({rating: value});
         this.fillEvent(value);
         this.highlightFill(value);
+        if (this.props.onClick)
+            this.props.onClick(value);
     }
 
     render() {
@@ -233,7 +235,7 @@ class Rating extends React.Component {
         let classCount = `global-rating-count ${this.state.classCount || ""}`
         return <div className={className}>
             <IconsRating className={classIcon} numOfIcons={this.state.numOfIcons} padding={this.state.padding}
-                         rating={this.state.rating} disabled={this.state.disabled}/>
+                         rating={this.state.rating} disabled={this.state.disabled} onClick={this.props.onClick}/>
             <label className={classCount}>({this.state.count.toLocaleString()})</label>
         </div>
     }

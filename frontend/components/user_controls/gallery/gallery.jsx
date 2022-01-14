@@ -16,7 +16,7 @@ const mapStateToProps = (state, ownProps) => {
     return {
         productId: productId,
         product: product,
-        images: images,
+        images: images.slice(0, 4)
     }
 };
 

@@ -1,0 +1,91 @@
+.reviews-form-grid {
+    grid-gap: 1em;
+}
+
+.reviews-header {
+    display: grid;
+    grid-gap: 3em;
+}
+
+.reviews-summary {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-content: center;
+}
+
+.reviews-title {
+    font-family: -apple-system, BlinkMacSystemFont, "Roboto", "Droid Sans", "Segoe UI", "Helvetica", Arial, sans-serif;
+    font-size: 1.5em;
+}
+
+.reviews-comment {
+    display: flex;
+    flex-direction: column;
+}
+
+.reviews-comment-input {
+    width: 20em;
+    height: 10em;
+}
+
+.reviews-each {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+.reviews-each-header {
+    display: flex;
+    flex-direction: row;
+
+    justify-content: space-between;
+}
+
+.reviews-first-name {
+    font-family: -apple-system, BlinkMacSystemFont, "Roboto", "Droid Sans", "Segoe UI", "Helvetica", Arial, sans-serif;
+    font-size: 1em;
+}
+
+.reviews-date {
+    font-family: -apple-system, BlinkMacSystemFont, "Roboto", "Droid Sans", "Segoe UI", "Helvetica", Arial, sans-serif;
+    font-size: 0.9em;
+}
+
+.reviews-commented {
+    font-family: -apple-system, BlinkMacSystemFont, "Roboto", "Droid Sans", "Segoe UI", "Helvetica", Arial, sans-serif;
+    font-size: 0.9em;
+}
+
+.reviews-submit:enabled {
+    width: 10em;
+    font-family: -apple-system, BlinkMacSystemFont, "Roboto", "Droid Sans", "Segoe UI", "Helvetica", Arial, sans-serif;
+    font-size: 0.75em;
+    font-weight: 500;
+    border-radius: 96px;
+    border: 0.15em solid black;
+    padding: 0.5em 0.5em 0.5em 0.5em;
+    cursor: pointer;
+    background-color: black;
+    color: white;
+}
+
+.reviews-submit:enabled:hover {
+    transform: scale(1.025);
+    background-color: #222222;
+    box-shadow: 0 0 1.5em 0 rgba(26, 26, 26, 0.12);
+    transition: transform 0.02s ease, box-shadow 0.3s ease;
+}
+
+.reviews-submit:disabled {
+    width: 10em;
+    font-family: -apple-system, BlinkMacSystemFont, "Roboto", "Droid Sans", "Segoe UI", "Helvetica", Arial, sans-serif;
+    font-size: 0.75em;
+    font-weight: 500;
+    border-radius: 96px;
+    border: 0.15em solid transparent;
+    padding: 0.5em 0.5em 0.5em 0.5em;
+    background-color: #6b6b6b;
+    color: white;
+    cursor: not-allowed;
+}

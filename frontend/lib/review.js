@@ -43,16 +43,21 @@ export class Review {
 
     static findByProductId(productId){
         let reviews = Review.all()[productId] || {};
-        console.log(reviews)
         return Object.values(reviews).map(rev => rev && new Review(rev));
     }
 
-    static findByProductIdUserId(productId, userId){
-        let reviews = Review.all()[productId] || {};
-        if (!reviews)
-            return null;
-        let review = reviews[userId]
-        return !review ? null : new Review(review);
+    static currentUser(){
+        let state = Store.store.getState();
+        if (!state) return null;
+        let user = state.entities.user;
+        if (!user) return null;
+        return user.reviews;
+    }
+
+    static findCurrentUserByProductId(productId){
+        let reviews = Review.currentUser();
+        if (!reviews) return null;
+        return reviews[productId];
     }
 
     static error(reviewId) {

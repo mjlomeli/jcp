@@ -9,8 +9,8 @@
 
 .gallery-carousel {
     position: relative;
-    width: 20em;
-    height: 20em;
+    width: 30em;
+    height: 30em;
 }
 
 .gallery-carousel-image {
@@ -24,7 +24,6 @@
 
 .gallery-elements img:not(.gallery-carousel-image){
     position: relative;
-    margin-top: 30%;
     user-select: none;
 }
 

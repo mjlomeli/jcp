@@ -1,7 +1,8 @@
 import * as SessionAPIUtil from '../utils/session';
 import * as AlertAction from './alert_action'
 import * as ModalAction from './ui_modal_action';
-import * as FavoriteAction from './favorite_action'
+import * as FavoriteAction from './favorite_action';
+import * as ReviewAction from './review_action';
 
 export const RECEIVE_USER = `RECEIVE_USER`;
 export const REMOVE_USER = "REMOVE_USER";
@@ -60,6 +61,7 @@ export const createSession = (user) => dispatch => (
             else
                 dispatch(AlertAction.success(`Welcome back ${user.firstName || user.email}!`));
             dispatch(FavoriteAction.fetchFavorites(parseInt(user.id)));
+            dispatch(ReviewAction.fetchUserReviews(parseInt(user.id)));
             dispatch(receiveSession(user.id));
             dispatch(receiveUser(user));
         },

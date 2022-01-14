@@ -14,8 +14,8 @@ import {fetchProductListing, fetchRandomProducts} from "../../../actions/product
 import Gallery from "../../user_controls/gallery/gallery";
 import {Product} from "../../../lib/product";
 import {urlId} from "../../../utils/tools";
-import SelectionsCircular from "../selections_circular/selections_circular";
 import Reviews from "../reviews/reviews";
+import Rating from "../../user_controls/rating/rating";
 
 const mapStateToProps = (state, ownProps) => {
     let productId = Product.findIDFromProps(ownProps);
@@ -75,7 +75,7 @@ class ProductTemplate extends React.Component {
 
 
     description(){
-        return <div className="product-template-items-description">
+        return <div className="product-page-items-description">
             <h2>Description</h2>{
             this.props.product.description.replace(/(\\r\\n|\\n|\\r)/gm, "\n").replace(/(\\t)/gm, "\t").split("\n").map(
                 (line, index) => <p key={index}>{line}</p>
@@ -89,12 +89,27 @@ class ProductTemplate extends React.Component {
     }
 
     options(){
-        return <div className="product-template-items-options">
-            <h3>{this.props.product.store}</h3>
-            <h2>{this.props.product.title}</h2>
-            <h2>{this.props.product.price}</h2>
-            <button onClick={this.onclickproceedcheckout} type="submit" className="product-template-items-options-submit">Proceed to checkout</button>
-        </div>
+        let discount = 0.05;
+        let percentage = discount * 100 >> 0;
+        let originalPrice = this.props.product.price || 0;
+        let savings = originalPrice * discount;
+        let price = originalPrice - savings;
+
+        let areas = ['store store', 'review_count ratings', 'title title', 'price price', 'saving saving', 'submit submit']
+        let components = {
+            'store': <h3>{this.props.product.store}</h3>,
+            'review_count': <span>235 sales</span>,
+            'ratings': <Rating rating={4.3} disabled={true}/>,
+            'title': <h2 className="product-page-title">{this.props.product.title}</h2>,
+            'price': <>
+                <span className="product-page-price">${price.toFixed(2)}</span>
+                <span className="product-page-discounted">${originalPrice.toFixed(2)}</span>
+            </>,
+            'saving': <span className="product-page-percentage-off">You save ${savings.toFixed(2)} ({percentage}% off)</span>,
+            'submit': <button onClick={this.onclickproceedcheckout} type="submit" className="product-page-items-options-submit">Add to cart</button>
+        }
+
+        return <GridLayout className="product-page-options-grid" areas={areas} components={components} />
     }
 
     shouldComponentUpdate(nextProps, nextState, nextContext) {
@@ -139,16 +154,18 @@ class ProductTemplate extends React.Component {
             return this.resolve();
         let areas = [
             'gallery options',
-            'details details'
+            'details details',
+            'review review'
         ]
         let components = {
             gallery: <Gallery productId={this.props.productId} />,
             options: this.options(),
-            details: this.description()
+            details: this.description(),
+            review: <Reviews productId={this.props.productId}/>
         }
-        return <><GridLayout areas={areas} components={components} className="product-template-grid" classElements="product-template-items" />
-            <Reviews productId={this.props.productId}/>
-        </>
+        return <div className="product-page-div">
+            <GridLayout areas={areas} components={components} className="product-page-grid" classElements="product-page-items" />
+        </div>
     }
 }
 

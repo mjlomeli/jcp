@@ -1,6 +1,7 @@
 import { RECEIVE_USER, REMOVE_USER } from '../../actions/session_action';
+import {RECEIVE_USER_REVIEWS} from "../../actions/review_action";
 
-const usersReducer = (prevState = {}, action) => {
+const usersReducer = (prevState = {reviews: {}}, action) => {
   Object.freeze(prevState);
   let newState = Object.assign({}, prevState);
   switch(action.type) {
@@ -9,7 +10,10 @@ const usersReducer = (prevState = {}, action) => {
       newState = {...newState, ...action.user}
       return newState;
     case REMOVE_USER:
-      return {};
+      return {reviews: {}};
+    case RECEIVE_USER_REVIEWS:
+      newState.reviews = {...newState.reviews, ...action.reviews};
+      return newState;
     default:
       return prevState;
   }

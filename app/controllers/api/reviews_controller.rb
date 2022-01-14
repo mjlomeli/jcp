@@ -25,7 +25,7 @@ class Api::ReviewsController < ApplicationController
     # else
       @review = Review.create(review_params)
       if @review.save
-        render json: @review
+        render json: {@review.product_id => {@review.user_id => @review}}
       else
         render json: @review.errors.full_messages, status: 401
       end
@@ -40,7 +40,7 @@ class Api::ReviewsController < ApplicationController
     else
       @review = Review.find_by(product_id: params[:product_id])
       if @review && @review.update_attributes(review_params)
-        render json: @review
+        render json: {@review.product_id => {@review.user_id => @review}}
       elsif !@review
         render json: ["Could not locate product id: #{params[:product_id]}"], status: 400
       else
@@ -87,6 +87,6 @@ class Api::ReviewsController < ApplicationController
   end
 
   def review_params
-    params.require(:review).permit(:product_id, :user_id, :rating, :comment)
+    params.permit(:product_id, :user_id, :rating, :comment, :first_name)
   end
 end
