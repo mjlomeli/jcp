@@ -16,7 +16,7 @@ import {urlId} from "../../../utils/tools";
 const mapStateToProps = (state, ownProps) => {
     let productId = Product.findIDFromProps(ownProps);
     let product = Product.findById(productId);
-    let images = product && product.imagesSmall() || null;
+    let images = product && product.imagesMedium() || null;
 
     return {
         productId: productId,

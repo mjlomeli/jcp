@@ -234,3 +234,32 @@ export function urlPath(props) {
         return props.match.path;
     return null;
 }
+
+export function arrayEquals(arr1, arr2){
+    if (arr1.length !== arr2.length)
+        return false;
+    let sorted1 = arr1.sort();
+    let sorted2 = arr2.sort();
+
+    for (let i = 0; i < sorted1.length; i++) {
+        if (sorted1[i] !== sorted2[i])
+            return false;
+    }
+    return true;
+}
+
+export function queryToString(query={}){
+    let query_sorted_array = Object.entries(query).filter(pair => {
+        let [key, value] = pair;
+        return !(Array.isArray(value) && !value.length && !value);
+    }).sort();
+    return JSON.stringify(Object.fromEntries(query_sorted_array))
+}
+
+export const permitProductQuery = (tags=[], materials=[], taxonomyPaths=[]) => {
+    let query = {};
+    if (tags.length) query['tags'] = tags;
+    if (materials.length) query['materials'] = materials;
+    if (taxonomyPaths.length) query['taxonomy_paths'] = taxonomyPaths;
+    return query;
+}

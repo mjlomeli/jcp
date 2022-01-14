@@ -25,7 +25,6 @@ const mapStateToProps = ({entities, errors}, ownProps) => {
         secondActivity: productIds.slice(0, 6),
         editors: productIds.slice(0, 6),
         selections: productIds.slice(0, 8),
-        productsList: productIds.slice(0, 16 * 4),
         recommendations: productIds.slice(0, 6)
     }
 };
@@ -65,7 +64,7 @@ class HomePage extends React.Component {
                 <SelectionsCircular productIds={this.props.firstPicks} />
             </>,
 
-            "picks2":  <SelectionsThumbnails productIds={this.props.productIds} numRows={2} />,
+            "picks2":  <SelectionsThumbnails productIds={this.props.secondPicks} numRows={2} />,
 
             "editors": <SelectionsLarge
                 mainId={this.props.firstActivity[0]}

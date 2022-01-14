@@ -57,9 +57,9 @@ class App extends React.Component {
                 {/*<AuthRoute exact path="/signup" component={SignUpFormContainer}/>*/}
                 {/*<AuthRoute exact path="/demo" component={DemoLogInFormContainer}/>*/}
 
-                <Route exact path="/home_page" component={HomePage} />
-                <Route exact path="/products_page" component={ProductsPage} />
-                <Route exact path="/product_page" component={ProductPage} />
+                <Route exact path="/home" component={HomePage} />
+                <Route exact path="/products" component={ProductsPage} />
+                <Route exact path="/product" component={ProductPage} />
                 {/*<ProtectedRoute exact path="/cart" component={CartPage} />*/}
 
                 {/*<Route exact path="/footer" component={FooterTemplate} />*/}
@@ -83,7 +83,6 @@ class App extends React.Component {
                 {/*<Route exact path="/card_listing" component={CardListing} />*/}
                 {/*<Route exact path="/card_featured" component={CardFeatured} />*/}
                 {/*<Route exact path="/card_featured/:id" component={CardFeatured} />*/}
-
             </Switch>
 
             <FooterTemplate />

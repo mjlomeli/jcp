@@ -23,6 +23,8 @@ export const receiveProductsListings = (listings={}) => ({
     listings: parse_int_listings(listings)
 })
 
+
+
 export const removeProducts = (productIds=[]) => ({
     type: REMOVE_PRODUCTS,
     productIds: productIds
@@ -50,7 +52,7 @@ export const receiveProductsGeneralErrors = (dispatch, errors) => {
 
 export const fetchProducts = (query) => dispatch => (
     ProductUtil.fetchProducts(query).then(
-        listing => dispatch(receiveProducts(listing)),
+        listing => dispatch(receiveProductsListings(listing)),
         err => {
             let keys = query && Object.keys(query) || [];
             let hasIds = id => ['id', 'ids', 'product_id', 'product_ids'].includes(id);

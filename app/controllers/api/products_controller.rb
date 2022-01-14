@@ -55,11 +55,20 @@ class Api::ProductsController < ApplicationController
     @query = query_params
     @filter = product_filters
     begin
+      puts @query
+      puts @filter
       @products = Product.where(groups_from_params(@query)).where(@filter).custom_query(**@query)
       if @products.empty?
         render json: ["No search results with filters: #{@filter} nor with the query: #{@query}"], status: 400
       else
-        render json: to_products_json(products: @products)
+        images = []
+        reviews = {}
+        @products.each do |product|
+          images.concat(product.images_resized("all"))
+          prod_reviews = product.reviews
+          reviews[product.id] = prod_reviews.map{|review| [review.user_id, review]}.to_h unless prod_reviews.empty?
+        end
+        render json: to_products_json(products: @products,  images: images, reviews: reviews, query: @query)
       end
     rescue => e
       puts e.to_s
@@ -184,7 +193,8 @@ class Api::ProductsController < ApplicationController
         args.push([k.to_sym, ActiveModel::Type::Boolean.new.cast(!!v ? v : false)])
       elsif %w[tags materials taxonomy_paths].include?(k)
         args.push([k.to_sym, to_array(v)])
-
+      elsif %w[tag material taxonomy_path].include?(k)
+        args.push(["#{k}s".to_sym, [v]])
 
       elsif %w[product_ids shop_ids user_ids].include?(k)
         ids = to_array(v).map { |value| ActiveModel::Type::Integer.new.cast(value) }

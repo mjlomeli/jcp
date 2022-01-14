@@ -20,7 +20,7 @@ export class NavigationBar extends React.Component {
             "Kitchen & Dining", "Drink & Barware"];
 
         let components = navs.map(title => {
-            return {header: title, link: `/products?tag=${title}`}
+            return {header: title, link: `/products?taxonomy_path=${encodeURIComponent(title)}`}
         });
 
         return <NavbarLayout components={components}

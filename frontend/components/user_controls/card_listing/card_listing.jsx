@@ -19,7 +19,7 @@ import {fetchProductListing, resetProductErrors} from "../../../actions/product_
 const mapStateToProps = (state, ownProps) => {
     let productId = Product.findIDFromProps(ownProps);
     let product = Product.findById(productId);
-    let images = product && product.imagesSmall();
+    let images = product && product.imagesMedium();
 
     return {
         productId: productId,

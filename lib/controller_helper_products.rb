@@ -12,13 +12,15 @@ def product_error(product: nil, products: [], **kwargs)
   products.map { |prod| [prod.id, prod.errors.full_messages] }.to_h
 end
 
-def to_products_json(products: [], images: [], reviews: {}, error_products: [], error_ids: [], **kwargs)
+def to_products_json(products: [], images: [], reviews: {}, error_products: [], error_ids: [], query: {}, **kwargs)
   listing = {}
 
   listing[:products] = {} unless products.empty?
   products.each { |product| listing[:products][product.id] = product }
 
   listing[:reviews] = reviews unless reviews.empty?
+
+  listing[:query] = query unless query.empty?
 
   listing[:images] = {} unless images.empty?
   images.each do |image|
