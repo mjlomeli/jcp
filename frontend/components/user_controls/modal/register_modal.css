@@ -2,7 +2,7 @@
 .register-background {
     width: 98%;
     height: 100%;
-    position: absolute;
+    position: fixed;
     top: 0;
     left: 0;
     min-height: 100vh;
@@ -19,7 +19,7 @@
 .register-modal {
     display: flex;
     align-content: space-evenly;
-    position: absolute;
+    position: fixed;
     grid-row-gap: 1em;
     font-family: "Graphik Webfont",-apple-system,"Helvetica Neue","Droid Sans",Arial,sans-serif;
     z-index: 50;
