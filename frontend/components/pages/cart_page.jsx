@@ -10,7 +10,6 @@ import React from 'react';
 import './cart_page.css'
 import GridLayout from "../user_controls/grid_layout/grid_layout";
 import CartItem from "../user_controls/cart_item/cart_item"
-import PaymentSelection from "../user_controls/payment_selection/payment_selection";
 import {fetchCartItems} from "../../actions/cart_item_action";
 import {Product} from "../../lib/product";
 
