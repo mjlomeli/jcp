@@ -58,7 +58,7 @@ class App extends React.Component {
 
                 <Route exact path="/home" component={HomePage} />
                 <Route exact path="/products" component={ProductsPage} />
-                <Route exact path="/favorites" component={FavoritesPage} />
+                <ProtectedRoute exact path="/favorites" component={FavoritesPage} />
                 <Route exact path="/product/:id" component={ProductPage} />
                 <ProtectedRoute exact path="/cart" component={CartPage} />
 

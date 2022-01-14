@@ -16,7 +16,7 @@ const mapDispatchToProps = dispatch => ({
 class SearchBar extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {query: "This is some text"}
+        this.state = {query: ""}
         this.onclick = this.props.onClick || this.onClick.bind(this);
         this.onchange = this.props.onChange || this.onChange.bind(this);
     }

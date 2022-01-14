@@ -13,19 +13,19 @@ import GridLayout from "../user_controls/grid_layout/grid_layout";
 
 
 const mapStateToProps = ({entities, errors}, ownProps) => {
-    let productIds = Object.keys(entities.products);
+    let shopListings = Object.keys(entities.products);
     return {
-        productIds: productIds,
-        categories: productIds.slice(0, 6),
-        popular: productIds.slice(0, 5),
-        recent: productIds.slice(0, 10),
-        firstPicks: productIds.slice(0, 6),
-        secondPicks: productIds.slice(0, 10),
-        firstActivity: productIds.slice(0, 9),
-        secondActivity: productIds.slice(0, 6),
-        editors: productIds.slice(0, 6),
-        selections: productIds.slice(0, 8),
-        recommendations: productIds.slice(0, 6)
+        productIds: shopListings,
+        categories: shopListings.slice(0, 6),
+        popular: shopListings.slice(0, 5),
+        recent: shopListings.slice(0, 10),
+        firstPicks: shopListings.slice(0, 6),
+        secondPicks: shopListings.slice(0, 10),
+        firstActivity: shopListings.slice(0, 9),
+        secondActivity: shopListings.slice(0, 6),
+        editors: shopListings.slice(0, 6),
+        selections: shopListings.slice(0, 8),
+        recommendations: shopListings.slice(0, 6)
     }
 };
 
