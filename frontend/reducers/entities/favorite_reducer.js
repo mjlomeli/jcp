@@ -1,26 +1,21 @@
 import {
-    RECEIVE_FAVORITE,
     REMOVE_FAVORITE,
-    RECEIVE_FAVORITES
-} from "../../actions/cart_item_action";
+    RECEIVE_FAVORITES,
+    CLEAR_ALL_FAVORITES
+} from "../../actions/favorite_action";
 
-export default function FavoriteReducer(prevState={}, action){
+export default function reducerFavorites(prevState=new Set([]), action){
     Object.freeze(prevState);
-    let newState = Object.assign({}, prevState) // this isn't a deep copy
+    let newState = new Set([...prevState])
     switch(action.type){
         case RECEIVE_FAVORITES:
-            action.favorites.forEach(favorite =>{
-                favorite.id = parseInt(favorite.id)
-                newState[favorite.id] = favorite;
-            })
-            return newState;
-        case RECEIVE_FAVORITE:
-            action.favorite.id = parseInt(favorite.id);
-            newState[action.favorite.id] = action.favorite;
+            action.productIds.forEach(productId => newState.add(parseInt(productId)));
             return newState;
         case REMOVE_FAVORITE:
-            delete newState[parseInt(action.favoriteId)]
+            newState.delete(parseInt(action.productId));
             return newState;
+        case CLEAR_ALL_FAVORITES:
+            return new Set([]);
         default:
             return prevState
     }

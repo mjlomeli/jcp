@@ -12,20 +12,30 @@ import './card_thumbnail.css'
 import {fetchProductListing, resetProductErrors} from "../../../actions/product_action";
 import {Product} from "../../../lib/product";
 import {urlId} from "../../../utils/tools";
+import {createFavorite, deleteFavorite, hasFavorite} from "../../../actions/favorite_action";
+import {createLogin} from "../../../actions/ui_modal_action";
 
 const mapStateToProps = (state, ownProps) => {
     let productId = Product.findIDFromProps(ownProps);
     let product = Product.findById(productId);
     let images = product && product.imagesMedium() || null;
+    let favored = state.entities.favorites.has(productId) || false;
+    let userId = state.session.id;
 
     return {
         productId: productId,
         product: product,
-        images: images
+        images: images,
+        favored: favored,
+        fill: favored ? "#A61A2E" : "none",
+        userId: userId
     }
 };
 
 const mapDispatchToProps = dispatch => ({
+    createFavorite: (userId, productId) => dispatch(createFavorite(userId, productId)),
+    deleteFavorite: (userId, productId) => dispatch(deleteFavorite(userId, productId)),
+    createLogin: () => dispatch(createLogin())
 });
 
 class Price extends React.Component {
@@ -62,29 +72,32 @@ class Price extends React.Component {
 class CardThumbnail extends React.Component {
     constructor(props) {
         super(props);
+        this.state = {}
 
-        this.favoriteFill = React.createRef();
         this.onclickfavorite = this.onClickFavorite.bind(this);
         this.onclick = props.onClick || this.onClick.bind(this);
     }
 
     onClickFavorite(e) {
-        //TODO: save product id to favorites
-        this.favoriteFill.current.classList.toggle("card-thumbnail-favored");
+        if (!this.props.userId){
+            this.props.createLogin();
+            return null;
+        }
+        if (this.props.favored)
+            this.props.deleteFavorite(this.props.userId, this.props.productId);
+        else
+            this.props.createFavorite(this.props.userId, this.props.productId);
     }
 
     onClick(e){
-        // TODO: send to product page
         this.props.history.push(`/product/${this.props.productId}`);
     }
 
     favoriteComponent() {
         return <div className="card-thumbnail-favorite" onClick={this.onclickfavorite}>
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="51 166.5 510 459">
-                <path
-                    d="M306,625.5c-42.102,0-255-160.956-255-306c0-87.234,60.282-153,140.25-153c43.391,2.685,84.259,21.312,114.75,52.301 c30.548-30.907,71.383-49.519,114.75-52.301c79.968,0,140.25,65.766,140.25,153C561,464.544,348.101,625.5,306,625.5z M191.25,217.5 c-51.714,0-89.25,42.917-89.25,102c0,104.754,164.016,237.787,204,255c39.882-16.754,204-148.716,204-255 c0-59.083-37.536-102-89.25-102c-50.465,0-94.35,53.678-94.886,54.238L305.77,296.55l-19.763-24.989 C285.243,270.617,242.25,217.5,191.25,217.5z"/>
-                <path ref={this.favoriteFill} fill="none"
-                      d="M306,625.5c-42.102,0-255-160.956-255-306c0-87.234,60.282-153,140.25-153 c43.391,2.685,84.259,21.312,114.75,52.301c30.548-30.907,71.383-49.519,114.75-52.301c79.968,0,140.25,65.766,140.25,153 C561,464.544,348.101,625.5,306,625.5z"/>
+                <path d="M306,625.5c-42.102,0-255-160.956-255-306c0-87.234,60.282-153,140.25-153c43.391,2.685,84.259,21.312,114.75,52.301 c30.548-30.907,71.383-49.519,114.75-52.301c79.968,0,140.25,65.766,140.25,153C561,464.544,348.101,625.5,306,625.5z M191.25,217.5 c-51.714,0-89.25,42.917-89.25,102c0,104.754,164.016,237.787,204,255c39.882-16.754,204-148.716,204-255 c0-59.083-37.536-102-89.25-102c-50.465,0-94.35,53.678-94.886,54.238L305.77,296.55l-19.763-24.989 C285.243,270.617,242.25,217.5,191.25,217.5z"/>
+                <path fill={this.props.fill} d="M306,625.5c-42.102,0-255-160.956-255-306c0-87.234,60.282-153,140.25-153 c43.391,2.685,84.259,21.312,114.75,52.301c30.548-30.907,71.383-49.519,114.75-52.301c79.968,0,140.25,65.766,140.25,153 C561,464.544,348.101,625.5,306,625.5z"/>
             </svg>
         </div>
     }
@@ -116,7 +129,8 @@ class CardThumbnail extends React.Component {
             return this.resolve();
         let price = this.props.product.price;
         let source = this.props.images[0].source();
-        return <div className="card-thumbnail">
+
+        let component = <div className="card-thumbnail">
             {this.favoriteComponent()}
             <Link to={`/product/${this.props.product.id}`} style={{textDecoration: "inherit", color: "inherit"}}>
                 <img className="card-thumbnail-image"
@@ -124,6 +138,9 @@ class CardThumbnail extends React.Component {
                 <Price price={price} freeShipping={"free shipping"}/>
             </Link>
         </div>
+
+
+        return component;
     }
 }
 

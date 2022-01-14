@@ -7,7 +7,7 @@ class Api::FavoritesController < ApplicationController
     elsif !!current_user and @user.id != current_user.id
       render json: ["Unauthorized user(#{@user.id}) tried to access user(#{params[:user_id]})"], status: 400
     else
-      render json: Favorite.where(user_id: @user.id).select(:product_id).map{|fav| fav.product_id}
+      render json: Favorite.where(user_id: @user.id).map{|fav| fav.product_id}
     end
   end
 
@@ -19,9 +19,9 @@ class Api::FavoritesController < ApplicationController
     # elsif @user.id != current_user.id
     #   render json: ["Unauthorized user(#{@user.id}) tried to access user(#{params[:user_id]})"], status: 400
     # else
-      @favorite = Favorite.create({user_id: @user.id, product_id: params[:product_id]})
+      @favorite = Favorite.create({user_id: params[:user_id], product_id: params[:product_id]})
       if @favorite.save
-        render json: @favorite
+        render json: [@favorite.product_id]
       else
         render json: @favorite.errors.full_messages, status: 401
       end
@@ -36,9 +36,9 @@ class Api::FavoritesController < ApplicationController
     # elsif @user.id != current_user.id
     #   render json: ["Unauthorized user(#{@user.id}) tried to access user(#{params[:user_id]})"], status: 400
     # else
-      @favorite = Favorite.find_by({user_id: @user.id, product_id: params[:product_id]})
-      if @favorite.destroy
-        render json: @favorite
+      @favorite = Favorite.find_by({user_id: params[:user_id], product_id: params[:product_id]})
+      if @favorite && @favorite.destroy
+        render json: [@favorite.product_id]
       elsif !@favorite
         render json: ["Could not locate product id: #{params[:product_id]}"], status: 400
       else

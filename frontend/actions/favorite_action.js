@@ -2,8 +2,8 @@ import * as FavoriteUtil from '../utils/favorite_util'
 import * as AlertAction from './alert_action'
 
 export const RECEIVE_FAVORITES = "RECEIVE_FAVORITES";
-export const RECEIVE_FAVORITE = "RECEIVE_FAVORITE";
 export const REMOVE_FAVORITE = "REMOVE_FAVORITE";
+export const CLEAR_ALL_FAVORITES = "CLEAR_ALL_FAVORITES";
 
 export const RECEIVE_FAVORITE_ERROR = "RECEIVE_FAVORITE_ERROR";
 export const RECEIVE_FAVORITES_ERROR = "RECEIVE_FAVORITES_ERROR";
@@ -11,14 +11,9 @@ export const RESET_FAVORITE_ERROR = "RESET_FAVORITE_ERROR";
 export const RESET_FAVORITES_ERROR = "RESET_FAVORITES_ERROR";
 
 
-const receiveFavorites = favorites =>({
+const receiveFavorites = productIds =>({
     type: RECEIVE_FAVORITES,
-    favorites: favorites
-})
-
-const receiveFavorite = productId =>({
-    type: RECEIVE_FAVORITE,
-    productId: productId
+    productIds: productIds
 })
 
 const removeFavorite = productId =>({
@@ -43,7 +38,7 @@ export const receiveFavoritesError = errors =>({
 
 export const fetchFavorites = (user_id) => dispatch => (
     FavoriteUtil.fetchFavorites(user_id).then(
-        favorites => dispatch(receiveFavorites(favorites)),
+        productIds => dispatch(receiveFavorites(productIds)),
         err => {
             dispatch(AlertAction.systemError(err.responseJSON));
             return dispatch(receiveFavoritesError(err.responseJSON))
@@ -51,21 +46,25 @@ export const fetchFavorites = (user_id) => dispatch => (
     )
 )
 
-export const createFavorite = favorite => dispatch =>(
-    FavoriteUtil.createFavorite(favorite).then(
-        favorite => {
+export const hasFavorite = productId => (dispatch, getState) => (
+    getState().entities.favorites.has(productId)
+)
+
+export const createFavorite = (userId, productId) => dispatch =>(
+    FavoriteUtil.createFavorite(userId, productId).then(
+        productIds => {
             dispatch(AlertAction.notification("It has been saved for you."));
-            dispatch(receiveFavorite(favorite))
+            dispatch(receiveFavorites(productIds))
         },
         err => {
             dispatch(AlertAction.systemError(err.responseJSON));
-            return dispatch(receiveFavoriteError(favorite.id, err.responseJSON))
+            return dispatch(receiveFavoriteError(productId, err.responseJSON))
         }
     )
 )
 
-export const deleteFavorite = productId => dispatch =>(
-    FavoriteUtil.deleteFavorite(productId).then(
+export const deleteFavorite = (userId, productId) => dispatch =>(
+    FavoriteUtil.deleteFavorite(userId, productId).then(
         favorite => {
             dispatch(AlertAction.notification("It was removed from your favorites."));
             dispatch(removeFavorite(productId))
@@ -75,6 +74,10 @@ export const deleteFavorite = productId => dispatch =>(
             return dispatch(receiveFavoriteError(productId, err.responseJSON))
         }
     )
+)
+
+export const clearAllFavorites = () => dispatch => (
+    dispatch({type: CLEAR_ALL_FAVORITES})
 )
 
 export const resetFavoriteError = productId => dispatch =>(
@@ -88,9 +91,10 @@ export const resetFavoritesError = () => dispatch =>(
 
 window.FavoriteAction = {
     fetchFavorites,
+    hasFavorite,
     resetFavoritesError,
     resetFavoriteError,
     createFavorite,
-    updateFavorite,
-    deleteFavorite
+    deleteFavorite,
+    clearAllFavorites
 }

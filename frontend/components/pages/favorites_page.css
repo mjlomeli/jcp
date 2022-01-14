@@ -1,0 +1,14 @@
+.products-page-div {
+    display: flex;
+    justify-content: center;
+}
+
+.products-page-grid {
+    grid-gap: 2em;
+    display: flex;
+}
+
+.products-page-items:nth-child(3) {
+    display: flex;
+    justify-content: center;
+}

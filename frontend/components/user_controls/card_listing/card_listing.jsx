@@ -12,23 +12,32 @@ import GridLayout from "../grid_layout/grid_layout";
 import Rating from "../rating/rating";
 import {connect} from "react-redux";
 import {Product} from "../../../lib/product";
-import {urlId, urlPath} from "../../../utils/tools";
-import {fetchProductListing, resetProductErrors} from "../../../actions/product_action";
+import {urlId} from "../../../utils/tools";
+import {createFavorite, deleteFavorite, hasFavorite} from "../../../actions/favorite_action";
+import {createLogin} from "../../../actions/ui_modal_action";
 
 
 const mapStateToProps = (state, ownProps) => {
     let productId = Product.findIDFromProps(ownProps);
     let product = Product.findById(productId);
     let images = product && product.imagesMedium();
+    let favored = state.entities.favorites.has(productId) || false;
+    let userId = state.session.id;
 
     return {
         productId: productId,
         product: product,
         images: images,
+        favored: favored,
+        fill: favored ? "#A61A2E" : "none",
+        userId: userId
     }
 };
 
 const mapDispatchToProps = dispatch => ({
+    createFavorite: (userId, productId) => dispatch(createFavorite(userId, productId)),
+    deleteFavorite: (userId, productId) => dispatch(deleteFavorite(userId, productId)),
+    createLogin: () => dispatch(createLogin())
 });
 
 
@@ -97,7 +106,7 @@ class Tags extends React.Component {
 class CardListing extends React.Component {
     constructor(props) {
         super(props);
-        this.favoriteFill = React.createRef();
+        this.state = {};
         this.onclickfavorite = this.onClickFavorite.bind(this);
     }
 
@@ -108,8 +117,16 @@ class CardListing extends React.Component {
     }
 
     onClickFavorite(e) {
-        //TODO: save product id to favorites
-        this.favoriteFill.current.classList.toggle("card-listing-favored");
+        if (!this.props.userId){
+            this.props.createLogin();
+            return null;
+        }
+        if (this.props.favored) {
+            this.props.deleteFavorite(this.props.userId, this.props.productId);
+        }
+        else {
+            this.props.createFavorite(this.props.userId, this.props.productId);
+        }
     }
 
     favoriteComponent() {
@@ -117,8 +134,7 @@ class CardListing extends React.Component {
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="51 166.5 510 459">
                 <path
                     d="M306,625.5c-42.102,0-255-160.956-255-306c0-87.234,60.282-153,140.25-153c43.391,2.685,84.259,21.312,114.75,52.301 c30.548-30.907,71.383-49.519,114.75-52.301c79.968,0,140.25,65.766,140.25,153C561,464.544,348.101,625.5,306,625.5z M191.25,217.5 c-51.714,0-89.25,42.917-89.25,102c0,104.754,164.016,237.787,204,255c39.882-16.754,204-148.716,204-255 c0-59.083-37.536-102-89.25-102c-50.465,0-94.35,53.678-94.886,54.238L305.77,296.55l-19.763-24.989 C285.243,270.617,242.25,217.5,191.25,217.5z"/>
-                <path ref={this.favoriteFill} fill="none"
-                      d="M306,625.5c-42.102,0-255-160.956-255-306c0-87.234,60.282-153,140.25-153 c43.391,2.685,84.259,21.312,114.75,52.301c30.548-30.907,71.383-49.519,114.75-52.301c79.968,0,140.25,65.766,140.25,153 C561,464.544,348.101,625.5,306,625.5z"/>
+                <path fill={this.props.fill} d="M306,625.5c-42.102,0-255-160.956-255-306c0-87.234,60.282-153,140.25-153 c43.391,2.685,84.259,21.312,114.75,52.301c30.548-30.907,71.383-49.519,114.75-52.301c79.968,0,140.25,65.766,140.25,153 C561,464.544,348.101,625.5,306,625.5z"/>
             </svg>
         </div>
     }
@@ -170,6 +186,7 @@ class CardListing extends React.Component {
 
     shouldComponentUpdate(nextProps, nextState, nextContext) {
         let productId = Product.findIDFromProps(this.props);
+        let nextProductId = Product.findIDFromProps(nextProps);
 
         if (Product.hasError(productId)) {
             if (urlId(this.props) === productId) {

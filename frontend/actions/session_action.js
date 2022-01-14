@@ -1,6 +1,7 @@
 import * as SessionAPIUtil from '../utils/session';
 import * as AlertAction from './alert_action'
 import * as ModalAction from './ui_modal_action';
+import * as FavoriteAction from './favorite_action'
 
 export const RECEIVE_USER = `RECEIVE_USER`;
 export const REMOVE_USER = "REMOVE_USER";
@@ -58,12 +59,13 @@ export const createSession = (user) => dispatch => (
                 dispatch(AlertAction.notification("You're logged in as a demo user."));
             else
                 dispatch(AlertAction.success(`Welcome back ${user.firstName || user.email}!`));
-            dispatch(receiveSession(user.id))
-            dispatch(receiveUser(user))
+            dispatch(FavoriteAction.fetchFavorites(parseInt(user.id)));
+            dispatch(receiveSession(user.id));
+            dispatch(receiveUser(user));
         },
         err => {
             dispatch(AlertAction.systemError(err.responseJSON));
-            return dispatch(receiveErrors(err.responseJSON))
+            return dispatch(receiveErrors(err.responseJSON));
         }
     )
 )
@@ -75,8 +77,9 @@ export const deleteSession = () => dispatch => (
                 dispatch(AlertAction.caution(user.demo));
             else
                 dispatch(AlertAction.notification(user.message));
-            dispatch(removeSession())
-            dispatch(removeUser())
+            dispatch(FavoriteAction.clearAllFavorites());
+            dispatch(removeSession());
+            dispatch(removeUser());
         },
         err => {
             dispatch(AlertAction.systemError(err.responseJSON));

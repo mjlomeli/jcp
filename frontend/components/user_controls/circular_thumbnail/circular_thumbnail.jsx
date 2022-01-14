@@ -9,8 +9,6 @@ import {connect} from 'react-redux';
 import React from 'react';
 import GridLayout from "../grid_layout/grid_layout";
 import {Product} from "../../../lib/product";
-import {fetchProduct, fetchProductListing, resetProductErrors} from "../../../actions/product_action";
-import {fetchImageByProductId} from "../../../actions/image_action";
 import {urlId} from "../../../utils/tools";
 
 const mapStateToProps = (state, ownProps) => {
