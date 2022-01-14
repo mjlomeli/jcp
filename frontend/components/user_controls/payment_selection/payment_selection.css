@@ -5,6 +5,10 @@
     border: 1px solid #ccc;
 }
 
+.payment-selection-radio {
+    justify-content: start;
+}
+
 .payment-selection-radio-grid {
     display: inline-flex;
     grid-row-gap: 0.2em;
@@ -43,16 +47,20 @@
 
 
 .payment-checkout {
+    width: 20em;
+    height: 20em;
     grid-row-gap: 0.5em;
     background-color: white;
     box-shadow: 0em 0em 1.5em 0 rgba(26, 26, 26, 0.19);
     border-radius: 1em;
-    padding: 2em 2em 2em 2em;
+    padding: 2em 2em 5em 2em;
 }
 
 
 .payment-selection-creditcards {
     display: flex;
+    justify-content: start;
+    justify-items: start;
     align-items: center;
     align-content: center;
 }
@@ -78,7 +86,9 @@
 
 .payment-selection-onlinepayment {
     display: flex;
-    align-items: center;
+    justify-content: start;
+    justify-items: start;
+    align-items: start;
     align-content: center;
 }
 
@@ -133,7 +143,7 @@
     border: 0.15em solid black;
     margin-left: 1em;
     margin-right: 1em;
-    padding: 1em 5em 1em 5em;
+    padding: 0.5em 2em 0.5em 2em;
     cursor: pointer;
     background-color: black;
     color: white;

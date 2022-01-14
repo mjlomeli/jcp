@@ -5,26 +5,13 @@ import Selection from "./radio";
 import {Product} from "../../../lib/product";
 import {fetchProduct, resetProductErrors} from "../../../actions/product_action";
 import {connect} from "react-redux";
-
-
-const defaultProductId = 1133353182;
-
-function findProductId(ownProps){
-    if (!ownProps) return null;
-    if (ownProps.productId)
-        return parseInt(ownProps.productId);
-    else if (ownProps.match && ownProps.match.params && ownProps.match.params.id)
-        return parseInt(ownProps.match.params.id);
-    return null;
-}
+import {notification} from "../../../actions/alert_action";
 
 const mapStateToProps = (state, ownProps) =>{
-    let productId = findProductId(ownProps);
-    let products = state.entities.products;
-    let product = Product.findById(productId);
+    let productId = Product.findIDFromProps(ownProps);
+    let product = Product.findById(productId)
 
     return {
-        products: products,
         productId: productId,
         product: product
     }
@@ -32,7 +19,8 @@ const mapStateToProps = (state, ownProps) =>{
 
 const mapDispatchToProps = dispatch => ({
     fetchProduct: (productId) => dispatch(fetchProduct(productId)),
-    resetProductError: productId => dispatch(resetProductErrors(productId))
+    resetProductError: productId => dispatch(resetProductErrors(productId)),
+    notification: message => dispatch(notification(message))
 });
 
 
@@ -40,9 +28,14 @@ class PaymentSelection extends React.Component {
     constructor(props) {
         super(props);
 
+        this.onclicksubmit = this.onClickSubmit.bind(this);
         this.discount = 0.05;
-        this.quantity = 3;
-        this.shipping = 6
+        this.quantity = 1;
+        this.shipping = 0;
+    }
+
+    onClickSubmit(e){
+        this.props.notification("This is only a demo. Thank you for taking the trial.");
     }
 
     paymentChoice(name, value, text = "", images = {}) {
@@ -143,9 +136,9 @@ class PaymentSelection extends React.Component {
 
 
     shouldComponentUpdate(nextProps, nextState, nextContext) {
-        let productId = findProductId(this.props);
-        if (Product.hasProductError(productId)) {
-            this.props.history.push(`/payment_selection/${defaultProductId}`);
+        let productId = Product.findIDFromProps(this.props);
+        if (Product.hasError(productId)) {
+            this.props.history.push(`/payment_selection/${1}`);
             this.props.resetProductError(this.props.productId);
             return false;
         }
@@ -172,7 +165,7 @@ class PaymentSelection extends React.Component {
             'price': this.priceCalculations(),
             'fee': this.feeCalculations(),
             'total': this.totalCalculation(),
-            'button': <button className="payment-checkout-submit">Proceed to checkout</button>
+            'button': <button className="payment-checkout-submit" onClick={this.onclicksubmit}>Proceed to checkout</button>
         }
         return <GridLayout areas={areas} components={components} className="payment-checkout"/>
     }

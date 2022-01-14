@@ -2,52 +2,177 @@ import {connect} from 'react-redux';
 import React from 'react';
 import './cart_item.css'
 import GridLayout from "../grid_layout/grid_layout";
+import Rating from "../rating/rating";
+import {Product} from "../../../lib/product";
+import {urlId} from "../../../utils/tools";
+import {fetchProductListing} from "../../../actions/product_action";
 import PaymentSelection from "../payment_selection/payment_selection";
 
-const mapStateToProps = ({entities, session, errors}) => ({
-    cart: entities.cart
-});
+
+const mapStateToProps = (state, ownProps) =>{
+    let productId = Product.findIDFromProps(ownProps);
+    let product = Product.findById(productId);
+    let images = product && product.imagesMedium();
+    let userId = state.session.id;
+
+    return {
+        productId: productId,
+        product: product,
+        images: images,
+        userId: userId
+    }
+};
 
 const mapDispatchToProps = dispatch => ({
+    fetchProduct: productId => dispatch(fetchProductListing(productId))
 });
+
+class Price extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {}
+    }
+
+    calculatedPrice(){
+        if (this.props.discount){
+            let price = this.props.price - (this.props.price * this.props.discount);
+            return <><label className="cart-item-calculated-price">${price.toFixed(2)}</label></>;
+        }
+    }
+
+    discounted(){
+        let percentage = (this.props.discount) ? this.props.discount * 100 >> 0 : 0
+        if (percentage)
+            return <><label className="cart-item-discount-price">({percentage}% off)</label></>
+        return <></>
+    }
+
+    originalPrice(){
+        return <label className="cart-item-original-price">${this.props.price}</label>
+    }
+
+    render() {
+
+        return <>
+            <div className="cart-item-price-container">
+                {this.calculatedPrice()}
+                <label className="cart-item-price-mod">
+                    {this.originalPrice()}
+                    {this.discounted()}
+                </label>
+            </div>
+        </>
+    }
+}
+
+class Additional extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {freeShipping: props.freeShipping || false}
+    }
+
+    shipping(){
+        return (this.props.freeShipping) ?
+            <div className="cart-item-additional">
+                <label className="cart-item-additional-label">FREE shipping</label>
+            </div> :
+            <></>;
+    }
+
+    recommendation(){
+        return <>
+            <div className="cart-item-additional">
+            </div>
+        </>
+    }
+
+    render() {
+        return <>
+            {this.shipping()}
+        </>
+    }
+}
+
 
 class CartItem extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {
-            storeName: "ClarkandTaft",
-            storeIcon: "https://i.etsystatic.com/isla/c03aba/25630519/isla_75x75.25630519_bbx5l4om.jpg?version=0",
-            title: "Personalized Name Puzzle With Pegs, Personalized Name Puzzle With Pegs, New Baby Gift",
-            imageUrl: "https://i.etsystatic.com/17305851/c/1801/1432/177/346/il/4ad87f/3411776815/il_340x270.3411776815_s6oc.jpg",
-            quantity: 1,
-            price: 62.58,
-            discount: 0.2,
-            note: "",
-            isGift: false,
-            couponCode: "",
-            paymentType: ""
-        }
-        this.onclick = props.onClick || this.onClick.bind(this);
+        this.state = {}
+    }
+
+
+    imageComponent(){
+        let source = this.props.images.length ? this.props.images[0].source() : null;
+        return <div className="cart-item-image-div">
+            <img className="cart-item-image" alt="img" aria-hidden="true" src={source} />
+        </div>
     }
 
     resize(title){
-        if (title.length > 75) {
+        if (title.length > 200) {
             return `${title.slice(0, 72)}...`
         }
         return title;
     }
 
-    componentDidMount() {
-        // TODO: make sure title is resized
+    shouldComponentUpdate(nextProps, nextState, nextContext) {
+        let productId = Product.findIDFromProps(this.props);
+
+        if (Product.hasError(productId)) {
+            if (urlId(this.props) === productId) {
+                this.props.history.push(`/card_featured/${Product.DEFAULT_ID}`);
+                this.props.resetProductError(this.props.productId);
+            } else {
+                this.props.fetchProduct(Product.DEFAULT_ID);
+            }
+            return false;
+        }
+        return true;
     }
 
-    onClick(e) {
-        e.preventDefault();
-        // TODO: send to product_template page
+    isRenderValid(){
+        return this.props.product && this.props.images && this.props.images.length;
     }
 
-    render(){
+    resolve(){
+        if (!this.props.product)
+            this.props.fetchProduct(this.props.productId);
         return null;
+    }
+
+    render() {
+        if (!this.isRenderValid())
+            return this.resolve();
+
+        let product = this.props.product;
+        let infoAreas = ['rating', 'title', 'price']
+        let infoComponents = {
+            'rating': <>
+                <label className="cart-item-store">{product.shop_id}</label>
+                <Rating rating={4.3} count={235}
+                        disabled={true} classCount="cart-item-rating-count"/>
+            </>,
+            'title': <label className="cart-item-title">{this.resize(product.title)}</label>,
+            'price': <div className="cart-item-grouped-price">
+                <Price price={product.price} discount={0.05}/>
+                <Additional freeShipping={"free shipping"}/></div>
+        }
+
+        let areas = ['image info']
+        let components = {
+            'image': this.imageComponent(),
+            'info': <GridLayout areas={infoAreas}
+                                components={infoComponents}
+                                className="cart-item-info-grid"
+                                classElements="cart-item-info-items"/>,
+        }
+
+        let item = <GridLayout areas={areas}
+                           components={components}
+                           className="cart-item-grid"
+                           classElements="cart-item-items"/>
+        let payment = <PaymentSelection productId={this.props.productId}/>
+        return <GridLayout className="cart-item" areas={['item payment']} components={{'item': item, 'payment': payment}} />
     }
 }
 

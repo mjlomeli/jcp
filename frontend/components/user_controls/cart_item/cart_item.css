@@ -1,21 +1,54 @@
+.cart-item {
+
+}
+
 .cart-item-grid {
-    margin: 0;
-    box-sizing: inherit;
-    cursor: pointer;
-    grid-row-end: 2;
-    grid-row-gap: 0.2em;
     grid-column-gap: 1em;
+    cursor: auto;
+    justify-items: start;
+    justify-content: start;
+    align-content: center;
+    align-items: center;
+    height: 100%;
+    width: 40em;
 }
 
 .cart-item-items {
+    cursor: auto;
+}
+
+.cart-item-items:first-child {
+}
+
+.cart-item-items:nth-child(2) {
+    width: 100%;
+}
+
+.cart-item-info-grid {
+    height: 100%;
+}
+
+.cart-item-info-items {
     cursor: inherit;
 }
 
 
+.cart-item-image-div {
+    position: relative;
+    width: 15em;
+    height: 15em;
+    object-position: center;
+    object-fit: scale-down;
+    cursor: inherit;
+
+}
+
 .cart-item-image{
+    width: 100%;
+    height: 100%;
+    object-fit: fill;
     box-sizing: inherit;
     border-radius: 0.25em;
-    cursor: inherit;
 }
 
 .cart-item-store {
@@ -23,8 +56,9 @@
 }
 
 .cart-item-title {
+    display: inline-block;
     color: #222;
-    font-weight: 640;
+    font-weight: 600;
     font-size: 1.5em;
     position: relative;
     font-family: -apple-system, BlinkMacSystemFont, "Roboto", "Droid Sans", "Segoe UI", "Helvetica", Arial, sans-serif;
@@ -54,9 +88,24 @@
 }
 
 .cart-item-original-price {
+    color: #258635;
     text-decoration: line-through;
     font-family: -apple-system, BlinkMacSystemFont, "Roboto", "Droid Sans", "Segoe UI", "Helvetica", Arial, sans-serif;
+    font-size: 1em;
     word-wrap: break-word;
+    -webkit-font-smoothing: antialiased;
+    cursor: inherit;
+
+    margin-left: 0.3em;
+    margin-right: 0.3em;
+}
+
+.cart-item-discount-price {
+    color: #258635;
+    font-size: 1em;
+    font-family: -apple-system, BlinkMacSystemFont, "Roboto", "Droid Sans", "Segoe UI", "Helvetica", Arial, sans-serif;
+    word-wrap: break-word;
+    -webkit-font-smoothing: antialiased;
     cursor: inherit;
 }
 
@@ -70,19 +119,25 @@
     cursor: inherit;
 }
 
-.cart-item-group-price {
+.cart-item-grouped-price {
 }
 
 .cart-item-additional {
     background-color: #D4E9D7;
-    border-radius: 96px;
-    cursor: inherit;
+    border-radius: 1em;
+    overflow: hidden;
     display: inline-flex;
+    cursor: inherit;
+    padding: 0.3em 1em 0.3em 1em;
 }
 
 .cart-item-additional-label {
-    margin-left: 0.5em;
-    margin-right: 0.5em;
+    color: #222;
+    font-size: 0.7em;
+    font-weight: 600;
+    font-family: -apple-system, BlinkMacSystemFont, "Roboto", "Droid Sans", "Segoe UI", "Helvetica", Arial, sans-serif;
+    word-wrap: break-word;
+    cursor: inherit;
 }
 
 .cart-item-rating-count {
@@ -94,15 +149,19 @@
     background: transparent;
     font-size: 1em;
     font-weight: 500;
-    border-radius: 96px;
+    border-radius: 5em;
     border: 0.15em solid black;
-    padding: 1em 3.5em 1em 3.5em;
+    padding: 0.5em 4em 0.7em 4em;
+    cursor: pointer;
+}
+
+.cart-item-submit-label {
     cursor: pointer;
 }
 
 
 .cart-item-submit:hover {
     transform: scale(1.01);
-    box-shadow: 0em 0em 1.5em 0 rgba(26, 26, 26, 0.12);
+    box-shadow: 0 0 1.5em 0 rgba(26, 26, 26, 0.12);
     transition: transform 0.07s ease, box-shadow 0.3s ease;
 }

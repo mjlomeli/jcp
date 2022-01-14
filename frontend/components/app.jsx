@@ -16,13 +16,12 @@ import Modal from "./user_controls/modal/modal"
 import HomePage from "./pages/home_page";
 import ProductsPage from "./pages/products_page";
 import ProductPage from "./pages/product_page";
-// import CartPage from "./pages/cart_page";
+import FavoritesPage from "./pages/favorites_page";
+import CartPage from "./pages/cart_page";
 
 
 import HeaderTemplate from "./themes/header_template/header_template";
 import FooterTemplate from "./themes/footer_template/footer_template";
-import ProductTemplate from "./themes/product_template/product_template";
-// import CartTemplate from "./themes/cart_template/cart_template";
 
 // import Rating from "./user_controls/rating/rating";
 // import CartItem from "./user_controls/cart_item/cart_item";
@@ -59,12 +58,9 @@ class App extends React.Component {
 
                 <Route exact path="/home" component={HomePage} />
                 <Route exact path="/products" component={ProductsPage} />
-                <Route exact path="/product" component={ProductPage} />
-                {/*<ProtectedRoute exact path="/cart" component={CartPage} />*/}
-
-                {/*<Route exact path="/footer" component={FooterTemplate} />*/}
-                <Route exact path="/product/:id" component={ProductTemplate} />
-                {/*<ProtectedRoute exact path="/cart_template" component={CartTemplate} />*/}
+                <Route exact path="/favorites" component={FavoritesPage} />
+                <Route exact path="/product/:id" component={ProductPage} />
+                <ProtectedRoute exact path="/cart" component={CartPage} />
 
                 {/*<Route exact path="/products_list" component={ProductsList} />*/}
                 {/*<Route exact path="/payment_selection" component={PaymentSelection} />*/}

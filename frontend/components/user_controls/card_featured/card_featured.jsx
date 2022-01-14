@@ -5,7 +5,6 @@ import GridLayout from "../grid_layout/grid_layout";
 import Rating from "../rating/rating";
 import {Product} from "../../../lib/product";
 import {urlId, urlPath} from "../../../utils/tools";
-import {Image} from "../../../lib/image";
 import {createFavorite, deleteFavorite, hasFavorite} from "../../../actions/favorite_action";
 import {createLogin} from "../../../actions/ui_modal_action";
 
@@ -131,7 +130,7 @@ class CardFeatured extends React.Component {
     }
 
     imageComponent(){
-        let source = this.props.images[0].source();
+        let source = this.props.images.length ? this.props.images[0].source() : null;
         return <div className="card-featured-image-div">
             {this.favoriteComponent()}
             <img className="card-featured-image" alt="img" aria-hidden="true" src={source} />

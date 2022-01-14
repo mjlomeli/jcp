@@ -9,7 +9,7 @@ import {fetchFavorites} from "../../actions/favorite_action";
 
 
 const mapStateToProps = ({entities, errors, index, session}, ownProps) => {
-    let productIds = !session.id && [] || entities.favorites;
+    let productIds = !session.id && [] || [...entities.favorites];
 
     return {
         user_id: session.id,
@@ -29,7 +29,7 @@ class FavoritesPage extends React.Component {
     }
 
     isRenderValid() {
-        return this.props.productIds.length || !this.props.user_id
+        return this.props.productIds.length && !!this.props.user_id
     }
 
     resolve() {
@@ -43,16 +43,17 @@ class FavoritesPage extends React.Component {
         if (!this.isRenderValid())
             return this.resolve();
 
+
         let components = {
             'featured': <CardFeatured productId={this.props.featuredId}/>,
             'products': <SelectionsFull productIds={this.props.productIds} numCols={5}/>,
             'recommended': <SelectionsCircular productIds={this.props.recommendationIds}/>
         }
         let areas = ['featured', 'products', 'recommended']
-        return <div className="products-page-div">
+        return <div className="favorites-page-div">
             <GridLayout areas={areas} components={components}
-                        className="products-page-grid"
-                        classElements="products-page-items"
+                        className="favorites-page-grid"
+                        classElements="favorites-page-items"
             /></div>
     }
 
