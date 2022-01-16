@@ -13,7 +13,7 @@ Released under [MIT](/LICENSE) by [@Mauricio](https://github.com/mjlomeli/jcp/bl
 ## Browser Compatibility
 [![Chrome - Available](https://img.shields.io/badge/Chrome-Available-2ea44f?style=for-the-badge&logo=google+chrome)](https://www.google.com/chrome/)
 
-[![firefox - Available (minor artifacts)](https://img.shields.io/badge/firefox-Available-(minor artifacts)-2ea44f?style=for-the-badge&logo=firefox)](https://www.mozilla.org/)
+[![firefox - Available (minor artifacts)](https://img.shields.io/badge/firefox-Available-2ea44f?style=for-the-badge&logo=firefox)](https://www.mozilla.org/) minor artifacts
 
 [![opera - Available](https://img.shields.io/badge/opera-Available-2ea44f?style=for-the-badge&logo=opera&logoColor=red)](https://www.opera.com/)
 
