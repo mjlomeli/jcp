@@ -1,4 +1,4 @@
-# JCP &nbsp; [![VIEW SITE - UP](https://img.shields.io/badge/VIEW_SITE-DOWN-2ea44f?style=for-the-badge&logo=heroku)](https://jcp-crafter.herokuapp.com/#/home)
+# JCP &nbsp; [![VIEW SITE - UP](https://img.shields.io/badge/VIEW_SITE-UP-2ea44f?style=for-the-badge&logo=heroku)](https://jcp-crafter.herokuapp.com/#/home)
 
 
 ## License
