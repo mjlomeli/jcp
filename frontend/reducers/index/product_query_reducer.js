@@ -8,7 +8,6 @@ export default function ProductQueryReducer(prevState={}, action){
         case ENTITY:
             if ('listings' in action && 'query' in action.listings) {
                 let query = queryToString(action.listings.query);
-                console.log("Reducer: ", query)
                 let relation = {};
                 if ('products' in action.listings)
                     relation['products'] = action.listings.products;

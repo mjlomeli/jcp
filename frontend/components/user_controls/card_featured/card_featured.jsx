@@ -5,6 +5,7 @@ import GridLayout from "../grid_layout/grid_layout";
 import Rating from "../rating/rating";
 import {Product} from "../../../lib/product";
 import {urlId, urlPath} from "../../../utils/tools";
+import { Route, Redirect, withRouter } from 'react-router-dom';
 import {createFavorite, deleteFavorite, hasFavorite} from "../../../actions/favorite_action";
 import {createLogin} from "../../../actions/ui_modal_action";
 
@@ -189,7 +190,7 @@ class CardFeatured extends React.Component {
             'price': <div className="card-featured-grouped-price">
                 <Price price={product.price} discount={0.05}/>
                 <Additional freeShipping={"free shipping"}/></div>,
-            'button': <button className="card-featured-submit">
+            'button': <button className="card-featured-submit" onClick={this.onclick}>
                 <label className="card-featured-submit-label">Shop this item</label>
                 </button>
         }
@@ -212,4 +213,4 @@ class CardFeatured extends React.Component {
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(CardFeatured);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(CardFeatured));
