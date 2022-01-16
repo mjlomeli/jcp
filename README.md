@@ -1,4 +1,4 @@
-# JCP &nbsp; [![VIEW SITE - UNAVAILABLE](https://img.shields.io/badge/VIEW_SITE-DOWN-critical?style=for-the-badge&logo=heroku)](https://jcp-crafter.herokuapp.com/#/home)
+# JCP &nbsp; [![VIEW SITE - UNAVAILABLE](https://img.shields.io/badge/VIEW_SITE-DOWN-success?style=for-the-badge&logo=heroku)](https://jcp-crafter.herokuapp.com/#/home)
 
 
 ## License
@@ -11,11 +11,11 @@ Released under [MIT](/LICENSE) by [@Mauricio](https://github.com/mjlomeli/jcp/bl
 
 
 ## Browser Compatibility
-[![Chrome - Unavailable](https://img.shields.io/badge/Chrome-Unavailable-critical?style=for-the-badge&logo=google+chrome)](https://www.google.com/chrome/)
+[![Chrome - Available](https://img.shields.io/badge/Chrome-Unavailable-success?style=for-the-badge&logo=google+chrome)](https://www.google.com/chrome/)
 
-[![firefox - Unavailable](https://img.shields.io/badge/firefox-Unavailable-critical?style=for-the-badge&logo=firefox)](https://www.mozilla.org/)
+[![firefox - Available (minor artifacts)](https://img.shields.io/badge/firefox-Unavailable-critical?style=for-the-badge&logo=firefox)](https://www.mozilla.org/)
 
-[![opera - Unavailable](https://img.shields.io/badge/opera-Unavailable-critical?style=for-the-badge&logo=opera&logoColor=red)](https://www.opera.com/)
+[![opera - Available](https://img.shields.io/badge/opera-Unavailable-success?style=for-the-badge&logo=opera&logoColor=red)](https://www.opera.com/)
 
 [![safari - Unavailable](https://img.shields.io/badge/safari-Unavailable-critical?style=for-the-badge&logo=safari&logoColor=blue)](https://www.apple.com/safari/)
 
