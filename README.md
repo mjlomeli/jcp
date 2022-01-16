@@ -11,11 +11,11 @@ Released under [MIT](/LICENSE) by [@Mauricio](https://github.com/mjlomeli/jcp/bl
 
 
 ## Browser Compatibility
-[![Chrome - Available](https://img.shields.io/badge/Chrome-Unavailable-2ea44f?style=for-the-badge&logo=google+chrome)](https://www.google.com/chrome/)
+[![Chrome - Available](https://img.shields.io/badge/Chrome-Available-2ea44f?style=for-the-badge&logo=google+chrome)](https://www.google.com/chrome/)
 
-[![firefox - Available (minor artifacts)](https://img.shields.io/badge/firefox-Unavailable-2ea44f?style=for-the-badge&logo=firefox)](https://www.mozilla.org/)
+[![firefox - Available (minor artifacts)](https://img.shields.io/badge/firefox-Available-(minor artifacts)-2ea44f?style=for-the-badge&logo=firefox)](https://www.mozilla.org/)
 
-[![opera - Available](https://img.shields.io/badge/opera-Unavailable-2ea44f?style=for-the-badge&logo=opera&logoColor=red)](https://www.opera.com/)
+[![opera - Available](https://img.shields.io/badge/opera-Available-2ea44f?style=for-the-badge&logo=opera&logoColor=red)](https://www.opera.com/)
 
 [![safari - Unavailable](https://img.shields.io/badge/safari-Unavailable-critical?style=for-the-badge&logo=safari&logoColor=blue)](https://www.apple.com/safari/)
 
