@@ -69,3 +69,7 @@
     z-index: -10;
     object-fit: scale-down;
 }
+
+.recommendation-footer {
+    height: 100%;
+}
