@@ -12,3 +12,34 @@
     display: flex;
     justify-content: center;
 }
+
+.favorites-empty {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    justify-items: center;
+    padding: 5em 0 5em 0;
+}
+
+.favorites-empty a {
+    display: flex;
+    justify-items: center;
+    justify-content: center;
+    color: black;
+
+    font-weight: 100;
+    font-size: 1em;
+    text-align: left;
+    word-break: break-word;
+    font-family: Arial, sans-serif;
+}
+
+.favorites-title {
+    font-weight: 100;
+    font-size: 3em;
+    white-space: nowrap;
+    line-height: 1em;
+    text-align: center;
+    font-family: "Guardian-EgypTT",Charter,"Charter Bitstream",Cambria,"Noto Serif Light","Droid Serif",Georgia,serif;
+    -webkit-text-stroke: 0.01em #FDEBD2;
+}

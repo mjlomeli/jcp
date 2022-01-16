@@ -24,12 +24,19 @@ class FooterTemplate extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            shop: this.props.shop || {
-                "Art & Collectibles": "http://localhost:3000/#/products?tag=Art & Collectibles",
-                "Home & Living": "http://localhost:3000/#/products?tag=Home & Living"},
+            shop1: this.props.shop || [
+                "Art & Collectibles",
+                "Craft Supplies & Tools",
+                "Books, Movies & Music",
+                "Home & Living"],
+            shop2: this.props.shop || [
+                "Home Decor",
+                "Toys & Games",
+                "Kitchen & Dining",
+                "Jewelry"],
             about: this.props.about || {"Wiki": "https://github.com/mjlomeli/jcp/wiki", "Purpose": "https://github.com/mjlomeli/jcp/wiki#purpose"},
             help: this.props.help || {"Issues": "https://github.com/mjlomeli/jcp/issues", "Repo": "https://github.com/mjlomeli/jcp"},
-            follow: this.props.follow || [{link: null, svg: "hello"}]
+            follow: this.props.follow || {"Github": "https://github.com/mjlomeli", "LinkedIn": "https://www.linkedin.com/in/mauricio-l-759796172/"}
         }
     }
 
@@ -41,6 +48,20 @@ class FooterTemplate extends React.Component {
             <a className="educated-by" href="#">
                 JCP is powered by 100% renewable electricity.
             </a>
+        </div>
+    }
+
+    queryRoute(title, queries) {
+        return <div>
+            <h3>{title}</h3>
+            <ul className="footer-list-container">
+                <li className="footer-list">
+                    {queries.map((name, idx) => {
+                        let tag = name ? `/products?taxonomy_path=${encodeURIComponent(name)}`: "#";
+                        return <Link key={idx} to={tag}>{name}</Link>
+                    })}
+                </li>
+            </ul>
         </div>
     }
 
@@ -64,10 +85,10 @@ class FooterTemplate extends React.Component {
         return <div>
             <h3>{title}</h3>
             <ul className="footer-list-container">
-                <li className="footer-follow-list">
-                    {links.map((obj, idx) => {
-                        let {link, svg} = obj;
-                        return <a key={idx} href={link || "#"}>{svg}</a>
+                <li className="footer-list">
+                    {Object.entries(links).map((obj, idx) => {
+                        let [name, url] = obj;
+                        return <a key={idx} href={url || "#"}>{name}</a>
                     })}
                 </li>
             </ul>
@@ -75,9 +96,10 @@ class FooterTemplate extends React.Component {
     }
 
     render() {
-        let areas = ["shop sell about help follow"];
+        let areas = ["shop1 shop2 about help follow"];
         let components = {
-            shop: this.links("Shop", this.state.shop),
+            shop1: this.queryRoute("Shop", this.state.shop1),
+            shop2: this.queryRoute("Categories", this.state.shop2),
             about: this.links("About", this.state.about),
             help: this.links("Help", this.state.help),
             follow: this.follow("Follow", this.state.follow)

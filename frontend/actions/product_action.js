@@ -59,7 +59,7 @@ export const fetchProducts = (query) => dispatch => (
             if (keys.some(hasIds))
                 return dispatch(receiveProductsErrors(dispatch, err.responseJSON))
             else
-                return dispatch(receiveProductsGeneralErrors(err.responseJSON))
+                return dispatch(receiveProductsGeneralErrors(dispatch, err.responseJSON))
         }
     )
 )
