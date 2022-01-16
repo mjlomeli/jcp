@@ -12,26 +12,23 @@ import GridLayout from "../user_controls/grid_layout/grid_layout";
 import CartItem from "../user_controls/cart_item/cart_item"
 import {fetchCartItems} from "../../actions/cart_item_action";
 import {Product} from "../../lib/product";
+import {fetchProductsListings} from "../../actions/product_action";
 
 
 const mapStateToProps = ({entities, errors, index, session}, ownProps) => {
-    let cartItems = !session.id && {} || entities.cartItems;
-    let productIds = !session.id && [] || [...entities.favorites];
-    let products = productIds.map(id => Product.findById(id));
-
-    let product = products[0];
-    let images = product && product.imagesMedium();
+    let isUser = !!session.id;
+    let cartItems = isUser ? entities.cartItems || {} : {};
+    let isCached = Object.keys(cartItems).every(id => !!Product.findById(id));
     return {
-        user_id: session.id,
+        isUser: isUser,
         cartItems: cartItems,
-        products: products,
-        product: product,
-        images: images
+        isCached: isCached
     }
 };
 
 const mapDispatchToProps = dispatch => ({
-    fetchCartItems: (user_id) => dispatch(fetchCartItems(user_id))
+    fetchCartItems: () => dispatch(fetchCartItems()),
+    fetchProducts: productIds => dispatch(fetchProductsListings(productIds))
 });
 
 class CartTemplate extends React.Component {
@@ -40,13 +37,41 @@ class CartTemplate extends React.Component {
         this.state = {}
     }
 
+    emptyCart(){
+        return <div className="cart-empty">
+            <h2 className="cart-title">Your cart is empty.</h2>
+            <Link to="/home">Discover something unique.</Link>
+        </div>
+    }
+
+    isRenderValid() {
+        return this.props.isUser && this.props.cartItems && this.props.isCached;
+    }
+
+    resolve() {
+        if (this.props.isUser && !this.props.cartItems)
+            this.props.fetchCartItems();
+        else if (!this.props.isCached)
+            this.props.fetchProducts(Object.keys(this.props.cartItems));
+        return null;
+    }
+
     render() {
-        let areas = ['cart_item1', 'cart_item2', 'cart_item3'];
-        let components = {
-            'cart_item1': <CartItem productId={1133338728}/>,
-            'cart_item2': <CartItem productId={1147559603}/>,
-            'cart_item3': <CartItem productId={1147316747}/>
-        }
+        if (!this.isRenderValid())
+            return this.resolve();
+        else if (!Object.keys(this.props.cartItems).length)
+            return this.emptyCart();
+
+        let areas = [];
+        let components = {}
+
+        Object.keys(this.props.cartItems).forEach((id, idx) => {
+            let layout = `cartItem_${idx}`;
+            let product = Product.findById(id);
+            areas.push(layout);
+            components[layout] =  <CartItem productId={id} product={product} images={product.imagesMedium()}/>
+        })
+
         return <GridLayout className="cart-checkout" areas={areas} components={components}/>
     }
 }

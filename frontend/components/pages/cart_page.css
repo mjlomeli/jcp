@@ -3,3 +3,51 @@
     padding-left: 5em;
     padding-right: 5em;
 }
+
+.cart-empty {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    justify-items: center;
+    padding: 5em 0 5em 0;
+}
+
+.cart-empty a {
+    display: flex;
+    justify-items: center;
+    justify-content: center;
+    color: black;
+
+    font-weight: 100;
+    font-size: 1em;
+    text-align: left;
+    word-break: break-word;
+    font-family: Arial, sans-serif;
+}
+
+.cart-title {
+    font-weight: 100;
+    font-size: 3em;
+    white-space: nowrap;
+    line-height: 1em;
+    text-align: center;
+    font-family: "Guardian-EgypTT",Charter,"Charter Bitstream",Cambria,"Noto Serif Light","Droid Serif",Georgia,serif;
+    -webkit-text-stroke: 0.01em #FDEBD2;
+}
+
+.cart-sub-title {
+    font-weight: 100;
+    font-size: 3em;
+    text-align: center;
+    font-family: "Guardian-EgypTT",Charter,"Charter Bitstream",Cambria,"Noto Serif Light","Droid Serif",Georgia,serif;
+    -webkit-text-stroke: 0.01em white;
+}
+
+.cart-thumbnail-titles {
+    font-weight: 100;
+    font-size: 1.5em;
+    text-align: left;
+    word-break: break-word;
+    font-family: Arial, sans-serif;
+    -webkit-text-stroke: 0.02em black;
+}

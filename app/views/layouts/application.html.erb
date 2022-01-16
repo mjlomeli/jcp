@@ -36,7 +36,17 @@
                     <% end %>
                 }
             },
-            "favorites": <%= current_user.favorites.map{|fav| fav.product_id} %>,
+            favorites: <%= current_user.favorites.map{|fav| fav.product_id} %>,
+            cartItems: {
+                <% current_user.cart_items.each do |cart_item| %>
+                "<%= Integer(cart_item.product_id) %>": {
+                    "id": <%= Integer(cart_item.id) %>,
+                    "product_id": <%= Integer(cart_item.product_id) %>,
+                    "user_id": <%= Integer(cart_item.user_id) %>,
+                    "quantity": <%= Integer(cart_item.quantity) %>,
+                },
+                <% end %>
+            },
         };
     </script>
   <% end %>

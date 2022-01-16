@@ -8,7 +8,6 @@ Rails.application.routes.draw do
       resources :users, only: [:index] do
         resources :favorites, only: [:index, :create]
         resources :reviews, only: [:index]
-        resources :cart_items, only: [:index, :create, :destroy, :update]
       end
 
       resources :products, only: [:index] do
@@ -66,8 +65,16 @@ Rails.application.routes.draw do
       delete 'favorite', to: 'favorites#delete'
 
       #######################################
-      # Favorite
+      # Shop
       get 'shop/listings', to: 'shops#listing'
+
+      #######################################
+      # CartItem
+      get 'cart_item', to: 'cart_items#index'
+      patch 'cart_item', to: 'cart_items#update'
+      post 'cart_item', to: 'cart_items#create'
+      delete 'cart_item', to: 'cart_items#destroy'
+
     end
 
     # Home_page page route

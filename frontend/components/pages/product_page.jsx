@@ -16,25 +16,31 @@ import {Product} from "../../lib/product";
 import {urlId} from "../../utils/tools";
 import Reviews from "../themes/reviews/reviews";
 import Rating from "../user_controls/rating/rating";
+import {createCartItem} from "../../actions/cart_item_action";
+import {createLogin} from "../../actions/ui_modal_action";
 
 const mapStateToProps = (state, ownProps) => {
     let productId = Product.findIDFromProps(ownProps);
     let product = Product.findById(productId);
     let images = product && product.imagesSmall();
     let recommendations = Object.keys(state.entities.products).slice(0, 6);
+    let userId = state.session.id;
 
     return {
         productId: productId,
         product: product,
         images: images,
-        recommendations: recommendations
+        recommendations: recommendations,
+        userId: userId
     }
 };
 
 const mapDispatchToProps = dispatch => {
     return {
         fetchProduct: (productId) => dispatch(fetchProductListing(productId)),
-        fetchRandomProducts: n => dispatch(fetchRandomProducts(n))
+        fetchRandomProducts: n => dispatch(fetchRandomProducts(n)),
+        createCartItem: (userId, productId) => dispatch(createCartItem({product_id: productId, user_id: userId, quantity: 1})),
+        createLogin: () => dispatch(createLogin())
     }
 };
 
@@ -48,12 +54,15 @@ class ProductPage extends React.Component {
      */
     constructor(props) {
         super(props);
-        this.onclickproceedcheckout = this.onClickProceedCheckout.bind(this);
-        this.onclickaddtocart = this.addToCart.bind(this);
+        this.onclickaddtocart = this.onClickAddToCart.bind(this);
     }
 
-    onClickProceedCheckout(){
-
+    onClickAddToCart(){
+        if (!this.props.userId){
+            this.props.createLogin();
+            return null;
+        }
+        this.props.createCartItem(this.props.userId, this.props.productId);
     }
 
     /** Action when the product_template page has the mouse enter.
@@ -83,11 +92,6 @@ class ProductPage extends React.Component {
         }</div>
     }
 
-    addToCart(e){
-        e.preventDefault();
-        //this.props.createCartItem(this.props.productId);
-    }
-
     options(){
         let discount = 0.05;
         let percentage = discount * 100 >> 0;
@@ -106,7 +110,7 @@ class ProductPage extends React.Component {
                 <span className="product-page-discounted">${originalPrice.toFixed(2)}</span>
             </>,
             'saving': <span className="product-page-percentage-off">You save ${savings.toFixed(2)} ({percentage}% off)</span>,
-            'submit': <button onClick={this.onclickproceedcheckout} type="submit" className="product-page-items-options-submit">Add to cart</button>
+            'submit': <button onClick={this.onclickaddtocart} type="submit" className="product-page-items-options-submit">Add to cart</button>
         }
 
         return <GridLayout className="product-page-options-grid" areas={areas} components={components} />

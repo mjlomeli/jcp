@@ -1,3 +1,6 @@
+require 'controller_helper_functions'
+require 'controller_helper_images'
+
 class Api::FavoritesController < ApplicationController
   def index
     #http://localhost:3000/api/favorite?user_id=2

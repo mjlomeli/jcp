@@ -155,6 +155,25 @@
     cursor: pointer;
 }
 
+.cart-item-remove {
+    font-family: -apple-system, BlinkMacSystemFont, "Roboto", "Droid Sans", "Segoe UI", "Helvetica", Arial, sans-serif;
+    background: transparent;
+    margin-top: 1em;
+    color: #666666;
+    font-size: 0.75em;
+    font-weight: 500;
+    border-radius: 5em;
+    border: 0.15em solid #666666;
+    padding: 0.5em 2em 0.7em 2em;
+    cursor: pointer;
+}
+
+.cart-item-remove:hover {
+    transform: scale(1.01);
+    box-shadow: 0 0 1.5em 0 rgba(26, 26, 26, 0.12);
+    transition: transform 0.07s ease, box-shadow 0.3s ease;
+}
+
 .cart-item-submit-label {
     cursor: pointer;
 }

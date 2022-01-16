@@ -7,13 +7,15 @@ import {debug, isNodeJs, isBrowser} from "./utils/tools";
 
 document.addEventListener("DOMContentLoaded", () => {
     let store;
-    if (window.currentUser){
+    if (window.currentUser) {
         const preloadedState = {
-        session: {id: window.currentUser.user.id},
-        entities: {
-            user: window.currentUser.user,
-            favorites: new Set(window.currentUser.favorites)
-        }}
+            session: {id: window.currentUser.user.id},
+            entities: {
+                cartItems: window.currentUser.cartItems,
+                user: window.currentUser.user,
+                favorites: new Set(window.currentUser.favorites)
+            }
+        }
         store = configureStore(preloadedState);
         delete window.currentUser;
     } else {
@@ -21,7 +23,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
     const root = document.getElementById("root");
     window.store = store;
-    ReactDOM.render(<Root store={store} />, root);
+    ReactDOM.render(<Root store={store}/>, root);
 
     window.debug = debug;
     window.isNodeJs = isNodeJs

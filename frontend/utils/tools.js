@@ -14,6 +14,19 @@ export const parse_int_image_ids = (image_listings = {}) => {
     return images;
 }
 
+export const parse_int_cart_item_ids = (cart_listings) => {
+    let carts = {};
+    Object.entries(cart_listings).forEach(product_pair => {
+        let [product_id, cart] = product_pair;
+        cart.id = parseInt(cart.id);
+        cart.user_id = parseInt(cart.user_id);
+        cart.product_id = parseInt(cart.product_id);
+        cart.quantity = parseInt(cart.quantity);
+        carts[parseInt(product_id)] = cart;
+    })
+    return carts;
+}
+
 export const parse_int_product_ids = (product_listings) => {
     let products = {};
     Object.entries(product_listings).forEach(pair => {
@@ -55,7 +68,6 @@ export const parse_int_user_ids = (users_listings) => {
 
 export const parse_int_review_ids = (reviews_listings) => {
     let reviews = {};
-    console.log(reviews_listings);
     Object.entries(reviews_listings).forEach(product_pair => {
         let [product_id, user_review] = product_pair;
         let product_review = {}

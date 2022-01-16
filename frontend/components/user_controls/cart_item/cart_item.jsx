@@ -7,6 +7,7 @@ import {Product} from "../../../lib/product";
 import {urlId} from "../../../utils/tools";
 import {fetchProductListing} from "../../../actions/product_action";
 import PaymentSelection from "../payment_selection/payment_selection";
+import {deleteCartItem} from "../../../actions/cart_item_action";
 
 
 const mapStateToProps = (state, ownProps) =>{
@@ -24,7 +25,8 @@ const mapStateToProps = (state, ownProps) =>{
 };
 
 const mapDispatchToProps = dispatch => ({
-    fetchProduct: productId => dispatch(fetchProductListing(productId))
+    fetchProduct: productId => dispatch(fetchProductListing(productId)),
+    deleteCartItem: productId => dispatch(deleteCartItem(productId))
 });
 
 class Price extends React.Component {
@@ -98,8 +100,13 @@ class CartItem extends React.Component {
     constructor(props) {
         super(props);
         this.state = {}
+
+        this.onclickremove = this.onClickRemove.bind(this);
     }
 
+    onClickRemove(e){
+        this.props.deleteCartItem(this.props.productId);
+    }
 
     imageComponent(){
         let source = this.props.images.length ? this.props.images[0].source() : null;
@@ -145,7 +152,7 @@ class CartItem extends React.Component {
             return this.resolve();
 
         let product = this.props.product;
-        let infoAreas = ['rating', 'title', 'price']
+        let infoAreas = ['rating', 'title', 'price', 'remove']
         let infoComponents = {
             'rating': <>
                 <label className="cart-item-store">{product.shop_id}</label>
@@ -155,7 +162,8 @@ class CartItem extends React.Component {
             'title': <label className="cart-item-title">{this.resize(product.title)}</label>,
             'price': <div className="cart-item-grouped-price">
                 <Price price={product.price} discount={0.05}/>
-                <Additional freeShipping={"free shipping"}/></div>
+                <Additional freeShipping={"free shipping"}/></div>,
+            'remove': <button className="cart-item-remove" type="button" onClick={this.onclickremove}>Remove</button>
         }
 
         let areas = ['image info']

@@ -1,8 +1,10 @@
 import * as CartItemUtil from '../utils/cart_item_util'
 import * as AlertAction from './alert_action'
+import {parse_int_cart_item_ids} from "../utils/tools";
 
 export const RECEIVE_CART_ITEMS = "RECEIVE_CART_ITEMS";
 export const RECEIVE_CART_ITEM = "RECEIVE_CART_ITEM";
+export const CLEAR_ALL_CART_ITEMS = "CLEAR_ALL_CART_ITEMS";
 export const REMOVE_CART_ITEM = "REMOVE_CART_ITEM";
 
 export const RECEIVE_CART_ITEM_ERROR = "RECEIVE_CART_ITEM_ERROR";
@@ -13,22 +15,17 @@ export const RESET_CART_ITEMS_ERROR = "RESET_CART_ITEMS_ERROR";
 
 const receiveCartItems = cartItems =>({
     type: RECEIVE_CART_ITEMS,
-    cartItems: cartItems
+    cartItems: parse_int_cart_item_ids(cartItems)
 })
 
-const receiveCartItem = cartItem =>({
-    type: RECEIVE_CART_ITEM,
-    cartItem: cartItem
-})
-
-const removeCartItem = cartItemId =>({
+const removeCartItem = productId =>({
     type: REMOVE_CART_ITEM,
-    cartItemId: cartItemId
+    productId: productId
 })
 
 const receiveCartItemError = (cartItemId, errors) =>({
     type: RECEIVE_CART_ITEM_ERROR,
-    cartItemId: cartItemId,
+    productId: productId,
     errors: errors
 })
 
@@ -41,8 +38,8 @@ export const receiveCartItemsError = errors =>({
 /*    Separation      */
 
 
-export const fetchCartItems = (user_id) => dispatch => (
-    CartItemUtil.fetchCartItems(user_id).then(
+export const fetchCartItems = () => dispatch => (
+    CartItemUtil.fetchCartItems().then(
         cartItems => dispatch(receiveCartItems(cartItems)),
         err => {
             dispatch(AlertAction.systemError(err.responseJSON));
@@ -53,9 +50,9 @@ export const fetchCartItems = (user_id) => dispatch => (
 
 export const createCartItem = cartItem => dispatch =>(
     CartItemUtil.createCartItem(cartItem).then(
-        cartItem => {
+        cartItems => {
             dispatch(AlertAction.success("Its been placed into your cart."));
-            dispatch(receiveCartItem(cartItem))
+            dispatch(receiveCartItems(cartItems));
         },
         err => {
             dispatch(AlertAction.systemError(err.responseJSON));
@@ -66,7 +63,7 @@ export const createCartItem = cartItem => dispatch =>(
 
 export const updateCartItem = cartItem => dispatch =>(
     CartItemUtil.updateCartItem(cartItem).then(
-        cartItem => dispatch(receiveCartItem(cartItem)),
+        cartItems => dispatch(receiveCartItems(cartItems)),
         err => {
             dispatch(AlertAction.systemError(err.responseJSON));
             return dispatch(receiveCartItemError(cartItem.id, err.responseJSON))
@@ -74,18 +71,22 @@ export const updateCartItem = cartItem => dispatch =>(
     )
 )
 
-export const deleteCartItem = cartItemId => dispatch =>(
-    CartItemUtil.deleteCartItem(cartItemId).then(
-        cartItem => {
+export const deleteCartItem = productId => dispatch =>(
+    CartItemUtil.deleteCartItem(productId).then(
+        cartItems => {
             dispatch(AlertAction.caution("The item has been removed from your cart."));
-            dispatch(removeCartItem(cartItem.id))
+            dispatch(removeCartItem(productId))
         },
         err => {
             dispatch(AlertAction.systemError(err.responseJSON));
-            return dispatch(receiveCartItemError(cartItemId, err.responseJSON))
+            return dispatch(receiveCartItemError(productId, err.responseJSON))
         }
     )
 )
+
+export const clearAllCartItems = () => dispatch =>(
+    dipatch({type: CLEAR_ALL_CART_ITEMS})
+);
 
 export const resetCartItemError = cartItemId => dispatch =>(
     dispatch({type: RESET_CART_ITEM_ERROR, cartItemId: cartItemId})
