@@ -23,17 +23,6 @@ import CartPage from "./pages/cart_page";
 import HeaderTemplate from "./themes/header_template/header_template";
 import FooterTemplate from "./themes/footer_template/footer_template";
 
-// import Rating from "./user_controls/rating/rating";
-// import CartItem from "./user_controls/cart_item/cart_item";
-// import PaymentSelection from "./user_controls/payment_selection/payment_selection";
-// import CardFeatured from "./user_controls/card_featured/card_featured";
-// import CardListing from "./user_controls/card_listing/card_listing";
-// import CardThumbnail from "./user_controls/card_thumbnail/card_thumbnail";
-// import CircularThumbnail from "./user_controls/circular_thumbnail/circular_thumbnail";
-// import ProductsList from "./user_controls/product_list/products_list";
-// import Gallery from "./user_controls/gallery/gallery";
-
-
 /* learn more about grid-auto-flow */
 
 class App extends React.Component {
@@ -48,37 +37,18 @@ class App extends React.Component {
             <header>
                 <HeaderTemplate />
             </header>
-            {/*<CardListing />*/}
-            {/*<CardListing productId={1147271903} />*/}
-            {/*<CardListing productId={1133338986} />*/}
             <Switch>
                 {/*<AuthRoute exact path="/login" component={LogInFormContainer}/>*/}
                 {/*<AuthRoute exact path="/signup" component={SignUpFormContainer}/>*/}
                 {/*<AuthRoute exact path="/demo" component={DemoLogInFormContainer}/>*/}
 
+                <Route exact path="/" component={HomePage} />
                 <Route exact path="/home" component={HomePage} />
                 <Route exact path="/products" component={ProductsPage} />
                 <ProtectedRoute exact path="/favorites" component={FavoritesPage} />
                 <Route exact path="/product/:id" component={ProductPage} />
                 <ProtectedRoute exact path="/cart" component={CartPage} />
 
-                {/*<Route exact path="/products_list" component={ProductsList} />*/}
-                {/*<Route exact path="/payment_selection" component={PaymentSelection} />*/}
-                {/*<Route exact path="/payment_selection/:id" component={PaymentSelection} />*/}
-                {/*<Route exact path="/cart_item" component={CartItem}/>*/}
-                {/*<Route exact path="/cart_item/:id" component={CartItem}/>*/}
-
-                {/*<Route exact path="/gallery" component={Gallery} />*/}
-                {/*<Route exact path="/gallery/:id" component={Gallery} />*/}
-                {/*<Route exact path="/searchbar" component={SearchBar} />*/}
-                {/*<Route exact path="/circular_thumbnail" component={CircularThumbnail} />*/}
-                {/*<Route exact path="/circular_thumbnail/:id" component={CircularThumbnail} />*/}
-                {/*<Route exact path="/card_thumbnail" component={CardThumbnail} />*/}
-                {/*<Route exact path="/card_thumbnail/:id" component={CardThumbnail} />*/}
-                {/*<Route exact path="/card_listing/:id" component={CardListing} />*/}
-                {/*<Route exact path="/card_listing" component={CardListing} />*/}
-                {/*<Route exact path="/card_featured" component={CardFeatured} />*/}
-                {/*<Route exact path="/card_featured/:id" component={CardFeatured} />*/}
             </Switch>
 
             <FooterTemplate />
