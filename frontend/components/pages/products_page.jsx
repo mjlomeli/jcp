@@ -82,13 +82,13 @@ class ProductsPage extends React.Component {
             return this.resolve();
 
         let components = {
-            'featured': <CardFeatured productId={this.props.featuredId}/>,
-            'products': <SelectionsFull key={null} productIds={this.props.productIds} numCols={5}/>,
+            'featured': <div key={this.props.queryKey} className="products-page-featured"><CardFeatured productId={this.props.featuredId}/></div>,
+            'products': <SelectionsFull key={this.props.queryKey} productIds={this.props.productIds} numCols={5}/>,
             'recommended': <SelectionsCircular productIds={this.props.recommendationIds}/>
         }
         let areas = ['featured', 'products', 'recommended']
         return <div key={this.props.queryKey} className="products-page-div">
-            <GridLayout areas={areas}
+            <GridLayout key={this.props.queryKey} areas={areas}
                         components={components}
                         className="products-page-grid"
                         classElements="products-page-items"

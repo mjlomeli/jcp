@@ -8,6 +8,10 @@
     display: flex;
 }
 
+.products-page-items:first-child {
+    max-width: 70em;
+}
+
 .products-page-items:nth-child(3) {
     display: flex;
     justify-content: center;
