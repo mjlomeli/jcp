@@ -26,7 +26,7 @@ const findProductIds = (ownProps, index, query_key, entities, isCachedQuery) => 
     return [];
 }
 
-const mapStateToProps = ({entities, errors, index}, ownProps) => {
+const extractParams = (ownProps) => {
     let params = new URLSearchParams(ownProps.location.search);
     let tag = params.get('tag');
     let tags = tag && [tag] || params.get('tags') || [];
@@ -34,16 +34,22 @@ const mapStateToProps = ({entities, errors, index}, ownProps) => {
     let materials = material && [material] || params.get('materials') || [];
     let taxonomyPath = params.get('taxonomy_path');
     let taxonomyPaths = taxonomyPath && [taxonomyPath] || params.get('taxonomy_paths') || [];
+    return [tags, materials, taxonomyPaths]
+}
+
+const mapStateToProps = ({entities, errors, index}, ownProps) => {
+    let [tags, materials, taxonomyPaths] = extractParams(ownProps);
     let isCachedQuery = hasCachedQuery(tags, materials, taxonomyPaths, index.query);
     let query = permitProductQuery(tags, materials, taxonomyPaths);
-    let query_key = queryToString(query);
-    let productIds = findProductIds(ownProps, index, query_key, entities, isCachedQuery);
+    let queryKey = queryToString(query);
+    let productIds = findProductIds(ownProps, index, queryKey, entities, isCachedQuery);
 
     return {
         productIds: productIds.slice(1, 31) || [],
         recommendationIds: Object.keys(entities.products).slice(0,6) || [],
         featuredId: productIds[0] || null,
         query: query,
+        queryKey: queryKey,
         isCachedQuery: isCachedQuery
     }
 };
@@ -77,17 +83,20 @@ class ProductsPage extends React.Component {
 
         let components = {
             'featured': <CardFeatured productId={this.props.featuredId}/>,
-            'products': <SelectionsFull productIds={this.props.productIds} numCols={5}/>,
+            'products': <SelectionsFull key={null} productIds={this.props.productIds} numCols={5}/>,
             'recommended': <SelectionsCircular productIds={this.props.recommendationIds}/>
         }
         let areas = ['featured', 'products', 'recommended']
-        return <div className="products-page-div">
-            <GridLayout areas={areas} components={components}
+        return <div key={this.props.queryKey} className="products-page-div">
+            <GridLayout areas={areas}
+                        components={components}
                         className="products-page-grid"
                         classElements="products-page-items"
             /></div>
     }
 
 }
+
+
 
 export default connect(mapStateToProps, mapDispatchToProps)(ProductsPage);

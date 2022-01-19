@@ -57,21 +57,14 @@ class SelectionsFull extends React.Component {
         let indices = [];
 
         let layout = [Array.from(Array(this.props.numCols)).map(_ => "text").join(" ")];
-        console.log("numRows: ", this.props.numRows);
-        console.log("numCols: ", this.props.numCols);
-        console.log("productIds.length: ", this.props.productIds.length);
-        console.log("numRows * numCols = ", this.props.numRows * this.props.numCols);
         for (let idx = 0; idx < this.props.numRows * this.props.numCols; idx++){
             if (idx >= this.props.productIds.length) {
-                console.log("idx >= productIds.length => ", idx, ">=", this.props.productIds.length);
                 indices.push("-")
             }
             else {
                 indices.push(`comp_${idx}`)
                 let productId = this.props.productIds[idx];
                 if (indices.length === this.props.numCols) {
-                    console.log("indices.length === numCols => ", indices.length, " === ", this.props.numCols);
-                    console.log(layout)
                     layout.push(indices.join(" "))
                     indices = [];
                 }
@@ -84,9 +77,10 @@ class SelectionsFull extends React.Component {
             let placeholder = Array.from(Array(this.props.numCols - indices.length)).map(_ => "-");
             layout.push(indices.concat(placeholder).join(" "));
         }
-        console.log("Final: ", layout);
-
-        return <GridLayout areas={layout} components={components} className="selections-full-grid"
+        return <GridLayout key={this.props.key}
+                           areas={layout}
+                           components={components}
+                           className="selections-full-grid"
                            classElements="selections-full-items"/>
     }
 }
