@@ -1,5 +1,5 @@
 import React from 'react';
-import {fetchProductListing, fetchProducts, fetchRandomProducts} from "../../actions/product_action";
+import {fetchProducts} from "../../actions/product_action";
 import {connect} from "react-redux";
 import "./products_page.css"
 import SelectionsFull from "../themes/selections_full/selections_full";
@@ -7,6 +7,7 @@ import CardFeatured from "../user_controls/card_featured/card_featured";
 import GridLayout from "../user_controls/grid_layout/grid_layout";
 import SelectionsCircular from "../themes/selections_circular/selections_circular";
 import {queryToString, permitProductQuery} from "../../utils/tools";
+import {fetchImages} from "../../actions/image_action";
 
 const hasCachedQuery = (tags=[], materials=[], taxonomyPaths=[], query) => {
     let permitted = permitProductQuery(tags, materials, taxonomyPaths);
@@ -55,9 +56,8 @@ const mapStateToProps = ({entities, errors, index}, ownProps) => {
 };
 
 const mapDispatchToProps = dispatch => ({
-    fetchRandomProducts: (n) => dispatch(fetchRandomProducts(n)),
-    fetchProductListing: (productIds) => dispatch(fetchProductListing(productIds)),
-    fetchProducts: query => dispatch(fetchProducts(query))
+    fetchProducts: query => dispatch(fetchProducts(query)),
+    fetchImages: productIds => dispatch(fetchImages({product_ids: productIds}))
 });
 
 class ProductsPage extends React.Component {

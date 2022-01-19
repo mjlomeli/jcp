@@ -55,6 +55,7 @@ class Api::ImagesController < ApplicationController
     # groups: :group_name, :group_id, :dimension,
     @query = query_params
     @filter = image_filters
+    puts @query
     begin
       @images = Image.where(@filter).custom_query(**@query)
       if @images.empty?

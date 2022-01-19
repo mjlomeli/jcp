@@ -1,7 +1,7 @@
 import React from 'react';
 
 import './home_page.css'
-import {fetchRandomProducts} from "../../actions/product_action";
+import {fetchProducts, fetchRandomProducts} from "../../actions/product_action";
 import SelectionsCircular from "../themes/selections_circular/selections_circular";
 import SelectionsFull from "../themes/selections_full/selections_full";
 import SelectionsThumbnails from "../themes/selections_thumbnails/selections_thumbnails";
@@ -12,11 +12,12 @@ import SelectionsBordered from "../themes/selections_bordered/selections_bordere
 import GridLayout from "../user_controls/grid_layout/grid_layout";
 
 
-const mapStateToProps = ({entities, session, errors}, ownProps) => {
+const mapStateToProps = ({entities, session, index, errors}, ownProps) => {
     let shopListings = Object.keys(entities.products);
     let isLoggedIn = !!session.id;
     let firstName = isLoggedIn && entities.user.first_name;
     return {
+        query: index.query,
         isLoggedIn: isLoggedIn,
         firstName: firstName,
         productIds: shopListings,
@@ -34,7 +35,8 @@ const mapStateToProps = ({entities, session, errors}, ownProps) => {
 };
 
 const mapDispatchToProps = dispatch => ({
-    fetchRandomProducts: (n) => dispatch(fetchRandomProducts(n))
+    fetchRandomProducts: (n) => dispatch(fetchRandomProducts(n)),
+    fetchProducts: query => dispatch(fetchProducts(query))
 });
 
 
@@ -42,8 +44,9 @@ class HomePage extends React.Component {
     constructor(props) {
         super(props);
     }
-    componentDidMount() {
 
+    shouldComponentUpdate(nextProps, nextState, nextContext) {
+        return !this.props.productIds.length;
     }
 
     isRenderValid() {
@@ -56,9 +59,24 @@ class HomePage extends React.Component {
         return null;
     }
 
+    postFetch(){
+        Promise.resolve().then(_ => {
+            this.props.fetchProducts({taxonomy_paths: ["Art & Collectibles"]});
+            this.props.fetchProducts({taxonomy_paths: ["Craft Supplies & Tools"]});
+            this.props.fetchProducts({taxonomy_paths: ["Books, Movies & Music"]});
+            this.props.fetchProducts({taxonomy_paths: ["Home & Living"]});
+            this.props.fetchProducts({taxonomy_paths: ["Home Decor"]});
+            this.props.fetchProducts({taxonomy_paths: ["Jewelry"]});
+            this.props.fetchProducts({taxonomy_paths: ["Toys & Games"]});
+            this.props.fetchProducts({taxonomy_paths: ["Kitchen & Dining"]});
+            this.props.fetchProducts({taxonomy_paths: ["Drink & Barware"]});
+        })
+    }
+
     render() {
         if (!this.isRenderValid())
             return this.resolve();
+        Promise.resolve().then(_ => this.postFetch())
         let areas = ["categories", "popular", "viewed", "picks1", "picks2", "editors", "selections", "based_1", "based_2", "recommendations"]
         let components = {
             "categories": <SelectionsCircular productIds={this.props.categories}/>,
