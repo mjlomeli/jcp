@@ -93,8 +93,7 @@ class GridLayout extends React.Component {
         // Any component assigned to `this` or `state` will no longer have visible actions.
         let components = this.props.components || defaultComponents;
         return <>
-            <div key={this.props.key}
-                onMouseEnter={this.onmouseenter}
+            <div onMouseEnter={this.onmouseenter}
                  onMouseLeave={this.onmouseleave}
                  onClick={this.onclick}
                  className={this.className}
