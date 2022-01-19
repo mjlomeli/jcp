@@ -25,6 +25,7 @@
     z-index: 50;
     width: 22em;
     height: 50em;
+    max-height: 92%;
 
     top: 50%;
     left: 50%;
@@ -65,7 +66,25 @@
     margin: auto;
 }
 
+.login-demo-button {
+    position: relative;
+    font-family: -apple-system, BlinkMacSystemFont, "Roboto", "Droid Sans", "Segoe UI", "Helvetica", Arial, sans-serif;
+    color: #FFFFFF;
+    background-color: #2F466C;
+    font-size: 0.8em;
+    font-weight: 600;
+    border-radius: 96px;
+    border: 0.2em solid black;
+    padding: 0.2em 1.5em 0.2em 1.5em;
+    cursor: pointer;
+    height: 3em;
+}
 
+.login-demo-button:hover, .login-register-button:hover {
+    transform: scale(1.025);
+    box-shadow: 0 0 1.5em 0 rgba(26, 26, 26, 0.12);
+    transition: transform 0.02s ease, box-shadow 0.3s ease;
+}
 
 /******** Form *****************/
 .login-form {

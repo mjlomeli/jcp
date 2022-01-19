@@ -21,15 +21,15 @@ const mapStateToProps = ({entities, session, errors}, ownProps) => {
         firstName: firstName,
         productIds: shopListings,
         categories: shopListings.slice(0, 6),
-        popular: shopListings.slice(0, 5),
-        recent: shopListings.slice(0, 10),
-        firstPicks: shopListings.slice(0, 6),
-        secondPicks: shopListings.slice(0, 10),
-        firstActivity: shopListings.slice(0, 9),
-        secondActivity: shopListings.slice(0, 6),
-        editors: shopListings.slice(0, 6),
-        selections: shopListings.slice(0, 8),
-        recommendations: shopListings.slice(0, 6)
+        popular: shopListings.slice(6, 11),
+        recent: shopListings.slice(11, 21),
+        firstPicks: shopListings.slice(21, 27),
+        secondPicks: shopListings.slice(27, 37),
+        firstActivity: shopListings.slice(37, 46),
+        secondActivity: shopListings.slice(46, 52),
+        editors: shopListings.slice(52, 58),
+        selections: shopListings.slice(58, 66),
+        recommendations: shopListings.slice(66, 72)
     }
 };
 
@@ -52,7 +52,7 @@ class HomePage extends React.Component {
 
     resolve() {
         if (!this.props.productIds || this.props.productIds.length === 0)
-            this.props.fetchRandomProducts(10);
+            this.props.fetchRandomProducts(72);
         return null;
     }
 

@@ -94,7 +94,7 @@ class Api::ProductsController < ApplicationController
     if @query[:product_ids] and !valid_dimension?(@query) and dimension != nil and dimension != "all"
       render json: product_ids.map { |id| [id, ["Could not find products with dimension: #{dimension}"]] }.to_h
     else
-      @products = product_ids.empty? ? Product.custom_query(**@query) : products_from_params(@query).custom_query(**@query)
+      @products = product_ids.empty? ? Product.offset(1).custom_query(**@query) : products_from_params(@query).custom_query(**@query)
       if @products.empty?
         render json: product_locate_error(**@query), status: 400
       else

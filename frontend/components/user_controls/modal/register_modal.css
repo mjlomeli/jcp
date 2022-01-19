@@ -23,8 +23,8 @@
     grid-row-gap: 1em;
     font-family: "Graphik Webfont",-apple-system,"Helvetica Neue","Droid Sans",Arial,sans-serif;
     z-index: 50;
-    width: 22em;
-    height: 50em;
+    width: 22%;
+    height: 80%;
 
     top: 50%;
     left: 50%;
@@ -60,19 +60,7 @@
     margin: auto;
 }
 
-.register-demo-button {
-    position: relative;
-    font-family: -apple-system, BlinkMacSystemFont, "Roboto", "Droid Sans", "Segoe UI", "Helvetica", Arial, sans-serif;
-    color: #FFFFFF;
-    background-color: #2F466C;
-    font-size: 0.8em;
-    font-weight: 600;
-    border-radius: 96px;
-    border: 0.2em solid black;
-    padding: 0.2em 1.5em 0.2em 1.5em;
-    cursor: pointer;
-    height: 3em;
-}
+
 
 
 

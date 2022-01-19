@@ -55,9 +55,6 @@ class RegisterModal extends React.Component {
                 case "facebook":
                     this.props.notification("Facebook login coming soon!");
                     break;
-                case "demo":
-                    this.props.createSession({email: "demo@email.com", password: "password"});
-                    break;
                 default:
                     break;
             }
@@ -79,13 +76,10 @@ class RegisterModal extends React.Component {
     }
 
     header() {
-        let areas = ['title demo', 'text .']
+        let areas = ['title title', 'text .']
         let components = {
             "title": <div className="register-header-title">Create your account</div>,
             "text": <div className="register-header-text">Registration is easy</div>,
-            "demo": <button className="register-demo-button" onClick={this.onclicksubmit("demo")} type="button">
-                Demo
-            </button>
         }
         return <GridLayout areas={areas} components={components} className="register-header"/>
     }
