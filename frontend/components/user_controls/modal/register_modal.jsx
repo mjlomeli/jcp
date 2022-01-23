@@ -145,8 +145,10 @@ class RegisterModal extends React.Component {
 
         return <div>
             <div className="register-background" onClick={this.onclickbackground}/>
+            <div className="register-outer-modal">
             <GridLayout areas={areas} components={components} className="register-modal"
                         classElements="register-modal-items"/>
+            </div>
         </div>
     }
 }
