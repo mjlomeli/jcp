@@ -291,6 +291,9 @@ export const permitProductQuery = (tags=[], materials=[], taxonomyPaths=[]) => {
 }
 
 class Trie {
+    /**
+     * Creates a Trie tree for O(1) lookup queries
+     */
     static setup(words){
         let root = new Trie();
         words.forEach(word => root.addChild(word));
