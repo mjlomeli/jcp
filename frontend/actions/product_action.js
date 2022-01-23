@@ -4,6 +4,8 @@ import {ENTITY} from "../reducers/constants";
 import {parse_int_listings} from "../utils/tools";
 
 export const RECEIVE_PRODUCTS = "RECEIVE_PRODUCTS";
+export const RECEIVE_PRODUCTS_TITLES = "RECEIVE_PRODUCTS_TITLES";
+export const RECEIVE_PRODUCTS_AS_QUERY = "RECEIVE_PRODUCTS_AS_QUERY";
 export const REMOVE_PRODUCTS = "REMOVE_PRODUCTS";
 
 export const RECEIVE_PRODUCTS_ERRORS = "RECEIVE_PRODUCT_ERROR";
@@ -16,6 +18,16 @@ export const RESET_ALL_PRODUCTS_ERRORS = "RESET_ALL_PRODUCTS_ERRORS";
 export const receiveProducts = (listings={}) => ({
     type: RECEIVE_PRODUCTS,
     listings: parse_int_listings(listings)
+})
+
+export const receiveProductsAsQuery = (listings, query) => ({
+    type: RECEIVE_PRODUCTS_AS_QUERY,
+    listings: {...parse_int_listings(listings), query: query}
+})
+
+export const receiveProductsTitles = (titles=[]) => ({
+    type: RECEIVE_PRODUCTS_TITLES,
+    titles: titles
 })
 
 export const receiveProductsListings = (listings={}) => ({
@@ -62,6 +74,19 @@ export const fetchProducts = (query) => dispatch => (
                 return dispatch(receiveProductsGeneralErrors(dispatch, err.responseJSON))
         }
     )
+)
+
+export const fetchProductsTitles = () => dispatch => (
+    ProductUtil.fetchProductsTitles().then(
+        titles => dispatch(receiveProductsTitles(titles)),
+        err => dispatch(AlertAction.systemError([err.responseJSON]))
+    )
+)
+
+export const fetchProductsAsQuery = (productIds, query) => dispatch => (
+    ProductUtil.fetchProductsListings(productIds).then(
+        listings => dispatch(receiveProductsAsQuery(listings, {query: query})),
+        err => dispatch(receiveProductsErrors(dispatch, err.responseJSON)))
 )
 
 export const fetchProductListing = (productId) => dispatch => (
@@ -147,6 +172,7 @@ export const resetAllProductsError = () => dispatch => (
 window.ProductAction = {
     fetchProduct,
     fetchProducts,
+    fetchProductsTitles,
     fetchProductsRange,
     fetchRandomProducts,
     fetchProductListing,

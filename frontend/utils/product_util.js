@@ -103,6 +103,13 @@ export const deleteProduct = (productId) => {
     });
 };
 
+export const fetchProductsTitles = () => {
+    return $.ajax({
+        url: `/api/products/index/titles`,
+        method: 'GET'
+    });
+};
+
 window.ProductUtil = {
     fetchProducts,
     fetchProductsRange,
@@ -111,5 +118,6 @@ window.ProductUtil = {
     fetchProductListing,
     createProduct,
     updateProduct,
-    deleteProduct
+    deleteProduct,
+    fetchProductsTitles
 }

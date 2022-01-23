@@ -243,7 +243,6 @@ export function isEmpty(obj) {
     throw new Error("isEmpty can only take an iterable object");
 }
 
-
 export function urlParams(props) {
     if (props && props.match)
         return props.match.params;
@@ -274,7 +273,12 @@ export function arrayEquals(arr1, arr2){
     return true;
 }
 
-export function queryToString(query={}){
+export function queryToString(ownProps){
+    let query = permitProductQuery(ownProps);
+    if (query instanceof String || typeof query === 'string')
+        return query;
+    else if (Array.isArray(query))
+        return `[${query}]`
     let query_sorted_array = Object.entries(query).filter(pair => {
         let [key, value] = pair;
         return !(Array.isArray(value) && !value.length && !value);
@@ -282,15 +286,41 @@ export function queryToString(query={}){
     return JSON.stringify(Object.fromEntries(query_sorted_array))
 }
 
-export const permitProductQuery = (tags=[], materials=[], taxonomyPaths=[]) => {
-    let query = {};
-    if (tags.length) query['tags'] = tags;
-    if (materials.length) query['materials'] = materials;
-    if (taxonomyPaths.length) query['taxonomy_paths'] = taxonomyPaths;
-    return query;
+export const extractProductsParams = (ownProps) => {
+    let [query, tags, materials, taxonomyPaths] = [null, null, null, null];
+    let [tag, material, taxonomyPath] = [null, null, null];
+    if (ownProps.location) {
+        let params = new URLSearchParams(ownProps.location.search);
+        query = params.get('query') || null;
+        tag = params.get('tag');
+        tags = tag && [tag] || params.get('tags') || [];
+        material = params.get('material');
+        materials = material && [material] || params.get('materials') || [];
+        taxonomyPath = params.get('taxonomy_path');
+        taxonomyPaths = taxonomyPath && [taxonomyPath] || params.get('taxonomy_paths') || [];
+    } else {
+        query = ownProps.query || null;
+        tag = ownProps.tag;
+        tags = tag && [tag] || ownProps.tags || [];
+        material = ownProps.material;
+        materials = material && [material] || ownProps.materials || [];
+        taxonomyPath = ownProps.taxonomy_path;
+        taxonomyPaths = taxonomyPath && [taxonomyPath] || ownProps.taxonomy_paths || [];
+    }
+    return [query, tags, materials, taxonomyPaths]
 }
 
-class Trie {
+export const permitProductQuery = (ownProps) => {
+    let [query, tags, materials, taxonomyPaths] = extractProductsParams(ownProps);
+    let data = {};
+    if (query) data['query'] = query;
+    if (tags.length) data['tags'] = tags;
+    if (materials.length) data['materials'] = materials;
+    if (taxonomyPaths.length) data['taxonomy_paths'] = taxonomyPaths;
+    return data;
+}
+
+export class Trie {
     /**
      * Creates a Trie tree for O(1) lookup queries
      */

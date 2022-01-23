@@ -45,3 +45,12 @@ def groups_from_params(tags: [], materials: [], taxonomy_paths: [], **kwargs)
   queries.concat(taxonomy_paths.to_set.map { |t| "'#{t}' = any (products.taxonomy_path)" }) unless taxonomy_paths.empty?
   queries.join(" or ")
 end
+
+def format_query(query)
+  query.downcase.gsub(".", "")
+         .gsub(" | ", " ").gsub(" || ", " ")
+         .gsub("||", " ").gsub("|", " ").gsub("/", " ")
+         .gsub(" - ", " ").gsub("-", " ").gsub(",", " ")
+         .gsub("(", "").gsub(")", "")
+         .gsub("  ", " ").gsub("  ", " ")
+end

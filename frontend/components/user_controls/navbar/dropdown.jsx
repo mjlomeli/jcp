@@ -23,6 +23,7 @@ const defaultDropDown = {
 export class DropdownLayout extends React.Component {
     static CLASS_PROPS = ['className', 'classHeader', 'classDropper', 'classLinks', 'classHover', 'classHeaderHover', 'classLinksHover'];
     static DATA_PROPS = ['header', 'link', 'components'];
+    static index = 0;
     #style = {};
     #linksStyle = {};
 
@@ -35,7 +36,11 @@ export class DropdownLayout extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state = {headerStyle: {}, dropperStyle: {}}
+        let display = this.props.dropperVisible === undefined ? {} : {display: "block"};
+        this.state = {
+            headerStyle: {},
+            dropperStyle: {...display}
+        }
         this.usingDefaultClass = !DropdownLayout.hasClassProps(props);
         this.usingDefaultData = !DropdownLayout.hasComponentData(props);
 
@@ -48,6 +53,8 @@ export class DropdownLayout extends React.Component {
         this.classHeaderHover = '';
         this.classLinksHover = '';
 
+        this.dropperId = props.dropperId;
+
         this.header = React.createRef();
         this.dropper = React.createRef();
 
@@ -59,8 +66,26 @@ export class DropdownLayout extends React.Component {
         this.#assignClassNames(props)
     }
 
-    onMouseEnter(e) {
-        if (!this.dropper.current) return;
+    isEmpty(){
+        let components = !this.usingDefaultData ? this.props.components : defaultDropDown.components;
+        if (Array.isArray(components))
+            return components.length === 0;
+        else if (typeof components === 'string' || components instanceof String)
+            return components === "";
+        else if (!components)
+            return true;
+        return Object.entries(components).length === 0;
+    }
+
+    isVisible(){
+        if (this.usingDefaultClass)
+            return this.state.dropperStyle.display === "block";
+        return this.dropper.current.style.display === "block";
+    }
+
+    showDropper(){
+        if (!this.dropper.current || this.isVisible())
+            return;
         if (!this.usingDefaultClass && !this.classHeaderHover)
             this.dropper.current.style.display = "block";
 
@@ -75,8 +100,9 @@ export class DropdownLayout extends React.Component {
         }
     }
 
-    onMouseLeave(e) {
-        if (!this.dropper.current) return;
+    hideDropper(){
+        if (!this.dropper.current || !this.isVisible())
+            return;
         if (!this.usingDefaultClass && !this.classHeaderHover)
             this.dropper.current.style.display = "none";
 
@@ -89,6 +115,18 @@ export class DropdownLayout extends React.Component {
                 this.header.current.classList.toggle(this.classHeaderHover);
             this.dropper.current.style.display = "none";
         }
+    }
+
+    onMouseEnter(e) {
+        if (this.isEmpty() || this.props.dropperVisible === false)
+            return;
+        this.showDropper();
+    }
+
+    onMouseLeave(e) {
+        if (this.props.dropperVisible === true)
+            return;
+        this.hideDropper();
     }
 
     onMouseEnterLink(e) {
@@ -138,7 +176,7 @@ export class DropdownLayout extends React.Component {
         };
         let headerStyle = {
             float: "none",
-            color: "black",
+            color: "#f9f9f9",
             padding: "12px 16px",
             textDecoration: "none",
             display: "block",
@@ -151,7 +189,8 @@ export class DropdownLayout extends React.Component {
             backgroundColor: "#f9f9f9",
             minWidth: "160px",
             boxShadow: "0px 8px 16px 0px rgba(0,0,0,0.2)",
-            zIndex: "1"
+            zIndex: "1",
+            borderRadius: "6px"
         };
         this.state = {headerStyle, dropperStyle};
     }
@@ -198,14 +237,16 @@ export class DropdownLayout extends React.Component {
         let header = !this.usingDefaultData ? this.props.header : defaultDropDown.header;
         let link = !this.usingDefaultData ? this.props.link : defaultDropDown.link;
 
-        return <Link className={this.classHeader} to={link} style={this.state.headerStyle} ref={this.header}>
+        return !!link ? <Link className={this.classHeader} to={link} style={this.state.headerStyle} ref={this.header}>
             {header}
-        </Link>
+        </Link> :
+            <div className={this.classHeader} style={this.state.headerStyle} ref={this.header}>
+                {header}
+            </div>
     }
 
     componentDropper(){
         let components = !this.usingDefaultData ? this.props.components : defaultDropDown.components;
-
         let dropdowns;
         if (Array.isArray(components))
             dropdowns = this.arrayDropDown(components);
@@ -216,7 +257,10 @@ export class DropdownLayout extends React.Component {
         else
             dropdowns = this.objectDropDown(components);
 
-        return !dropdowns ? null : <div className={this.classDropper} style={this.state.dropperStyle} ref={this.dropper}>
+        return !dropdowns || !dropdowns.length || this.props.dropperVisible === false ? null :
+            <div id={this.dropperId} className={this.classDropper}
+                 style={this.state.dropperStyle}
+                 ref={this.dropper}>
             {dropdowns}
         </div>
     }

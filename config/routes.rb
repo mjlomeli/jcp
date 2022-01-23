@@ -34,11 +34,14 @@ Rails.application.routes.draw do
       get 'products/shops/:id', to: 'products#from_shops'
       get 'products/groups', to: 'products#from_groups'
 
+
       get 'products/query', to: 'products#query'
       get 'products/pages', to: 'products#pages'
       get 'products/listings', to: 'products#listings'
       get 'products/price_range', to: 'products#price_range'
       get 'products/popular', to: 'products#popular'
+
+      get 'products/index/titles', to: 'products#index_titles'
 
       delete 'products', to: 'products#destroys'
 

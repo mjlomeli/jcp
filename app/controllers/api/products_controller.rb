@@ -51,12 +51,15 @@ class Api::ProductsController < ApplicationController
     end
   end
 
+  def index_titles
+    products = Product.all.map{|product| [format_query(product.title), {title: product.title, id: Integer(product.id)}]}.to_h
+    render json: products
+  end
+
   def query
     @query = query_params
     @filter = product_filters
     begin
-      puts @query
-      puts @filter
       @products = Product.where(groups_from_params(@query)).where(@filter).custom_query(**@query)
       if @products.empty?
         render json: ["No search results with filters: #{@filter} nor with the query: #{@query}"], status: 400

@@ -35,7 +35,7 @@ def to_array(value)
   if value.is_a? String
     JSON.parse(value.gsub("'", '"')) rescue nil
   else
-    Array(params[value]) rescue nil #converts to an Array on fail set to nil
+    Array(value) rescue nil #converts to an Array on fail set to nil
   end
 end
 

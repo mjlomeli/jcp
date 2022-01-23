@@ -1,7 +1,6 @@
 import React from 'react';
-
 import './home_page.css'
-import {fetchProducts, fetchRandomProducts} from "../../actions/product_action";
+import {fetchProducts, fetchProductsTitles, fetchRandomProducts} from "../../actions/product_action";
 import SelectionsCircular from "../themes/selections_circular/selections_circular";
 import SelectionsFull from "../themes/selections_full/selections_full";
 import SelectionsThumbnails from "../themes/selections_thumbnails/selections_thumbnails";
@@ -36,7 +35,8 @@ const mapStateToProps = ({entities, session, index, errors}, ownProps) => {
 
 const mapDispatchToProps = dispatch => ({
     fetchRandomProducts: (n) => dispatch(fetchRandomProducts(n)),
-    fetchProducts: query => dispatch(fetchProducts(query))
+    fetchProducts: query => dispatch(fetchProducts(query)),
+    fetchProductsTitles: () => dispatch(fetchProductsTitles())
 });
 
 
@@ -70,13 +70,14 @@ class HomePage extends React.Component {
             this.props.fetchProducts({taxonomy_paths: ["Toys & Games"]});
             this.props.fetchProducts({taxonomy_paths: ["Kitchen & Dining"]});
             this.props.fetchProducts({taxonomy_paths: ["Drink & Barware"]});
+            this.props.fetchProductsTitles();
         })
     }
 
     render() {
         if (!this.isRenderValid())
             return this.resolve();
-        Promise.resolve().then(_ => this.postFetch())
+        this.postFetch()
         let areas = ["categories", "popular", "viewed", "picks1", "picks2", "editors", "selections", "based_1", "based_2", "recommendations"]
         let components = {
             "categories": <SelectionsCircular productIds={this.props.categories}/>,
