@@ -220,7 +220,7 @@ class CardListing extends React.Component {
             'price': this.priceComponent(),
             'tag': this.tagComponent("free shipping")
         }
-
+        let productKey = `card-listing-${this.props.productId}`;
         return <GridLayout areas={areas}
                            components={components}
                            className="global-card-listing-grid"

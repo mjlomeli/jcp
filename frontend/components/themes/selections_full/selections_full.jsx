@@ -77,8 +77,7 @@ class SelectionsFull extends React.Component {
             let placeholder = Array.from(Array(this.props.numCols - indices.length)).map(_ => "-");
             layout.push(indices.concat(placeholder).join(" "));
         }
-        return <GridLayout key={this.props.key}
-                           areas={layout}
+        return <GridLayout areas={layout}
                            components={components}
                            className="selections-full-grid"
                            classElements="selections-full-items"/>

@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import configureStore from "./store/store";
 import Root from "./components/root";
 import {debug, isNodeJs, isBrowser} from "./utils/tools";
+import {fetchProductsTitles} from "./actions/product_action";
 
 document.addEventListener("click", (e) => {
     let el = e.target;
@@ -28,6 +29,7 @@ document.addEventListener("DOMContentLoaded", () => {
     } else {
         store = configureStore({})
     }
+    fetchProductsTitles()(store.dispatch)
     const root = document.getElementById("root");
     window.store = store;
     ReactDOM.render(<Root store={store}/>, root);

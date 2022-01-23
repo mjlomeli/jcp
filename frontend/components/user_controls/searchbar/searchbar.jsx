@@ -12,6 +12,7 @@ import React from 'react';
 import './searchbar.css'
 import {DropdownLayout} from "../navbar/dropdown";
 import {fetchProductsAsQuery} from "../../../actions/product_action";
+import {systemError} from "../../../actions/alert_action";
 
 const mapStateToProps = ({errors, index}, ownProps) => ({
     //errors: errors.session, // need to add a ui or user_control errors
@@ -20,7 +21,8 @@ const mapStateToProps = ({errors, index}, ownProps) => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-    fetchProducts: (ids, query) => dispatch(fetchProductsAsQuery(ids, query))
+    fetchProducts: (ids, query) => dispatch(fetchProductsAsQuery(ids, query)),
+    notifyError: (message) => dispatch(systemError([message]))
 });
 
 class SearchBar extends React.Component {
@@ -36,16 +38,10 @@ class SearchBar extends React.Component {
 
     onClick(e) {
         let query = this.state.query;
-        // use the search query to route to a products page with the query results
-        let ids = this.props.tri.getLike(query).map(result => {
-            let result_data = this.props.data[result];
-            return result_data.id;
-        })
-        this.props.fetchProducts(ids, query).then(_=>
-            this.props.history.push(`/products?query=${query}`)
-        )
+        if (query === "")
+            return;
+        this.props.history.push(`/products?query=${query}`);
     }
-
 
     onClickLink(title) {
         return (e) => {

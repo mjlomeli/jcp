@@ -82,7 +82,7 @@ class GridLayout extends React.Component {
         return Object.entries(components).map(
             (obj, i) => {
                 let [key, value] = obj;
-                return <div key={i}
+                return <div key={key.toString()}
                             className={this.classElements}
                             style={{...this.#itemsStyle, gridArea: `${key}`}}>{value}</div>
             })
@@ -97,7 +97,6 @@ class GridLayout extends React.Component {
                  onMouseLeave={this.onmouseleave}
                  onClick={this.onclick}
                  className={this.className}
-                 onDrag={this.ondrag}
                  style={this.#gridStyle} ref={this.refGridLayout}>{
                      this.#makeElements(components)
             }</div>

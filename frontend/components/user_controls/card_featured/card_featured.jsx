@@ -195,6 +195,7 @@ class CardFeatured extends React.Component {
                 </button>
         }
 
+        let key = `featured-${this.props.productId}`
         let areas = ['image info']
         let components = {
             'image': this.imageComponent(),
