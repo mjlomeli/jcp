@@ -289,3 +289,110 @@ export const permitProductQuery = (tags=[], materials=[], taxonomyPaths=[]) => {
     if (taxonomyPaths.length) query['taxonomy_paths'] = taxonomyPaths;
     return query;
 }
+
+class Trie {
+    static setup(words){
+        let root = new Trie();
+        words.forEach(word => root.addChild(word));
+        return root;
+    }
+
+    constructor(value) {
+        this.value = value;
+        this.children = null;
+    }
+
+    keys(){
+        if (!this.children)
+            return [];
+        return Object.keys(this.children);
+    }
+
+    values(){
+        if (!this.children)
+            return [];
+        return Object.values(this.children);
+    }
+
+    items(){
+        if (!this.children)
+            return [];
+        return Object.entries(this.children);
+    }
+
+    get(item){
+        if (this.has(item))
+            return this.children[item];
+        return null;
+    }
+
+    has(item){
+        if (!this.children)
+            return false;
+        return item in this.children;
+    }
+
+    set(key, item){
+        if (!this.children)
+            this.children = {[key]: item};
+        else
+            this.children[key] = item;
+    }
+
+    addChild(word){
+        if (word === "")
+            return this.set(".", null);
+        let [nextChar, rest] = [word[0], word.slice(1)];
+        if (this.has(nextChar))
+            return this.get(nextChar).addChild(rest);
+        this.set(nextChar, new Trie(nextChar));
+        this.get(nextChar).addChild(rest);
+    }
+
+    isMember(word){
+        if (word === "")
+            return this.has(".");
+        let [nextChar, rest] = [word[0], word.slice(1)];
+        if (nextChar === ".")
+            return this.values().some(child => child.isMember(rest));
+        else if (this.has(nextChar))
+            return this.get(nextChar).isMember(rest);
+        return false;
+    }
+
+    isLike(word){
+        if (word === "")
+            return true;
+        let [nextChar, rest] = [word[0], word.slice(1)];
+        if (nextChar === ".")
+            return this.values().some(child => child.isLike(rest))
+        else if (this.has(nextChar))
+            return this.get(nextChar).isLike(rest);
+        return false;
+    }
+
+    getLike(word){
+        if (this.isLike(word))
+            return this.getLikeHelper(word, [], "", this);
+        return [];
+    }
+
+    getLikeHelper(word, found, traced, root){
+        let [nextChar, rest] = [word[0], word.slice(1)];
+        if (nextChar === "" || nextChar === undefined){
+            if (root.isMember(traced))
+                found.push(traced);
+            this.items().forEach(pair => {
+                let [child_char, child] = pair;
+                if (child_char !== ".")
+                    child.getLikeHelper(word, found, `${traced}${child_char}`, root)
+            })
+        } else if (this.isMember(traced) && traced !== "") {
+            found.push(traced)
+            return found;
+        } else if (this.has(nextChar)) {
+            this.get(nextChar).getLikeHelper(rest, found, `${traced}${nextChar}`, root);
+        }
+        return found;
+    }
+}
