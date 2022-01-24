@@ -72,17 +72,21 @@ class ProductsPage extends React.Component {
 
     resolve() {
         if (!this.props.isCachedQuery && this.props.queryKey) {
-            if ('query' in this.props.query) {
-                let query = this.props.query.query;
-                let ids = this.props.tri.getLike(query.toLowerCase()).map(result => this.props.data[result].id)
-                if (ids.length)
-                    this.props.fetchProductsAsQuery(ids, query);
-                else
-                    return this.noResultsComponent();
-            } else if (this.props.query && this.props.query.taxonomy_path)
-                this.props.fetchProducts(this.props.query);
-            else
-                return this.noResultsComponent();
+            // console.log("query:", this.props.query);
+            // console.log("queryKey:", this.props.queryKey);
+            // console.log("key in index:", this.props.queryKey in this.props.data)
+            // if ('query' in this.props.query) {
+            //     let query = this.props.query.query;
+            //     let ids = this.props.tri.getLike(query.toLowerCase()).map(result => this.props.data[result].id)
+            //     console.log("ids: ", ids);
+            //     if (ids.length)
+            //         this.props.fetchProductsAsQuery(ids, query);
+            //     else
+            //         return this.noResultsComponent();
+            // } else if (this.props.query && this.props.query.taxonomy_path)
+            //     this.props.fetchProducts(this.props.query);
+            // else
+            //     return this.noResultsComponent();
         }
         return null;
     }

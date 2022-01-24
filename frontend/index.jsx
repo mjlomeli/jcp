@@ -30,15 +30,6 @@ document.addEventListener("DOMContentLoaded", () => {
         store = configureStore({})
     }
     fetchProductsTitles()(store.dispatch)
-    fetchProducts({taxonomy_paths: ["Art & Collectibles"]})(store.dispatch);
-    fetchProducts({taxonomy_paths: ["Craft Supplies & Tools"]})(store.dispatch);
-    fetchProducts({taxonomy_paths: ["Books, Movies & Music"]})(store.dispatch);
-    fetchProducts({taxonomy_paths: ["Home & Living"]})(store.dispatch);
-    fetchProducts({taxonomy_paths: ["Home Decor"]})(store.dispatch);
-    fetchProducts({taxonomy_paths: ["Jewelry"]})(store.dispatch);
-    fetchProducts({taxonomy_paths: ["Toys & Games"]})(store.dispatch);
-    fetchProducts({taxonomy_paths: ["Kitchen & Dining"]})(store.dispatch);
-    fetchProducts({taxonomy_paths: ["Drink & Barware"]})(store.dispatch);
     const root = document.getElementById("root");
     window.store = store;
     ReactDOM.render(<Root store={store}/>, root);

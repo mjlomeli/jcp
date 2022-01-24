@@ -144,8 +144,8 @@ class ProductPage extends React.Component {
      **/
     resolve() {
         if (!Product.hasError(this.props.productId)) {
-            this.props.fetchProduct(this.props.productId);
-            this.props.fetchRandomProducts(6);
+            // this.props.fetchProduct(this.props.productId);
+            // this.props.fetchRandomProducts(6);
         }
         return null;
     }

@@ -157,6 +157,20 @@ export const deleteProducts = productIds => dispatch => (
         err => dispatch(receiveProductsErrors(dispatch, err.responseJSON)))
 )
 
+export const fetchTabbeddItems = () => {
+    Promise.resolve().then(_=> {
+        fetchProducts({taxonomy_paths: ["Art & Collectibles"]})(store.dispatch);
+        fetchProducts({taxonomy_paths: ["Craft Supplies & Tools"]})(store.dispatch);
+        fetchProducts({taxonomy_paths: ["Books, Movies & Music"]})(store.dispatch);
+        fetchProducts({taxonomy_paths: ["Home & Living"]})(store.dispatch);
+        fetchProducts({taxonomy_paths: ["Home Decor"]})(store.dispatch);
+        fetchProducts({taxonomy_paths: ["Jewelry"]})(store.dispatch);
+        fetchProducts({taxonomy_paths: ["Toys & Games"]})(store.dispatch);
+        fetchProducts({taxonomy_paths: ["Kitchen & Dining"]})(store.dispatch);
+        fetchProducts({taxonomy_paths: ["Drink & Barware"]})(store.dispatch);
+    });
+}
+
 export const resetProductErrors = productId => dispatch => (
     dispatch({type: RESET_PRODUCTS_ERRORS, productIds: [productId]})
 )
@@ -177,6 +191,7 @@ window.ProductAction = {
     fetchRandomProducts,
     fetchProductListing,
     fetchProductsListings,
+    fetchTabbeddItems,
     resetProductErrors,
     resetProductsErrors,
     resetAllProductsError,

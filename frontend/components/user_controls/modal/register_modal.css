@@ -60,6 +60,26 @@
 }
 
 
+.register-demo-button {
+    position: relative;
+    font-family: -apple-system, BlinkMacSystemFont, "Roboto", "Droid Sans", "Segoe UI", "Helvetica", Arial, sans-serif;
+    color: #FFFFFF;
+    background-color: #2F466C;
+    font-weight: 600;
+    border-radius: 96px;
+    border: 0.2em solid black;
+    padding: 0.2em 1.5em 0.2em 1.5em;
+    cursor: pointer;
+    font-size: min(min(1.5vw, 0.8em), 1.5vh);
+    width: min(10vw, 6rem);
+    height: min(10vw, 3em);
+}
+
+.register-demo-button:hover, .login-register-button:hover {
+    transform: scale(1.025);
+    box-shadow: 0 0 1.5em 0 rgba(26, 26, 26, 0.12);
+    transition: transform 0.02s ease, box-shadow 0.3s ease;
+}
 
 
 

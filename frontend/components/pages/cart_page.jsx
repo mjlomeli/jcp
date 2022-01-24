@@ -49,10 +49,10 @@ class CartTemplate extends React.Component {
     }
 
     resolve() {
-        if (this.props.isUser && !this.props.cartItems)
-            this.props.fetchCartItems();
-        else if (!this.props.isCached)
-            this.props.fetchProducts(Object.keys(this.props.cartItems));
+        // if (this.props.isUser && !this.props.cartItems)
+        //     this.props.fetchCartItems();
+        // else if (!this.props.isCached)
+        //     this.props.fetchProducts(Object.keys(this.props.cartItems));
         return null;
     }
 

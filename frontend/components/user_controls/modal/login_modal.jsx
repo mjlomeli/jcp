@@ -62,9 +62,6 @@ class LoginModal extends React.Component {
                 case "facebook":
                     this.props.notification("Facebook login coming soon!");
                     break;
-                case "demo":
-                    this.props.createSession({email: "demo@email.com", password: "password"});
-                    break;
                 default:
                     break;
             }
@@ -89,10 +86,7 @@ class LoginModal extends React.Component {
         let components = {
             "text": <div className="login-signin-text">Sign in</div>,
             "space": <div className="login-header-space" />,
-            "demo": <button className="login-demo-button" onClick={this.onclicksubmit("demo")} type="button">
-                Demo
-            </button>,
-            "register": <button className="login-register-button" onClick={this.onclicksubmit("register")} type="button">
+            "button": <button className="login-register-button" onClick={this.onclicksubmit("register")} type="button">
                 Register
             </button>
         }

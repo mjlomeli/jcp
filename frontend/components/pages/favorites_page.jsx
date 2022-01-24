@@ -41,8 +41,9 @@ class FavoritesPage extends React.Component {
     }
 
     resolve() {
-        if (!this.props.productIds)
-            this.props.fetchFavorites(this.props.user_id);
+        if (!this.props.productIds) {
+            // this.props.fetchFavorites(this.props.user_id);
+        }
         return null;
     }
 
