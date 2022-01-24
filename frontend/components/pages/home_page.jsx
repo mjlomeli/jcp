@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {Fragment} from 'react';
 import './home_page.css'
 import {fetchProducts, fetchProductsTitles, fetchRandomProducts} from "../../actions/product_action";
 import SelectionsCircular from "../themes/selections_circular/selections_circular";
@@ -45,10 +45,6 @@ const mapDispatchToProps = dispatch => ({
 class HomePage extends React.Component {
     constructor(props) {
         super(props);
-    }
-
-    shouldComponentUpdate(nextProps, nextState, nextContext) {
-        return !this.props.productIds.length;
     }
 
     isRenderValid() {
