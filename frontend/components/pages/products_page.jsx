@@ -72,20 +72,31 @@ class ProductsPage extends React.Component {
 
     resolve() {
         if (!this.props.isCachedQuery && this.props.queryKey) {
-            let query = this.props.query.query;
-            let ids = this.props.tri.getLike(query.toLowerCase()).map(result => this.props.data[result].id)
-            if (ids.length)
-                this.props.fetchProductsAsQuery(ids, query);
+            if ('query' in this.props.query) {
+                let query = this.props.query.query;
+                let ids = this.props.tri.getLike(query.toLowerCase()).map(result => this.props.data[result].id)
+                if (ids.length)
+                    this.props.fetchProductsAsQuery(ids, query);
+                else
+                    return this.noResultsComponent();
+            } else if (this.props.query && this.props.query.taxonomy_path)
+                this.props.fetchProducts(this.props.query);
+            else
+                return this.noResultsComponent();
         }
-        return this.noResultsComponent();
+        return null;
     }
 
     render() {
         if (!this.isRenderValid())
             return this.resolve();
+        else if (!this.props.productIds || !this.props.productIds.length)
+            this.noResultsComponent();
         let productsKey = `${this.props.queryKey || ProductsPage.productsKey}`;
         console.log(productsKey)
         console.log(this.props.productIds);
+        if (this.props.query.query)
+            console.log(this.props.tri.getLike(this.props.query.query.toLowerCase()));
         let components = {
             'featured': <div key={productsKey} className="products-page-featured"><CardFeatured key={productsKey} productId={this.props.featuredId}/></div>,
             'products': <SelectionsFull key={productsKey} productIds={this.props.productIds} numCols={5}/>,

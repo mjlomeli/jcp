@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import configureStore from "./store/store";
 import Root from "./components/root";
 import {debug, isNodeJs, isBrowser} from "./utils/tools";
-import {fetchProductsTitles} from "./actions/product_action";
+import {fetchProductsTitles, fetchProducts} from "./actions/product_action";
 
 document.addEventListener("click", (e) => {
     let el = e.target;
@@ -30,6 +30,15 @@ document.addEventListener("DOMContentLoaded", () => {
         store = configureStore({})
     }
     fetchProductsTitles()(store.dispatch)
+    fetchProducts({taxonomy_paths: ["Art & Collectibles"]})(store.dispatch);
+    fetchProducts({taxonomy_paths: ["Craft Supplies & Tools"]})(store.dispatch);
+    fetchProducts({taxonomy_paths: ["Books, Movies & Music"]})(store.dispatch);
+    fetchProducts({taxonomy_paths: ["Home & Living"]})(store.dispatch);
+    fetchProducts({taxonomy_paths: ["Home Decor"]})(store.dispatch);
+    fetchProducts({taxonomy_paths: ["Jewelry"]})(store.dispatch);
+    fetchProducts({taxonomy_paths: ["Toys & Games"]})(store.dispatch);
+    fetchProducts({taxonomy_paths: ["Kitchen & Dining"]})(store.dispatch);
+    fetchProducts({taxonomy_paths: ["Drink & Barware"]})(store.dispatch);
     const root = document.getElementById("root");
     window.store = store;
     ReactDOM.render(<Root store={store}/>, root);

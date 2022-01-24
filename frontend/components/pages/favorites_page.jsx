@@ -24,6 +24,7 @@ const mapDispatchToProps = dispatch => ({
 });
 
 class FavoritesPage extends React.Component {
+    static counter = 0;
     constructor(props) {
         super(props);
     }
@@ -57,7 +58,7 @@ class FavoritesPage extends React.Component {
             'recommended': <SelectionsCircular productIds={this.props.recommendationIds}/>
         }
         let areas = ['products', 'recommended']
-        return <div className="favorites-page-div">
+        return <div key={`${++FavoritesPage.counter}`} className="favorites-page-div">
             <GridLayout areas={areas} components={components}
                         className="favorites-page-grid"
                         classElements="favorites-page-items"
