@@ -56,6 +56,7 @@ class App extends React.Component {
                 {/*<AuthRoute exact path="/signup" component={SignUpFormContainer}/>*/}
                 {/*<AuthRoute exact path="/demo" component={DemoLogInFormContainer}/>*/}
 
+                <Route exact path="/" component={HomePage} />
                 <Route exact path="/home" component={HomePage} />
                 <Route exact path="/products" component={ProductsPage} />
                 <ProtectedRoute exact path="/favorites" component={FavoritesPage} />
