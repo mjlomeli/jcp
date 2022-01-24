@@ -16,7 +16,7 @@ import Modal from "./user_controls/modal/modal"
 import HomePage from "./pages/home_page";
 // import ProductsPage from "./pages/products_page";
 // import ProductPage from "./pages/product_page";
-// import FavoritesPage from "./pages/favorites_page";
+import FavoritesPage from "./pages/favorites_page";
 // import CartPage from "./pages/cart_page";
 
 
@@ -43,8 +43,9 @@ class App extends React.Component {
                 {/*<AuthRoute exact path="/demo" component={DemoLogInFormContainer}/>*/}
 
                 <Route exact path="/" component={HomePage} />
+                <Route exact path="/home" component={HomePage} />
                 {/*<Route exact path="/products" component={ProductsPage} />*/}
-                {/*<ProtectedRoute exact path="/favorites" component={FavoritesPage} />*/}
+                <ProtectedRoute exact path="/favorites" component={FavoritesPage} />
                 {/*<Route exact path="/product/:id" component={ProductPage} />*/}
                 {/*<ProtectedRoute exact path="/cart" component={CartPage} />*/}
 

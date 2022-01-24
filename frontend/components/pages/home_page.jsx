@@ -15,13 +15,16 @@ import {initialBoot} from "../../lib/post_fetching";
 const mapStateToProps = ({entities, session, index, errors}, ownProps) => {
     let shopListings = Object.keys(entities.products);
     let isLoggedIn = !!session.id;
+    let userId = session.id;
     let firstName = isLoggedIn && entities.user.first_name;
     return {
+        userId: userId,
+        isLoggedIn: isLoggedIn,
         index: index,
         query: index.query,
-        isLoggedIn: isLoggedIn,
         firstName: firstName,
         productIds: shopListings,
+
         categories: shopListings.slice(0, 6),
         popular: shopListings.slice(6, 11),
         recent: shopListings.slice(11, 21),
@@ -45,6 +48,25 @@ const mapDispatchToProps = dispatch => ({
 class HomePage extends React.Component {
     constructor(props) {
         super(props);
+    }
+
+    shouldComponentUpdate(nextProps, nextState, nextContext) {
+        //Must include this to prevent re-rendering in chaotic intervals
+        let preProductIds = this.props.productIds;
+        let preLoggedIn = this.props.isLoggedIn;
+        let postProductIds = nextProps.productIds;
+        let postLoggedIn = nextProps.isLoggedIn;
+        let preFirstName = this.props.firstName;
+        let postFirstName = nextProps.firstName;
+        if (postLoggedIn !== preLoggedIn)
+            return true;
+        else if (preProductIds.length !== postProductIds.length)
+            return true;
+        else if (preFirstName !== postFirstName)
+            return true;
+        else if (!postProductIds.every((postId) => preProductIds.includes(postId)))
+            return true;
+        return false;
     }
 
     isRenderValid() {
@@ -99,16 +121,16 @@ class HomePage extends React.Component {
             </div>
         }
 
-        let message = this.props.isLoggedIn ? <>
+        let message = this.props.isLoggedIn ? <Fragment key={`${this.props.userId}`}>
             <h1 className="home-page-title">Welcome back,</h1>
             <h1 className="home-page-title">{this.props.firstName}!</h1>
-        </>: <>
+        </Fragment>: <>
                 <h1 className="home-page-title">Enjoy Cyber Week deals on small</h1>
                 <h1 className="home-page-title">business cheer!</h1></>
         return <><div className="background-header"/>
             <div style={{width: "100%"}}>
             {message}
-            <GridLayout areas={areas} components={components} className="home-page-grid"/>
+            <GridLayout key={this.props.productIds.toString()} areas={areas} components={components} className="home-page-grid"/>
         </div></>
     }
 }

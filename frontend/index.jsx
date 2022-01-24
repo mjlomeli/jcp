@@ -5,13 +5,6 @@ import Root from "./components/root";
 import {debug, isNodeJs, isBrowser} from "./utils/tools";
 import {fetchProductsTitles, fetchProducts} from "./actions/product_action";
 
-document.addEventListener("click", (e) => {
-    let el = e.target;
-    do {
-        if (el){}
-        el = el.parentNode;
-    } while (el)
-})
 
 document.addEventListener("DOMContentLoaded", () => {
     let store;
