@@ -60,23 +60,21 @@ class HomePage extends React.Component {
     }
 
     postFetch(){
-        Promise.resolve().then(_ => {
-            this.props.fetchProducts({taxonomy_paths: ["Art & Collectibles"]});
-            this.props.fetchProducts({taxonomy_paths: ["Craft Supplies & Tools"]});
-            this.props.fetchProducts({taxonomy_paths: ["Books, Movies & Music"]});
-            this.props.fetchProducts({taxonomy_paths: ["Home & Living"]});
-            this.props.fetchProducts({taxonomy_paths: ["Home Decor"]});
-            this.props.fetchProducts({taxonomy_paths: ["Jewelry"]});
-            this.props.fetchProducts({taxonomy_paths: ["Toys & Games"]});
-            this.props.fetchProducts({taxonomy_paths: ["Kitchen & Dining"]});
-            this.props.fetchProducts({taxonomy_paths: ["Drink & Barware"]});
-        })
+        this.props.fetchProducts({taxonomy_paths: ["Art & Collectibles"]});
+        this.props.fetchProducts({taxonomy_paths: ["Craft Supplies & Tools"]});
+        this.props.fetchProducts({taxonomy_paths: ["Books, Movies & Music"]});
+        this.props.fetchProducts({taxonomy_paths: ["Home & Living"]});
+        this.props.fetchProducts({taxonomy_paths: ["Home Decor"]});
+        this.props.fetchProducts({taxonomy_paths: ["Jewelry"]});
+        this.props.fetchProducts({taxonomy_paths: ["Toys & Games"]});
+        this.props.fetchProducts({taxonomy_paths: ["Kitchen & Dining"]});
+        this.props.fetchProducts({taxonomy_paths: ["Drink & Barware"]});
     }
 
     render() {
         if (!this.isRenderValid())
             return this.resolve();
-        Promise.resolve().then(_ => this.postFetch())
+        this.postFetch();
         let areas = ["categories", "popular", "viewed", "picks1", "picks2", "editors", "selections", "based_1", "based_2", "recommendations"]
         let components = {
             "categories": <SelectionsCircular productIds={this.props.categories}/>,
