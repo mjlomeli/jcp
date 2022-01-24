@@ -9,6 +9,7 @@ import SelectionsLarge from "../themes/selections_large/selections_large";
 import SelectionsSmall from "../themes/selections_small/selections_small";
 import SelectionsBordered from "../themes/selections_bordered/selections_bordered";
 import GridLayout from "../user_controls/grid_layout/grid_layout";
+import {initialBoot} from "../../lib/post_fetching";
 
 
 const mapStateToProps = ({entities, session, index, errors}, ownProps) => {
@@ -16,6 +17,7 @@ const mapStateToProps = ({entities, session, index, errors}, ownProps) => {
     let isLoggedIn = !!session.id;
     let firstName = isLoggedIn && entities.user.first_name;
     return {
+        index: index,
         query: index.query,
         isLoggedIn: isLoggedIn,
         firstName: firstName,
@@ -54,30 +56,15 @@ class HomePage extends React.Component {
     }
 
     resolve() {
-        // if (!this.props.productIds || this.props.productIds.length === 0)
-        //     this.props.fetchRandomProducts(72);
+        if (!this.props.productIds || this.props.productIds.length === 0)
+            this.props.fetchRandomProducts(72);
         return null;
-    }
-
-    postFetch(){
-        Promise.resolve().then(_ => {
-            // this.props.fetchProducts({taxonomy_paths: ["Art & Collectibles"]});
-            // this.props.fetchProducts({taxonomy_paths: ["Craft Supplies & Tools"]});
-            // this.props.fetchProducts({taxonomy_paths: ["Books, Movies & Music"]});
-            // this.props.fetchProducts({taxonomy_paths: ["Home & Living"]});
-            // this.props.fetchProducts({taxonomy_paths: ["Home Decor"]});
-            // this.props.fetchProducts({taxonomy_paths: ["Jewelry"]});
-            // this.props.fetchProducts({taxonomy_paths: ["Toys & Games"]});
-            // this.props.fetchProducts({taxonomy_paths: ["Kitchen & Dining"]});
-            // this.props.fetchProducts({taxonomy_paths: ["Drink & Barware"]});
-            // this.props.fetchProductsTitles();
-        })
     }
 
     render() {
         if (!this.isRenderValid())
             return this.resolve();
-        this.postFetch();
+        initialBoot(this.props.index);
         let areas = ["categories", "popular", "viewed", "picks1", "picks2", "editors", "selections", "based_1", "based_2", "recommendations"]
         let components = {
             "categories": <SelectionsCircular productIds={this.props.categories}/>,
