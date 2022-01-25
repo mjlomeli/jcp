@@ -7,7 +7,7 @@ import {initialBoot} from "./lib/post_fetching";
 
 document.addEventListener("DOMContentLoaded", () => {
     let store;
-    let testing = false;
+    let testing = true;
     if (window.currentUser) {
         const preloadedState = {
             session: {id: window.currentUser.user.id},

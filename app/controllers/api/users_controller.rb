@@ -10,10 +10,6 @@ class Api::UsersController < ApplicationController
     end
   end
 
-  def show
-    @user = selected_user
-  end
-
   def create
     @user = User.new(user_params)
     if @user.save

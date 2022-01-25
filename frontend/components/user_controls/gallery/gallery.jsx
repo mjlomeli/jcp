@@ -83,6 +83,7 @@ class Gallery extends React.Component {
     }
 
     carousel() {
+        console.log(this.state.index);
         if (!this.props.images || !this.props.images.length)
             return null;
         let carousel = this.props.images[this.state.index]
@@ -107,7 +108,12 @@ class Gallery extends React.Component {
         let preProductId = this.props.productId;
         let postProductId = nextProps.productId;
 
+        let preIndex = this.state.index;
+        let postIndex = nextState.index;
+
         if (preProductId !== postProductId)
+            return true;
+        else if (preIndex !== postIndex)
             return true;
 
         return false;

@@ -172,8 +172,9 @@ class ProductPage extends React.Component {
             details: this.description(),
             review: <Reviews productId={this.props.productId}/>
         }
-        return <div className="product-page-div">
-            <GridLayout areas={areas} components={components} className="product-page-grid" classElements="product-page-items" />
+        return <div className="product-page-div" key={`product-page-${this.props.productId}`}>
+            <GridLayout areas={areas} components={components}
+                        className="product-page-grid" classElements="product-page-items" />
         </div>
     }
 }

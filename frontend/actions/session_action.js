@@ -95,3 +95,9 @@ export const deleteSession = () => (dispatch, getState) => {
         }
     )
 }
+
+window.SessionAction = {
+    createUser,
+    createSession,
+    deleteSession
+}
