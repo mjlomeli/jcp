@@ -33,12 +33,10 @@ class ApplicationRecord < ActiveRecord::Base
   self.abstract_class = true
 
   def self.custom_query(**kwargs)
-    puts kwargs
     self.range(**kwargs).paginate(**kwargs)
   end
 
   def self.paginate(page_number: 1, results_per_page: self.count, **kwargs)
-    puts "#{page_number}, #{results_per_page}"
     index = (page_number - 1) * results_per_page
     self.offset(index).limit(results_per_page)
   end

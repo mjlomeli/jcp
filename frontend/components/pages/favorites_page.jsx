@@ -37,19 +37,34 @@ class FavoritesPage extends React.Component {
 
     shouldComponentUpdate(nextProps, nextState, nextContext) {
         //Must include this to prevent re-rendering in chaotic intervals
-        let preProductIds = this.props.productIds;
-        let postProductIds = nextProps.productIds;
-        if (!preProductIds || !postProductIds)
+        let preFavoriteIds = this.props.favoriteIds;
+        let postFavoriteIds = nextProps.favoriteIds;
+
+        let preRecommendIds = this.props.recommendationIds;
+        let postRecommendIds = nextProps.recommendationIds;
+
+        let preUserId = this.props.userId;
+        let postUserId = nextProps.userId;
+
+        if (!preFavoriteIds || !postFavoriteIds)
             return true;
-        if (preProductIds.length !== postProductIds.length)
+        else if (preUserId !== postUserId)
             return true;
-        else if (!postProductIds.every((postId) => preProductIds.includes(postId)))
+        else if (preFavoriteIds.length !== postFavoriteIds.length)
+            return true;
+        else if (!preRecommendIds || !postRecommendIds)
+            return true;
+        else if (preRecommendIds.length !== postRecommendIds.length)
+            return true;
+        else if (!preFavoriteIds.every((preId) => postFavoriteIds.includes(preId)))
+            return true;
+        else if (!preRecommendIds.every((preId) => postRecommendIds.includes(preId)))
             return true;
         return false;
     }
 
     isRenderValid() {
-        return this.props.favoriteIds.length && !!this.props.userId
+        return !!this.props.userId
     }
 
     resolve() {
@@ -64,9 +79,11 @@ class FavoritesPage extends React.Component {
         else if (!this.props.favoriteIds.length)
             return this.emptyFavorites();
 
+        console.log(this.props.favoriteIds);
+        console.log(this.props.recommendationIds);
 
         let components = {
-            'products': <SelectionsFull productIds={this.props.favoriteIds} numCols={5}/>,
+            'products': <SelectionsFull key={`${this.props.userId}${this.props.favoriteIds.length}`} productIds={this.props.favoriteIds} numCols={5}/>,
             'recommended': <SelectionsCircular productIds={this.props.recommendationIds}/>
         }
         let areas = ['products', 'recommended']

@@ -123,18 +123,17 @@ class CartItem extends React.Component {
     }
 
     shouldComponentUpdate(nextProps, nextState, nextContext) {
-        let productId = Product.findIDFromProps(this.props);
+        let preProductId = this.props.productId;
+        let postProductId = nextProps.productId;
 
-        if (Product.hasError(productId)) {
-            if (urlId(this.props) === productId) {
-                this.props.history.push(`/card_featured/${Product.DEFAULT_ID}`);
-                this.props.resetProductError(this.props.productId);
-            } else {
-                this.props.fetchProduct(Product.DEFAULT_ID);
-            }
-            return false;
-        }
-        return true;
+        let preQuantity = this.props.quantity;
+        let postQuantity = nextProps.quantity;
+
+        if (preProductId !== postProductId)
+            return true;
+        else if (preQuantity !== postQuantity)
+            return true;
+        return false;
     }
 
     isRenderValid(){
@@ -142,7 +141,7 @@ class CartItem extends React.Component {
     }
 
     resolve(){
-        if (!this.props.product)
+        if (this.props.productId && !this.props.product)
             this.props.fetchProduct(this.props.productId);
         return null;
     }

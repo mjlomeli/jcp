@@ -3,6 +3,7 @@ import * as AlertAction from './alert_action'
 import * as ModalAction from './ui_modal_action';
 import * as FavoriteAction from './favorite_action';
 import * as ReviewAction from './review_action';
+import * as CartItemAction from './cart_item_action';
 
 export const RECEIVE_USER = `RECEIVE_USER`;
 export const REMOVE_USER = "REMOVE_USER";
@@ -72,20 +73,25 @@ export const createSession = (user) => dispatch => (
     )
 )
 
-export const deleteSession = () => dispatch => (
-    SessionAPIUtil.deleteSession().then(
+export const deleteSession = () => (dispatch, getState) => {
+    let userId = getState().session.id;
+    let user = getState().entities.user;
+    return SessionAPIUtil.deleteSession().then(
         user => {
-            if ("demo" in user)
+            if (userId === 1) {
                 dispatch(AlertAction.caution(user.demo));
-            else
+                dispatch(FavoriteAction.silentDeleteAllFavorites(userId));
+                dispatch(CartItemAction.silentDeleteAllCartItems(userId));
+            } else
                 dispatch(AlertAction.notification(user.message));
             dispatch(FavoriteAction.clearAllFavorites());
+            dispatch(CartItemAction.clearAllCartItems())
             dispatch(removeSession());
-            dispatch(removeUser());
+            return dispatch(removeUser());
         },
         err => {
             dispatch(AlertAction.systemError(err.responseJSON));
             return dispatch(receiveErrors(err.responseJSON))
         }
     )
-)
+}

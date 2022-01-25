@@ -104,18 +104,13 @@ class Gallery extends React.Component {
     }
 
     shouldComponentUpdate(nextProps, nextState, nextContext) {
-        let productId = Product.findIDFromProps(this.props);
+        let preProductId = this.props.productId;
+        let postProductId = nextProps.productId;
 
-        if (Product.hasError(productId)) {
-            if (urlId(this.props) === productId) {
-                this.props.history.push(`/card_listing/${Product.DEFAULT_ID}`);
-                this.props.resetProductError(this.props.productId);
-            } else {
-                this.props.fetchProduct(Product.DEFAULT_ID);
-            }
-            return false;
-        }
-        return true;
+        if (preProductId !== postProductId)
+            return true;
+
+        return false;
     }
 
     isRenderValid() {

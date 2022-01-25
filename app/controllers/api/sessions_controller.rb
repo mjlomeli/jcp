@@ -17,7 +17,7 @@ class Api::SessionsController < ApplicationController
       render json: { message: 'Logout successful.' }
     else
       if @user.email == "demo@email.com"
-        render json: { demo: 'Thank you for demoing my website!' }
+        render json: { demo: 'Thank you for demoing my website!', referenceId: Integer(@user.id) }
       else
         name = (@user.first_name or @user.email)
         render json: { message: "You've successfully logged out #{name}. See you later!"}

@@ -66,27 +66,57 @@ class ProductsPage extends React.Component {
         </div>
     }
 
+    shouldComponentUpdate(nextProps, nextState, nextContext) {
+        let preProductIds = this.props.productIds;
+        let postProductIds = nextProps.productIds;
+
+        let preQueryKey = this.props.queryKey;
+        let postQueryKey = nextProps.queryKey;
+
+        let preRecommendIds = this.props.recommendationIds;
+        let postRecommendIds = nextProps.recommendationIds;
+
+        let preFeatureId = this.props.featureId;
+        let postFeatureId = nextProps.featureId;
+
+        if (preProductIds.length !== postProductIds.length)
+            return true;
+        else if (preQueryKey !== postQueryKey)
+            return true;
+        else if (preRecommendIds.length !== postRecommendIds.length)
+            return true;
+        else if (preFeatureId !== postFeatureId)
+            return true;
+        else if (!preProductIds.every(preId => postProductIds.includes(preId)))
+            return true;
+        else if (!preRecommendIds.every(preId => postRecommendIds.includes(preId)))
+            return true;
+        return false;
+    }
+
     isRenderValid() {
+        if (!this.props.productIds)
+            return false;
         return this.props.productIds.length || this.props.isCachedQuery
     }
 
     resolve() {
         if (!this.props.isCachedQuery && this.props.queryKey) {
-            // console.log("query:", this.props.query);
-            // console.log("queryKey:", this.props.queryKey);
-            // console.log("key in index:", this.props.queryKey in this.props.data)
-            // if ('query' in this.props.query) {
-            //     let query = this.props.query.query;
-            //     let ids = this.props.tri.getLike(query.toLowerCase()).map(result => this.props.data[result].id)
-            //     console.log("ids: ", ids);
-            //     if (ids.length)
-            //         this.props.fetchProductsAsQuery(ids, query);
-            //     else
-            //         return this.noResultsComponent();
-            // } else if (this.props.query && this.props.query.taxonomy_path)
-            //     this.props.fetchProducts(this.props.query);
-            // else
-            //     return this.noResultsComponent();
+            console.log("query:", this.props.query);
+            console.log("queryKey:", this.props.queryKey);
+            console.log("key in index:", this.props.queryKey in this.props.data)
+            if ('query' in this.props.query) {
+                let query = this.props.query.query;
+                let ids = this.props.tri.getLike(query.toLowerCase()).map(result => this.props.data[result].id)
+                console.log("ids: ", ids);
+                if (ids.length)
+                    this.props.fetchProductsAsQuery(ids, query);
+                else
+                    return this.noResultsComponent();
+            } else if (this.props.query && this.props.query.taxonomy_path)
+                this.props.fetchProducts(this.props.query);
+            else
+                return this.noResultsComponent();
         }
         return null;
     }

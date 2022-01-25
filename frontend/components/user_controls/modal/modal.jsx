@@ -14,6 +14,7 @@ import RegisterModal from "./register_modal";
 const mapStateToProps = (state, ownProps) =>{
     return {
         isLoggedIn: !!state.session.id,
+        userId: state.session.id,
         type: state.ui.modal.type
     }
 };
@@ -24,6 +25,25 @@ const mapDispatchToProps = dispatch => ({
 class Modal extends React.Component {
     constructor(props) {
         super(props);
+    }
+
+    shouldComponentUpdate(nextProps, nextState, nextContext) {
+        let preProductId = this.props.productId;
+        let postProductId = nextProps.productId;
+
+        let preLoggedIn = this.props.isLoggedIn;
+        let postLoggedIn = nextProps.isLoggedIn;
+
+        let preType = this.props.type;
+        let postType = nextProps.type;
+
+        if (preProductId !== postProductId)
+            return true;
+        else if (preLoggedIn !== postLoggedIn)
+            return true;
+        else if (preType !== postType)
+            return true;
+        return false;
     }
 
     isRenderValid() {

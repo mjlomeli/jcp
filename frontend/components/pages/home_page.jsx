@@ -53,18 +53,21 @@ class HomePage extends React.Component {
     shouldComponentUpdate(nextProps, nextState, nextContext) {
         //Must include this to prevent re-rendering in chaotic intervals
         let preProductIds = this.props.productIds;
-        let preLoggedIn = this.props.isLoggedIn;
         let postProductIds = nextProps.productIds;
+
+        let preLoggedIn = this.props.isLoggedIn;
         let postLoggedIn = nextProps.isLoggedIn;
+
         let preFirstName = this.props.firstName;
         let postFirstName = nextProps.firstName;
-        if (postLoggedIn !== preLoggedIn)
+
+        if (preLoggedIn !== postLoggedIn)
             return true;
         else if (preProductIds.length !== postProductIds.length)
             return true;
         else if (preFirstName !== postFirstName)
             return true;
-        else if (!postProductIds.every((postId) => preProductIds.includes(postId)))
+        else if (!preProductIds.every((preId) => postProductIds.includes(preId)))
             return true;
         return false;
     }

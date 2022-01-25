@@ -14,10 +14,10 @@ import Modal from "./user_controls/modal/modal"
 
 
 import HomePage from "./pages/home_page";
-// import ProductsPage from "./pages/products_page";
-// import ProductPage from "./pages/product_page";
+import ProductsPage from "./pages/products_page";
+import ProductPage from "./pages/product_page";
 import FavoritesPage from "./pages/favorites_page";
-// import CartPage from "./pages/cart_page";
+import CartPage from "./pages/cart_page";
 
 
 import HeaderTemplate from "./themes/header_template/header_template";
@@ -44,10 +44,10 @@ class App extends React.Component {
 
                 <Route exact path="/" component={HomePage} />
                 <Route exact path="/home" component={HomePage} />
-                {/*<Route exact path="/products" component={ProductsPage} />*/}
+                <Route exact path="/products" component={ProductsPage} />
                 <ProtectedRoute exact path="/favorites" component={FavoritesPage} />
-                {/*<Route exact path="/product/:id" component={ProductPage} />*/}
-                {/*<ProtectedRoute exact path="/cart" component={CartPage} />*/}
+                <Route exact path="/product/:id" component={ProductPage} />
+                <ProtectedRoute exact path="/cart" component={CartPage} />
 
             </Switch>
 

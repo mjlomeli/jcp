@@ -29,6 +29,19 @@ class SelectionsThumbnails extends React.Component {
         this.state = {}
     }
 
+    shouldComponentUpdate(nextProps, nextState, nextContext) {
+        let preProductIds = this.props.productIds;
+        let postProductIds = nextProps.productIds;
+
+        if (!preProductIds || !postProductIds)
+            return true;
+        else if (preProductIds.length !== postProductIds.length)
+            return true;
+        else if (!preProductIds.every(preId => postProductIds.includes(preId)))
+            return true;
+        return false;
+    }
+
     isRenderValid() {
         return this.props.productIds && this.props.productIds.length;
     }
@@ -50,7 +63,7 @@ class SelectionsThumbnails extends React.Component {
                 layout.push(indices.join(" "))
                 indices = [];
             }
-            components[`comp_${idx}`] = <CardThumbnail productId={productId}
+            components[`comp_${idx}`] = <CardThumbnail key={`${productId}`} productId={productId}
                                                        product={Product.findById(productId)}
                                                        images={Image.findByProductId(productId)}/>
         })

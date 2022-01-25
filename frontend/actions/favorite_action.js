@@ -76,6 +76,29 @@ export const deleteFavorite = (userId, productId) => dispatch =>(
     )
 )
 
+export const deleteAllFavorites = (userId) => (dispatch, getState) => {
+    let favorites = [...getState().entities.favorites];
+    favorites.forEach(productId => {
+        FavoriteUtil.deleteFavorite(userId, productId).then(
+            favorite => dispatch(removeFavorite(productId)),
+            err => dispatch(receiveFavoriteError(productId, err.responseJSON))
+    )})
+    if (favorites.every(id => !getState().entities.favorites.includes(id)))
+        return dispatch(AlertAction.notification("All items have been removed from your favorites."));
+    else
+        return dispatch(AlertAction.systemError("Errors occurred trying to remove all favorites."));
+}
+
+export const silentDeleteAllFavorites = (userId) => (dispatch, getState) => {
+    let favorites = [...getState().entities.favorites];
+    favorites.forEach(productId => {
+        FavoriteUtil.deleteFavorite(userId, productId).then(
+            favorite => dispatch(removeFavorite(productId)),
+            err => dispatch(receiveFavoriteError(productId, err.responseJSON))
+        )}
+    )
+}
+
 export const clearAllFavorites = () => dispatch => (
     dispatch({type: CLEAR_ALL_FAVORITES})
 )
@@ -96,5 +119,7 @@ window.FavoriteAction = {
     resetFavoriteError,
     createFavorite,
     deleteFavorite,
-    clearAllFavorites
+    clearAllFavorites,
+    deleteAllFavorites,
+    silentDeleteAllFavorites
 }

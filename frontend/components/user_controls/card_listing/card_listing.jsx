@@ -185,22 +185,22 @@ class CardListing extends React.Component {
     }
 
     shouldComponentUpdate(nextProps, nextState, nextContext) {
-        let productId = Product.findIDFromProps(this.props);
-        let nextProductId = Product.findIDFromProps(nextProps);
+        let preProductId = this.props.productId;
+        let postProductId = nextProps.productId;
 
-        if (Product.hasError(productId)) {
-            if (urlId(this.props) === productId) {
-                this.props.history.push(`/card_listing/${Product.DEFAULT_ID}`);
-                this.props.resetProductError(this.props.productId);
-            } else {
-                this.props.fetchProduct(Product.DEFAULT_ID);
-            }
-            return false;
-        }
-        return true;
+        let preFavored = this.props.favored;
+        let postFavored = nextProps.favored;
+
+        if (preProductId !== postProductId)
+            return true;
+        else if (preFavored !== postFavored)
+            return true;
+        return false;
     }
 
     isRenderValid() {
+        if (!this.props.productId)
+            return false;
         return !!this.props.product && !!this.props.images;
     }
 
@@ -220,7 +220,7 @@ class CardListing extends React.Component {
             'price': this.priceComponent(),
             'tag': this.tagComponent("free shipping")
         }
-        let productKey = `card-listing-${this.props.productId}`;
+
         return <GridLayout areas={areas}
                            components={components}
                            className="global-card-listing-grid"

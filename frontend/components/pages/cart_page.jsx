@@ -16,11 +16,13 @@ import {fetchProductsListings} from "../../actions/product_action";
 
 
 const mapStateToProps = ({entities, errors, index, session}, ownProps) => {
-    let isUser = !!session.id;
-    let cartItems = isUser ? entities.cartItems || {} : {};
+    let isLoggedIn = !!session.id;
+    let userId = session.id;
+    let cartItems = isLoggedIn ? entities.cartItems : {};
     let isCached = Object.keys(cartItems).every(id => !!Product.findById(id));
     return {
-        isUser: isUser,
+        isLoggedIn: isLoggedIn,
+        userId: userId,
         cartItems: cartItems,
         isCached: isCached
     }
@@ -45,14 +47,12 @@ class CartTemplate extends React.Component {
     }
 
     isRenderValid() {
-        return this.props.isUser && this.props.cartItems && this.props.isCached;
+        return this.props.cartItems && this.props.isCached;
     }
 
     resolve() {
-        // if (this.props.isUser && !this.props.cartItems)
-        //     this.props.fetchCartItems();
-        // else if (!this.props.isCached)
-        //     this.props.fetchProducts(Object.keys(this.props.cartItems));
+        if (!this.props.isCached)
+            this.props.fetchProducts(Object.keys(this.props.cartItems));
         return null;
     }
 

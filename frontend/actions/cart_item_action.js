@@ -23,7 +23,7 @@ const removeCartItem = productId =>({
     productId: productId
 })
 
-const receiveCartItemError = (cartItemId, errors) =>({
+const receiveCartItemError = (productId, errors) =>({
     type: RECEIVE_CART_ITEM_ERROR,
     productId: productId,
     errors: errors
@@ -55,8 +55,9 @@ export const createCartItem = cartItem => dispatch =>(
             dispatch(receiveCartItems(cartItems));
         },
         err => {
+            console.log(err);
             dispatch(AlertAction.systemError(err.responseJSON));
-            return dispatch(receiveCartItemError(cartItem.id, err.responseJSON))
+            return dispatch(receiveCartItemError(cartItem.product_id, err.responseJSON))
         }
     )
 )
@@ -71,8 +72,8 @@ export const updateCartItem = cartItem => dispatch =>(
     )
 )
 
-export const deleteCartItem = productId => dispatch =>(
-    CartItemUtil.deleteCartItem(productId).then(
+export const deleteCartItem = productId => (dispatch, getState) =>(
+    CartItemUtil.deleteCartItem(getState().session.id, productId).then(
         cartItems => {
             dispatch(AlertAction.caution("The item has been removed from your cart."));
             dispatch(removeCartItem(productId))
@@ -84,8 +85,39 @@ export const deleteCartItem = productId => dispatch =>(
     )
 )
 
+export const deleteAllCartItems = () => (dispatch, getState) => {
+    let productIds = Object.keys(getState().entities.cartItems);
+    let userId = getState().session.id;
+    productIds.forEach(productId => {
+        CartItemUtil.deleteCartItem(userId, productId).then(
+            cartItems => dispatch(removeCartItem(productId)),
+            err => dispatch(receiveCartItemError(productId, err.responseJSON))
+        )
+    })
+    let currentIds = Object.keys(getState().entities.cartItems);
+    if (productIds.every(id => !currentIds.includes(id)))
+        return dispatch(AlertAction.caution("All item have been removed from your cart."));
+    else
+        return dispatch(AlertAction.systemError(["Errors occurred when removing all items from your cart."]));
+}
+
+export const silentDeleteAllCartItems = () => (dispatch, getState) => {
+    let productIds = Object.keys(getState().entities.cartItems);
+    let userId = getState().session.id;
+    let errors = [];
+    productIds.forEach(productId => {
+        CartItemUtil.deleteCartItem(userId, productId).then(
+            cartItems => dispatch(removeCartItem(productId)),
+            err => errors.concat(err)
+        )
+    })
+    if (errors.length)
+        return dispatch(receiveCartItemsError(errors))
+    return Promise.resolve();
+}
+
 export const clearAllCartItems = () => dispatch =>(
-    dipatch({type: CLEAR_ALL_CART_ITEMS})
+    dispatch({type: CLEAR_ALL_CART_ITEMS})
 );
 
 export const resetCartItemError = cartItemId => dispatch =>(
@@ -103,5 +135,8 @@ window.CartItemAction = {
     resetCartItemError,
     createCartItem,
     updateCartItem,
-    deleteCartItem
+    deleteCartItem,
+    clearAllCartItems,
+    deleteAllCartItems,
+    silentDeleteAllCartItems
 }

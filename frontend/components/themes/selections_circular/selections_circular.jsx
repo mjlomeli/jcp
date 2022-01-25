@@ -25,6 +25,19 @@ class SelectionsCircular extends React.Component {
         this.state = {}
     }
 
+    shouldComponentUpdate(nextProps, nextState, nextContext) {
+        let preProductIds = this.props.productIds;
+        let postProductIds = nextProps.productIds;
+
+        if (!preProductIds || !postProductIds)
+            return true;
+        else if (preProductIds.length !== postProductIds.length)
+            return true;
+        else if (!preProductIds.every(preId => postProductIds.includes(preId)))
+            return true;
+        return false;
+    }
+
     isRenderValid() {
         return this.props.productIds && this.props.productIds.length;
     }
@@ -42,7 +55,7 @@ class SelectionsCircular extends React.Component {
         let components = {}
         this.props.productIds.forEach((productId, idx) => {
             layout1x6.push(`comp_${idx}`)
-            components[`comp_${idx}`] = <CircularThumbnail productId={productId}
+            components[`comp_${idx}`] = <CircularThumbnail key={`${productId}`} productId={productId}
                                                            product={Product.findById(productId)}
                                                            images={Image.findByProductId(productId)}
                                                            className="selections-circular"

@@ -53,15 +53,7 @@ class Reviews extends React.Component {
         this.onclickrating = this.onClickRating.bind(this);
     }
 
-    isRenderValid() {
-        return this.props.productId && this.props.reviews;
-    }
 
-    resolve() {
-        if (!this.props.reviews)
-            this.props.fetchProductListing(this.props.productId);
-        return null;
-    }
 
     onChangeInput(e) {
         this.setState({comment: e.currentTarget.value})
@@ -127,6 +119,55 @@ class Reviews extends React.Component {
         return ratings.reduce((a, b) => a + b) / ratings.length;
     }
 
+    shouldComponentUpdate(nextProps, nextState, nextContext) {
+        let preProductId = this.props.productId;
+        let postProductId = nextProps.productId;
+
+        let preUserId = this.props.userId;
+        let postUserId = nextProps.userId;
+
+        let preFirstName = this.props.firstName;
+        let postFirstName = nextProps.firstName;
+
+        let preReviews = this.props.reviews;
+        let postReviews = nextProps.reviews;
+
+        let preUserReview = this.props.userReview;
+        let postUserReview = nextProps.userReview;
+
+        let preUserRating = this.props.userRating;
+        let postUserRating = nextProps.userRating;
+
+        let preUserComment = this.props.userComment;
+        let postUserComment = nextProps.userComment;
+
+        if (preProductId !== postProductId)
+            return true;
+        else if (preReviews.length !== postReviews.length)
+            return true;
+        else if (preFirstName !== postFirstName)
+            return true;
+        else if (preUserId !== postUserId)
+            return true;
+        else if (preUserReview !== postUserReview)
+            return true;
+        else if (preUserRating !== postUserRating)
+            return true;
+        else if (preUserComment !== postUserComment)
+            return true;
+        return false;
+    }
+
+    isRenderValid() {
+        return this.props.productId && this.props.reviews;
+    }
+
+    resolve() {
+        if (!this.props.reviews)
+            this.props.fetchProductListing(this.props.productId);
+        return null;
+    }
+
     render() {
         if (!this.isRenderValid())
             return this.resolve();
@@ -139,7 +180,7 @@ class Reviews extends React.Component {
             }
         })
 
-        return <div className="reviews-header">
+        return <div className="reviews-header" key={`${this.props.productId}`}>
             {this.reviewForm()}
             <div className="reviews-summary">
                 <span className="reviews-title">{this.props.reviews.length} reviews</span>

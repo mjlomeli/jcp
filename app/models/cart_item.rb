@@ -1,6 +1,10 @@
 class CartItem < ApplicationRecord
   validates :user_id, presence: true
   validates :product_id, presence: true
+  validates :quantity, presence: true
+  validates :user_id, uniqueness: {scope: [:product_id], message: "product is already in the cart"}
+  validates :quantity, exclusion: {in: %w[0]}
+
 
   belongs_to :user,
              foreign_key: :user_id,

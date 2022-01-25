@@ -23,7 +23,7 @@ class Api::CartItemsController < ApplicationController
     if !@user
       render json: ["User is not authorized"], status: 400
     else
-      @cart = CartItem.create(cart_item_params)
+      @cart = CartItem.new(cart_item_params)
       @cart.user_id = @user.id
       if @cart.save
         render json: {@cart.product_id => @cart}
@@ -53,12 +53,14 @@ class Api::CartItemsController < ApplicationController
   end
 
   def destroy
-    # DELETE /api/cart_items/:id
-    @user = current_user
+    # DELETE /api/cart_item
+    puts "\nEntered 'destroy'\n"
+    @user = user_from_params
     if !@user
       render json: ["User is not authorized"], status: 400
     else
-      @cart = CartItem.find_by(product_id: params[:product_id])
+      product_id = cart_item_params["product_id"]
+      @cart = CartItem.find_by(product_id: product_id, user_id: @user.id)
       if !@cart
         render json: ["Could not locate product id: #{params[:user_id]}"], status: 400
       elsif @cart.destroy
@@ -72,20 +74,12 @@ class Api::CartItemsController < ApplicationController
   private
 
   def user_from_params
-    user_id = Integer(params[:user_id]) rescue nil #converts to integer on fail set to nil
+    user_id = Integer(params[:user_id]) rescue Integer(params["user_id"]) rescue nil #converts to integer on fail set to nil
     return nil unless !!user_id
-
-    user = User.find_by(id: user_id)
-    return nil unless user
-
-    if !current_user || user.id != current_user.id
-      nil
-    else
-      user
-    end
+    User.find_by(id: user_id)
   end
 
-  def cart_item_params
-    params.permit(:product_id, :quantity, :user_id)
+  def cart_item_params(new_params=params, **kwargs)
+    new_params.permit(:product_id, :quantity, :user_id)
   end
 end

@@ -136,13 +136,24 @@ class PaymentSelection extends React.Component {
 
 
     shouldComponentUpdate(nextProps, nextState, nextContext) {
-        let productId = Product.findIDFromProps(this.props);
-        if (Product.hasError(productId)) {
-            this.props.history.push(`/payment_selection/${1}`);
-            this.props.resetProductError(this.props.productId);
-            return false;
-        }
-        return true;
+        let preProductId = this.props.productId;
+        let postProductId = nextProps.productId;
+
+
+        if (preProductId !== postProductId)
+            return true;
+        return false;
+
+        /*
+        let preProductIds = this.props.productIds;
+        let postLoggedIn = nextProps.isLoggedIn;
+
+        if (preProductIds.length !== postProductIds.length)
+            return true;
+        else if (!postProductIds.every((postId) => preProductIds.includes(postId)))
+            return true;
+        return false;
+         */
     }
 
     isRenderValid(){

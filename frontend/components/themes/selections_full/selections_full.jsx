@@ -33,8 +33,16 @@ class SelectionsFull extends React.Component {
     }
 
     shouldComponentUpdate(nextProps, nextState, nextContext) {
-        return !this.props.productIds.every(id => nextProps.productIds.includes(id));
+        let preProductIds = this.props.productIds;
+        let postProductIds = nextProps.productIds;
 
+        if (!preProductIds || !postProductIds)
+            return true;
+        else if (preProductIds.length !== postProductIds.length)
+            return true;
+        else if (!preProductIds.every(preId => postProductIds.includes(preId)))
+            return true;
+        return false;
     }
 
     isRenderValid() {
@@ -68,7 +76,7 @@ class SelectionsFull extends React.Component {
                     layout.push(indices.join(" "))
                     indices = [];
                 }
-                components[`comp_${idx}`] = <CardListing length={50} productId={productId}
+                components[`comp_${idx}`] = <CardListing key={`${productId}`} length={50} productId={productId}
                                                          product={Product.findById(productId)}
                                                          images={Image.findByProductId(productId)}/>
             }

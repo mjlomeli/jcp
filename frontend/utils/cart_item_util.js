@@ -30,14 +30,14 @@ export const updateCartItem = (cartItem) => {
     });
 };
 
-export const deleteCartItem = (productId) => {
-    if (!productId){
-        debug.error("A product id must be provided for deleteCartItem.");
+export const deleteCartItem = (userId, productId) => {
+    if (!productId || !userId){
+        debug.error("A product id and user id must be provided for deleteCartItem.");
     }
     return $.ajax({
         url: `/api/cart_item`,
         method: 'DELETE',
-        data: {product_id: productId}
+        data: {product_id: productId, user_id: userId}
     });
 };
 

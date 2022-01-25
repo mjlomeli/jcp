@@ -1,18 +1,9 @@
-import {
-    Route,
-    Redirect,
-    Switch,
-    Link,
-    HashRouter,
-    useHistory
-} from 'react-router-dom';
+import {Link} from 'react-router-dom';
 import {connect} from 'react-redux';
 import React from 'react';
 import './card_thumbnail.css'
-import {fetchProductListing, resetProductErrors} from "../../../actions/product_action";
 import {Product} from "../../../lib/product";
-import {urlId} from "../../../utils/tools";
-import {createFavorite, deleteFavorite, hasFavorite} from "../../../actions/favorite_action";
+import {createFavorite, deleteFavorite} from "../../../actions/favorite_action";
 import {createLogin} from "../../../actions/ui_modal_action";
 
 const mapStateToProps = (state, ownProps) => {
@@ -103,18 +94,17 @@ class CardThumbnail extends React.Component {
     }
 
     shouldComponentUpdate(nextProps, nextState, nextContext) {
-        let productId = Product.findIDFromProps(this.props);
+        let preProductId = this.props.productId;
+        let postProductId = nextProps.productId;
 
-        if (Product.hasError(productId)) {
-            if (urlId(this.props) === productId) {
-                this.props.history.push(`/card_thumbnail/${Product.DEFAULT_ID}`);
-                this.props.resetProductError(this.props.productId);
-            } else {
-                this.props.fetchProduct(Product.DEFAULT_ID);
-            }
-            return false;
-        }
-        return true;
+        let preFavored = this.props.favored;
+        let postFavored = nextProps.favored;
+
+        if (preProductId !== postProductId)
+            return true;
+        else if (preFavored !== postFavored)
+            return true;
+        return false;
     }
 
     isRenderValid() {
@@ -130,17 +120,14 @@ class CardThumbnail extends React.Component {
         let price = this.props.product.price;
         let source = this.props.images[0].source();
 
-        let component = <div className="card-thumbnail">
+        return <div className="card-thumbnail">
             {this.favoriteComponent()}
             <Link to={`/product/${this.props.product.id}`} style={{textDecoration: "inherit", color: "inherit"}}>
                 <img className="card-thumbnail-image"
                      alt="img" aria-hidden="true" src={source}/>
                 <Price price={price} freeShipping={"free shipping"}/>
             </Link>
-        </div>
-
-
-        return component;
+        </div>;
     }
 }
 

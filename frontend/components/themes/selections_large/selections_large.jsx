@@ -29,19 +29,11 @@ class SelectionsLarge extends React.Component {
         this.state = {}
     }
 
-    isRenderValid() {
-        return this.props.productIds && this.props.productIds.length;
-    }
 
-    resolve() {
-        if (!this.props.productIds || this.props.productIds.length === 0)
-            this.props.fetchRandomProducts(10);
-        return null;
-    }
 
     mainProduct(){
         let mainId = this.props.mainId;
-        return <CardThumbnail productId={mainId} product={Product.findById(mainId)}
+        return <CardThumbnail key={`${mainId}`} productId={mainId} product={Product.findById(mainId)}
                               images={Image.findByProductId(mainId)}/>
     }
 
@@ -55,7 +47,7 @@ class SelectionsLarge extends React.Component {
                 areas.push(`main main ${layout.join(" ")}`)
                 layout = [];
             }
-            components[`comp_${idx}`] = <CardThumbnail productId={productId}
+            components[`comp_${idx}`] = <CardThumbnail key={`${productId}`} productId={productId}
                                                        product={Product.findById(productId)}
                                                        images={Image.findByProductId(productId)}/>
         })
@@ -64,6 +56,29 @@ class SelectionsLarge extends React.Component {
                            components={components}
                            className="selections-large-grid"
                            classElements="selections-large-items"/>
+    }
+
+    shouldComponentUpdate(nextProps, nextState, nextContext) {
+        let preProductIds = this.props.productIds;
+        let postProductIds = nextProps.productIds;
+
+        if (!preProductIds || !postProductIds)
+            return true;
+        else if (preProductIds.length !== postProductIds.length)
+            return true;
+        else if (!preProductIds.every(preId => postProductIds.includes(preId)))
+            return true;
+        return false;
+    }
+
+    isRenderValid() {
+        return this.props.productIds && this.props.productIds.length;
+    }
+
+    resolve() {
+        if (!this.props.productIds || this.props.productIds.length === 0)
+            this.props.fetchRandomProducts(10);
+        return null;
     }
 
     render() {

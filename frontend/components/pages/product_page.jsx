@@ -117,18 +117,17 @@ class ProductPage extends React.Component {
     }
 
     shouldComponentUpdate(nextProps, nextState, nextContext) {
-        let productId = Product.findIDFromProps(this.props);
+        let preProductId = this.props.productId;
+        let postProductId = nextProps.productId;
 
-        if (Product.hasError(productId)) {
-            if (urlId(this.props) === productId) {
-                this.props.history.push(`/card_listing/${Product.DEFAULT_ID}`);
-                this.props.resetProductError(this.props.productId);
-            } else {
-                this.props.fetchProduct(Product.DEFAULT_ID);
-            }
-            return false;
-        }
-        return true;
+        let preUserId = this.props.userId;
+        let postUserId = nextProps.userId;
+
+        if (preProductId !== postProductId)
+            return true;
+        else if (preUserId !== postUserId)
+            return true;
+        return false;
     }
 
     /** Reponse if the current state is able to render with its current properties
