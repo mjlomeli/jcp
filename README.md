@@ -19,7 +19,7 @@ Released under [MIT](/LICENSE) by [@Mauricio](https://github.com/mjlomeli/jcp/bl
 
 [![edge - Compatible](https://img.shields.io/badge/edge-Compatible-2ea44f?style=for-the-badge&logo=microsoft+edge&logoColor=blue)](https://www.microsoft.com/)
 
-[![safari - Incompatible](https://img.shields.io/badge/safari-Incompatible-critical?style=for-the-badge&logo=safari&logoColor=blue)](https://www.apple.com/safari/)
+[![safari - Unavailable](https://img.shields.io/badge/safari-Unavailable-critical?style=for-the-badge&logo=safari&logoColor=blue)](https://www.apple.com/safari/)
 
 <br>
 
