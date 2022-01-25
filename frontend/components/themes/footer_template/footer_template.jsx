@@ -88,7 +88,7 @@ class FooterTemplate extends React.Component {
                 <li className="footer-list">
                     {Object.entries(links).map((obj, idx) => {
                         let [name, url] = obj;
-                        return <a key={idx} href={url || "#"}>{name}</a>
+                        return <a key={idx} href={url || "#"} target="_blank">{name}</a>
                     })}
                 </li>
             </ul>
