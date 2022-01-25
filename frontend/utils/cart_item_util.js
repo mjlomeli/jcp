@@ -1,9 +1,10 @@
 import {debug} from "./tools";
 
-export const fetchCartItems = () => {
+export const fetchCartItems = userId => {
     return $.ajax({
         url: `/api/cart_item`,
-        method: 'GET'
+        method: 'GET',
+        data: {user_id: userId}
     });
 };
 

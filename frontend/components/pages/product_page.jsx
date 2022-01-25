@@ -120,10 +120,15 @@ class ProductPage extends React.Component {
         let preProductId = this.props.productId;
         let postProductId = nextProps.productId;
 
+        let preProduct = this.props.product;
+        let postProduct = nextProps.product;
+
         let preUserId = this.props.userId;
         let postUserId = nextProps.userId;
 
         if (preProductId !== postProductId)
+            return true;
+        else if (!preProduct || !postProduct)
             return true;
         else if (preUserId !== postUserId)
             return true;
@@ -142,9 +147,9 @@ class ProductPage extends React.Component {
      * @return {null} - Returns null for shorthand ending in an if statement
      **/
     resolve() {
-        if (!Product.hasError(this.props.productId)) {
-            // this.props.fetchProduct(this.props.productId);
-            // this.props.fetchRandomProducts(6);
+        if (!this.props.product) {
+            this.props.fetchProduct(this.props.productId);
+            this.props.fetchRandomProducts(6);
         }
         return null;
     }

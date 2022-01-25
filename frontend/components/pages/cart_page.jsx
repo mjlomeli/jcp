@@ -29,11 +29,12 @@ const mapStateToProps = ({entities, errors, index, session}, ownProps) => {
 };
 
 const mapDispatchToProps = dispatch => ({
-    fetchCartItems: () => dispatch(fetchCartItems()),
+    fetchCartItems: userId => dispatch(fetchCartItems(userId)),
     fetchProducts: productIds => dispatch(fetchProductsListings(productIds))
 });
 
-class CartTemplate extends React.Component {
+class CartPage extends React.Component {
+    static recentFetch = false;
     constructor(props) {
         super(props);
         this.state = {}
@@ -46,13 +47,51 @@ class CartTemplate extends React.Component {
         </div>
     }
 
+    shouldComponentUpdate(nextProps, nextState, nextContext) {
+        let preProductIds = Object.keys(this.props.cartItems);
+        let postProductIds = Object.keys(nextProps.cartItems);
+
+        let preUserId = this.props.userId;
+        let postUserId = nextProps.userId;
+
+        let preCached = this.props.isCached;
+        let postCached = nextProps.isCached;
+
+        // console.log(!preProductIds || !postProductIds)
+        // console.log(`${preProductIds.length} !== ${postProductIds.length} =>`, preProductIds.length != postProductIds.length)
+        // console.log(`${preUserId} != ${postUserId} => ${preUserId !== postUserId}`)
+        // console.log(`${preProductIds} === ${postProductIds} =>`, !preProductIds.every(preId => postProductIds.includes(preId)));
+        // console.log(`${preCached} !== ${postCached} => ${preCached !== postCached}`)
+
+        if (!preProductIds || !postProductIds)
+            return true;
+        else if (preProductIds.length !== postProductIds.length)
+            return true;
+        else if (preUserId !== postUserId)
+            return true;
+        else if (preCached !== postCached)
+            return true;
+        else if (preProductIds.every(preId => !postProductIds.includes(preId)))
+            return true;
+        return false;
+    }
+
     isRenderValid() {
-        return this.props.cartItems && this.props.isCached;
+        if (CartPage.recentFetch && this.props.isCached) {
+            CartPage.recentFetch = false;
+            return true;
+        }
+        return Object.keys(this.props.cartItems).length && this.props.isCached;
     }
 
     resolve() {
-        if (!this.props.isCached)
-            this.props.fetchProducts(Object.keys(this.props.cartItems));
+        let productIds = Object.keys(this.props.cartItems);
+        if (!productIds.length && !CartPage.recentFetch) {
+            CartPage.recentFetch = true;
+            this.props.fetchCartItems(this.props.userId);
+        }
+        else if (!this.props.isCached)
+            this.props.fetchProducts(productIds);
         return null;
     }
 
@@ -76,4 +115,4 @@ class CartTemplate extends React.Component {
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(CartTemplate);
+export default connect(mapStateToProps, mapDispatchToProps)(CartPage);

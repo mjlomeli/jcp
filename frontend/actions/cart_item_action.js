@@ -38,8 +38,8 @@ export const receiveCartItemsError = errors =>({
 /*    Separation      */
 
 
-export const fetchCartItems = () => dispatch => (
-    CartItemUtil.fetchCartItems().then(
+export const fetchCartItems = () => (dispatch, getState) => (
+    CartItemUtil.fetchCartItems(getState().session.id).then(
         cartItems => dispatch(receiveCartItems(cartItems)),
         err => {
             dispatch(AlertAction.systemError(err.responseJSON));

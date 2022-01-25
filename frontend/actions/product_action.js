@@ -62,8 +62,8 @@ export const receiveProductsGeneralErrors = (dispatch, errors) => {
 /*    Separation      */
 
 
-export const fetchProducts = (query) => dispatch => (
-    ProductUtil.fetchProducts(query).then(
+export const fetchProducts = (query) => dispatch => {
+    return ProductUtil.fetchProducts(query).then(
         listing => dispatch(receiveProductsListings(listing)),
         err => {
             let keys = query && Object.keys(query) || [];
@@ -74,46 +74,47 @@ export const fetchProducts = (query) => dispatch => (
                 return dispatch(receiveProductsGeneralErrors(dispatch, err.responseJSON))
         }
     )
-)
+}
 
-export const fetchProductsTitles = () => dispatch => (
-    ProductUtil.fetchProductsTitles().then(
+export const fetchProductsTitles = () => dispatch => {
+    return ProductUtil.fetchProductsTitles().then(
         titles => dispatch(receiveProductsTitles(titles)),
         err => dispatch(AlertAction.systemError([err.responseJSON]))
     )
-)
+}
 
-export const fetchProductsAsQuery = (productIds, query) => dispatch => (
-    ProductUtil.fetchProductsListings(productIds).then(
+export const fetchProductsAsQuery = (productIds, query) => dispatch => {
+    console.log(`fetchProductsAsQuery: ${productIds}`);
+    return ProductUtil.fetchProductsListings(productIds).then(
         listings => dispatch(receiveProductsAsQuery(listings, {query: query})),
         err => dispatch(receiveProductsErrors(dispatch, err.responseJSON)))
-)
+}
 
-export const fetchProductListing = (productId) => dispatch => (
-    ProductUtil.fetchProductListing(productId).then(
+export const fetchProductListing = (productId) => dispatch => {
+    return ProductUtil.fetchProductListing(productId).then(
         listing => dispatch(receiveProductsListings(listing)),
         err => dispatch(receiveProductsErrors(dispatch, err.responseJSON)))
-)
+}
 
-export const fetchProductsListings = (productIds) => dispatch => (
-    ProductUtil.fetchProductsListings(productIds).then(
+export const fetchProductsListings = (productIds) => dispatch => {
+    return ProductUtil.fetchProductsListings(productIds).then(
         listings => dispatch(receiveProductsListings(listings)),
         err => dispatch(receiveProductsErrors(dispatch, err.responseJSON)))
-)
+}
 
 
-export const fetchProductsRange = (start, end) => dispatch => (
-    ProductUtil.fetchProductsRange(start, end).then(
+export const fetchProductsRange = (start, end) => dispatch => {
+    return ProductUtil.fetchProductsRange(start, end).then(
         listing => dispatch(receiveProducts(listing)),
         err => dispatch(receiveProductsGeneralErrors(dispatch, err.responseJSON)))
-)
+}
 
 
-export const fetchRandomProducts = (limit) => dispatch => (
-    ProductUtil.fetchRandomProducts(limit).then(
+export const fetchRandomProducts = (limit) => dispatch => {
+    return ProductUtil.fetchRandomProducts(limit).then(
         listing => dispatch(receiveProductsListings(listing)),
         err => dispatch(receiveProductsErrors(dispatch, err.responseJSON)))
-)
+}
 
 export const fetchProduct = productId => (dispatch) => {
     return ProductUtil.fetchProduct(productId).then(
@@ -121,54 +122,40 @@ export const fetchProduct = productId => (dispatch) => {
         err => dispatch(receiveProductsErrors(dispatch, err.responseJSON)))
 }
 
-export const createProduct = product => dispatch => (
-    ProductUtil.createProduct(product).then(
+export const createProduct = product => dispatch => {
+    return ProductUtil.createProduct(product).then(
         listing => {
             dispatch(AlertAction.success("Your product has been created!"));
             dispatch(receiveProducts(listing))
         },
         err => dispatch(receiveProductsErrors(dispatch, err.responseJSON)))
-)
+}
 
-export const updateProduct = product => dispatch => (
-    ProductUtil.updateProduct(product).then(
+export const updateProduct = product => dispatch => {
+    return ProductUtil.updateProduct(product).then(
         listing => {
             dispatch(AlertAction.success("Changes have been saved."));
             dispatch(receiveProducts(listing))
         },
         err => dispatch(receiveProductsErrors(dispatch, err.responseJSON)))
-)
+}
 
-export const deleteProduct = productId => dispatch => (
-    ProductUtil.deleteProduct(productId).then(
+export const deleteProduct = productId => dispatch => {
+    return ProductUtil.deleteProduct(productId).then(
         productIds => {
             dispatch(AlertAction.caution("The item has been deleted."));
             dispatch(removeProducts(productIds))
         },
         err => dispatch(receiveProductsErrors(dispatch, err.responseJSON)))
-)
+}
 
-export const deleteProducts = productIds => dispatch => (
+export const deleteProducts = productIds => dispatch => {
     ProductUtil.deleteProduct(productIds).then(
         productIds => {
             dispatch(AlertAction.caution("The item has been deleted."));
             dispatch(removeProducts(productIds))
         },
         err => dispatch(receiveProductsErrors(dispatch, err.responseJSON)))
-)
-
-export const fetchTabbeddItems = () => {
-    Promise.resolve().then(_=> {
-        fetchProducts({taxonomy_paths: ["Art & Collectibles"]})(store.dispatch);
-        fetchProducts({taxonomy_paths: ["Craft Supplies & Tools"]})(store.dispatch);
-        fetchProducts({taxonomy_paths: ["Books, Movies & Music"]})(store.dispatch);
-        fetchProducts({taxonomy_paths: ["Home & Living"]})(store.dispatch);
-        fetchProducts({taxonomy_paths: ["Home Decor"]})(store.dispatch);
-        fetchProducts({taxonomy_paths: ["Jewelry"]})(store.dispatch);
-        fetchProducts({taxonomy_paths: ["Toys & Games"]})(store.dispatch);
-        fetchProducts({taxonomy_paths: ["Kitchen & Dining"]})(store.dispatch);
-        fetchProducts({taxonomy_paths: ["Drink & Barware"]})(store.dispatch);
-    });
 }
 
 export const resetProductErrors = productId => dispatch => (
@@ -191,7 +178,6 @@ window.ProductAction = {
     fetchRandomProducts,
     fetchProductListing,
     fetchProductsListings,
-    fetchTabbeddItems,
     resetProductErrors,
     resetProductsErrors,
     resetAllProductsError,

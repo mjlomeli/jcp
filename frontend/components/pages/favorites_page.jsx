@@ -79,9 +79,6 @@ class FavoritesPage extends React.Component {
         else if (!this.props.favoriteIds.length)
             return this.emptyFavorites();
 
-        console.log(this.props.favoriteIds);
-        console.log(this.props.recommendationIds);
-
         let components = {
             'products': <SelectionsFull key={`${this.props.userId}${this.props.favoriteIds.length}`} productIds={this.props.favoriteIds} numCols={5}/>,
             'recommended': <SelectionsCircular productIds={this.props.recommendationIds}/>

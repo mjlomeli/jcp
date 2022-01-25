@@ -1,6 +1,11 @@
 import React, {Fragment} from 'react';
 import './home_page.css'
-import {fetchProducts, fetchProductsTitles, fetchRandomProducts} from "../../actions/product_action";
+import {
+    fetchProducts,
+    fetchProductsListings,
+    fetchProductsTitles,
+    fetchRandomProducts
+} from "../../actions/product_action";
 import SelectionsCircular from "../themes/selections_circular/selections_circular";
 import SelectionsFull from "../themes/selections_full/selections_full";
 import SelectionsThumbnails from "../themes/selections_thumbnails/selections_thumbnails";
@@ -13,7 +18,7 @@ import {initialBoot} from "../../lib/post_fetching";
 
 
 const mapStateToProps = ({entities, session, index, errors}, ownProps) => {
-    let shopListings = Object.keys(entities.products);
+    let shopListings = Object.keys(entities.products).slice(0, 73);
     let isLoggedIn = !!session.id;
     let userId = session.id;
     let firstName = isLoggedIn && entities.user.first_name;
@@ -38,9 +43,10 @@ const mapStateToProps = ({entities, session, index, errors}, ownProps) => {
     }
 };
 
-const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = (dispatch, ownProps) => ({
     fetchRandomProducts: (n) => dispatch(fetchRandomProducts(n)),
     fetchProducts: query => dispatch(fetchProducts(query)),
+    fetchProductsListings: productIds => dispatch(fetchProductsListings(productIds)),
     fetchProductsTitles: () => dispatch(fetchProductsTitles())
 });
 
@@ -61,13 +67,23 @@ class HomePage extends React.Component {
         let preFirstName = this.props.firstName;
         let postFirstName = nextProps.firstName;
 
+        /*
+        console.log(preLoggedIn !== postLoggedIn)
+        console.log(!preProductIds || !postProductIds)
+        console.log(`!${preProductIds.length} || !${postProductIds.length} =>`, !preProductIds.length || !postProductIds.length)
+        console.log(postProductIds.length < 72)
+        console.log(preFirstName !== postFirstName)
+         */
+
         if (preLoggedIn !== postLoggedIn)
             return true;
-        else if (preProductIds.length !== postProductIds.length)
+        else if (!preProductIds || !postProductIds)
+            return true;
+        else if (!preProductIds.length || !postProductIds.length)
+            return true;
+        else if (postProductIds < 72)
             return true;
         else if (preFirstName !== postFirstName)
-            return true;
-        else if (!preProductIds.every((preId) => postProductIds.includes(preId)))
             return true;
         return false;
     }
@@ -85,7 +101,8 @@ class HomePage extends React.Component {
     render() {
         if (!this.isRenderValid())
             return this.resolve();
-        initialBoot(this.props.index);
+        this.props.fetchProductsListings(this.props.productIds);
+
         let areas = ["categories", "popular", "viewed", "picks1", "picks2", "editors", "selections", "based_1", "based_2", "recommendations"]
         let components = {
             "categories": <SelectionsCircular productIds={this.props.categories}/>,
@@ -123,7 +140,6 @@ class HomePage extends React.Component {
                 <SelectionsCircular productIds={this.props.recommendations} title="Explore related"/>
             </div>
         }
-
         let message = this.props.isLoggedIn ? <Fragment key={`${this.props.userId}`}>
             <h1 className="home-page-title">Welcome back,</h1>
             <h1 className="home-page-title">{this.props.firstName}!</h1>

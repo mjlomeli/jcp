@@ -4,7 +4,7 @@ require 'controller_helper_images'
 class Api::CartItemsController < ApplicationController
   def index
     # GET /api/cart_items
-    @user = current_user
+    @user = user_from_params
     if !@user
       render json: ["User is not authorized"], status: 400
     else
@@ -19,7 +19,7 @@ class Api::CartItemsController < ApplicationController
 
   def create
     # POST /api/cart_items
-    @user = current_user
+    @user = user_from_params
     if !@user
       render json: ["User is not authorized"], status: 400
     else
@@ -35,7 +35,7 @@ class Api::CartItemsController < ApplicationController
 
   def update
     # PATCH /api/cart_item
-    @user = current_user
+    @user = user_from_params
     if !@user
       render json: ["User is not authorized"], status: 400
     else
@@ -54,7 +54,6 @@ class Api::CartItemsController < ApplicationController
 
   def destroy
     # DELETE /api/cart_item
-    puts "\nEntered 'destroy'\n"
     @user = user_from_params
     if !@user
       render json: ["User is not authorized"], status: 400
