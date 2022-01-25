@@ -23,14 +23,14 @@ Released under [MIT](/LICENSE) by [@Mauricio](https://github.com/mjlomeli/jcp/bl
 
 # Welcome to JCP!
 
+## [Wiki](https://github.com/mjlomeli/jcp/wiki)
+Click on the Wiki to learn more about this program.
+
 ## Purpose
 
 JCP (Jay-see-p) Is a clone of Etsy where people come together to make, sell, buy, and collect unique items.
 
 ![image](https://github.com/mjlomeli/jcp/wiki/images/favorites.gif)
-
-
-## [Wiki](https://github.com/mjlomeli/jcp/wiki)
 
 
 ### Contributors
