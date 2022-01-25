@@ -36,7 +36,8 @@ class FooterTemplate extends React.Component {
                 "Jewelry"],
             about: this.props.about || {"Wiki": "https://github.com/mjlomeli/jcp/wiki", "Purpose": "https://github.com/mjlomeli/jcp/wiki#purpose"},
             help: this.props.help || {"Issues": "https://github.com/mjlomeli/jcp/issues", "Repo": "https://github.com/mjlomeli/jcp"},
-            follow: this.props.follow || {"Github": "https://github.com/mjlomeli", "LinkedIn": "https://www.linkedin.com/in/mauricio-l-759796172/"}
+            follow: this.props.follow || {"Github": "https://github.com/mjlomeli",
+                "LinkedIn": "https://www.linkedin.com/in/mauricio-l-759796172/", "AngelList": "https://angel.co/u/mauricio-lomeli-2"}
         }
     }
 
