@@ -17,7 +17,7 @@ Released under [MIT](/LICENSE) by [@Mauricio](https://github.com/mjlomeli/jcp/bl
 
 [![opera - Available](https://img.shields.io/badge/opera-Available-2ea44f?style=for-the-badge&logo=opera&logoColor=red)](https://www.opera.com/)
 
-[![edge - Compatible](https://img.shields.io/badge/edge-Compatible-success?style=for-the-badge&logo=microsoft+edge&logoColor=blue)](https://www.microsoft.com/)
+[![edge - Compatible](https://img.shields.io/badge/edge-Compatible-2ea44f?style=for-the-badge&logo=microsoft+edge&logoColor=blue)](https://www.microsoft.com/)
 
 [![safari - Unavailable](https://img.shields.io/badge/safari-Unavailable-critical?style=for-the-badge&logo=safari&logoColor=blue)](https://www.apple.com/safari/)
 
