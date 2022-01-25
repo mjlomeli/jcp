@@ -22,6 +22,7 @@ import CartPage from "./pages/cart_page";
 
 import HeaderTemplate from "./themes/header_template/header_template";
 import FooterTemplate from "./themes/footer_template/footer_template";
+import PaymentSelection from "./user_controls/payment_selection/payment_selection";
 
 /* learn more about grid-auto-flow */
 
@@ -45,6 +46,7 @@ class App extends React.Component {
                 <Route exact path="/" component={HomePage} />
                 <Route exact path="/home" component={HomePage} />
                 <Route exact path="/products" component={ProductsPage} />
+                <Route exact path="/payment" component={PaymentSelection} />
                 <ProtectedRoute exact path="/favorites" component={FavoritesPage} />
                 <Route exact path="/product/:id" component={ProductPage} />
                 <ProtectedRoute exact path="/cart" component={CartPage} />

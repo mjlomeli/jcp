@@ -129,7 +129,6 @@ export class Product {
         this.results_per_page = props.results_per_page;
         this.page_number = props.page_number;
     }
-
     imagesSmall() {
         let images = [];
         this.image_ids.forEach(id => {

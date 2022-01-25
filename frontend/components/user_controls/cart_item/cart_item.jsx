@@ -174,12 +174,10 @@ class CartItem extends React.Component {
                                 classElements="cart-item-info-items"/>,
         }
 
-        let item = <GridLayout areas={areas}
+        return <GridLayout areas={areas}
                            components={components}
                            className="cart-item-grid"
                            classElements="cart-item-items"/>
-        let payment = <PaymentSelection productId={this.props.productId}/>
-        return <GridLayout className="cart-item" areas={['item payment']} components={{'item': item, 'payment': payment}} />
     }
 }
 

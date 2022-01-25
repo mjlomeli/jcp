@@ -13,6 +13,7 @@ import CartItem from "../user_controls/cart_item/cart_item"
 import {fetchCartItems} from "../../actions/cart_item_action";
 import {Product} from "../../lib/product";
 import {fetchProductsListings} from "../../actions/product_action";
+import PaymentSelection from "../user_controls/payment_selection/payment_selection";
 
 
 const mapStateToProps = ({entities, errors, index, session}, ownProps) => {
@@ -96,21 +97,23 @@ class CartPage extends React.Component {
     }
 
     render() {
+        let productIds = Object.keys(this.props.cartItems).map(id => parseInt(id));
         if (!this.isRenderValid())
             return this.resolve();
-        else if (!Object.keys(this.props.cartItems).length)
+        else if (!productIds.length)
             return this.emptyCart();
 
         let areas = [];
         let components = {}
 
-        Object.keys(this.props.cartItems).forEach((id, idx) => {
-            let layout = `cartItem_${idx}`;
+        productIds.forEach((id, idx) => {
+            let layout = `cartItem_${idx} payment`;
             let product = Product.findById(id);
             areas.push(layout);
             components[layout] =  <CartItem productId={id} product={product} images={product.imagesMedium()}/>
         })
-
+        if (productIds.length)
+            components['payment'] = <PaymentSelection productIds={productIds}/>
         return <GridLayout className="cart-checkout" areas={areas} components={components}/>
     }
 }

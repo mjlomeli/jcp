@@ -3,35 +3,45 @@ import GridLayout from "../grid_layout/grid_layout";
 import "./payment_selection.css"
 import Selection from "./radio";
 import {Product} from "../../../lib/product";
-import {fetchProduct, resetProductErrors} from "../../../actions/product_action";
+import {fetchProductsListings} from "../../../actions/product_action";
 import {connect} from "react-redux";
 import {notification} from "../../../actions/alert_action";
 
 const mapStateToProps = (state, ownProps) =>{
-    let productId = Product.findIDFromProps(ownProps);
-    let product = Product.findById(productId)
-
+    let productIds = ownProps.productIds || [];
+    let products = productIds.filter(id => !!Product.findById(id)).map(id => Product.findById(id));
+    let isCached = products.length === productIds.length;
+    let prices = products.reduce((nxt, product) => nxt + product.price, 0);
+    let totals = Math.round((prices * 100) + Number.EPSILON) / 100 ;
+    let discount = Math.round(prices * PaymentSelection.DISCOUNT  * 100) / 100;
+    let subtotal = Math.round((totals - discount + Number.EPSILON) * 100) / 100;
+    let charges = Math.round((subtotal + PaymentSelection.SHIPPING + Number.EPSILON) * 100) / 100;
     return {
-        productId: productId,
-        product: product
+        productIds: productIds,
+        products: products,
+        isCached: isCached,
+        prices: prices,
+        totals: totals,
+        discount: discount,
+        subtotal: subtotal,
+        charges: charges
     }
 };
 
 const mapDispatchToProps = dispatch => ({
-    fetchProduct: (productId) => dispatch(fetchProduct(productId)),
-    resetProductError: productId => dispatch(resetProductErrors(productId)),
+    fetchProducts: (productIds) => dispatch(fetchProductsListings(productIds)),
     notification: message => dispatch(notification(message))
 });
 
 
 class PaymentSelection extends React.Component {
+    static DISCOUNT = 0.05;
+    static SHIPPING = 0;
+    static recentFetch = false;
     constructor(props) {
         super(props);
 
         this.onclicksubmit = this.onClickSubmit.bind(this);
-        this.discount = 0.05;
-        this.quantity = 1;
-        this.shipping = 0;
     }
 
     onClickSubmit(e){
@@ -87,14 +97,11 @@ class PaymentSelection extends React.Component {
     }
 
     priceCalculations() {
-        let price = this.props.product.price;
-        let total = Math.round((price * this.quantity * 100) + Number.EPSILON) / 100 ;
-        let discount = Math.round(price * this.quantity * this.discount  * 100) / 100;
         let nameTotal = <label className="payment-text-highlight payment-label">Items(s) total</label>
-        let priceTotal = <label className="payment-text payment-price">${total.toFixed(2)}</label>
+        let priceTotal = <label className="payment-text payment-price">${this.props.totals.toFixed(2)}</label>
 
         let nameDiscount = <label className="payment-text-highlight payment-label">Shop Discount</label>
-        let priceDiscount = <label className="payment-text payment-price">-${discount.toFixed(2)}</label>
+        let priceDiscount = <label className="payment-text payment-price">-${this.props.discount.toFixed(2)}</label>
 
         return <>
             {this.rowComponent(nameTotal, priceTotal)}
@@ -104,15 +111,11 @@ class PaymentSelection extends React.Component {
     }
 
     feeCalculations() {
-        let price = this.props.product.price;
-        let total = price * this.quantity;
-        let discount = Math.round((price * this.quantity * this.discount  * 100) + Number.EPSILON) / 100;
-        let subtotal = Math.round((total - discount + Number.EPSILON) * 100) / 100;
         let nameSubtotal = <label className="payment-text payment-label">Subtotal</label>
         let priceSubtotal = <label
-            className="payment-text payment-price">${subtotal.toFixed(2)}</label>
+            className="payment-text payment-price">${this.props.subtotal.toFixed(2)}</label>
         let nameShipping = <label className="payment-text payment-label">Shipping</label>
-        let priceShipping = <label className="payment-text payment-price">${this.shipping.toFixed(2)}</label>
+        let priceShipping = <label className="payment-text payment-price">${PaymentSelection.SHIPPING.toFixed(2)}</label>
 
         return <>
             {this.rowComponent(nameSubtotal, priceSubtotal)}
@@ -122,54 +125,50 @@ class PaymentSelection extends React.Component {
     }
 
     totalCalculation() {
-        let price = this.props.product.price;
-        let total = price * this.quantity;
-        let discount = Math.round(price * this.quantity * this.discount  * 100) / 100;
-        let subtotal = total - discount;
-        let charge = Math.round((subtotal + this.shipping + Number.EPSILON) * 100) / 100
-
-
-        let nameTotal = <label className="payment-text-highlight payment-label">Total ({this.quantity} items)</label>
-        let priceTotal = <label className="payment-text-highlight payment-price">${charge.toFixed(2)}</label>
+        let nameTotal = <label className="payment-text-highlight payment-label">Total ({this.props.productIds.length} items)</label>
+        let priceTotal = <label className="payment-text-highlight payment-price">${this.props.charges.toFixed(2)}</label>
         return this.rowComponent(nameTotal, priceTotal);
     }
 
 
-    shouldComponentUpdate(nextProps, nextState, nextContext) {
-        let preProductId = this.props.productId;
-        let postProductId = nextProps.productId;
-
-
-        if (preProductId !== postProductId)
-            return true;
-        return false;
-
-        /*
-        let preProductIds = this.props.productIds;
-        let postLoggedIn = nextProps.isLoggedIn;
-
-        if (preProductIds.length !== postProductIds.length)
-            return true;
-        else if (!postProductIds.every((postId) => preProductIds.includes(postId)))
-            return true;
-        return false;
-         */
-    }
+    // shouldComponentUpdate(nextProps, nextState, nextContext) {
+    //     let preProductIds = this.props.productIds;
+    //     let postProductIds = nextProps.productIds;
+    //
+    //     // console.log(!preProductIds || !postProductIds)
+    //     // console.log(`${preProductIds.length} !== ${postProductIds.length} =>`, preProductIds.length != postProductIds.length)
+    //     // console.log(`${preProductIds} === ${postProductIds} =>`, !preProductIds.every(preId => postProductIds.includes(preId)));
+    //
+    //     if (!preProductIds || !postProductIds)
+    //         return true;
+    //     else if (preProductIds.length !== postProductIds.length)
+    //         return true;
+    //     else if (preProductIds.every(preId => !postProductIds.includes(preId)))
+    //         return true;
+    //     return false;
+    // }
 
     isRenderValid(){
-        return !!this.props.product;
+        if (PaymentSelection.recentFetch && this.props.isCached) {
+            PaymentSelection.recentFetch = false;
+            return true;
+        }
+        return this.props.productIds.length && this.props.isCached;
     }
 
     resolve(){
-        if (!this.props.product)
-            this.props.fetchProduct(this.props.productId)
+        if (this.props.productIds.length && !PaymentSelection.recentFetch) {
+            PaymentSelection.recentFetch = true;
+            this.props.fetchProducts(this.props.productIds);
+        }
+        console.log(this.props.productIds);
+        console.log(this.props.products);
         return null;
     }
 
     render() {
         if (!this.isRenderValid())
-            return this.resolve();
-
+             return this.resolve();
         let areas = ['radio', 'price', 'fee', 'total', 'button']
         let components = {
             'radio': this.paymentTypes(),

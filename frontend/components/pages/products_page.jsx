@@ -53,8 +53,6 @@ const mapDispatchToProps = dispatch => ({
 });
 
 class ProductsPage extends React.Component {
-
-    static productsKey = 0;
     constructor(props) {
         super(props);
     }
