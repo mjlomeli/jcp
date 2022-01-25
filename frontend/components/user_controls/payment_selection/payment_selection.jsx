@@ -74,7 +74,7 @@ class PaymentSelection extends React.Component {
             'discover': "https://brandeps.com/logo-download/D/Discover-Card-logo-vector-01.svg"
         }
 
-        let onlinePayment = {'paypal': "http://logosvg.com/wp-content/uploads/PayPal_logo.svg"}
+        let onlinePayment = {'paypal': "https://s3.cointelegraph.com/storage/uploads/view/3278bdc14c74dd4e85732b776d0e5b1d.png"}
         let other = {'klarna': "https://bobatoo.co.uk/wp-content/uploads/2020/01/Klarna-Logo.jpg"}
         let areas = ['creditcards', 'online', 'other'];
         let components = {

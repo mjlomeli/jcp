@@ -1,0 +1,1 @@
+rails db:environment:set RAILS_ENV=development && bundle exec rails db:migrate:reset db:seed
