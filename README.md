@@ -27,6 +27,8 @@ Released under [MIT](/LICENSE) by [@Mauricio](https://github.com/mjlomeli/jcp/bl
 
 JCP (Jay-see-p) Is a clone of Etsy where people come together to make, sell, buy, and collect unique items.
 
+![image](https://user-images.githubusercontent.com/46548793/150982567-ca8ac8a6-2768-4d04-9a46-bb80a1e0c526.png)
+
 
 ## [Wiki](https://github.com/mjlomeli/jcp/wiki)
 
