@@ -34,17 +34,19 @@ JCP (Jay-see-p) Is a clone of Etsy where people come together to make, sell, buy
 
 ![image](https://github.com/mjlomeli/jcp/wiki/images/login.gif)
 
-### Favorites
+### Cart
 
-![image](https://github.com/mjlomeli/jcp/wiki/images/favorites.gif)
+![image](https://github.com/mjlomeli/jcp/wiki/images/cart.gif)
+
 
 ### Search Bar
 
 ![image](https://github.com/mjlomeli/jcp/wiki/images/searchbar.gif)
 
-### Cart
+### Favorites
 
-![image](https://github.com/mjlomeli/jcp/wiki/images/cart.gif)
+![image](https://github.com/mjlomeli/jcp/wiki/images/favorites.gif)
+
 
 ### Contributors
 
