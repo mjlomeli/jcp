@@ -73,7 +73,7 @@ class FooterTemplate extends React.Component {
                     {Object.entries(links).map((pair, idx) => {
                         let [name, link] = pair;
                         if (['Wiki', 'Purpose', 'Issues', 'Repo'].includes(name))
-                            return <a key={idx} href={link}>{name}</a>
+                            return <a key={idx} href={link} target="_blank">{name}</a>
                         return <Link key={idx} to={link || "#"}>{name}</Link>
                     })}
                 </li>

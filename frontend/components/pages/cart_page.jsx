@@ -103,6 +103,7 @@ class CartPage extends React.Component {
         else if (!productIds.length)
             return this.emptyCart();
 
+        window.scrollTo(0, 0)
         let areas = [];
         let components = {}
 

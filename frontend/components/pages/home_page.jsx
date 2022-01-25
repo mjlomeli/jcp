@@ -101,8 +101,8 @@ class HomePage extends React.Component {
     render() {
         if (!this.isRenderValid())
             return this.resolve();
+        window.scrollTo(0, 0)
         this.props.fetchProductsListings(this.props.productIds);
-
         let areas = ["categories", "popular", "viewed", "picks1", "picks2", "editors", "selections", "based_1", "based_2", "recommendations"]
         let components = {
             "categories": <SelectionsCircular productIds={this.props.categories}/>,

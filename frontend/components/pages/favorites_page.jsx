@@ -79,6 +79,7 @@ class FavoritesPage extends React.Component {
         else if (!this.props.favoriteIds.length)
             return this.emptyFavorites();
 
+        window.scrollTo(0, 0)
         let components = {
             'products': <SelectionsFull key={`${this.props.userId}${this.props.favoriteIds.length}`} productIds={this.props.favoriteIds} numCols={5}/>,
             'recommended': <SelectionsCircular productIds={this.props.recommendationIds}/>

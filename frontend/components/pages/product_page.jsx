@@ -160,6 +160,7 @@ class ProductPage extends React.Component {
     render() {
         if (!this.isRenderValid())
             return this.resolve();
+        window.scrollTo(0, 0)
         let areas = [
             'gallery options',
             'details details',

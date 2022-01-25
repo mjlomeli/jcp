@@ -120,6 +120,7 @@ class ProductsPage extends React.Component {
             return this.resolve();
         else if (!this.props.productIds || !this.props.productIds.length)
             this.noResultsComponent();
+        window.scrollTo(0, 0)
         let productsKey = `${this.props.queryKey || ProductsPage.productsKey}`;
         let components = {
             'featured': <div key={productsKey} className="products-page-featured"><CardFeatured key={productsKey} productId={this.props.featuredId}/></div>,
