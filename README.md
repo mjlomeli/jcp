@@ -30,12 +30,9 @@ Click on the Wiki to learn more about this program.
 
 JCP (Jay-see-p) Is a clone of Etsy where people come together to make, sell, buy, and collect unique items.
 
-![image](https://github.com/mjlomeli/jcp/wiki/images/favorites.gif)
-
-
 ### Login
 
-![image](https://github.com/mjlomeli/jcp/wiki/images/favorites.gif)
+![image](https://github.com/mjlomeli/jcp/wiki/images/login.gif)
 
 ### Favorites
 
