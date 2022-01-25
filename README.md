@@ -11,11 +11,13 @@ Released under [MIT](/LICENSE) by [@Mauricio](https://github.com/mjlomeli/jcp/bl
 
 
 ## Browser Compatibility
-[![Chrome - Available](https://img.shields.io/badge/Chrome-Available-2ea44f?style=for-the-badge&logo=google+chrome)](https://www.google.com/chrome/)
+[![Chrome - Compatible](https://img.shields.io/badge/Chrome-Compatible-2ea44f?style=for-the-badge&logo=google+chrome)](https://www.google.com/chrome/)
 
-[![firefox - Available (minor artifacts)](https://img.shields.io/badge/firefox-Available-2ea44f?style=for-the-badge&logo=firefox)](https://www.mozilla.org/) (minor artifacts)
+[![firefox - Compatible (minor artifacts)](https://img.shields.io/badge/firefox-Compatible-2ea44f?style=for-the-badge&logo=firefox)](https://www.mozilla.org/) (minor artifacts)
 
-[![opera - Available](https://img.shields.io/badge/opera-Available-2ea44f?style=for-the-badge&logo=opera&logoColor=red)](https://www.opera.com/)
+[![opera - Compatible](https://img.shields.io/badge/opera-Compatible-2ea44f?style=for-the-badge&logo=opera&logoColor=red)](https://www.opera.com/)
+
+[![edge - Compatible](https://img.shields.io/badge/edge-Compatible-2ea44f?style=for-the-badge&logo=microsoft+edge&logoColor=blue)](https://www.microsoft.com/)
 
 [![safari - Unavailable](https://img.shields.io/badge/safari-Unavailable-critical?style=for-the-badge&logo=safari&logoColor=blue)](https://www.apple.com/safari/)
 
