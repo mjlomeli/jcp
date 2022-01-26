@@ -39,7 +39,7 @@ const mapDispatchToProps = dispatch => {
     return {
         fetchProduct: (productId) => dispatch(fetchProductListing(productId)),
         fetchRandomProducts: n => dispatch(fetchRandomProducts(n)),
-        createCartItem: (userId, productId) => dispatch(createCartItem({product_id: productId, user_id: userId, quantity: 1})),
+        createCartItem: (userId, productId, quantity) => dispatch(createCartItem({product_id: productId, user_id: userId, quantity: quantity})),
         createLogin: () => dispatch(createLogin())
     }
 };
@@ -55,6 +55,13 @@ class ProductPage extends React.Component {
     constructor(props) {
         super(props);
         this.onclickaddtocart = this.onClickAddToCart.bind(this);
+        this.onchangequantity = this.onChangeQuantity.bind(this);
+        this.state = {quantity: 1};
+    }
+
+    onChangeQuantity(e){
+        this.setState({quantity: e.target.value})
+        console.log(e.target.value)
     }
 
     onClickAddToCart(){
@@ -62,7 +69,7 @@ class ProductPage extends React.Component {
             this.props.createLogin();
             return null;
         }
-        this.props.createCartItem(this.props.userId, this.props.productId);
+        this.props.createCartItem(this.props.userId, this.props.productId, this.state.quantity);
     }
 
     /** Action when the product_template page has the mouse enter.
@@ -92,6 +99,15 @@ class ProductPage extends React.Component {
         }</div>
     }
 
+    quantityComponent(){
+        return <div className="product-page-quantity">
+        <label>Quantity</label>
+        <select id="quantity" name="quantity" onChange={this.onchangequantity}>
+            {Array.from(Array(10)).map((v, idx) => <option key={`${idx+1}`} value={`${idx + 1}`}>{idx+1}</option>)}
+        </select>
+        </div>
+    }
+
     options(){
         let discount = 0.05;
         let percentage = discount * 100 >> 0;
@@ -99,7 +115,12 @@ class ProductPage extends React.Component {
         let savings = originalPrice * discount;
         let price = originalPrice - savings;
 
-        let areas = ['store store', 'review_count ratings', 'title title', 'price price', 'saving saving', 'submit submit']
+        let areas = [
+            'store store', 'review_count ratings',
+            'title title', 'price price',
+            'saving saving',
+            'quantity quantity',
+            'submit submit']
         let components = {
             'store': <h3>{this.props.product.store}</h3>,
             'review_count': <span>235 sales</span>,
@@ -110,6 +131,7 @@ class ProductPage extends React.Component {
                 <span className="product-page-discounted">${originalPrice.toFixed(2)}</span>
             </>,
             'saving': <span className="product-page-percentage-off">You save ${savings.toFixed(2)} ({percentage}% off)</span>,
+            'quantity': this.quantityComponent(),
             'submit': <button onClick={this.onclickaddtocart} type="submit" className="product-page-items-options-submit">Add to cart</button>
         }
 

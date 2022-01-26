@@ -9,9 +9,10 @@ import {notification} from "../../../actions/alert_action";
 
 const mapStateToProps = (state, ownProps) =>{
     let productIds = ownProps.productIds || [];
+    let cartItems = state.entities.cartItems;
     let products = productIds.filter(id => !!Product.findById(id)).map(id => Product.findById(id));
     let isCached = products.length === productIds.length;
-    let prices = products.reduce((nxt, product) => nxt + product.price, 0);
+    let prices = products.reduce((nxt, product) => nxt + (product.price * cartItems[product.id].quantity), 0);
     let totals = Math.round((prices * 100) + Number.EPSILON) / 100 ;
     let discount = Math.round(prices * PaymentSelection.DISCOUNT  * 100) / 100;
     let subtotal = Math.round((totals - discount + Number.EPSILON) * 100) / 100;

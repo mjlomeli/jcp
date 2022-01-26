@@ -17,6 +17,7 @@ const mapStateToProps = (state, ownProps) => {
     let firstName = state.entities.user.first_name;
     let userRating = userReview && userReview.rating;
     let userComment = userReview && userReview.comment;
+    let averageRating = Reviews.averageRating(reviews);
 
     return {
         productId: productId,
@@ -26,7 +27,8 @@ const mapStateToProps = (state, ownProps) => {
         userReview: userReview,
         userRating: userRating || 0,
         userComment: userComment || "",
-        reviewExists: !!userReview
+        reviewExists: !!userReview,
+        averageRating: averageRating
     }
 };
 
@@ -39,12 +41,20 @@ const mapDispatchToProps = dispatch => ({
 
 
 class Reviews extends React.Component {
+
+    static averageRating(reviews) {
+        let ratings = reviews.map(review => review.rating);
+        if (!ratings || !ratings.length)
+            return 0;
+        return ratings.reduce((a, b) => a + b) / ratings.length;
+    }
     constructor(props) {
         super(props);
         this.state = {
             rating: this.props.userRating,
             comment: this.props.userComment,
-            disabled: !this.props.userComment
+            disabled: !this.props.userComment,
+            averageRating: this.props.averageRating
         }
 
         this.onchangeinput = this.onChangeInput.bind(this);
@@ -66,6 +76,9 @@ class Reviews extends React.Component {
     }
 
     onClickSubmit() {
+        let reviews = Review.findByProductId(this.props.productId).filter(r => r.user_id !== this.props.userId);
+        let sumRating = reviews.reduce((nxt, rev) => rev + nxt, 0);
+        let averageRating = (sumRating + this.state.rating) / (reviews.length + 1)
         let review = {
             user_id: this.props.userId,
             product_id: this.props.productId,
@@ -78,6 +91,7 @@ class Reviews extends React.Component {
             this.props.updateReview(review);
         else
             this.props.createReview(review);
+        this.setState({averageRating: averageRating})
     }
 
     onClickRating(value){
@@ -112,13 +126,6 @@ class Reviews extends React.Component {
         </div>
     }
 
-    averageRating() {
-        let ratings = this.props.reviews.map(review => review.rating);
-        if (!ratings || !ratings.length)
-            return 0;
-        return ratings.reduce((a, b) => a + b) / ratings.length;
-    }
-
     shouldComponentUpdate(nextProps, nextState, nextContext) {
         let preProductId = this.props.productId;
         let postProductId = nextProps.productId;
@@ -141,6 +148,16 @@ class Reviews extends React.Component {
         let preUserComment = this.props.userComment;
         let postUserComment = nextProps.userComment;
 
+        let preRating = this.state.rating;
+        let postRating = nextState.rating;
+        let preComment = this.state.comment;
+        let postComment = nextState.comment;
+        let preDisabled = this.state.disabled;
+        let postDisabled = nextState.disabled;
+
+        let preAverageRating = this.state.averageRating;
+        let postAverageRating = nextState.averageRating;
+
         if (preProductId !== postProductId)
             return true;
         else if (preReviews.length !== postReviews.length)
@@ -154,6 +171,14 @@ class Reviews extends React.Component {
         else if (preUserRating !== postUserRating)
             return true;
         else if (preUserComment !== postUserComment)
+            return true;
+        else if (preRating !== postRating)
+            return true;
+        else if (preComment !== postComment)
+            return true;
+        else if (preDisabled !== postDisabled)
+            return true;
+        else if (preAverageRating !== postAverageRating)
             return true;
         return false;
     }
@@ -184,7 +209,7 @@ class Reviews extends React.Component {
             {this.reviewForm()}
             <div className="reviews-summary">
                 <span className="reviews-title">{this.props.reviews.length} reviews</span>
-                <Rating rating={this.averageRating()} disabled={true}/>
+                <Rating rating={this.state.averageRating} disabled={true}/>
             </div>
             <GridLayout areas={layout} components={components} className="reviews-grid"
                         classElements="reviews-items"/>

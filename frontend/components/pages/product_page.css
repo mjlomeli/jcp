@@ -36,6 +36,12 @@
     justify-content: flex-start;
 }
 
+.product-page-quantity {
+    font-family: -apple-system, BlinkMacSystemFont, "Roboto", "Droid Sans", "Segoe UI", "Helvetica", Arial, sans-serif;
+    display: flex;
+    flex-direction: column;
+}
+
 
 .product-page-items-options-submit:enabled {
     width: 100%;

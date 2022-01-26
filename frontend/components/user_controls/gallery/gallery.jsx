@@ -78,7 +78,6 @@ class Gallery extends React.Component {
     }
 
     carousel() {
-        console.log(this.state.index);
         if (!this.props.images || !this.props.images.length)
             return null;
         let carousel = this.props.images[this.state.index]

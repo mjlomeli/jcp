@@ -15,12 +15,13 @@ const mapStateToProps = (state, ownProps) =>{
     let product = Product.findById(productId);
     let images = product && product.imagesMedium();
     let userId = state.session.id;
-
+    let cartItem = productId && state.entities.cartItems[productId] || {}
     return {
         productId: productId,
         product: product,
         images: images,
-        userId: userId
+        userId: userId,
+        quantity: cartItem.quantity || 0
     }
 };
 
@@ -151,6 +152,7 @@ class CartItem extends React.Component {
             return this.resolve();
 
         let product = this.props.product;
+        let quantityLabel = ` (${this.props.quantity})`;
         let infoAreas = ['rating', 'title', 'price', 'remove']
         let infoComponents = {
             'rating': <>
@@ -158,9 +160,9 @@ class CartItem extends React.Component {
                 <Rating rating={4.3} count={235}
                         disabled={true} classCount="cart-item-rating-count"/>
             </>,
-            'title': <label className="cart-item-title">{this.resize(product.title)}</label>,
+            'title': <label className="cart-item-title">{this.resize(product.title)}{quantityLabel}</label>,
             'price': <div className="cart-item-grouped-price">
-                <Price price={product.price} discount={0.05}/>
+                <Price price={product.price * this.props.quantity} discount={0.05}/>
                 <Additional freeShipping={"free shipping"}/></div>,
             'remove': <button className="cart-item-remove" type="button" onClick={this.onclickremove}>Remove</button>
         }

@@ -1,6 +1,7 @@
 .products-page-div {
     display: flex;
     justify-content: center;
+    margin-top: 1em;
 }
 
 .products-page-grid {
@@ -16,3 +17,4 @@
     display: flex;
     justify-content: center;
 }
+
