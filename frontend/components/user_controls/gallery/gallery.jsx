@@ -1,5 +1,5 @@
 import {connect} from 'react-redux';
-import React from 'react';
+import React, {Fragment} from 'react';
 import './gallery.css'
 import GridLayout from "../../user_controls/grid_layout/grid_layout";
 import {Product} from "../../../lib/product";
@@ -51,11 +51,6 @@ class Gallery extends React.Component {
         let index = this.state.index;
         index >= this.props.images.length-1 ? index -= this.props.images.length-1 : index++
         this.setState({index: index});
-    }
-
-    imageSelections(index) {
-        return <img className="gallery-image-selections" onClick={this.onClick.bind(this)} src={this.props.images[index].source()}
-                    alt="img" data-index={index}/>
     }
 
     leftButtonComponent() {
@@ -115,7 +110,6 @@ class Gallery extends React.Component {
             return true;
         else if (preIndex !== postIndex)
             return true;
-
         return false;
     }
 
@@ -133,14 +127,14 @@ class Gallery extends React.Component {
         if (!this.isRenderValid())
             return this.resolve();
 
-        let images = this.props.images;
-        let areas = [];
+        let productId = this.props.productId;
+        let areas = ['image carousel carousel carousel carousel'];
         let components = {'carousel': this.carousel()}
-        for (let i = 0; i < images.length; i++) {
-            let row = [`image${i}`].concat(Array(images.length - 1).fill('carousel'));
-            areas.push(row.join(" "));
-            components[`image${i}`] = this.imageSelections(i);
-        }
+        components['image'] = <Fragment>{
+            this.props.images.map((image, idx) => {
+                return <img key={`${productId}_${idx}`} className="gallery-image-selections" onClick={this.onClick.bind(this)} src={image.source()} alt="img" data-index={idx}/>
+        })}
+        </Fragment>
         return <GridLayout areas={areas} components={components} className="gallery-grid" classElements="gallery-elements"/>
     }
 }
