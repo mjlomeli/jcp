@@ -1,5 +1,5 @@
-# JCP &nbsp; [![VIEW SITE - UP](https://img.shields.io/badge/VIEW_SITE-UP-2ea44f?style=for-the-badge&logo=heroku)](https://jcp-crafter.herokuapp.com/#/home)
-<img src="./images/walkthrough.gif" alt="walkthrough.gif"/>
+# <img src="https://github.com/mjlomeli/jcp/wiki/images/jcp.png" alt="jcp" width="50" /> &nbsp; [![VIEW SITE - UP](https://img.shields.io/badge/VIEW_SITE-UP-2ea44f?style=for-the-badge&logo=heroku)](https://jcp-crafter.herokuapp.com/#/home)
+
 
 ## License
 [![License](https://img.shields.io/badge/License-MIT-blue)](https://github.com/mjlomeli/jcp/blob/main/LICENSE)
