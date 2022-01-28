@@ -6,8 +6,6 @@ import {Product} from "../../../lib/product";
 import {fetchProductListing, resetProductErrors} from "../../../actions/product_action";
 import {urlId} from "../../../utils/tools";
 
-
-
 const mapStateToProps = (state, ownProps) => {
     let productId = Product.findIDFromProps(ownProps);
     let product = Product.findById(productId);

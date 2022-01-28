@@ -20,10 +20,10 @@ document.addEventListener("DOMContentLoaded", () => {
     } else {
         store = configureStore({}, testing)
     }
-    initialBoot()(store.dispatch, store.getState);
     const root = document.getElementById("root");
     window.store = store;
     ReactDOM.render(<Root store={store}/>, root);
+    initialBoot()(store.dispatch, store.getState);
 
     window.debug = debug;
     window.isNodeJs = isNodeJs

@@ -48,6 +48,7 @@ class Reviews extends React.Component {
             return 0;
         return ratings.reduce((a, b) => a + b) / ratings.length;
     }
+
     constructor(props) {
         super(props);
         this.state = {
@@ -62,8 +63,6 @@ class Reviews extends React.Component {
         this.onclicksubmit = this.onClickSubmit.bind(this);
         this.onclickrating = this.onClickRating.bind(this);
     }
-
-
 
     onChangeInput(e) {
         this.setState({comment: e.currentTarget.value})
@@ -117,7 +116,7 @@ class Reviews extends React.Component {
 
     reviewComponent(review) {
         let date = new Date(Date.parse(review.created_at));
-        return <div className="reviews-each">
+        return <div key={`${review.id}`} className="reviews-each">
             <div className="reviews-each-header"><label className="reviews-first-name">{review.first_name}</label>
             <label className="reviews-date">{date.toLocaleString()}</label>
             </div>
@@ -209,7 +208,7 @@ class Reviews extends React.Component {
             {this.reviewForm()}
             <div className="reviews-summary">
                 <span className="reviews-title">{this.props.reviews.length} reviews</span>
-                <Rating rating={this.state.averageRating} disabled={true}/>
+                <Rating key={`${this.state.averageRating}`} rating={this.state.averageRating} disabled={true}/>
             </div>
             <GridLayout areas={layout} components={components} className="reviews-grid"
                         classElements="reviews-items"/>

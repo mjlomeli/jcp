@@ -43,13 +43,15 @@ const fetchCartItems = () => (dispatch, getState) => {
 const fetchFavorites = () => (dispatch, getState) => {
     let resolve = Promise.resolve();
     if (!getState) return resolve;
-    let entities = getState().entities;
 
-    let userId = entities.userId;
+    let state = getState();
+    let entities = state.entities;
+
+    if (!entities || !entities.favorites) return resolve;
+    let favoriteIds = entities.favorites;
+
+    let userId = state.session.id;
     if (!userId) return resolve;
-
-    if (!entities || !entities.favoriteIds) return resolve;
-    let favoriteIds = entities.favoriteIds;
 
     if (!favoriteIds.length)
         return dispatch(FavoriteAction.fetchFavorites(userId));

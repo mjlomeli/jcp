@@ -58,10 +58,7 @@ class FavoritesPage extends React.Component {
             return true;
         else if (!preFavoriteIds.every((preId) => postFavoriteIds.includes(preId)))
             return true;
-        else if (!preRecommendIds.every((preId) => postRecommendIds.includes(preId)))
-            return true;
-        //return false;
-        return true;
+        return false;
     }
 
     isRenderValid() {

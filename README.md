@@ -1,5 +1,8 @@
 # JCP &nbsp; [![VIEW SITE - UP](https://img.shields.io/badge/VIEW_SITE-UP-2ea44f?style=for-the-badge&logo=heroku)](https://jcp-crafter.herokuapp.com/#/home)
 
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-10 125.5 612 367">
+<text transform="matrix(1 0 0 1 -10 411.6875)" fill="#F1641E" font-family="'ArialMT'" font-size="393.2774">Jcp</text>
+</svg>
 
 ## License
 [![License](https://img.shields.io/badge/License-MIT-blue)](https://github.com/mjlomeli/jcp/blob/main/LICENSE)

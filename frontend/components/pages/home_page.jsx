@@ -85,6 +85,8 @@ class HomePage extends React.Component {
             return true;
         else if (preFirstName !== postFirstName)
             return true;
+        else if (this.props.recommendations.length !== nextProps.recommendations.length)
+            return true;
         return false;
     }
 

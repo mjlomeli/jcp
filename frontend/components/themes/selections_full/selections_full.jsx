@@ -55,37 +55,45 @@ class SelectionsFull extends React.Component {
         return null;
     }
 
+    generateAreas(){
+        let capacity = this.props.numRows * this.props.numCols;
+        let length = this.props.productIds.length;
+        let areas = [];
+        let indices = [];
+        for (let i = 0; i < capacity; i++){
+            if (indices.length === this.props.numCols) {
+                areas.push(indices.join(" "));
+                indices = [];
+            }
+            if (i < length)
+                indices.push(`comp_${this.props.productIds[i]}`);
+            else
+                indices.push("-");
+        }
+        if (indices.length)
+            areas.push(indices.join(" "));
+        return areas;
+    }
+
     render() {
         if (!this.isRenderValid())
             return this.resolve();
+
         let title = <h2 className="selections-full-thumbnail-titles">{this.props.title}</h2>;
         let description = <label className="selections-full-descriptions">{this.props.description}</label>;
         let text = <div>{title}{description}</div>
         let components = {'text': text}
-        let indices = [];
+        let areas = [Array.from(Array(this.props.numCols)).map(_ => "text").join(" ")]
+        areas = areas.concat(this.generateAreas());
 
-        let layout = [Array.from(Array(this.props.numCols)).map(_ => "text").join(" ")];
-        for (let idx = 0; idx < this.props.numRows * this.props.numCols; idx++){
-            if (idx >= this.props.productIds.length) {
-                indices.push("-")
-            }
-            else {
-                indices.push(`comp_${idx}`)
-                let productId = this.props.productIds[idx];
-                if (indices.length === this.props.numCols) {
-                    layout.push(indices.join(" "))
-                    indices = [];
-                }
-                components[`comp_${idx}`] = <CardListing key={`${productId}`} length={50} productId={productId}
-                                                         product={Product.findById(productId)}
-                                                         images={Image.findByProductId(productId)}/>
-            }
-        }
-        if (indices.length){
-            let placeholder = Array.from(Array(this.props.numCols - indices.length)).map(_ => "-");
-            layout.push(indices.concat(placeholder).join(" "));
-        }
-        return <GridLayout areas={layout}
+        this.props.productIds.forEach((productId, idx) => {
+            components[`comp_${productId}`] = <CardListing key={`${productId}`} length={50}
+                                                     productId={productId}
+                                                     product={Product.findById(productId)}
+                                                     images={Image.findByProductId(productId)}/>
+        })
+
+        return <GridLayout key={areas.join(" ")} areas={areas}
                            components={components}
                            className="selections-full-grid"
                            classElements="selections-full-items"/>

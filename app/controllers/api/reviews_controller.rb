@@ -40,7 +40,8 @@ class Api::ReviewsController < ApplicationController
     else
       @review = Review.find_by(product_id: params[:product_id])
       if @review && @review.update_attributes(review_params)
-        render json: {@review.product_id => {@review.user_id => @review}}
+        rev = Review.where(product_id: @review.product_id).map{|obj| [obj.user_id, obj]}.to_h
+        render json: {@review.product_id => {@review.user_id => rev}}
       elsif !@review
         render json: ["Could not locate product id: #{params[:product_id]}"], status: 400
       else
