@@ -24,12 +24,12 @@ Released under [MIT](/LICENSE) by [@Mauricio](https://github.com/mjlomeli/jcp/bl
 <br>
 
 ## Table of contents
-- [Overview](#Welcome-to-JCP!)
+- [Overview](#Welcome)
 - [Wiki - Technical overview](https://github.com/mjlomeli/jcp/wiki)
 - [Technologies](#Technologies)
 - [Features](#Features)
 
-# Welcome to JCP!
+# Welcome
 JCP (Jay-see-p) Is a clone of Etsy where people come together to make, sell, buy, and collect unique items.
 
 This is a recreation of the website Etsy entirely out of CSS, HTML, Javascript, React.js, and Redux.js for the frontend; PostreSQL and Ruby on rails for the backend. Its primary purpose is as a proof of concept.
