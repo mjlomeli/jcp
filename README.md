@@ -24,7 +24,7 @@ Released under [MIT](/LICENSE) by [@Mauricio](https://github.com/mjlomeli/jcp/bl
 <br>
 
 ## Table of contents
-- [Overview](# Welcome to JCP!)
+- [Overview](#Welcome-to-JCP!)
 - [Wiki - Technical overview](https://github.com/mjlomeli/jcp/wiki)
 - [Technologies](#Technologies)
 - [Features](#Features)
