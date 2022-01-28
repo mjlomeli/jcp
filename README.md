@@ -23,34 +23,66 @@ Released under [MIT](/LICENSE) by [@Mauricio](https://github.com/mjlomeli/jcp/bl
 
 <br>
 
+## Table of contents
+- [Overview](#Welcome to JCP!)
+- [Wiki - Technical overview](https://github.com/mjlomeli/jcp/wiki)
+- [Technologies](#Technologies)
+- [Features](#Features)
+
 # Welcome to JCP!
-
-## [Wiki](https://github.com/mjlomeli/jcp/wiki)
-Click on the Wiki to learn more about this program.
-
-## Purpose
-
 JCP (Jay-see-p) Is a clone of Etsy where people come together to make, sell, buy, and collect unique items.
 
-### Login
+This is a recreation of the website Etsy entirely out of CSS, HTML, Javascript, React.js, and Redux.js for the frontend; PostreSQL and Ruby on rails for the backend. Its primary purpose is as a proof of concept.
+
+# Technologies
+* PostgreSQL
+* Javascript
+* React
+* Redux
+* Node
+* Ruby on Rails
+* jQuery
+* jBuilder
+* HTML & CSS
+* Webpack
+* Python
+
+The frontend primarily uses the React framework and Redux architecture. Its contents are 
+fetched from a Ruby on Rails, PostgreSQL API using jQuery and jBuilder. Items were generated
+using Python's requests for API and webscraping to be saved on PostgreSQL.
+
+# Features
+## Login & Sign up
+Logging in is simple! At the top right corner, click on 'Sign in'. When prompted
+enter your username and password. You may register or demo the site by clicking on
+the 'Register' button. You'll be prompted about your login if successful. 
 
 ![image](https://github.com/mjlomeli/jcp/wiki/images/login.gif)
 
-### Cart
+## Cart
+Once logged in, navigate to a product and click 'Add to cart'. Products sent to
+the cart are located in your cart page. The icon is located at the top right 
+corner of the screen. You'll know when an item is added to your cart if a
+notification below prompts you about the status of the item.
 
 ![image](https://github.com/mjlomeli/jcp/wiki/images/cart.gif)
 
 
-### Search Bar
+## Search Bar
+If you know the name of the item, enter it in the search bar. Clicking on the
+drop down suggestions will directly send you to the product.
 
 ![image](https://github.com/mjlomeli/jcp/wiki/images/searchbar.gif)
 
-### Favorites
+## Favorites
+To favoring items for viewing later you'll locate the heart icon when hovering over
+the item's image. Red colored hearts indicate the item is favored. You'll know 
+when the item is saved if a notification below prompts you about its status.
 
 ![image](https://github.com/mjlomeli/jcp/wiki/images/favorites.gif)
 
 
-### Contributors
+## Contributors
 
 <table>
   <tr>
