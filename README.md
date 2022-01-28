@@ -51,6 +51,8 @@ The frontend primarily uses the React framework and Redux architecture. Its cont
 fetched from a Ruby on Rails, PostgreSQL API using jQuery and jBuilder. Items were generated
 using Python's requests for API and webscraping to be saved on PostgreSQL.
 
+Learn more about my implementations on the [Wiki - Technical overview](https://github.com/mjlomeli/jcp/wiki).
+
 # Features
 ## Login & Sign up
 Logging in is simple! At the top right corner, click on 'Sign in'. When prompted
