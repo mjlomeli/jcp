@@ -205,3 +205,5 @@ package-lock.json
 /.yarn
 .pnp.cjs
 /.pnp.cjs
+# Ignore master key for decrypting credentials and more.
+/config/master.key

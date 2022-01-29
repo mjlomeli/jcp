@@ -1,0 +1,1 @@
+sudo rm config/master.key && sudo rm config/credentials.yml.enc && rails credentials:edit && rails assets:precompile RAILS_ENV=production

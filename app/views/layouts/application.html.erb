@@ -11,6 +11,12 @@
   <%= stylesheet_link_tag 'application', media: 'all' %>
   <%= javascript_include_tag 'application' %>
   <%= favicon_link_tag asset_path("jcp-icon.png") %>
+  <script>
+    window.logo_png = "<%= image_url("jcp-icon.png") %>";
+    window.logo_svg = "<%= image_url("jcp-icon.svg") %>";
+
+  </script>
+
   <% if current_user %>
     <script>
         window.currentUser = {

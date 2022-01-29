@@ -9,7 +9,8 @@
   },
   "scripts": {
     "postinstall": "webpack",
-    "jcp": "NODE_OPTIONS=--openssl-legacy-provider && webpack --watch --mode=development",
+    "jcp-production": "NODE_OPTIONS=--openssl-legacy-provider && webpack --watch --mode=production",
+    "jcp-development": "NODE_OPTIONS=--openssl-legacy-provider && webpack --watch --mode=development",
     "start": "webpack --watch --mode=development",
     "webpack5": "export NODE_OPTIONS=--openssl-legacy-provider && webpack --watch --mode=development",
     "test": "echo \"Error: no test specified\" && exit 1"
