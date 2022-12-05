@@ -1,4 +1,4 @@
-# <img src="https://github.com/mjlomeli/jcp/wiki/images/jcp.png" alt="jcp" width="50" /> &nbsp; [![VIEW SITE - DOWN](https://img.shields.io/badge/VIEW_SITE-DOWN-critical?style=for-the-badge&logo=heroku)](#)
+# <img src="https://github.com/mjlomeli/jcp/wiki/images/jcp.png" alt="jcp" width="50" /> &nbsp; [![VIEW SITE - MAINTENANCE](https://img.shields.io/badge/VIEW_SITE-MAINTENANCE-critical?style=for-the-badge&logo=heroku)](#)
 
 
 ## License
