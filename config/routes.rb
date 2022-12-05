@@ -58,6 +58,7 @@ Rails.application.routes.draw do
 
       get 'images/query', to: 'images#query'
       get 'images/listings', to: 'images#listings'
+      get 'images/render/:id', to: 'images#render_image'
 
       delete 'images', to: 'images#destroys'
 

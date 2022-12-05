@@ -2,8 +2,22 @@ require 'json'
 require 'set'
 require 'controller_helper_functions'
 require 'controller_helper_images'
+require 'open-uri'
 
 class Api::ImagesController < ApplicationController
+
+  def render_image
+    @query = { image_ids: [params[:id]] }
+    @image = Image.find_by(id: params[:id])
+    if !@image
+      render json: image_locate_error(@query), status: 400
+    elsif !@image.data
+      render json: ["image with id: #{@image.id} has not had its data saved locally in the database"], status: 400
+    else
+      send_data Base64.decode64(@image.data), :type => @image.mimetype, :disposition => 'inline'
+    end
+  end
+
   def show
     @query = { image_ids: [params[:id]] }
     @image = Image.find_by(id: params[:id])
@@ -76,7 +90,7 @@ class Api::ImagesController < ApplicationController
       render json: ["Could not find images with product_ids: #{@query[:product_ids]}"], status: 400
     else
       @filter = image_filters
-      @images = @products.reduce([]){|arr, product| arr + product.filtered_images(filter: @filter)}
+      @images = @products.reduce([]) { |arr, product| arr + product.filtered_images(filter: @filter) }
       render json: to_images_json(images: @images)
     end
   end
@@ -88,7 +102,7 @@ class Api::ImagesController < ApplicationController
       render json: ["Could not find images with user_ids: #{@query[:users_ids]}"], status: 400
     else
       @filter = image_filters
-      @images = @users.reduce([]){|arr, user| arr + user.filtered_images(filter: @filter)}
+      @images = @users.reduce([]) { |arr, user| arr + user.filtered_images(filter: @filter) }
       render json: to_images_json(images: @images)
     end
   end
@@ -100,7 +114,7 @@ class Api::ImagesController < ApplicationController
       render json: ["Could not find images with shop_ids: #{@query[:shop_ids]}"], status: 400
     else
       @filter = image_filters
-      @images = @shops.reduce([]){|arr, shop| arr + shop.filtered_images(filter: @filter)}
+      @images = @shops.reduce([]) { |arr, shop| arr + shop.filtered_images(filter: @filter) }
       render json: to_images_json(images: @images)
     end
   end
@@ -113,7 +127,7 @@ class Api::ImagesController < ApplicationController
       render json: image_locate_error(**@query), status: 400
     else
       group_ids = @query[:group_ids].map(&:to_i).to_set
-      success_ids = @images.reduce([]){|arr, img| arr << img.group_id}.to_set
+      success_ids = @images.reduce([]) { |arr, img| arr << img.group_id }.to_set
       error_ids = group_ids.subtract(success_ids)
       render json: to_images_json(images: @images, group_ids: error_ids)
     end
@@ -121,7 +135,7 @@ class Api::ImagesController < ApplicationController
 
   private
 
-  def query_params(body_params=params, **kwargs)
+  def query_params(body_params = params, **kwargs)
     query = body_params.reject { |k, v| %w[format controller action].include?(k) }
     args = []
     query.each do |k, v|
@@ -155,7 +169,7 @@ class Api::ImagesController < ApplicationController
   #                 :group_id, :dimension, :created_at, :updated_at)
   # end
 
-  def image_params(new_params=params, **kwargs)
+  def image_params(new_params = params, **kwargs)
     # the .require makes it so that when a controller is using the
     # image_params function, if image_template doesn't exist in the home_body_template
     # provided by a form, then the controller will not continue
@@ -169,5 +183,18 @@ class Api::ImagesController < ApplicationController
     filter[:id] = query[:image_ids] if query.key?(:image_ids)
     filter[:group_id] = query[:group_ids] if query.key?(:group_ids)
     filter
+  end
+
+  def save_image(image)
+    if !!image && !!image.url && !image.data
+      URI.open(image.url) do |file|
+        image.mimetype = file.content_type
+        image.encoding = 'base64'
+        image.data = Base64.encode64(file.read)
+        unless image.save
+          puts "[IMAGE_ERROR} #{image.errors.full_messages}"
+        end
+      end
+    end
   end
 end
