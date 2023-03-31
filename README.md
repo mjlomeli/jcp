@@ -14,7 +14,7 @@ Server is down due to Heroku no longer supprting the following:
 
 Released under [MIT](/LICENSE) by [@Mauricio](https://github.com/mjlomeli/jcp/blob/main/LICENSE).
 
-**Email** : [Mauricio](mailto:developer.mauricio.jr.lomeli@gmail.com)
+**Email** : [Mauricio](mailto:dev.mauricio.jr.lomeli@gmail.com)
 
 
 ## Browser Compatibility
